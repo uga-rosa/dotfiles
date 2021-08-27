@@ -20,6 +20,7 @@ require("default.mappings")
 
 map("n", "<leader>ps", "<cmd>PaqSync<cr>")
 
+--require("paq")({
 paq({
   "savq/paq-nvim",
   { "vim-jp/vimdoc-ja", config = 'vim.o.helplang = "ja,en"' },
@@ -122,4 +123,4 @@ paq({
   },
 })
 
-require("filittle").setup()
+--require("filittle").setup()
