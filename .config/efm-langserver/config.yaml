@@ -1,0 +1,57 @@
+---
+version: 2
+root-markers:
+  - .git/
+
+tools:
+  markdown-textlint: &markdown-textlint
+    lint-command: 'textlint -f unix --stdin --stdin-filename ${INPUT}'
+    lint-ignore-exit-code: true
+    lint-stdin: true
+    lint-formats:
+      - '%f:%l:%c: %m [%trror/%r]'
+
+  fixjson: &fixjson
+    format-command: 'fixjson'
+
+  jsonlint: &jsonlint
+    lint-command: 'jsonlint -c'
+    lint-stdin: true
+    lint-formats:
+      - 'line %l, col %c, found: %m'
+
+  stylua: &stylua
+    format-command: 'stylua --config-path ~/.config/stylua.toml -'
+    format-stdin: true
+
+  python-black: &python-black
+    format-command: 'black -q -'
+    format-stdin: true
+
+  shfmt: &shfmt
+    format-command: 'shfmt -ci -s -bn -i 2'
+    format-stdin: true
+
+  yamllint: &yamllint
+    lint-command: 'yamllint -f parsable -c ~/.yamllint -'
+    lint-stdin: true
+
+languages:
+  markdown:
+    - <<: *markdown-textlint
+
+  json:
+    - <<: *fixjson
+    - <<: *jsonlint
+
+  lua:
+    - <<: *stylua
+
+  python:
+    - <<: *python-black
+
+  sh:
+    - <<: *shfmt
+
+  yaml:
+    - <<: *yamllint

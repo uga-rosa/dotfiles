@@ -1,0 +1,65 @@
+{
+  "configurations": {
+    "python_file": {
+      "adapter": "debugpy",
+      "configuration": {
+        "name": "python: Launch",
+        "type": "python",
+        "request": "launch",
+        "python": "~/.pyenv/shims/python",
+        "cwd": "${fileDirname}",
+        "program": "${file}",
+        "stopOnEntry": true,
+        "console": "internalConsole"
+      },
+      "breakpoints": {
+        "exception": {
+          "raised": "N",
+          "uncaught": "Y"
+        }
+      }
+    },
+    "rust_file": {
+      "adapter": "CodeLLDB",
+      "variables": {
+        "appname": {
+          "shell": ["basename", "${cwd}"]
+        }
+      },
+      "configuration": {
+        "name": "rust Launch",
+        "type": "lldb",
+        "request": "launch",
+        "cargo": {
+          "args": ["test", "--no-run", "--lib"]
+        }
+      },
+      "breakpoints": {
+        "exception": {
+          "cpp_throw": "Y",
+          "cpp_catch": "N"
+        }
+      }
+    },
+    "lua_file" : {
+      "adapter": "lua-local",
+      "configuration": {
+        "request": "launch",
+        "type": "lua-local",
+        "cwd": "${workspaceFolder}",
+        "program": {
+          "lua": "lua",
+          "file": "${file}"
+        },
+        "stopOnEntry": true,
+        "console": "internalConsole"
+      },
+      "breakpoints": {
+        "exception": {
+          "raised": "N",
+          "uncaught": "Y"
+        }
+      }
+    }
+  }
+}

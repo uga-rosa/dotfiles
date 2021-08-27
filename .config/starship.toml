@@ -1,0 +1,18 @@
+format = """
+$git_branch$git_commit$git_state$git_status$python$rust$jobs$directory
+$character"""
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+
+[rust]
+format = "[$symbol($version)]($style)"
+
+[directory]
+truncation_length = 100
+truncate_to_repo = false
+format = " [$path]($style)[$read_only]($read_only_style)"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
