@@ -85,6 +85,7 @@ end
 -- opts' keys
 -- config: Execute before the plugin loading (string or function).
 --         But lua require will be resoloved without any problems.
+-- check:  Flag of to load config (pcall(require, <value>)).
 -- ft:     On-demand loading on filetype (string or array).
 -- event:  On-demand loading on event (string).
 utils.paq = function(opts)
@@ -92,6 +93,14 @@ utils.paq = function(opts)
     if type(v) == "table" then
       local config
       if v.config then
+        if v.check then
+          local check = type(v.check) == "string" and { v.check } or v.check
+          for _, c in ipairs(check) do
+            if not pcall(require, c) then
+              goto continue
+            end
+          end
+        end
         config = function()
           if type(v.config) == "function" then
             v.config()
@@ -100,6 +109,7 @@ utils.paq = function(opts)
           end
         end
       end
+      ::continue::
 
       if v.ft or v.event then
         v.opt = true

@@ -93,16 +93,16 @@ cmp.setup({
     }),
   },
   sources = source_list({ "luasnip", "lsp", "buffer", "path", "emoji" }),
-  event = {
-    on_confirm_done = function(entry)
-      local Method = cmp.lsp.CompletionItemKind.Method
-      local Function = cmp.lsp.CompletionItemKind.Function
-      local item = entry:get_completion_item()
-      if item.kind == Method or item.kind == Function then
-        vim.api.nvim_feedkeys("(", "i", true)
-      end
-    end,
-  },
+  --event = {
+  --  on_confirm_done = function(entry)
+  --    local Method = cmp.lsp.CompletionItemKind.Method
+  --    local Function = cmp.lsp.CompletionItemKind.Function
+  --    local item = entry:get_completion_item()
+  --    if item.kind == Method or item.kind == Function then
+  --      vim.api.nvim_feedkeys("(", "i", true)
+  --    end
+  --  end,
+  --},
 })
 
 augroup("MyCmp", {

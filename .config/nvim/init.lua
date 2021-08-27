@@ -20,7 +20,6 @@ require("default.mappings")
 
 map("n", "<leader>ps", "<cmd>PaqSync<cr>")
 
---require("paq")({
 paq({
   "savq/paq-nvim",
   { "vim-jp/vimdoc-ja", config = 'vim.o.helplang = "ja,en"' },
@@ -33,6 +32,7 @@ paq({
   },
   {
     "hoob3rt/lualine.nvim",
+    check = "lualine",
     config = function()
       if vim.fn.has("vim_starting") == 1 then
         require("lualine").setup({
@@ -48,11 +48,12 @@ paq({
   "hrsh7th/cmp-nvim-lua",
   "saadparwaiz1/cmp_luasnip",
   "kdheepak/cmp-latex-symbols",
-  { "hrsh7th/nvim-cmp", config = 'require("plugins.cmp")' },
+  { "hrsh7th/nvim-cmp", check = "cmp", config = 'require("plugins.cmp")' },
   { "cohama/lexima.vim", config = 'require("plugins.lexima")' },
-  { "L3MON4D3/LuaSnip", config = 'require("plugins.luasnip")' },
+  { "L3MON4D3/LuaSnip", check = "luasnip", config = 'require("plugins.luasnip")' },
   {
     "rafamadriz/friendly-snippets",
+    check = "luasnip",
     config = function()
       require("luasnip.loaders.from_vscode").load({
         paths = fn.stdpath("data") .. "/site/pack/paqs/start/friendly-snippets",
@@ -60,11 +61,19 @@ paq({
     end,
   },
   "kabouzeid/nvim-lspinstall",
-  { "neovim/nvim-lspconfig", config = 'require("plugins.lsp")' },
+  {
+    "neovim/nvim-lspconfig",
+    check = { "lspinstall", "lspconfig", "cmp_nvim_lsp" },
+    config = 'require("plugins.lsp")',
+  },
   "nvim-lua/popup.nvim",
   "nvim-lua/plenary.nvim",
   "kyazdani42/nvim-web-devicons",
-  { "nvim-telescope/telescope.nvim", config = 'require("plugins.telescope")' },
+  {
+    "nvim-telescope/telescope.nvim",
+    check = "telescope",
+    config = 'require("plugins.telescope")',
+  },
   "nvim-treesitter/nvim-treesitter-textobjects",
   "David-Kunz/treesitter-unit",
   {
@@ -72,9 +81,14 @@ paq({
     run = function()
       vim.cmd("TSUpdate")
     end,
+    check = { "nvim-treesitter", "treesitter-unit" },
     config = 'require("plugins.treesitter")',
   },
-  { "akinsho/nvim-toggleterm.lua", config = 'require("plugins.toggleterm")' },
+  {
+    "akinsho/nvim-toggleterm.lua",
+    check = "toggleterm",
+    config = 'require("plugins.toggleterm")',
+  },
   { "machakann/vim-sandwich", config = 'require("plugins.sandwich")' },
   "tversteeg/registers.nvim",
   {
@@ -104,9 +118,8 @@ paq({
   {
     "simrat39/rust-tools.nvim",
     ft = "rust",
-    config = function()
-      require("rust-tools").setup({})
-    end,
+    check = "rust-tools",
+    config = 'require("rust-tools").setup({})',
   },
   {
     "iamcco/markdown-preview.nvim",
@@ -121,6 +134,5 @@ paq({
       require("config.pasteimage")
     end,
   },
+  { "uga-rosa/filittle.nvim", check = "filittle", config = 'require("filittle").setup()' },
 })
-
---require("filittle").setup()
