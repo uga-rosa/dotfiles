@@ -34,5 +34,5 @@ end, "expr")
 require("snippets")
 
 require("luasnip.loaders.from_vscode").load({
-  paths = "~/.snippets",
+  paths = "~/snippets",
 })

@@ -1,33 +1,39 @@
-# よく行くdirectory
 export weeklyreport="$HOME/workspace/slide/Weekly_report"
 export workspace="$HOME/workspace"
 export ehome="/mnt/e/home"
 alias wr="cd $weeklyreport"
 alias home="cd $ehome"
 
-# Xserver
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 
-# marp
 export CHROME_PATH=$(which google-chrome)
 
-# tmux
 export TERM=xterm-256color
 
-# trash-cli
-alias mm="trash-put"
-
-# chrome
 alias google-chrome="google-chrome --enable-features=WebUIDarkMode --force-dark-mode"
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_OPTS='--height 50% --reverse'
+export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_CTRL_T_OPTS='--preview "bat --color=always --style=header,grid --line-range :100 {}"'
+export FZF_ALT_C_COMMAND='fd --type d'
+
+# zoxide
+eval "$(zoxide init zsh)"
+
+# pyenv
+eval "$(pyenv init -)"
+
+# lazygit
+alias g="lazygit"
 
 # windows chrome
 function wchrome() {
   [[ -z ${1} ]] && return 1
   chrome.exe $(wslpath -w ${1})
 }
-
-# scpの帯域制限
-alias scp="scp -l 163840"
 
 # tmux-session-select
 function tmux_session_select() {

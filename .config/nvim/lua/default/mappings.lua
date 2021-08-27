@@ -4,7 +4,7 @@ local map_conv = utils.map_conv
 vim.g.mapleader = " "
 
 --map("i", "jj", "<esc>", "noremap")
-map("n", "Q", "<nop>", "noremap")
+map("n", "Q", "q", "noremap")
 map("n", "<leader><esc>", "<cmd>noh<cr>", "noremap")
 map("v", "<", "<gv", "noremap")
 map("v", ">", ">gv", "noremap")
@@ -31,4 +31,4 @@ map({ "i", "c" }, "<C-d>", "<delete>", "noremap")
 map("c", "<C-a>", "<home>", "noremap")
 map("c", "<C-e>", "<end>", "noremap")
 map("c", "<C-x>", [[expand('%:p')]], { "noremap", "expr" })
-map("i", "<C-h>", "<bs>") -- for nvim-autopairs
+map("i", "<C-h>", "<bs>")

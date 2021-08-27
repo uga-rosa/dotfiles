@@ -78,6 +78,7 @@ cmp.setup({
       })[entry.source.name]
       vim_item.dup = ({
         nvim_lua = 0,
+        buffer = 0,
       })[entry.source.name] or 1
       return vim_item
     end,

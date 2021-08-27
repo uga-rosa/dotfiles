@@ -11,11 +11,8 @@ zmodload zsh/zpty
 # unique path
 typeset -U path PATH
 
-# 分割ファイルの読み込み
+# load ~./zsh/*
 for i (~/.zsh/*) . $i
-
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
@@ -40,23 +37,16 @@ zinit light-mode for \
 
 ## End of Zinit's installer chunk
 
-# zoxideと干渉するので
+# for zoxide
 unalias zi
 
-## シンタックスハイライト
 zinit light zsh-users/zsh-syntax-highlighting
 
-## 履歴補完
 zinit light zsh-users/zsh-autosuggestions
 
-# コマンド補完
 zinit light zsh-users/zsh-completions
 autoload -Uz compinit && compinit
 
-## 補完で小文字でも大文字にマッチさせる
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
-## 補完候補を一覧表示したとき、Tabや矢印で選択できるようにする
 zstyle ':completion:*:default' menu select=1
-
-alias luamake=/home/nakai/.cache/nvimlsp/lua-language-server/3rd/luamake/luamake
