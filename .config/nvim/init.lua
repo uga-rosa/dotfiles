@@ -134,5 +134,12 @@ paq({
       require("config.pasteimage")
     end,
   },
-  { "uga-rosa/filittle.nvim", check = "filittle", config = 'require("filittle").setup()' },
+  { "norcalli/nvim-colorizer.lua", opt = true },
 })
+
+vim.cmd([[
+command! -bar ColorizerSetup packadd nvim-colorizer.lua | lua require('colorizer').setup()
+command! NvimColorizer ColorizerSetup | e
+]])
+
+--require("filittle").setup()
