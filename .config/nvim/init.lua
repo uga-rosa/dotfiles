@@ -134,12 +134,23 @@ paq({
       require("config.pasteimage")
     end,
   },
-  { "norcalli/nvim-colorizer.lua", opt = true },
 })
 
-vim.cmd([[
-command! -bar ColorizerSetup packadd nvim-colorizer.lua | lua require('colorizer').setup()
-command! NvimColorizer ColorizerSetup | e
-]])
-
---require("filittle").setup()
+require("filittle").setup({
+  devicons = true,
+  mappings = {
+    ["<cr>"] = "open",
+    ["l"] = "open",
+    ["<C-x>"] = "split",
+    ["<C-v>"] = "vsplit",
+    ["<C-t>"] = "tabedit",
+    ["h"] = "up",
+    ["~"] = "home",
+    ["R"] = "reload",
+    ["+"] = "toggle_hidden",
+    ["t"] = "touch",
+    ["m"] = "mkdir",
+    ["d"] = "delete",
+    ["r"] = "rename",
+  },
+})

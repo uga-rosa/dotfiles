@@ -14,7 +14,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # windows_commands
-export PATH=$HOME/.windows_commands:$PATH
+export PATH=$HOME/.windows_command:$PATH
 
 # Path to mine
 export PATH=$HOME/bin:$PATH

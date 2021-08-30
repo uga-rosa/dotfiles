@@ -22,11 +22,9 @@ _G.source_list = function(arr)
     nvim_lua = { name = "nvim_lua" },
     latex = { name = "latex_symbols" },
   }
-  local sources = {}
-  for _, name in ipairs(arr) do
-    sources[#sources + 1] = config[name]
-  end
-  return sources
+  return vim.tbl_map(function(name)
+    return config[name]
+  end, arr)
 end
 
 local lspkind = {
@@ -93,16 +91,25 @@ cmp.setup({
     }),
   },
   sources = source_list({ "luasnip", "lsp", "buffer", "path", "emoji" }),
-  --event = {
-  --  on_confirm_done = function(entry)
-  --    local Method = cmp.lsp.CompletionItemKind.Method
-  --    local Function = cmp.lsp.CompletionItemKind.Function
-  --    local item = entry:get_completion_item()
-  --    if item.kind == Method or item.kind == Function then
-  --      vim.api.nvim_feedkeys("(", "i", true)
-  --    end
-  --  end,
-  --},
+  event = {
+    on_confirm_done = function(entry)
+      local Method = cmp.lsp.CompletionItemKind.Method
+      local Function = cmp.lsp.CompletionItemKind.Function
+      local item = entry:get_completion_item()
+      if vim.tbl_contains({ Method, Function }, item.kind) then
+        if
+          (
+            item.textEdit
+            and item.textEdit.newText
+            and item.textEdit.newText:match("[%(%[]")
+          ) or (item.insertText and item.insertText:match("[%(%[]"))
+        then
+          return
+        end
+        vim.api.nvim_feedkeys("(", "", true)
+      end
+    end,
+  },
 })
 
 augroup("MyCmp", {
