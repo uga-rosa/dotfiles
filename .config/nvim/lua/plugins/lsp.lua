@@ -93,4 +93,4 @@ sign define LspDiagnosticsSignHint text=
 ]])
 
 -- rename in floating window
-require("config.rename")
+require("myplug.rename")

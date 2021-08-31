@@ -1,4 +1,4 @@
-if not require("packerInit") then
+if not require("packer_init") then
   return
 end
 
@@ -88,24 +88,9 @@ return packer.startup({
       ft = "rust",
       config = 'require("rust-tools").setup({})',
     })
+    use({
+      "uga-rosa/filittle.nvim",
+      config = 'require("plugins.other").filittle()',
+    })
   end,
 })
-
---require("filittle").setup({
---  devicons = true,
---  mappings = {
---    ["<cr>"] = "open",
---    ["l"] = "open",
---    ["<C-x>"] = "split",
---    ["<C-v>"] = "vsplit",
---    ["<C-t>"] = "tabedit",
---    ["h"] = "up",
---    ["~"] = "home",
---    ["R"] = "reload",
---    ["+"] = "toggle_hidden",
---    ["t"] = "touch",
---    ["m"] = "mkdir",
---    ["d"] = "delete",
---    ["r"] = "rename",
---  },
---})

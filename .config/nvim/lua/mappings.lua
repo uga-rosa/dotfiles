@@ -45,11 +45,11 @@ end, {
 })
 
 vim.cmd([[
-silent! command PackerCompile lua require 'plugins' require('packer').compile()
-silent! command PackerInstall lua require 'plugins' require('packer').install()
-silent! command PackerStatus lua require 'plugins' require('packer').status()
-silent! command PackerUpdate lua require 'plugins' require('packer').update()
-silent! command PackerSync lua require 'plugins' require('packer').sync()
+silent! command PackerCompile lua require('packer_plug') require('packer').compile()
+silent! command PackerInstall lua require('packer_plug') require('packer').install()
+silent! command PackerStatus lua require('packer_plug') require('packer').status()
+silent! command PackerUpdate lua require('packer_plug') require('packer').update()
+silent! command PackerSync lua require('packer_plug') require('packer').sync()
 ]])
 
 map("n", "<leader>ps", "<cmd>PackerSync<cr>", "noremap")
