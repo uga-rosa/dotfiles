@@ -16,7 +16,6 @@ return packer.startup({
     use({ "bluz71/vim-nightfly-guicolors" })
     use({
       "hrsh7th/nvim-cmp",
-      config = 'require("plugins.cmp")',
       requires = {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
@@ -26,6 +25,7 @@ return packer.startup({
         "saadparwaiz1/cmp_luasnip",
         "kdheepak/cmp-latex-symbols",
       },
+      config = 'require("plugins.cmp")',
     })
     use({
       "cohama/lexima.vim",
@@ -34,26 +34,30 @@ return packer.startup({
     })
     use({
       "L3MON4D3/LuaSnip",
-      config = 'require("plugins.luasnip")',
       requires = "rafamadriz/friendly-snippets",
+      config = 'require("plugins.luasnip")',
     })
-    use("kabouzeid/nvim-lspinstall")
     use({
       "neovim/nvim-lspconfig",
+      requires = "kabouzeid/nvim-lspinstall",
       config = 'require("plugins.lsp")',
     })
-    use("nvim-lua/popup.nvim")
-    use("nvim-lua/plenary.nvim")
-    use("kyazdani42/nvim-web-devicons")
     use({
       "nvim-telescope/telescope.nvim",
+      requires = {
+        "nvim-lua/popup.nvim",
+        "nvim-lua/plenary.nvim",
+        "kyazdani42/nvim-web-devicons",
+      },
       config = 'require("plugins.telescope")',
     })
-    use("nvim-treesitter/nvim-treesitter-textobjects")
-    use("David-Kunz/treesitter-unit")
     use({
       "nvim-treesitter/nvim-treesitter",
-      run = "TSUpdate",
+      requires = {
+        "nvim-treesitter/nvim-treesitter-textobjects",
+        "David-Kunz/treesitter-unit",
+      },
+      run = ":TSUpdate",
       config = 'require("plugins.treesitter")',
     })
     use({
@@ -69,16 +73,18 @@ return packer.startup({
       "junegunn/vim-easy-align",
       config = 'require("plugins.other").easyalign()',
     })
-    use("kana/vim-operator-user")
     use({
       "kana/vim-operator-replace",
+      requires = "kana/vim-operator-user",
       config = 'require("plugins.other").operator_replace()',
     })
     use({
-      "junegunn/fzf.vim",
-      requires = { "junegunn/fzf", run = "./install --all" },
+      "nanotee/zoxide.vim",
+      requires = {
+        { "junegunn/fzf", run = "./install --all" },
+        "junegunn/fzf.vim",
+      },
     })
-    use("nanotee/zoxide.vim")
     use({
       "tyru/open-browser.vim",
       config = 'require("plugins.other").openbrowser()',
@@ -90,6 +96,10 @@ return packer.startup({
     })
     use({
       "uga-rosa/filittle.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "kyazdani42/nvim-web-devicons",
+      },
       config = 'require("plugins.other").filittle()',
     })
   end,
