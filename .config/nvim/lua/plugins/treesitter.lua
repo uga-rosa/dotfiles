@@ -1,3 +1,9 @@
+local res = pcall(require, "nvim-treesitter")
+local res2, tsunit = pcall(require, "treesitter-unit")
+if not (res and res2) then
+  return
+end
+
 local map = utils.map
 
 require("nvim-treesitter.configs").setup({
@@ -41,7 +47,7 @@ do
     vim.schedule_wrap(function()
       local mode = vim.fn.mode(1)
       if vim.g.treesitter_unit_highlight and mode == "n" then
-        require("treesitter-unit").disable_highlighting()
+        tsunit.disable_highlighting()
         vim.g.treesitter_unit_highlight = false
       end
     end)
@@ -49,7 +55,7 @@ do
 end
 
 _G.TSUnitHlEnable = function()
-  require("treesitter-unit").enable_highlighting()
+  tsunit.enable_highlighting()
   vim.g.treesitter_unit_highlight = true
 end
 

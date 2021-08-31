@@ -8,3 +8,5 @@ local rules = {
 for _, v in ipairs(rules) do
   vim.fn["lexima#add_rule"](v)
 end
+
+utils.map("i", "<C-h>", "<bs>")

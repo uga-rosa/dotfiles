@@ -4,8 +4,8 @@ local api, cmd = vim.api, vim.cmd
 utils.lua2vim = function(func)
   if not _G.myluafunc then
     _G.myluafunc = setmetatable({}, {
-      __call = function(self, idx)
-        return self[idx]()
+      __call = function(self, num)
+        return self[num]()
       end,
     })
   end

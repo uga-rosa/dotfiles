@@ -1,5 +1,7 @@
+local fn = vim.fn
 local map = utils.map
 local map_conv = utils.map_conv
+local t = utils.t
 
 vim.g.mapleader = " "
 
@@ -31,4 +33,23 @@ map({ "i", "c" }, "<C-d>", "<delete>", "noremap")
 map("c", "<C-a>", "<home>", "noremap")
 map("c", "<C-e>", "<end>", "noremap")
 map("c", "<C-x>", [[expand('%:p')]], { "noremap", "expr" })
-map("i", "<C-h>", "<bs>")
+map("n", "0", function()
+  if fn.getline("."):sub(1, fn.col(".") - 1):match("^%s+$") then
+    return t("0")
+  else
+    return t("^")
+  end
+end, {
+  "noremap",
+  "expr",
+})
+
+vim.cmd([[
+silent! command PackerCompile lua require 'plugins' require('packer').compile()
+silent! command PackerInstall lua require 'plugins' require('packer').install()
+silent! command PackerStatus lua require 'plugins' require('packer').status()
+silent! command PackerUpdate lua require 'plugins' require('packer').update()
+silent! command PackerSync lua require 'plugins' require('packer').sync()
+]])
+
+map("n", "<leader>ps", "<cmd>PackerSync<cr>", "noremap")

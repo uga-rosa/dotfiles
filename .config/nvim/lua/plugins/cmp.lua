@@ -1,4 +1,8 @@
-local cmp = require("cmp")
+local res, cmp = pcall(require, "cmp")
+if not res then
+  return
+end
+
 local augroup = utils.augroup
 
 _G.source_list = function(arr)

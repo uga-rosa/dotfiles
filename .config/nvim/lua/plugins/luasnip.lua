@@ -1,4 +1,8 @@
-local luasnip = require("luasnip")
+local res, luasnip = pcall(require, "luasnip")
+if not res then
+  return
+end
+
 local map = utils.map
 local t = utils.t
 
@@ -34,5 +38,8 @@ end, "expr")
 require("snippets")
 
 require("luasnip.loaders.from_vscode").load({
-  paths = "~/snippets",
+  paths = {
+    "~/snippets",
+    vim.fn.stdpath("data") .. "/site/pack/packer/start/friendly-snippets",
+  },
 })

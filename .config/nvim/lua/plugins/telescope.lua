@@ -1,3 +1,8 @@
+local res, telescope = pcall(require, "telescope")
+if not res then
+  return
+end
+
 local map = utils.map
 
 map("n", "<F1>", "<cmd>Telescope builtin<cr>")
@@ -15,8 +20,6 @@ map("n", "<leader>I", "<cmd>Telescope lsp_workspace_diagnostics<cr>")
 map("n", "<leader>a", "<cmd>Telescope lsp_code_actions<cr>")
 map("n", "gd", "<cmd>Telescope lsp_definitions<cr>")
 map("n", "gr", "<cmd>Telescope lsp_references<cr>")
-
-local telescope = require("telescope")
 
 telescope.setup({
   pickers = {

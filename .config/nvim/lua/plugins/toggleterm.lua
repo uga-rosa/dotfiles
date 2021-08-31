@@ -1,7 +1,12 @@
+local res, toggleterm = pcall(require, "toggleterm")
+if not res then
+  return
+end
+
 local map = utils.map
 local augroup = utils.augroup
 
-require("toggleterm").setup({
+toggleterm.setup({
   size = function(term)
     if term.direction == "horizontal" then
       return 15

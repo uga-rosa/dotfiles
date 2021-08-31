@@ -1,9 +1,15 @@
-local lspinstall = require("lspinstall")
+local res, lspinstall = pcall(require, "lspinstall")
+local res2, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+local res3, lspconfig = pcall(require, "lspconfig")
+if not (res and res2 and res3) then
+  return
+end
+
 local map = utils.map
 local set = utils.set
 
 -- cmp source
-require("cmp_nvim_lsp").setup()
+cmp_nvim_lsp.setup()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown" }
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -30,7 +36,7 @@ opts.lua = {
   settings = {
     Lua = {
       diagnostics = {
-        globals = { "vim", "utils", "Luasnip_current_nodes" },
+        globals = { "vim", "jit", "package", "utils", "Luasnip_current_nodes" },
       },
       workspace = {
         library = {
@@ -59,7 +65,7 @@ local setup_servers = function()
   lspinstall.setup()
   for _, server in ipairs(lspinstall.installed_servers()) do
     local opt = opts[server] or default
-    require("lspconfig")[server].setup(opt)
+    lspconfig[server].setup(opt)
   end
 end
 
