@@ -6,16 +6,12 @@ vim.o.title = true
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.showmatch = true
-vim.o.cursorline = false
 vim.o.expandtab = true
 vim.o.tabstop = 2
 vim.o.shiftwidth = 2
 vim.o.softtabstop = 2
 vim.o.smartindent = true
 vim.o.swapfile = false
-vim.o.backup = false
-vim.o.undofile = false
-vim.o.showcmd = true
 vim.o.scrolloff = 3
 vim.o.ignorecase = true
 vim.o.smartcase = true
@@ -23,7 +19,9 @@ vim.o.termguicolors = true
 vim.o.clipboard = "unnamedplus"
 vim.o.inccommand = "split"
 vim.o.signcolumn = "yes"
-vim.o.shell = "/bin/zsh"
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 augroup("nocomment", { { "BufEnter", "*", "setlocal formatoptions-=ro" } })
 
@@ -43,6 +41,19 @@ augroup("RemoveTrailingWhitespace", {
     function()
       if vim.bo.filetype ~= "markdown" then
         vim.cmd([[%s/ \+$//e]])
+      end
+    end,
+  },
+})
+
+augroup("automkdir", {
+  {
+    "BufWritePre",
+    "*",
+    function()
+      local dir = vim.fn.expand("%:p:h")
+      if vim.fn.isdirectory(dir) then
+        vim.fn.mkdir(dir, "p")
       end
     end,
   },

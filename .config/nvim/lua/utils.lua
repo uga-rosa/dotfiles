@@ -1,52 +1,56 @@
 utils = {}
-local api, cmd = vim.api, vim.cmd
 
-utils.lua2vim = function(func)
-  if not _G.myluafunc then
-    _G.myluafunc = setmetatable({}, {
-      __call = function(self, num)
-        return self[num]()
-      end,
-    })
-  end
+_G.myluafunc = setmetatable({}, {
+  __call = function(self, num)
+    return self[num]()
+  end,
+})
+
+local api = vim.api
+local cmd = vim.cmd
+
+--@param func: function
+--@param map:  boolean
+utils.lua2vim = function(func, map)
   local idx = #_G.myluafunc + 1
   _G.myluafunc[idx] = func
-  return "v:lua.myluafunc(" .. idx .. ")"
+  local command = ("lua myluafunc(%s)"):format(idx)
+  command = map and ("<cmd>%s<cr>"):format(command) or command
+  return command
 end
 
--- modes:   mode (string or array)
--- befores: {lhs} (string or array)
--- after:   {rhs} (string or function)
--- opts:    option. including "buffer" (string or array)
-utils.map = function(modes, befores, after, opts)
+--@param modes: string or array
+--@param lhs:   string or array
+--@param rhs:   string or function
+--@param opts:  string or array (including "buffer")
+utils.map = function(modes, lhs, rhs, opts)
   modes = type(modes) == "string" and { modes } or modes
-  befores = type(befores) == "string" and { befores } or befores
-  local bufflag = false
-  if type(opts) == "nil" then
-    opts = {}
-  else
-    opts = type(opts) == "string" and { opts } or opts
-    for key, opt in ipairs(opts) do
-      if opt == "buffer" then
-        bufflag = true
-      else
-        opts[opt] = true
-      end
-      opts[key] = nil
-    end
+  lhs = type(lhs) == "string" and { lhs } or lhs
+  opts = opts or {}
+  opts = type(opts) == "string" and { opts } or opts
+
+  if type(rhs) == "function" then
+    opts.noremap = true
+    local map = not opts.expr
+    rhs = utils.lua2vim(rhs, map)
   end
-  if type(after) == "function" then
-    after = utils.lua2vim(after)
-    if not opts.expr then
-      after = "<cmd>call " .. after .. "<cr>"
+
+  local buffer = false
+  for key, opt in ipairs(opts) do
+    if opt == "buffer" then
+      buffer = true
+    else
+      opts[opt] = true
     end
+    opts[key] = nil
   end
+
   for _, mode in ipairs(modes) do
-    for _, before in ipairs(befores) do
-      if bufflag then
-        api.nvim_buf_set_keymap(0, mode, before, after, opts)
+    for _, l in ipairs(lhs) do
+      if buffer then
+        api.nvim_buf_set_keymap(0, mode, l, rhs, opts)
       else
-        api.nvim_set_keymap(mode, before, after, opts)
+        api.nvim_set_keymap(mode, l, rhs, opts)
       end
     end
   end
@@ -61,82 +65,59 @@ utils.t = function(str)
   return api.nvim_replace_termcodes(str, true, true, true)
 end
 
-utils.autocmd = function(autocmd)
-  if type(autocmd[#autocmd]) == "function" then
-    autocmd[#autocmd] = "call " .. utils.lua2vim(autocmd[#autocmd])
+--@param au: string or array
+utils.autocmd = function(au)
+  local command
+  if type(au) == "table" then
+    if type(au[#au]) == "function" then
+      au[#au] = utils.lua2vim(au[#au])
+    end
+    command = table.concat(vim.tbl_flatten({ "au", au }), " ")
+  else
+    assert(type(au) == "string", "Invalid arguments type: " .. type(au))
+    command = au
   end
-  local command = table.concat(vim.tbl_flatten({ "au", autocmd }), " ")
   cmd(command)
 end
 
-utils.augroup = function(group, autocommands)
+--@param group: string
+--@param aus:   string in array or array in array
+utils.augroup = function(group, aus)
   cmd("augroup " .. group)
   cmd("au!")
-  for _, autocmd in ipairs(autocommands) do
-    utils.autocmd(autocmd)
+  for _, au in ipairs(aus) do
+    utils.autocmd(au)
   end
   cmd("augroup END")
 end
 
-local eval = function(inStr)
+utils.eval = function(inStr)
   return assert(load(inStr))()
 end
 
--- opts' keys
--- config: Execute before the plugin loading (string or function).
---         But lua require will be resoloved without any problems.
--- check:  Flag of to load config (pcall(require, <value>)).
--- ft:     On-demand loading on filetype (string or array).
--- event:  On-demand loading on event (string).
-utils.paq = function(opts)
-  for _, v in ipairs(opts) do
-    if type(v) == "table" then
-      local config
-      if v.config then
-        if v.check then
-          local check = type(v.check) == "string" and { v.check } or v.check
-          for _, c in ipairs(check) do
-            if not pcall(require, c) then
-              goto continue
-            end
-          end
-        end
-        config = function()
-          if type(v.config) == "function" then
-            v.config()
-          elseif type(v.config) == "string" then
-            eval(v.config)
-          end
-        end
-      end
-      ::continue::
-
-      if v.ft or v.event then
-        v.opt = true
-        local plugin_name = string.match(v[1], "^[^/]+/([^/]+)$")
-        local timing
-        if v.ft then
-          local filetype = type(v.ft) == "table" and table.concat(v.ft, ",") or v.ft
-          timing = "FileType " .. filetype
-        elseif v.event then
-          timing = v.event .. " *"
-        end
-        utils.autocmd({ timing, "packadd " .. plugin_name })
-        if config then
-          utils.autocmd({ timing, config })
-        end
-      elseif config then
-        config()
-      end
+utils.is_array = function(table)
+  local count = 0
+  for k, _ in pairs(table) do
+    count = count + 1
+    if not (type(k) == "number" and k > 0) then
+      return false
     end
   end
-  require("paq")(opts)
+  if #table == count then
+    return true
+  end
+  return false
 end
 
 utils.set = {}
+local Set = {}
 
--- self - arr
-utils.set.diff = function(self, arr)
+utils.set.new = function(arr)
+  assert(utils.is_array(arr), "Args must be array-like table.")
+  return setmetatable(arr, { __index = Set })
+end
+
+function Set:diff(arr)
   local result = setmetatable({}, { __index = table })
   for _, v in ipairs(self) do
     if not vim.tbl_contains(arr, v) then
@@ -144,8 +125,4 @@ utils.set.diff = function(self, arr)
     end
   end
   return result
-end
-
-utils.set.new = function(arr)
-  return setmetatable(arr, { __index = utils.set })
 end

@@ -77,7 +77,8 @@ lspinstall.post_install_hook = function()
 end
 
 -- format
-vim.cmd("autocmd BufWritePre *.lua lua vim.lsp.buf.formatting_sync()")
+vim.cmd("command! Format lua vim.lsp.buf.formatting_sync()")
+vim.cmd("autocmd BufWritePre *.lua Format")
 
 -- mapping
 map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", "noremap")

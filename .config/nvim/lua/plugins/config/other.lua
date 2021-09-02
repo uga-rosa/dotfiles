@@ -12,6 +12,13 @@ M.lualine = function()
   end
 end
 
+M.colorizer = function()
+  local res, colorizer = pcall(require, "colorizer")
+  if res then
+    colorizer.setup()
+  end
+end
+
 M.easyalign = function()
   map({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
 end

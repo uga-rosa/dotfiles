@@ -8,38 +8,38 @@ local t = utils.t
 
 map({ "i", "s" }, "<C-j>", function()
   if luasnip.jumpable(1) then
-    return t("<Plug>luasnip-jump-next")
+    luasnip.jump(1)
   else
-    return t("<C-j>")
+    vim.api.nvim_feedkeys(t("<C-j>"), "n", true)
   end
-end, "expr")
+end)
 
 map({ "i", "s" }, "<C-k>", function()
   if luasnip.jumpable(-1) then
-    return t("<Plug>luasnip-jump-prev")
+    luasnip.jump(-1)
   else
-    return t("<C-k>")
+    vim.api.nvim_feedkeys(t("<C-k>"), "n", true)
   end
-end, "expr")
+end)
 
-map({ "i", "s" }, "<C-e>", function()
+map({ "i", "s" }, "<C-l>", function()
   if luasnip.choice_active() then
-    return t("<Plug>luasnip-next-choice")
+    luasnip.change_choice(1)
   else
-    return t("<C-e>")
+    vim.api.nvim_feedkeys(t("<C-l>"), "n", true)
   end
-end, "expr")
+end)
 
 map("i", "<esc>", function()
   Luasnip_current_nodes[vim.fn.bufnr("%")] = nil
-  return t("<esc>")
-end, "expr")
+  vim.api.nvim_feedkeys(t("<esc>"), "n", true)
+end)
 
 require("snippets")
 
 require("luasnip.loaders.from_vscode").load({
   paths = {
     "~/snippets",
-    vim.fn.stdpath("data") .. "/site/pack/packer/start/friendly-snippets",
+    vim.fn.stdpath("data") .. "/site/pack/packer/opt/friendly-snippets",
   },
 })
