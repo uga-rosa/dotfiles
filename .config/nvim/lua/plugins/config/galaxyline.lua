@@ -248,17 +248,25 @@ gls.right[i] = {
 i = i + 1
 gls.right[i] = {
   LineColumn = {
-    icon = "☰ ",
     provider = "LineColumn",
     condition = cond.buffer_not_empty,
-    highlight = { colors.black_blue, colors.indigo },
+    highlight = { colors.black_blue, colors.purple },
+    separator = icons.round.left,
+    separator_highlight = { colors.purple, colors.bg },
   },
 }
 
 i = i + 1
 gls.right[i] = {
   LinePercent = {
-    provider = "LinePercent",
-    highlight = { colors.black_blue, colors.indigo, "bold" },
+    provider = {
+      "LinePercent",
+      function()
+        return "▊"
+      end,
+    },
+    highlight = { colors.purple, colors.bg },
+    separator = icons.round.left,
+    separator_highlight = { colors.bg, colors.purple },
   },
 }
