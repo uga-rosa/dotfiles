@@ -4,35 +4,34 @@ if not res then
 end
 
 local map = utils.map
-local t = utils.t
 
-map({ "i", "s" }, "<C-j>", function()
+map({ "i", "s" }, "<C-j>", function(fallback)
   if luasnip.jumpable(1) then
     luasnip.jump(1)
   else
-    vim.api.nvim_feedkeys(t("<C-j>"), "n", true)
+    fallback()
   end
 end)
 
-map({ "i", "s" }, "<C-k>", function()
+map({ "i", "s" }, "<C-k>", function(fallback)
   if luasnip.jumpable(-1) then
     luasnip.jump(-1)
   else
-    vim.api.nvim_feedkeys(t("<C-k>"), "n", true)
+    fallback()
   end
 end)
 
-map({ "i", "s" }, "<C-l>", function()
+map({ "i", "s" }, "<C-l>", function(fallback)
   if luasnip.choice_active() then
     luasnip.change_choice(1)
   else
-    vim.api.nvim_feedkeys(t("<C-l>"), "n", true)
+    fallback()
   end
 end)
 
-map("i", "<esc>", function()
+map("i", "<esc>", function(fallback)
   Luasnip_current_nodes[vim.fn.bufnr("%")] = nil
-  vim.api.nvim_feedkeys(t("<esc>"), "n", true)
+  fallback()
 end)
 
 require("snippets")

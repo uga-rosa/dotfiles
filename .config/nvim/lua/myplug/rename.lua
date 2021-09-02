@@ -39,7 +39,8 @@ local rename = function()
   local cmd2 = "<cmd>lua Rename.close(" .. win .. ")<cr>"
   map("i", "<cr>", cmd1, { "noremap", "buffer", "nowait" })
   map("i", "<C-c>", cmd2, { "noremap", "buffer", "nowait" })
-  map("n", { "<esc>", "q" }, cmd2, { "noremap", "buffer", "nowait" })
+  map("n", "<esc>", cmd2, { "noremap", "buffer", "nowait" })
+  map("n", "q", cmd2, { "noremap", "buffer", "nowait" })
 end
 
 _G.Rename = {

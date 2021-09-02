@@ -11,7 +11,7 @@ local cmd = vim.cmd
 
 --@param func: function
 --@param map:  boolean
-utils.lua2vim = function(func, map)
+local func2str = function(func, map)
   local idx = #_G.myluafunc + 1
   _G.myluafunc[idx] = func
   local command = ("lua myluafunc(%s)"):format(idx)
@@ -19,21 +19,33 @@ utils.lua2vim = function(func, map)
   return command
 end
 
+utils.t = function(str)
+  return api.nvim_replace_termcodes(str, true, true, true)
+end
+
 --@param modes: string or array
---@param lhs:   string or array
+--@param lhs:   string
 --@param rhs:   string or function
 --@param opts:  string or array (including "buffer")
 utils.map = function(modes, lhs, rhs, opts)
   modes = type(modes) == "string" and { modes } or modes
-  lhs = type(lhs) == "string" and { lhs } or lhs
   opts = opts or {}
   opts = type(opts) == "string" and { opts } or opts
 
-  if type(rhs) == "function" then
-    opts.noremap = true
-    local map = not opts.expr
-    rhs = utils.lua2vim(rhs, map)
+  local fallback = function()
+    return api.nvim_feedkeys(utils.t(lhs), "n", true)
   end
+
+  local _rhs = (function()
+    if type(rhs) == "function" then
+      opts.noremap = true
+      return func2str(function()
+        rhs(fallback)
+      end, true)
+    else
+      return rhs
+    end
+  end)()
 
   local buffer = false
   for key, opt in ipairs(opts) do
@@ -46,12 +58,10 @@ utils.map = function(modes, lhs, rhs, opts)
   end
 
   for _, mode in ipairs(modes) do
-    for _, l in ipairs(lhs) do
-      if buffer then
-        api.nvim_buf_set_keymap(0, mode, l, rhs, opts)
-      else
-        api.nvim_set_keymap(mode, l, rhs, opts)
-      end
+    if buffer then
+      api.nvim_buf_set_keymap(0, mode, lhs, _rhs, opts)
+    else
+      api.nvim_set_keymap(mode, lhs, _rhs, opts)
     end
   end
 end
@@ -61,16 +71,12 @@ utils.map_conv = function(modes, a, b, opts)
   utils.map(modes, b, a, opts)
 end
 
-utils.t = function(str)
-  return api.nvim_replace_termcodes(str, true, true, true)
-end
-
 --@param au: string or array
 utils.autocmd = function(au)
   local command
   if type(au) == "table" then
     if type(au[#au]) == "function" then
-      au[#au] = utils.lua2vim(au[#au])
+      au[#au] = func2str(au[#au])
     end
     command = table.concat(vim.tbl_flatten({ "au", au }), " ")
   else

@@ -31,10 +31,10 @@ map({ "i", "c" }, "<C-d>", "<delete>", "noremap")
 map("c", "<C-a>", "<home>", "noremap")
 map("c", "<C-e>", "<end>", "noremap")
 map("c", "<C-x>", [[expand('%:p')]], { "noremap", "expr" })
-map("n", "0", function()
+map("n", "0", function(fallback)
   if fn.getline("."):sub(1, fn.col(".") - 1):match("^%s+$") then
     vim.api.nvim_feedkeys("0", "n", true)
   else
-    vim.api.nvim_feedkeys("^", "n", true)
+    fallback()
   end
 end)
