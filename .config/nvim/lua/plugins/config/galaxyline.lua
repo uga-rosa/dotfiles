@@ -97,7 +97,9 @@ local function highlight(...)
   vim.cmd(cmd)
 end
 
-gls.left[1] = {
+local i = 1
+
+gls.left[i] = {
   leftRounded = {
     provider = function()
       return icons.sep.left
@@ -106,7 +108,8 @@ gls.left[1] = {
   },
 }
 
-gls.left[2] = {
+i = i + 1
+gls.left[i] = {
   ViMode = {
     provider = function()
       highlight("GalaxyViMode", colors.regal_blue, mode_hl(), "bold")
@@ -116,7 +119,8 @@ gls.left[2] = {
   },
 }
 
-gls.left[3] = {
+i = i + 1
+gls.left[i] = {
   WhiteSpace = {
     provider = function()
       highlight("SecondGalaxyViMode", mode_hl(), colors.regal_blue, "bold")
@@ -126,7 +130,8 @@ gls.left[3] = {
   },
 }
 
-gls.left[4] = {
+i = i + 1
+gls.left[i] = {
   FileIcon = {
     provider = "FileIcon",
     condition = cond.buffer_not_empty,
@@ -137,10 +142,20 @@ gls.left[4] = {
   },
 }
 
-gls.left[5] = {
+i = i + 1
+gls.left[i] = {
   FileName = {
     provider = "FileName",
     condition = cond.buffer_not_empty,
-    highlight = { colors.watermelon, colors.regal_blue, "bold" },
+    highlight = { colors.violet, colors.regal_blue, "bold" },
+  },
+}
+
+i = i + 1
+gls.left[i] = {
+  FileSize = {
+    provider = "FileSize",
+    condition = cond.buffer_not_empty,
+    highlight = { colors.watermelon, colors.regal_blue },
   },
 }

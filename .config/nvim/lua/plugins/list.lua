@@ -101,6 +101,10 @@ return packer.startup({
       "akinsho/nvim-toggleterm.lua",
       config = 'require("plugins.config.toggleterm")',
     })
+    use({
+      "lewis6991/gitsigns.nvim",
+      config = 'require("plugins.config.gitsigns")',
+    })
     -- surround operator
     use({
       "machakann/vim-sandwich",
