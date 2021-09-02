@@ -1,6 +1,5 @@
 local res, gl = pcall(require, "galaxyline")
-local res2, dev = pcall(require, "nvim-web-devicons")
-if not (res and res2) then
+if not res then
   return
 end
 
@@ -8,27 +7,27 @@ local gls = gl.section
 local cond = require("galaxyline.condition")
 
 local icons = {
-  sep = {
+  round = {
     right = "",
     left = "",
   },
   diagnostic = {
-    error = "",
-    warning = "",
-    info = "",
+    error = "  ",
+    warning = "  ",
+    hint = "  ",
+    info = "  ",
   },
   diff = {
-    added = "",
-    modified = "",
-    removed = "",
+    added = " ",
+    modified = " ",
+    removed = " ",
   },
-  git = "",
-  devil = "  ",
+  git = " ",
+  devil = " ",
 }
 
 local colors = {
-  black = "#011627",
-  white = "#c3ccdc",
+  bg = "#1d3b53",
   black_blue = "#081e2f",
   dark_blue = "#092236",
   deep_blue = "#0e293f",
@@ -56,26 +55,25 @@ local colors = {
 }
 
 local mode_map = {
-  n = { icons.devil .. "NORMAL ", colors.indigo },
-  no = { icons.devil .. "NORMAL  ", colors.indigo },
-  i = { icons.devil .. "INSERT  ", colors.ash_blue },
-  ic = { icons.devil .. "INSERT  ", colors.ash_blue },
-  c = { icons.devil .. "COMMAND ", colors.emerald },
-  ce = { icons.devil .. "COMMAND ", colors.emerald },
-  cv = { icons.devil .. "COMMAND ", colors.emerald },
-  v = { icons.devil .. "VISUAL  ", colors.purple },
-  V = { icons.devil .. "VISUAL  ", colors.purple },
-  [""] = { icons.devil .. "VISUAL  ", colors.purple },
-  R = { icons.devil .. "REPLACE ", colors.red },
-  ["r?"] = { icons.devil .. "REPLACE ", colors.red },
-  Rv = { icons.devil .. "REPLACE ", colors.red },
-  r = { icons.devil .. "REPLACE ", colors.red },
-  rm = { icons.devil .. "REPLACE ", colors.red },
-  s = { icons.devil .. "SELECT  ", colors.purple },
-  S = { icons.devil .. "SELECT  ", colors.purple },
-  [""] = { icons.devil .. "SELECT  ", colors.purple },
-  t = { icons.devil .. "TERMINAL ", colors.orange },
-  ["!"] = { "  !        ", colors.white_blue },
+  n = { icons.devil .. "NORMAL", colors.indigo },
+  no = { icons.devil .. "NORMAL", colors.indigo },
+  i = { icons.devil .. "INSERT", colors.ash_blue },
+  ic = { icons.devil .. "INSERT", colors.ash_blue },
+  c = { icons.devil .. "COMMAND", colors.emerald },
+  ce = { icons.devil .. "COMMAND", colors.emerald },
+  cv = { icons.devil .. "COMMAND", colors.emerald },
+  v = { icons.devil .. "VISUAL", colors.purple },
+  V = { icons.devil .. "VISUAL", colors.purple },
+  [""] = { icons.devil .. "VISUAL", colors.purple },
+  R = { icons.devil .. "REPLACE", colors.red },
+  ["r?"] = { icons.devil .. "REPLACE", colors.red },
+  Rv = { icons.devil .. "REPLACE", colors.red },
+  r = { icons.devil .. "REPLACE", colors.red },
+  rm = { icons.devil .. "REPLACE", colors.red },
+  s = { icons.devil .. "SELECT", colors.purple },
+  S = { icons.devil .. "SELECT", colors.purple },
+  [""] = { icons.devil .. "SELECT", colors.purple },
+  t = { icons.devil .. "TERMINAL", colors.orange },
 }
 
 local function mode_label()
@@ -83,7 +81,7 @@ local function mode_label()
 end
 
 local function mode_hl()
-  return mode_map[vim.fn.mode()][2] or colors.regal_blue
+  return mode_map[vim.fn.mode()][2] or colors.bg
 end
 
 local function highlight(...)
@@ -100,9 +98,9 @@ end
 local i = 1
 
 gls.left[i] = {
-  leftRounded = {
+  RoundLeft = {
     provider = function()
-      return icons.sep.left
+      return icons.round.left
     end,
     highlight = "GalaxyViModeInv",
   },
@@ -112,20 +110,21 @@ i = i + 1
 gls.left[i] = {
   ViMode = {
     provider = function()
-      highlight("GalaxyViMode", colors.regal_blue, mode_hl(), "bold")
+      highlight("GalaxyViMode", colors.black_blue, mode_hl(), "bold")
       highlight("GalaxyViModeInv", mode_hl(), "bold")
       return mode_label()
     end,
+    highlight = "GalaxyViMode",
   },
 }
 
 i = i + 1
 gls.left[i] = {
-  WhiteSpace = {
+  RoundRight = {
     provider = function()
-      highlight("SecondGalaxyViMode", mode_hl(), colors.regal_blue, "bold")
+      highlight("SecondGalaxyViMode", mode_hl(), colors.bg, "bold")
     end,
-    separator = icons.sep.right .. " ",
+    separator = icons.round.right .. " ",
     separator_highlight = "SecondGalaxyViMode",
   },
 }
@@ -137,7 +136,7 @@ gls.left[i] = {
     condition = cond.buffer_not_empty,
     highlight = {
       require("galaxyline.provider_fileinfo").get_file_icon_color,
-      colors.regal_blue,
+      colors.bg,
     },
   },
 }
@@ -147,15 +146,119 @@ gls.left[i] = {
   FileName = {
     provider = "FileName",
     condition = cond.buffer_not_empty,
-    highlight = { colors.violet, colors.regal_blue, "bold" },
+    highlight = { colors.violet, colors.bg, "bold" },
   },
 }
 
 i = i + 1
 gls.left[i] = {
-  FileSize = {
-    provider = "FileSize",
+  DiagnosticError = {
+    icon = icons.diagnostic.error,
+    provider = "DiagnosticError",
     condition = cond.buffer_not_empty,
-    highlight = { colors.watermelon, colors.regal_blue },
+    highlight = { colors.red, colors.bg },
+  },
+}
+
+i = i + 1
+gls.left[i] = {
+  DiagnosticWarn = {
+    icon = icons.diagnostic.warning,
+    provider = "DiagnosticWarn",
+    condition = cond.buffer_not_empty,
+    highlight = { colors.orange, colors.bg },
+  },
+}
+
+i = i + 1
+gls.left[i] = {
+  DiagnosticHint = {
+    icon = icons.diagnostic.hint,
+    provider = "DiagnosticHint",
+    condition = cond.buffer_not_empty,
+    highlight = { colors.turquoise, colors.bg },
+  },
+}
+
+i = i + 1
+gls.left[i] = {
+  DiagnosticInfo = {
+    icon = icons.diagnostic.info,
+    provider = "DiagnosticInfo",
+    condition = cond.buffer_not_empty,
+    highlight = { colors.blue, colors.bg },
+  },
+}
+
+i = 1
+gls.right[i] = {
+  GitIcon = {
+    provider = function()
+      return icons.git
+    end,
+    condition = cond.buffer_not_empty,
+    highlight = { colors.purple, colors.bg },
+  },
+}
+
+i = i + 1
+gls.right[i] = {
+  GitBranch = {
+    provider = {
+      "GitBranch",
+      function()
+        return " "
+      end,
+    },
+    condition = cond.buffer_not_empty,
+    highlight = { colors.purple, colors.bg },
+  },
+}
+
+i = i + 1
+gls.right[i] = {
+  DiffAdd = {
+    icon = icons.diff.added,
+    provider = "DiffAdd",
+    condition = cond.buffer_not_empty,
+    highlight = { colors.green, colors.bg },
+  },
+}
+
+i = i + 1
+gls.right[i] = {
+  DiffModified = {
+    icon = icons.diff.modified,
+    provider = "DiffModified",
+    condition = cond.buffer_not_empty,
+    highlight = { colors.orange, colors.bg },
+  },
+}
+
+i = i + 1
+gls.right[i] = {
+  DiffRemove = {
+    icon = icons.diff.removed,
+    provider = "DiffRemove",
+    condition = cond.buffer_not_empty,
+    highlight = { colors.red, colors.bg },
+  },
+}
+
+i = i + 1
+gls.right[i] = {
+  LineColumn = {
+    icon = "☰ ",
+    provider = "LineColumn",
+    condition = cond.buffer_not_empty,
+    highlight = { colors.black_blue, colors.indigo },
+  },
+}
+
+i = i + 1
+gls.right[i] = {
+  LinePercent = {
+    provider = "LinePercent",
+    highlight = { colors.black_blue, colors.indigo, "bold" },
   },
 }

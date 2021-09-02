@@ -86,11 +86,16 @@ map("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>", "noremap")
 map("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>", "noremap")
 
 -- sign
+-- same with galaxyline
 vim.cmd([[
-sign define LspDiagnosticsSignError text=
-sign define LspDiagnosticsSignWarning text=
-sign define LspDiagnosticsSignInformation text=
-sign define LspDiagnosticsSignHint text=
+highlight LspDiagnosticsSignError guifg=#fc514e
+highlight LspDiagnosticsSignWarning guifg=#f78c6c
+highlight LspDiagnosticsSignHint guifg=#7fdbca
+highlight LspDiagnosticsSignInformation guifg=#82aaff
+sign define LspDiagnosticsSignError text= texthl=LspDiagnosticsSignError
+sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning
+sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint
+sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation
 ]])
 
 -- rename in floating window
