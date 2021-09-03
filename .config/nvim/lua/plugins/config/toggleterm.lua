@@ -46,7 +46,7 @@ _G.lazy_git_toggle = function()
   lazygit:toggle()
 end
 
-map("n", "<leader>g", "<cmd>lua lazy_git_toggle()<cr>", "noremap")
+map("n", "<leader>gg", "<cmd>lua lazy_git_toggle()<cr>", "noremap")
 
 augroup("MyTerm", {
   {

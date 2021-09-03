@@ -19,7 +19,7 @@ if not res then
   if res then
     print("Packer cloned successfully")
   else
-    print("Couldn't clone packer! \nPacker path: " .. packer_path)
+    print("Couldn't clone packer!\nPacker path: " .. packer_path)
     return
   end
 end

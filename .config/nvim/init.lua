@@ -16,7 +16,7 @@ silent! command PackerUpdate lua require('plugins.list') require('packer').updat
 silent! command PackerSync lua require('plugins.list') require('packer').sync()
 ]])
 
-vim.cmd("au BufWrite plugins.list.lua PackerCompile")
+vim.cmd("au BufWrite list.lua PackerCompile")
 
 utils.map("n", "<leader>ps", "<cmd>PackerSync<cr>", "noremap")
 

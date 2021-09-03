@@ -1,6 +1,7 @@
 local M = {}
 
 local map = utils.map
+local aug = utils.augroup
 
 M.lualine = function()
   local res, lualine = pcall(require, "lualine")
@@ -12,19 +13,12 @@ M.lualine = function()
   end
 end
 
-M.colorizer = function()
-  local res, colorizer = pcall(require, "colorizer")
-  if res then
-    colorizer.setup()
-  end
-end
-
 M.easyalign = function()
   map({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
 end
 
 M.operator_replace = function()
-  map("n", "_", "<Plug>(operator-replace)")
+  map("n", "s", "<Plug>(operator-replace)")
 end
 
 M.openbrowser = function()
@@ -57,6 +51,20 @@ M.filittle = function()
       ["r"] = "rename",
     },
   })
+end
+
+M.panda = function()
+  require("panda").setup({
+    browser = "chrome.exe",
+    opt = {
+      "--mathjax",
+    },
+  })
+  map("n", "<leader>m", '<cmd>lua require("panda").run()<cr>')
+  aug("mypanda", {
+    { "BufWritePost", "*.md", 'lua require("panda").convert()' },
+  })
+  vim.cmd('command! PandaConvert lua require("panda").run({dir = "html"})')
 end
 
 return M

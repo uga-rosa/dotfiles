@@ -30,9 +30,13 @@ return packer.startup({
       requires = "kyazdani42/nvim-web-devicons",
       config = 'require("plugins.config.galaxyline")',
     })
+    -- colorizer
     use({
       "norcalli/nvim-colorizer.lua",
-      config = 'require("plugins.config.other").colorizer()',
+      setup = function()
+        vim.cmd("command! ColorizerSetup lua require'colorizer'.setup()")
+      end,
+      cmd = "ColorizerSetup",
     })
     -- completion
     use({
@@ -113,25 +117,42 @@ return packer.startup({
     -- easy align
     use({
       "junegunn/vim-easy-align",
-      config = 'require("plugins.config.other").easyalign()',
+      keys = {
+        { "n", "<Plug>(EasyAlign)" },
+        { "x", "<Plug>(EasyAlign)" },
+      },
+      setup = 'require("plugins.config.other").easyalign()',
     })
     -- replace
     use({
       "kana/vim-operator-replace",
       requires = "kana/vim-operator-user",
-      config = 'require("plugins.config.other").operator_replace()',
+      keys = {
+        { "n", "<Plug>(operator-replace)" },
+      },
+      setup = 'require("plugins.config.other").operator_replace()',
     })
     -- show registers
     use("tversteeg/registers.nvim")
     -- open browser
     use({
       "tyru/open-browser.vim",
-      config = 'require("plugins.config.other").openbrowser()',
+      keys = {
+        { "n", "<Plug>(openbrowser-smart-search)" },
+        { "x", "<Plug>(openbrowser-smart-search)" },
+      },
+      setup = 'require("plugins.config.other").openbrowser()',
     })
     -- quickrun
     use({
       "thinca/vim-quickrun",
       config = 'require("plugins.config.quickrun")',
+    })
+    -- rust
+    use({
+      "simrat39/rust-tools.nvim",
+      ft = "rust",
+      config = 'require("rust-tools").setup({})',
     })
     -- filer
     use({
@@ -142,11 +163,11 @@ return packer.startup({
       },
       config = 'require("plugins.config.other").filittle()',
     })
-    -- rust
+    -- markdown preview
     use({
-      "simrat39/rust-tools.nvim",
-      ft = "rust",
-      config = 'require("rust-tools").setup({})',
+      "uga-rosa/panda.nvim",
+      ft = "markdown",
+      config = 'require("plugins.config.other").panda()',
     })
   end,
 })

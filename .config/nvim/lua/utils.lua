@@ -47,15 +47,17 @@ utils.map = function(modes, lhs, rhs, opts)
     end
   end)()
 
-  local buffer = false
   for key, opt in ipairs(opts) do
-    if opt == "buffer" then
-      buffer = true
-    else
-      opts[opt] = true
-    end
+    opts[opt] = true
     opts[key] = nil
   end
+
+  local buffer = (function()
+    if opts["buffer"] then
+      opts["buffer"] = nil
+      return true
+    end
+  end)()
 
   for _, mode in ipairs(modes) do
     if buffer then
