@@ -112,23 +112,25 @@ cmp.setup({
   },
 })
 
-augroup("MyCmp", {
-  {
-    "FileType",
-    "lua",
-    function()
-      require("cmp").setup.buffer({
-        sources = source_list({ "luasnip", "lsp", "nvim_lua", "buffer", "path" }),
-      })
-    end,
-  },
-  {
-    "FileType",
-    "markdown",
-    function()
-      require("cmp").setup.buffer({
-        sources = source_list({ "luasnip", "latex", "buffer", "path", "emoji" }),
-      })
-    end,
+augroup({
+  MyCmp = {
+    {
+      "FileType",
+      "lua",
+      function()
+        require("cmp").setup.buffer({
+          sources = source_list({ "luasnip", "lsp", "nvim_lua", "buffer", "path" }),
+        })
+      end,
+    },
+    {
+      "FileType",
+      "markdown",
+      function()
+        require("cmp").setup.buffer({
+          sources = source_list({ "luasnip", "latex", "buffer", "path", "emoji" }),
+        })
+      end,
+    },
   },
 })

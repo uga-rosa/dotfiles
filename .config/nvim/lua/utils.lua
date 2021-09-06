@@ -11,11 +11,11 @@ local cmd = vim.cmd
 
 --@param func: function
 --@param map:  boolean
-local func2str = function(func, map)
+local func2str = function(func, mapping)
   local idx = #_G.myluafunc + 1
   _G.myluafunc[idx] = func
   local command = ("lua myluafunc(%s)"):format(idx)
-  command = map and ("<cmd>%s<cr>"):format(command) or command
+  command = mapping and ("<cmd>%s<cr>"):format(command) or command
   return command
 end
 
@@ -75,54 +75,66 @@ end
 
 --@param au: string or array
 utils.autocmd = function(au)
-  local command
-  if type(au) == "table" then
-    if type(au[#au]) == "function" then
-      au[#au] = func2str(au[#au])
-    end
-    command = table.concat(vim.tbl_flatten({ "au", au }), " ")
-  else
-    assert(type(au) == "string", "Invalid arguments type: " .. type(au))
-    command = au
+  if type(au[#au]) == "function" then
+    au[#au] = func2str(au[#au], false)
   end
-  cmd(command)
+  cmd(table.concat(vim.tbl_flatten({ "au", au }), " "))
 end
 
---@param group: string
---@param aus:   string in array or array in array
-utils.augroup = function(group, aus)
-  cmd("augroup " .. group)
-  cmd("au!")
-  for _, au in ipairs(aus) do
-    utils.autocmd(au)
+--@param augrps: table (key: group name, value: autocmd (array-like table))
+utils.augroup = function(augrps)
+  for group, aus in pairs(augrps) do
+    cmd("augroup " .. group)
+    cmd("au!")
+    for _, au in ipairs(aus) do
+      if type(au) ~= "table" then
+        utils.autocmd(aus)
+        break
+      end
+      utils.autocmd(au)
+    end
+    cmd("augroup END")
   end
-  cmd("augroup END")
 end
 
 utils.eval = function(inStr)
   return assert(load(inStr))()
 end
 
-utils.is_array = function(table)
+table.is_array = function(self)
   local count = 0
-  for k, _ in pairs(table) do
+  for k, _ in pairs(self) do
     count = count + 1
     if not (type(k) == "number" and k > 0) then
       return false
     end
   end
-  if #table == count then
+  if #self == count then
     return true
   end
   return false
 end
 
 utils.set = {}
+
 local Set = {}
 
+utils.set.unique = function(self)
+  local check = {}
+  local res = {}
+  for _, v in ipairs(self) do
+    if not check[v] then
+      check[v] = true
+      res[#res + 1] = v
+    end
+  end
+  return res
+end
+
 utils.set.new = function(arr)
-  assert(utils.is_array(arr), "Args must be array-like table.")
-  return setmetatable(arr, { __index = Set })
+  assert(table.is_array(arr), "Args must be array-like table.")
+  local res = utils.set.unique(arr)
+  return setmetatable(res, { __index = Set })
 end
 
 function Set:diff(arr)

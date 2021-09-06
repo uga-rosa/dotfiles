@@ -48,21 +48,23 @@ end
 
 map("n", "<leader>gg", "<cmd>lua lazy_git_toggle()<cr>", "noremap")
 
-augroup("MyTerm", {
-  {
-    "FileType",
-    "rust",
-    function()
-      map("n", "@r", [[<cmd>TermExec cmd='cargo run'<cr>]], { "noremap", "buffer" })
-      map("n", "@t", [[<cmd>TermExec cmd='cargo test'<cr>]], { "noremap", "buffer" })
-      map("n", "@c", [[<cmd>TermExec cmd='cargo check'<cr>]], { "noremap", "buffer" })
-    end,
-  },
-  {
-    "FileType",
-    "python",
-    function()
-      map("n", "@r", [[<cmd>TermExec cmd='python %'<cr>]], { "noremap", "buffer" })
-    end,
+augroup({
+  MyTerm = {
+    {
+      "FileType",
+      "rust",
+      function()
+        map("n", "@r", [[<cmd>TermExec cmd='cargo run'<cr>]], { "noremap", "buffer" })
+        map("n", "@t", [[<cmd>TermExec cmd='cargo test'<cr>]], { "noremap", "buffer" })
+        map("n", "@c", [[<cmd>TermExec cmd='cargo check'<cr>]], { "noremap", "buffer" })
+      end,
+    },
+    {
+      "FileType",
+      "python",
+      function()
+        map("n", "@r", [[<cmd>TermExec cmd='python %'<cr>]], { "noremap", "buffer" })
+      end,
+    },
   },
 })

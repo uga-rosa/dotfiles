@@ -1,7 +1,7 @@
 local M = {}
 
 local map = utils.map
-local aug = utils.augroup
+local augroup = utils.augroup
 
 M.lualine = function()
   local res, lualine = pcall(require, "lualine")
@@ -61,9 +61,7 @@ M.panda = function()
     },
   })
   map("n", "<leader>m", '<cmd>lua require("panda").run()<cr>')
-  aug("mypanda", {
-    { "BufWritePost", "*.md", 'lua require("panda").convert()' },
-  })
+  augroup({ mypanda = { "BufWritePost", "*.md", 'lua require("panda").convert()' } })
   vim.cmd('command! PandaConvert lua require("panda").run({dir = "html"})')
 end
 

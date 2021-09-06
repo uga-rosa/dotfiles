@@ -20,22 +20,40 @@ vim.o.clipboard = "unnamedplus"
 vim.o.inccommand = "split"
 vim.o.signcolumn = "yes"
 
-vim.g.loaded_netrw = 1
+vim.g.loaded_python_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+
+-- disable unnecessary plugin
+vim.g.loaded_2html_plugin = 1
+vim.g.loaded_getscript = 1
+vim.g.loaded_getscriptPlugin = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_logiPat = 1
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+vim.g.netrw_nogx = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrwSettings = 1
+vim.g.loaded_netrwFileHandlers = 1
+vim.g.loaded_rrhelper = 1
+vim.g.loaded_spellfile_plugin = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
 
-augroup("nocomment", { { "BufEnter", "*", "setlocal formatoptions-=ro" } })
-
-augroup("quit_help", { { "FileType", "help", "nnoremap <nowait><buffer> q <cmd>q<cr>" } })
-
-augroup("indent4", {
-  { "FileType", "python", "setlocal tabstop=4" },
-  { "FileType", "python", "setlocal shiftwidth=4" },
-})
-
-augroup("MyFiletype", { { "BufEnter", "*.inp", "set filetype=packmol" } })
-
-augroup("RemoveTrailingWhitespace", {
-  {
+augroup({
+  nocomment = { "BufEnter", "*", "setlocal formatoptions-=ro" },
+  quit_help = { "FileType", "help", "nnoremap <nowait><buffer> q <cmd>q<cr>" },
+  indent4 = {
+    { "FileType", "python", "setlocal tabstop=4" },
+    { "FileType", "python", "setlocal shiftwidth=4" },
+  },
+  MyFiletype = { "BufEnter", "*.inp", "set filetype=packmol" },
+  RemoveTrailingWhitespace = {
     "BufWrite",
     "*",
     function()
@@ -44,10 +62,7 @@ augroup("RemoveTrailingWhitespace", {
       end
     end,
   },
-})
-
-augroup("automkdir", {
-  {
+  automkdir = {
     "BufWritePre",
     "*",
     function()
