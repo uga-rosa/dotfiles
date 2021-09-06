@@ -169,5 +169,10 @@ return packer.startup({
       ft = "markdown",
       config = 'require("plugins.config.other").panda()',
     })
+    -- SATySFi
+    use({
+      "qnighy/satysfi.vim",
+      ft = "satysfi",
+    })
   end,
 })

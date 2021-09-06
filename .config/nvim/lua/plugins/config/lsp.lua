@@ -54,7 +54,7 @@ opts.efm = {
 }
 
 -- automatically install
-local servers = set.new({ "lua", "rust", "python", "bash", "efm", "vim" })
+local servers = set.new({ "lua", "rust", "python", "bash", "efm", "vim", "typescript" })
 local uninstalled = servers:diff(lspinstall.installed_servers())
 for _, lsp in ipairs(uninstalled) do
   lspinstall.install_server(lsp)

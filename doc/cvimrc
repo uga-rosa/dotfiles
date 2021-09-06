@@ -1,5 +1,0 @@
-set smoothscroll
-let barposition = "bottom"
-let locale = "ja"
-map h previousTab
-map l nextTab
