@@ -36,7 +36,7 @@ function wchrome() {
 }
 
 # tmux-session-select
-if [ -n $SSH_TTY ]; then
+if [ -z $SSH_TTY ]; then
   function tmux_session_select() {
     ID=$(tmux list-sessions)
     if [[ -z $ID ]]; then
