@@ -32,6 +32,7 @@ local default = {
 }
 
 local opts = {}
+
 opts.lua = {
   settings = {
     Lua = {
@@ -48,9 +49,14 @@ opts.lua = {
   },
   capabilities = capabilities,
 }
+
 opts.efm = {
   filetypes = { "markdown", "json", "lua", "python", "sh", "yaml" },
   capabilities = capabilities,
+}
+
+opts.bash = {
+  filetypes = { "sh", "zsh" },
 }
 
 -- automatically install

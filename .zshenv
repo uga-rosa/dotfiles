@@ -1,5 +1,8 @@
 export LIBGL_ALWAYS_INDIRECT=1
 
+# brew
+[ -d /home/linuxbrew ] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
 # rust
 [[ -e $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
 
