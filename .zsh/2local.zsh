@@ -36,32 +36,30 @@ function wchrome() {
 }
 
 # tmux-session-select
-if [ -z $SSH_TTY ]; then
-  function tmux_session_select() {
-    ID=$(tmux list-sessions)
-    if [[ -z $ID ]]; then
-      BUFFER="tmux new-session"
-      zle accept-line
-    fi
-    if [[ -z $TMUX ]]; then
-      create_new_session="\nCreate New Session"
-    else
-      create_new_session=""
-    fi
-    ID=$ID${create_new_session}:
-    ID=$(echo "$ID" | fzf | cut -d: -f1)
-    if [[ "\n$ID" == "${create_new_session}" ]]; then
-      BUFFER="tmux new-session"
-      zle accept-line
-    elif [[ -n $ID ]]; then
-      in_out="switch"
-      [[ -z $TMUX ]] && in_out="attach-session"
-      BUFFER="tmux $in_out -t $ID"
-      zle accept-line
-    else
-      :
-    fi
-  }
-  zle -N tmux_session_select
-  bindkey '^S' tmux_session_select
-fi
+function tmux_session_select() {
+  ID=$(tmux list-sessions)
+  if [[ -z $ID ]]; then
+    BUFFER="tmux new-session"
+    zle accept-line
+  fi
+  if [[ -z $TMUX ]]; then
+    create_new_session="\nCreate New Session"
+  else
+    create_new_session=""
+  fi
+  ID=$ID${create_new_session}:
+  ID=$(echo "$ID" | fzf | cut -d: -f1)
+  if [[ "\n$ID" == "${create_new_session}" ]]; then
+    BUFFER="tmux new-session"
+    zle accept-line
+  elif [[ -n $ID ]]; then
+    in_out="switch"
+    [[ -z $TMUX ]] && in_out="attach-session"
+    BUFFER="tmux $in_out -t $ID"
+    zle accept-line
+  else
+    :
+  fi
+}
+zle -N tmux_session_select
+bindkey '^S' tmux_session_select

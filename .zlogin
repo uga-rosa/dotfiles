@@ -1,5 +1,5 @@
 # tmux
-if [[ -z $TMUX ]]; then
+if [[ -z $SSH_TTY && -z $TMUX ]]; then
   # get the IDs
   ID=$(tmux list-sessions)
   if [[ -z $ID ]]; then
