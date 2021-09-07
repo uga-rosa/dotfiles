@@ -25,8 +25,6 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 
-vim.cmd("syntax off")
-
 -- disable unnecessary plugin
 vim.g.loaded_2html_plugin = 1
 vim.g.loaded_getscript = 1
@@ -50,7 +48,6 @@ vim.g.loaded_zipPlugin = 1
 
 augroup({
   markdown = {
-    { "FileType", "markdown", "syntax on" },
     {
       "FileType",
       "markdown",
@@ -62,15 +59,14 @@ augroup({
   satysfi = {
     { "BufEnter", "*.saty", "set filetype=satysfi" },
     { "BufEnter", "*.satyh", "set filetype=satysfi" },
-    { "FileType", "satysfi", "syntax on" },
   },
+  packmol = { "BufEnter", "*.inp", "set filetype=packmol" },
   nocomment = { "BufEnter", "*", "setlocal formatoptions-=ro" },
   quit_help = { "FileType", "help", "nnoremap <nowait><buffer> q <cmd>q<cr>" },
   indent4 = {
     { "FileType", "python", "setlocal tabstop=4" },
     { "FileType", "python", "setlocal shiftwidth=4" },
   },
-  packmol = { "BufEnter", "*.inp", "set filetype=packmol" },
   RemoveTrailingWhitespace = {
     "BufWrite",
     "*",
