@@ -144,7 +144,6 @@ return packer.startup({
     use({
       "uga-rosa/filittle.nvim",
       requires = {
-        "nvim-lua/plenary.nvim",
         "kyazdani42/nvim-web-devicons",
       },
       config = 'require("plugins.config.other").filittle()',

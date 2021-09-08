@@ -22,3 +22,5 @@ utils.map("n", "<leader>ps", "<cmd>PackerSync<cr>", "noremap")
 
 vim.g.nightflyItalics = 0
 vim.cmd("colorscheme nightfly")
+
+--require("plugins.config.other").filittle()

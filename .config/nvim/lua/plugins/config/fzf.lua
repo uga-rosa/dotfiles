@@ -87,7 +87,7 @@ fzf_lua.setup({
   },
 
   helptags = {
-    previewer = "builtin",
+    --previewer = "builtin",
   },
 
   file_icon_padding = " ",
