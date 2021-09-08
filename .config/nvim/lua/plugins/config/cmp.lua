@@ -20,7 +20,6 @@ _G.source_list = function(arr)
     lsp = { name = "nvim_lsp" },
     luasnip = { name = "luasnip" },
     nvim_lua = { name = "nvim_lua" },
-    latex = { name = "latex_symbols" },
   }
   return vim.tbl_map(function(name)
     return config[name]
@@ -72,7 +71,6 @@ cmp.setup({
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
         nvim_lua = "[Lua]",
-        latex_symbols = "[Latex]",
       })[entry.source.name]
       vim_item.dup = ({
         nvim_lua = 0,
@@ -120,15 +118,6 @@ augroup({
       function()
         require("cmp").setup.buffer({
           sources = source_list({ "luasnip", "lsp", "nvim_lua", "buffer", "path" }),
-        })
-      end,
-    },
-    {
-      "FileType",
-      "markdown",
-      function()
-        require("cmp").setup.buffer({
-          sources = source_list({ "luasnip", "latex", "buffer", "path", "emoji" }),
         })
       end,
     },

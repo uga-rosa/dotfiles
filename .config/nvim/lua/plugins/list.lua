@@ -48,7 +48,6 @@ return packer.startup({
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-nvim-lua",
         "saadparwaiz1/cmp_luasnip",
-        "kdheepak/cmp-latex-symbols",
       },
       config = 'require("plugins.config.cmp")',
     })
@@ -74,21 +73,13 @@ return packer.startup({
     })
     -- fuzzy finder
     use({
-      "nvim-telescope/telescope.nvim",
+      "ibhagwan/fzf-lua",
       requires = {
-        "nvim-lua/popup.nvim",
-        "nvim-lua/plenary.nvim",
+        "vijaymarupudi/nvim-fzf",
         "kyazdani42/nvim-web-devicons",
-      },
-      config = 'require("plugins.config.telescope")',
-    })
-    -- zoxide in vim
-    use({
-      "nanotee/zoxide.vim",
-      requires = {
         { "junegunn/fzf", run = "./install --all" },
-        "junegunn/fzf.vim",
       },
+      config = 'require("plugins.config.fzf")',
     })
     -- treesitter
     use({
@@ -142,11 +133,6 @@ return packer.startup({
         { "x", "<Plug>(openbrowser-smart-search)" },
       },
       setup = 'require("plugins.config.other").openbrowser()',
-    })
-    -- quickrun
-    use({
-      "thinca/vim-quickrun",
-      config = 'require("plugins.config.quickrun")',
     })
     -- rust
     use({

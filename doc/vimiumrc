@@ -23,6 +23,8 @@ map O Vomnibar.activateInNewTab
 map b Vomnibar.activateBookmarks
 map B Vomnibar.activateBookmarksInNewTab
 map T Vomnibar.activateTabSelection
+
+map / enterFindMode
 map n performFind
 map N performBackwardsFind
 
