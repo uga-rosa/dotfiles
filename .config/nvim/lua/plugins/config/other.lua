@@ -1,7 +1,7 @@
 local M = {}
 
 local map = utils.map
-local augroup = utils.augroup
+local command = utils.command
 
 M.lualine = function()
   local res, lualine = pcall(require, "lualine")
@@ -11,6 +11,16 @@ M.lualine = function()
       options = { theme = "nightfly" },
     })
   end
+end
+
+M.colorizer = function()
+  command({
+    "ColorizerSetup",
+    function()
+      require("colorizer").setup()
+      vim.cmd("e")
+    end,
+  })
 end
 
 M.easyalign = function()

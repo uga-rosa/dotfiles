@@ -33,10 +33,7 @@ return packer.startup({
     -- colorizer
     use({
       "norcalli/nvim-colorizer.lua",
-      setup = function()
-        vim.cmd("command! ColorizerSetup lua require'colorizer'.setup()")
-      end,
-      cmd = "ColorizerSetup",
+      config = 'require("plugins.config.other").colorizer()',
     })
     -- completion
     use({

@@ -6,7 +6,7 @@ if not (res and res2 and res3) then
 end
 
 local map = utils.map
-local set = utils.set
+local command = utils.command
 
 -- cmp source
 cmp_nvim_lsp.setup()
@@ -60,31 +60,44 @@ opts.bash = {
 }
 
 -- automatically install
-local servers = set.new({ "lua", "rust", "python", "bash", "efm", "vim", "typescript" })
-local uninstalled = servers:diff(lspinstall.installed_servers())
+local servers = { "lua", "rust", "python", "bash", "efm", "vim", "typescript" }
+
+local uninstalled = (function()
+  local installed = lspinstall.installed_servers()
+  return vim.tbl_filter(function(v)
+    return not vim.tbl_contains(installed, v)
+  end, servers)
+end)()
+
 for _, lsp in ipairs(uninstalled) do
   lspinstall.install_server(lsp)
 end
 
+-- reinstall command
+command({
+  "LspReinstallAll",
+  function()
+    for _, v in ipairs(lspinstall.installed_servers()) do
+      lspinstall.install_server(v)
+    end
+  end,
+})
+
 -- setup
-local setup_servers = function()
-  lspinstall.setup()
-  for _, server in ipairs(lspinstall.installed_servers()) do
-    local opt = opts[server] or default
-    lspconfig[server].setup(opt)
-  end
-end
-
-setup_servers()
-
-lspinstall.post_install_hook = function()
-  setup_servers()
-  vim.cmd([[bufdo e]])
+lspinstall.setup()
+for _, server in ipairs(lspinstall.installed_servers()) do
+  local opt = opts[server] or default
+  lspconfig[server].setup(opt)
 end
 
 -- format
-vim.cmd("command! Format lua vim.lsp.buf.formatting_sync()")
-vim.cmd("autocmd BufWritePre *.lua Format")
+command({
+  "Format",
+  function()
+    vim.lsp.buf.formatting_sync()
+  end,
+})
+vim.cmd("autocmd BufWritePre *.lua,*.json,*.py Format")
 
 -- mapping
 map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", "noremap")

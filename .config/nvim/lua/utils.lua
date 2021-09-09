@@ -97,52 +97,16 @@ utils.augroup = function(augrps)
   end
 end
 
+utils.command = function(command)
+  if type(command) == "table" then
+    if type(command[#command]) == "function" then
+      command[#command] = func2str(command[#command], false)
+    end
+    command = table.concat(command, " ")
+  end
+  cmd("com!" .. command)
+end
+
 utils.eval = function(inStr)
   return assert(load(inStr))()
-end
-
-table.is_array = function(self)
-  local count = 0
-  for k, _ in pairs(self) do
-    count = count + 1
-    if not (type(k) == "number" and k > 0) then
-      return false
-    end
-  end
-  if #self == count then
-    return true
-  end
-  return false
-end
-
-utils.set = {}
-
-local Set = {}
-
-utils.set.unique = function(self)
-  local check = {}
-  local res = {}
-  for _, v in ipairs(self) do
-    if not check[v] then
-      check[v] = true
-      res[#res + 1] = v
-    end
-  end
-  return res
-end
-
-utils.set.new = function(arr)
-  assert(table.is_array(arr), "Args must be array-like table.")
-  local res = utils.set.unique(arr)
-  return setmetatable(res, { __index = Set })
-end
-
-function Set:diff(arr)
-  local result = setmetatable({}, { __index = table })
-  for _, v in ipairs(self) do
-    if not vim.tbl_contains(arr, v) then
-      result:insert(v)
-    end
-  end
-  return result
 end
