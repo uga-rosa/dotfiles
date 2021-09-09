@@ -14,7 +14,7 @@ toggleterm.setup({
       return vim.o.columns * 0.4
     end
   end,
-  open_mapping = [[<C-t>]],
+  open_mapping = [[<M-t>]],
   hide_numbers = true,
   shade_terminals = true,
   shading_factor = "<number>",

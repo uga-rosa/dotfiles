@@ -12,3 +12,5 @@ require("nvim-autopairs.completion.cmp").setup({
   map_complete = true,
   auto_select = true,
 })
+
+utils.map("i", "<C-h>", "<bs>")
