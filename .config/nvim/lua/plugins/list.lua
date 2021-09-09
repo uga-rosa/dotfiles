@@ -53,9 +53,9 @@ return packer.startup({
     })
     -- auto close parentheses
     use({
-      "cohama/lexima.vim",
+      "windwp/nvim-autopairs",
       event = "InsertEnter",
-      config = 'require("plugins.config.lexima")',
+      config = 'require("plugins.config.autopairs")',
     })
     -- snippet engine
     use({

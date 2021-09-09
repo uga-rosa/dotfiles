@@ -89,25 +89,6 @@ cmp.setup({
     }),
   },
   sources = source_list({ "luasnip", "lsp", "buffer", "path", "emoji" }),
-  event = {
-    on_confirm_done = function(entry)
-      local Method = cmp.lsp.CompletionItemKind.Method
-      local Function = cmp.lsp.CompletionItemKind.Function
-      local item = entry:get_completion_item()
-      if vim.tbl_contains({ Method, Function }, item.kind) then
-        if
-          (
-            item.textEdit
-            and item.textEdit.newText
-            and item.textEdit.newText:match("[%(%[]")
-          ) or (item.insertText and item.insertText:match("[%(%[]"))
-        then
-          return
-        end
-        vim.api.nvim_feedkeys("(", "", true)
-      end
-    end,
-  },
 })
 
 augroup({

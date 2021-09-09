@@ -29,11 +29,6 @@ map({ "i", "s" }, "<C-l>", function(fallback)
   end
 end)
 
-map("i", "<esc>", function(fallback)
-  Luasnip_current_nodes[vim.fn.bufnr("%")] = nil
-  fallback()
-end)
-
 require("snippets")
 
 require("luasnip.loaders.from_vscode").load({

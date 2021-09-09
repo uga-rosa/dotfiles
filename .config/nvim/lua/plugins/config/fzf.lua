@@ -92,6 +92,9 @@ fzf_lua.setup({
     },
   },
 
+  helptags = { previewer = { split = "topleft" } },
+  manpages = { previewer = { split = "topleft" } },
+
   file_icon_padding = " ",
 })
 
