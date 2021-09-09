@@ -1,13 +1,13 @@
 utils = {}
 
+local api = vim.api
+local cmd = vim.cmd
+
 _G.myluafunc = setmetatable({}, {
   __call = function(self, num)
     return self[num]()
   end,
 })
-
-local api = vim.api
-local cmd = vim.cmd
 
 --@param func: function
 --@param map:  boolean
