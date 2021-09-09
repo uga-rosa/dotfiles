@@ -25,12 +25,16 @@ augroup({
   },
 })
 
-local panda = require("panda")
+local panda = require("myplug.panda")
+local slide_opt = {
+  css = false,
+  _opt = { "-s", "-t", "revealjs", "-V", "theme=moon" },
+}
 
 map("n", "<leader>m", function()
   local firstline = vim.fn.getline(1)
   if firstline:match("^%%") then
-    panda.run({ opt = { "--katex", "-s", "-t", "revealjs", "-V", "theme=moon" } })
+    panda.run(slide_opt)
   else
     panda.run()
   end
@@ -42,8 +46,8 @@ augroup({
       "VimLeavePre",
       "*",
       function()
-        require("panda").terminate()
-        require("panda").unlink()
+        panda.terminate()
+        panda.unlink()
       end,
     },
     {
@@ -52,7 +56,7 @@ augroup({
       function()
         local firstline = vim.fn.getline(1)
         if firstline:match("^%%") then
-          panda.convert({ opt = { "--katex", "-s", "-t", "revealjs", "-V", "theme=moon" } })
+          panda.convert(slide_opt)
         else
           panda.convert()
         end

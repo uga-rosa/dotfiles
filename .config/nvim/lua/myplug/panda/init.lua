@@ -3,7 +3,7 @@ local M = {}
 local fn = vim.fn
 local uv = vim.loop
 
-local css_dir = fn.stdpath("config") .. "/lua/panda/css/"
+local css_dir = fn.stdpath("config") .. "/lua/myplug/panda/css/"
 
 local settings = {
   css = true,
@@ -17,7 +17,6 @@ local settings = {
   ext = { "md" },
   browser = "chrome.exe",
   opt = {
-    "--self-contained",
     "--katex",
   },
 }
@@ -34,6 +33,8 @@ local get_boolen = function(opts, default, name)
     return opts[name]
   end
 end
+
+local output = {}
 
 --@param opts: options
 -- opts.dir: output directory
@@ -54,8 +55,6 @@ M.convert = function(opts)
 
   local ext = fn.fnamemodify(fullpath, ":e")
   assert(vim.tbl_contains(settings.ext, ext), "Extension not set: " .. ext)
-
-  local output = {}
 
   output.name = (opts.name or fn.fnamemodify(fullpath, ":t:r")) .. ".html"
 
@@ -108,13 +107,11 @@ M.convert = function(opts)
       print("Convertion failure.")
     end
   end)
-
-  return output
 end
 
 local handle
 
-local preview = function(output)
+local preview = function()
   if handle then
     return
   end
@@ -132,19 +129,19 @@ local preview = function(output)
   end)
 end
 
-local link = function(output)
+local link = function()
   local image_dir = fn.expand("%:p:h") .. "/image"
   uv.fs_symlink(image_dir, output.parent .. "/image")
 end
 
-M.unlink = function(output)
+M.unlink = function()
   uv.fs_unlink(output.parent .. "/image")
 end
 
 M.run = function(opts)
-  local output = M.convert(opts)
-  preview(output)
-  link(output)
+  M.convert(opts)
+  preview()
+  link()
 end
 
 M.terminate = function()
