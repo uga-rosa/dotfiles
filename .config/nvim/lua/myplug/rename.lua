@@ -1,6 +1,8 @@
 local M = {}
 
-local lsp, api, fn = vim.lsp, vim.api, vim.fn
+local lsp = vim.lsp
+local api = vim.api
+local fn = vim.fn
 local map = utils.map
 
 M.close = function(win)
@@ -10,7 +12,7 @@ M.close = function(win)
   api.nvim_win_close(win, true)
 end
 
-M.dorename = function(win)
+M.rename = function(win)
   local new_name = vim.trim(fn.getline("."):sub(3, -1))
   M.close(win)
   if not (new_name and #new_name > 0) then
@@ -19,7 +21,7 @@ M.dorename = function(win)
   lsp.buf.rename(new_name)
 end
 
-M.rename = function()
+M.open = function()
   local opts = {
     relative = "cursor",
     row = 1,
@@ -32,21 +34,32 @@ M.rename = function()
   local cword = fn.expand("<cword>")
   local buf = api.nvim_create_buf(false, true)
   local win = api.nvim_open_win(buf, true, opts)
+
   vim.bo.buftype = "prompt"
   vim.bo.bufhidden = "wipe"
   fn.prompt_setprompt(buf, "> ")
   api.nvim_buf_set_lines(buf, -1, -1, false, { cword })
   vim.cmd([[startinsert!]])
-  local cmd1 = ("<cmd>lua require('myplug.rename').dorename(%s)<cr>"):format(win)
-  local cmd2 = ("<cmd>lua require('myplug.rename').close(%s)<cr>"):format(win)
-  map("i", "<cr>", cmd1, { "noremap", "buffer", "nowait" })
-  map("i", "<C-c>", cmd2, { "noremap", "buffer", "nowait" })
-  map("n", "<esc>", cmd2, { "noremap", "buffer", "nowait" })
-  map("n", "q", cmd2, { "noremap", "buffer", "nowait" })
+
+  local rename = function()
+    M.rename(win)
+  end
+  local close = function()
+    M.close(win)
+  end
+
+  local map_opt = { "buffer", "nowait" }
+
+  map("i", "<cr>", rename, map_opt)
+  map("i", "<C-c>", close, map_opt)
+  map("n", "<esc>", close, map_opt)
+  map("n", "q", close, map_opt)
 end
 
 M.setup = function()
-  map("n", "<leader>rn", "<cmd>lua require('myplug.rename').rename()<cr>", "noremap")
+  map("n", "<leader>rn", function()
+    M.open()
+  end, "noremap")
 end
 
 return M

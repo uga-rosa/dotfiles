@@ -90,8 +90,10 @@ return packer.startup({
       "akinsho/nvim-toggleterm.lua",
       config = 'require("plugins.config.toggleterm")',
     })
+    -- git
     use({
       "lewis6991/gitsigns.nvim",
+      requires = "nvim-lua/plenary.nvim",
       config = 'require("plugins.config.gitsigns")',
     })
     -- surround operator
