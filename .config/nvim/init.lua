@@ -2,6 +2,7 @@ local config = {
   "utils",
   "core.options",
   "core.mappings",
+  "myplug",
 }
 
 for _, v in ipairs(config) do
@@ -22,5 +23,3 @@ utils.map("n", "<leader>ps", "<cmd>PackerSync<cr>", "noremap")
 
 vim.g.nightflyItalics = 0
 vim.cmd("colorscheme nightfly")
-
---require("plugins.config.other").filittle()

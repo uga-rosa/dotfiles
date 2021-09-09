@@ -70,6 +70,15 @@ fzf_lua.setup({
     },
   },
 
+  oldfiles = {
+    actions = {
+      ["default"] = actions.file_edit,
+      ["ctrl-x"] = actions.file_split,
+      ["ctrl-v"] = actions.file_vsplit,
+      ["ctrl-t"] = actions.file_tabedit,
+    },
+  },
+
   lsp = {
     prompt = "❯ ",
     cwd_only = false,

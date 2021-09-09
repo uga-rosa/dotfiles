@@ -103,6 +103,3 @@ sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning
 sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint
 sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation
 ]])
-
--- rename in floating window
-require("myplug.rename")

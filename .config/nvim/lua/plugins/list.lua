@@ -60,9 +60,6 @@ return packer.startup({
     -- snippet engine
     use({
       "L3MON4D3/LuaSnip",
-      requires = {
-        { "rafamadriz/friendly-snippets", opt = true },
-      },
       config = 'require("plugins.config.luasnip")',
     })
     -- LSP

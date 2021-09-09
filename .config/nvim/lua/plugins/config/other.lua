@@ -54,15 +54,33 @@ M.filittle = function()
 end
 
 M.panda = function()
-  require("panda").setup({
-    browser = "chrome.exe",
-    opt = {
-      "--mathjax",
+  local res, panda = pcall(require, "panda")
+  if not res then
+    return
+  end
+  map("n", "<leader>m", function()
+    local firstline = vim.fn.getline(1)
+    if firstline:match("^%%") then
+      panda.run({ opt = { "--katex", "-s", "-t", "revealjs", "-V", "theme=moon" } })
+    else
+      panda.run()
+    end
+  end)
+
+  augroup({
+    mypanda = {
+      "BufWritePost",
+      "*.md",
+      function()
+        local firstline = vim.fn.getline(1)
+        if firstline:match("^%%") then
+          panda.convert({ opt = { "--katex", "-s", "-t", "revealjs", "-V", "theme=moon" } })
+        else
+          panda.convert()
+        end
+      end,
     },
   })
-  map("n", "<leader>m", '<cmd>lua require("panda").run()<cr>')
-  augroup({ mypanda = { "BufWritePost", "*.md", 'lua require("panda").convert()' } })
-  vim.cmd('command! PandaConvert lua require("panda").run({dir = "html"})')
 end
 
 return M

@@ -9,15 +9,10 @@ local d = ls.dynamic_node
 
 ls.snippets = {
   markdown = {
-    s("code", {
-      t("```"),
-      c(
-        1,
-        { i(1, "rust"), sn(1, { t('{.numberLines caption="'), i(1, "filename"), t('"}') }) }
-      ),
-      t({ "", "" }),
-      i(0),
-      t({ "", "```" }),
+    s("slide_init", {
+      t("% "),
+      i(1, "Title"),
+      t({ "", "% 中井 剛志", "% " .. os.date("%Y/%m/%d"), "", "" }),
     }),
     s("bracket", {
       c(1, { t([[\left(]]), t([[\left\{]]), t([[\left[]]) }),

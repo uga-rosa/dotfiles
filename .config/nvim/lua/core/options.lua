@@ -47,15 +47,6 @@ vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
 
 augroup({
-  markdown = {
-    {
-      "FileType",
-      "markdown",
-      function()
-        vim.g.markdown_fenced_languages = { "lua", "python", "rust" }
-      end,
-    },
-  },
   satysfi = {
     { "BufEnter", "*.saty", "set filetype=satysfi" },
     { "BufEnter", "*.satyh", "set filetype=satysfi" },
