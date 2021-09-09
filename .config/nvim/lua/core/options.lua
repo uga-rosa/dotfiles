@@ -77,4 +77,20 @@ augroup({
       end
     end,
   },
+  mypacker = {
+    "BufWrite",
+    "*list.lua",
+    "PackerCompile",
+  },
 })
+
+-- packer.nvim
+vim.cmd([[
+silent! command PackerCompile lua require('plugins.list') require('packer').compile()
+silent! command PackerInstall lua require('plugins.list') require('packer').install()
+silent! command PackerStatus lua require('plugins.list') require('packer').status()
+silent! command PackerUpdate lua require('plugins.list') require('packer').update()
+silent! command PackerSync lua require('plugins.list') require('packer').sync()
+]])
+
+utils.map("n", "<leader>ps", "<cmd>PackerSync<cr>", "noremap")
