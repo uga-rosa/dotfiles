@@ -145,12 +145,6 @@ return packer.startup({
       },
       config = 'require("plugins.config.other").filittle()',
     })
-    -- markdown preview
-    use({
-      "uga-rosa/panda.nvim",
-      ft = "markdown",
-      config = 'require("plugins.config.other").panda()',
-    })
     -- SATySFi
     use({
       "qnighy/satysfi.vim",

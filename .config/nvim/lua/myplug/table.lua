@@ -61,9 +61,11 @@ M.jump = function(dir)
   end
 end
 
-vim.cmd("command! MakeTable lua require('myplug.table').make()")
-local map = utils.map
-map("i", "<tab>", '<cmd>lua require("myplug.table").jump(1)<cr>')
-map("i", "<S-tab>", '<cmd>lua require("myplug.table").jump(-1)<cr>')
+M.setup = function()
+  vim.cmd("command! MakeTable lua require('myplug.table').make()")
+  local map = utils.map
+  map("i", "<tab>", '<cmd>lua require("myplug.table").jump(1)<cr>')
+  map("i", "<S-tab>", '<cmd>lua require("myplug.table").jump(-1)<cr>')
+end
 
 return M

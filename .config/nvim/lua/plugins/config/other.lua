@@ -53,34 +53,4 @@ M.filittle = function()
   })
 end
 
-M.panda = function()
-  local res, panda = pcall(require, "panda")
-  if not res then
-    return
-  end
-  map("n", "<leader>m", function()
-    local firstline = vim.fn.getline(1)
-    if firstline:match("^%%") then
-      panda.run({ opt = { "--katex", "-s", "-t", "revealjs", "-V", "theme=moon" } })
-    else
-      panda.run()
-    end
-  end)
-
-  augroup({
-    mypanda = {
-      "BufWritePost",
-      "*.md",
-      function()
-        local firstline = vim.fn.getline(1)
-        if firstline:match("^%%") then
-          panda.convert({ opt = { "--katex", "-s", "-t", "revealjs", "-V", "theme=moon" } })
-        else
-          panda.convert()
-        end
-      end,
-    },
-  })
-end
-
 return M

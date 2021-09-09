@@ -34,7 +34,7 @@ fzf_lua.setup({
   flip_columns = 120,
   previewers = {
     builtin = {
-      title = true,
+      title = false,
       scrollbar = true,
       scrollchar = "█",
       wrap = false,
@@ -46,9 +46,6 @@ fzf_lua.setup({
       hl_cursorline = "CursorLine",
       hl_range = "IncSearch",
       keymap = {
-        toggle_full = nil,
-        toggle_wrap = nil,
-        toggle_hidden = nil,
         page_up = "<C-u>",
         page_down = "<C-d>",
         page_reset = "<C-g>",
@@ -93,10 +90,6 @@ fzf_lua.setup({
       Information = { icon = " ", color = "blue" },
       Hint = { icon = " ", color = "magenta" },
     },
-  },
-
-  helptags = {
-    --previewer = "builtin",
   },
 
   file_icon_padding = " ",
