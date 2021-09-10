@@ -32,5 +32,5 @@ end)
 require("snippets")
 
 require("luasnip.loaders.from_vscode").load({
-  paths = { vim.fn.stdpath("config") .. "/snippet" },
+  paths = { vim.fn.stdpath("config") .. "/snippets" },
 })
