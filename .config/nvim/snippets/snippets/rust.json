@@ -9,14 +9,5 @@
       "let end = start.elapsed();",
       "println!(\"{:?}\", end)"
     ]
-  },
-  "issue": {
-    "prefix": [
-      "issue"
-    ],
-    "body": [
-      "  $1",
-      "$1"
-    ]
   }
 }
