@@ -87,10 +87,16 @@ return packer.startup({
     })
     -- terminal helper
     use({
-      "akinsho/nvim-toggleterm.lua",
-      config = 'require("plugins.config.toggleterm")',
+      "kassio/neoterm",
+      config = 'require("plugins.config.neoterm")',
     })
     -- git
+    use({
+      "kdheepak/lazygit.nvim",
+      config = function()
+        utils.map("n", "<leader>l", "LazyGit", { "cmd", "noremap" })
+      end,
+    })
     use({
       "lewis6991/gitsigns.nvim",
       requires = "nvim-lua/plenary.nvim",
