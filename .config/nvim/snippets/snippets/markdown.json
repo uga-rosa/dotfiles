@@ -1,0 +1,196 @@
+{
+  "incremental": {
+    "prefix": [
+      "incremental"
+    ],
+    "body": [
+      ":::incremental",
+      "",
+      "$0",
+      "",
+      ":::"
+    ]
+  },
+  "sup": {
+    "prefix": [
+      "sup"
+    ],
+    "body": [
+      "<sup>$1</sup>"
+    ]
+  },
+  "sub": {
+    "prefix": [
+      "sub"
+    ],
+    "body": [
+      "<sub>$1</sub>"
+    ]
+  },
+  "right": {
+    "prefix": [
+      "right"
+    ],
+    "body": [
+      "<div style='text-align': right>$1</div>"
+    ]
+  },
+  "frac": {
+    "prefix": [
+      "frac"
+    ],
+    "body": [
+      "${1|,\\displaystyle|}\\frac{$2}{$3}"
+    ]
+  },
+  "formula_multi": {
+    "prefix": [
+      "formula_multi"
+    ],
+    "body": [
+      "$$",
+      "\\begin{${1|aligned,multiline|}}",
+      "\\end{$1}",
+      "$$"
+    ]
+  },
+  "formula": {
+    "prefix": [
+      "formula"
+    ],
+    "body": [
+      "$$",
+      "$0",
+      "$$"
+    ]
+  },
+  "matrix": {
+    "prefix": [
+      "matrix"
+    ],
+    "body": [
+      "\\begin{${1|p,v|}matrix}",
+      "$0",
+      "\\end{$1matrix}"
+    ]
+  },
+  "sum_prod": {
+    "prefix": [
+      "sum_prod"
+    ],
+    "body": [
+      "${1|\\sum,\\prod|}_{${2:i=1}}^{${3:n}}"
+    ]
+  },
+  "int": {
+    "prefix": [
+      "int"
+    ],
+    "body": [
+      "\\int_{${1:0}}^{${2:\\infty}}"
+    ]
+  },
+  "tag": {
+    "prefix": [
+      "tag"
+    ],
+    "body": [
+      "\\tag{$1}"
+    ]
+  },
+  "sqrt": {
+    "prefix": [
+      "sqrt"
+    ],
+    "body": [
+      "\\sqrt{$1}"
+    ]
+  },
+  "arrow": {
+    "prefix": [
+      "arrow"
+    ],
+    "body": [
+      "${1|\\right,\\Right,\\left,\\Left|}arrow"
+    ]
+  },
+  "infinity": {
+    "prefix": [
+      "infinity"
+    ],
+    "body": [
+      "\\infty"
+    ]
+  },
+  "partial": {
+    "prefix": [
+      "partial"
+    ],
+    "body": [
+      "\\partial"
+    ]
+  },
+  "vector": {
+    "prefix": [
+      "vector"
+    ],
+    "body": [
+      "${1|\\bm,\\overrightarrow|}{$2}"
+    ]
+  },
+  "overline": {
+    "prefix": [
+      "overline"
+    ],
+    "body": [
+      "\\overline$1"
+    ]
+  },
+  "slide_title": {
+    "prefix": [
+      "slide_title"
+    ],
+    "body": [
+      "<!-- _class: lead invert -->",
+      "<!-- _paginate: false -->"
+    ]
+  },
+  "slide_section": {
+    "prefix": [
+      "slide_section"
+    ],
+    "body": [
+      "<!-- _class: gaia lead -->",
+      "<!-- _paginate: false -->"
+    ]
+  },
+  "details": {
+    "prefix": [
+      "details"
+    ],
+    "body": [
+      "<details><summary>${1:menu}</summary><div>",
+      "",
+      "$2",
+      "",
+      "</div></details>",
+      ""
+    ]
+  },
+  "bold": {
+    "prefix": [
+      "bold"
+    ],
+    "body": [
+      "**$1**"
+    ]
+  },
+  "italic": {
+    "prefix": [
+      "italic"
+    ],
+    "body": [
+      "*$1*"
+    ]
+  }
+}

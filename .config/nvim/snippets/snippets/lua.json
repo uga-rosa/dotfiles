@@ -1,0 +1,100 @@
+{
+  "snippet": {
+    "prefix": [
+      "snippet"
+    ],
+    "body": [
+      "s(\"${1:trig}\",{",
+      "  ${2:body}",
+      "}),"
+    ]
+  },
+  "node": {
+    "prefix": [
+      "node"
+    ],
+    "body": [
+      "${1|t,i,f,c,sn|}($2),"
+    ]
+  },
+  "pcall_require": {
+    "prefix": [
+      "pcall_require"
+    ],
+    "body": [
+      "local res$2, ${1:module} = pcall(require, \"$1\")",
+      "if not res$2 then",
+      "\treturn",
+      "end"
+    ]
+  },
+  "require": {
+    "prefix": [
+      "req"
+    ],
+    "body": [
+      "require(\"${1:module}\")"
+    ]
+  },
+  "return": {
+    "prefix": [
+      "rt"
+    ],
+    "body": [
+      "return "
+    ]
+  },
+  "local": {
+    "prefix": [
+      "l"
+    ],
+    "body": [
+      "local "
+    ]
+  },
+  "local require": {
+    "prefix": [
+      "lreq"
+    ],
+    "body": [
+      "local ${1:var} = require(\"${2:module}\")"
+    ]
+  },
+  "class": {
+    "prefix": [
+      "cl"
+    ],
+    "body": [
+      "${1:classname} = {}",
+      "",
+      "$1.${2:new} = function($3)",
+      "\tlocal ${4:varName} = ${5:{}}",
+      "",
+      "\t${6:--code}",
+      "",
+      "\treturn $4",
+      "end"
+    ]
+  },
+  "local function": {
+    "prefix": [
+      "lfun"
+    ],
+    "body": [
+      "local $1 = function($2)",
+      "\t$0",
+      "end"
+    ]
+  },
+  "tbl map": {
+    "prefix": [
+      "tbl map"
+    ],
+    "body": [
+      "vim.tbl_map(function(${1:var})",
+      "\t$3",
+      "\treturn $4",
+      "end, ${2:table})"
+    ]
+  }
+}

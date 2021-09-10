@@ -1,0 +1,56 @@
+{
+  "name": "mysnippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "lua"
+        ],
+        "path": "./snippets/lua.json"
+      },
+      {
+        "language": [
+          "rust"
+        ],
+        "path": "./snippets/rust.json"
+      },
+      {
+        "language": [
+          "python"
+        ],
+        "path": "./snippets/python.json"
+      },
+      {
+        "language": [
+          "sh",
+          "zsh"
+        ],
+        "path": "./snippets/sh.json"
+      },
+      {
+        "language": [
+          "vim"
+        ],
+        "path": "./snippets/vim.json"
+      },
+      {
+        "language": [
+          "markdown"
+        ],
+        "path": "./snippets/markdown.json"
+      },
+      {
+        "language": [
+          "json"
+        ],
+        "path": "./snippets/json.json"
+      },
+      {
+        "language": [
+          "packmol"
+        ],
+        "path": "./snippets/packmol.json"
+      }
+    ]
+  }
+}

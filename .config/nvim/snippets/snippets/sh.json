@@ -1,0 +1,11 @@
+{
+  "shebang": {
+    "prefix": [
+      "shebang"
+    ],
+    "body": [
+      "#!/bin/${1|bash,zsh|}",
+      ""
+    ]
+  }
+}

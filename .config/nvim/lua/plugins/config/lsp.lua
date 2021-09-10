@@ -7,6 +7,7 @@ end
 
 local map = utils.map
 local command = utils.command
+local augroup = utils.augroup
 
 -- cmp source
 cmp_nvim_lsp.setup()
@@ -91,13 +92,13 @@ for _, server in ipairs(lspinstall.installed_servers()) do
 end
 
 -- format
-command({
-  "Format",
-  function()
-    vim.lsp.buf.formatting_sync()
-  end,
+command({ "-bar", "Format", vim.lsp.buf.formatting_sync })
+augroup({
+  format = {
+    { "BufWritePre", "*.lua,*.py", "Format" },
+    { "BufWritePost", "*.json", "Format|w" },
+  },
 })
-vim.cmd("autocmd BufWritePre *.lua,*.json,*.py Format")
 
 -- mapping
 map("n", "K", "lua vim.lsp.buf.hover()", { "noremap", "cmd" })
