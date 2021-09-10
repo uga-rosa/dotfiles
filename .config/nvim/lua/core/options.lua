@@ -48,11 +48,9 @@ vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
 
 augroup({
-  satysfi = {
-    { "BufEnter", "*.saty", "set filetype=satysfi" },
-    { "BufEnter", "*.satyh", "set filetype=satysfi" },
-  },
-  packmol = { "BufEnter", "*.inp", "set filetype=packmol" },
+  packmol = { "BufNewFile,BufRead", "*.inp", "set filetype=packmol" },
+  satysfi = { "BufNewFile,BufRead", "*.saty,*.satyh", "set filetype=satysfi" },
+  nim = { "BufNewFile,BufRead", "*.nim,*.nims,*.nimble", "set filetype=nim" },
   nocomment = { "BufEnter", "*", "setlocal formatoptions-=ro" },
   quit_help = {
     "FileType",

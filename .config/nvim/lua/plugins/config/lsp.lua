@@ -91,6 +91,9 @@ for _, server in ipairs(lspinstall.installed_servers()) do
   lspconfig[server].setup(opt)
 end
 
+-- Nim (manual installed)
+require("lspconfig").nimls.setup({})
+
 -- format
 command({ "-bar", "Format", vim.lsp.buf.formatting_sync })
 augroup({

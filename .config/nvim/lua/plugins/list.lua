@@ -130,12 +130,6 @@ return packer.startup({
       },
       setup = 'require("plugins.config.other").openbrowser()',
     })
-    -- rust
-    use({
-      "simrat39/rust-tools.nvim",
-      ft = "rust",
-      config = 'require("rust-tools").setup({})',
-    })
     -- filer
     use({
       "uga-rosa/filittle.nvim",
@@ -143,6 +137,12 @@ return packer.startup({
         "kyazdani42/nvim-web-devicons",
       },
       config = 'require("plugins.config.other").filittle()',
+    })
+    -- rust
+    use({
+      "simrat39/rust-tools.nvim",
+      ft = "rust",
+      config = 'require("rust-tools").setup({})',
     })
     -- SATySFi
     use({

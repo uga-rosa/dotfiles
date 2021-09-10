@@ -66,5 +66,12 @@ augroup({
         map("n", "@r", "TermExec cmd='python %'", { "noremap", "buffer", "cmd" })
       end,
     },
+    {
+      "FileType",
+      "nim",
+      function()
+        map("n", "@r", "TermExec cmd='nim c %'", { "noremap", "buffer", "cmd" })
+      end,
+    },
   },
 })

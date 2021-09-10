@@ -49,3 +49,6 @@ eval "$(starship init zsh)"
 
 # go
 export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
+
+# nim
+export PATH="$PATH:$HOME/.nimble/bin"
