@@ -3,6 +3,8 @@ local M = {}
 local fn = vim.fn
 local uv = vim.loop
 
+local augroup = utils.augroup
+
 local css_dir = fn.stdpath("config") .. "/lua/myplug/panda/css/"
 
 local settings = {
@@ -135,7 +137,13 @@ local link = function()
 end
 
 M.unlink = function()
+  if output == {} then
+    return
+  end
   uv.fs_unlink(output.parent .. "/image")
+  if output.parent == "/tmp" then
+    uv.fs_unlink(output.path)
+  end
 end
 
 M.run = function(opts)
@@ -157,6 +165,18 @@ M.setup = function(opts)
   for k, v in pairs(opts) do
     settings[k] = v
   end
+  augroup({
+    _panda_ = {
+      {
+        "VimLeavePre",
+        "*",
+        function()
+          M.terminate()
+          M.unlink()
+        end,
+      },
+    },
+  })
 end
 
 return M

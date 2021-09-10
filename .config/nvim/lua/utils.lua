@@ -11,11 +11,10 @@ _G.myluafunc = setmetatable({}, {
 
 --@param func: function
 --@param map:  boolean
-local func2str = function(func, mapping)
+local func2str = function(func)
   local idx = #_G.myluafunc + 1
   _G.myluafunc[idx] = func
   local command = ("lua myluafunc(%s)"):format(idx)
-  command = mapping and ("<cmd>%s<cr>"):format(command) or command
   return command
 end
 
@@ -26,7 +25,8 @@ end
 --@param modes: string or array
 --@param lhs:   string
 --@param rhs:   string or function
---@param opts:  string or array (including "buffer")
+--@param opts:  string or array (including "buffer", "cmd")
+-- opts.cmd: format to <cmd>%s<cr>
 utils.map = function(modes, lhs, rhs, opts)
   modes = type(modes) == "string" and { modes } or modes
   opts = opts or {}
@@ -39,9 +39,10 @@ utils.map = function(modes, lhs, rhs, opts)
   local _rhs = (function()
     if type(rhs) == "function" then
       opts.noremap = true
+      opts.cmd = true
       return func2str(function()
         rhs(fallback)
-      end, true)
+      end)
     else
       return rhs
     end
@@ -53,9 +54,18 @@ utils.map = function(modes, lhs, rhs, opts)
   end
 
   local buffer = (function()
-    if opts["buffer"] then
-      opts["buffer"] = nil
+    if opts.buffer then
+      opts.buffer = nil
       return true
+    end
+  end)()
+
+  _rhs = (function()
+    if opts.cmd then
+      opts.cmd = nil
+      return ("<cmd>%s<cr>"):format(_rhs)
+    else
+      return _rhs
     end
   end)()
 
@@ -76,7 +86,7 @@ end
 --@param au: string or array
 utils.autocmd = function(au)
   if type(au[#au]) == "function" then
-    au[#au] = func2str(au[#au], false)
+    au[#au] = func2str(au[#au])
   end
   cmd(table.concat(vim.tbl_flatten({ "au", au }), " "))
 end
@@ -100,7 +110,7 @@ end
 utils.command = function(command)
   if type(command) == "table" then
     if type(command[#command]) == "function" then
-      command[#command] = func2str(command[#command], false)
+      command[#command] = func2str(command[#command])
     end
     command = table.concat(command, " ")
   end

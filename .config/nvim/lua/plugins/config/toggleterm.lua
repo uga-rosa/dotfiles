@@ -46,7 +46,7 @@ _G.lazy_git_toggle = function()
   lazygit:toggle()
 end
 
-map("n", "<leader>gg", "<cmd>lua lazy_git_toggle()<cr>", "noremap")
+map("n", "<leader>l", "lua lazy_git_toggle()", { "noremap", "cmd" })
 
 augroup({
   MyTerm = {
@@ -54,16 +54,16 @@ augroup({
       "FileType",
       "rust",
       function()
-        map("n", "@r", [[<cmd>TermExec cmd='cargo run'<cr>]], { "noremap", "buffer" })
-        map("n", "@t", [[<cmd>TermExec cmd='cargo test'<cr>]], { "noremap", "buffer" })
-        map("n", "@c", [[<cmd>TermExec cmd='cargo check'<cr>]], { "noremap", "buffer" })
+        map("n", "@r", "TermExec cmd='cargo run'", { "noremap", "buffer", "cmd" })
+        map("n", "@t", "TermExec cmd='cargo test'", { "noremap", "buffer", "cmd" })
+        map("n", "@c", "TermExec cmd='cargo check'", { "noremap", "buffer", "cmd" })
       end,
     },
     {
       "FileType",
       "python",
       function()
-        map("n", "@r", [[<cmd>TermExec cmd='python %'<cr>]], { "noremap", "buffer" })
+        map("n", "@r", "TermExec cmd='python %'", { "noremap", "buffer", "cmd" })
       end,
     },
   },

@@ -4,7 +4,7 @@ local map_conv = utils.map_conv
 
 vim.g.mapleader = " "
 
-map("n", "<esc><esc>", "<cmd>noh<cr>", "noremap")
+map("n", "<esc><esc>", "nohlsearch", { "noremap", "cmd" })
 map("n", "<leader><cr>", "o<esc>", "noremap")
 
 map("n", "Q", "q", "noremap")
@@ -59,4 +59,5 @@ silent! command PackerStatus lua require('plugins.list') require('packer').statu
 silent! command PackerUpdate lua require('plugins.list') require('packer').update()
 silent! command PackerSync lua require('plugins.list') require('packer').sync()
 ]])
-map("n", "<leader>ps", "<cmd>PackerSync<cr>", "noremap")
+
+map("n", "<leader>ps", "PackerSync", { "noremap", "cmd" })

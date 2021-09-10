@@ -1,4 +1,5 @@
 local augroup = utils.augroup
+local map = utils.map
 
 vim.o.fileencoding = "utf-8"
 vim.o.hidden = true
@@ -53,7 +54,13 @@ augroup({
   },
   packmol = { "BufEnter", "*.inp", "set filetype=packmol" },
   nocomment = { "BufEnter", "*", "setlocal formatoptions-=ro" },
-  quit_help = { "FileType", "help", "nnoremap <nowait><buffer> q <cmd>q<cr>" },
+  quit_help = {
+    "FileType",
+    "help",
+    function()
+      map("n", "q", "quit", { "nowait", "buffer", "cmd" })
+    end,
+  },
   indent4 = {
     { "FileType", "python", "setlocal tabstop=4" },
     { "FileType", "python", "setlocal shiftwidth=4" },

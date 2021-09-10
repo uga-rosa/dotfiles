@@ -36,8 +36,8 @@ require("nvim-treesitter.configs").setup({
 
 map("x", "iu", ':lua require("treesitter-unit").select()<cr>', "noremap")
 map("x", "au", ':lua require("treesitter-unit").select(true)<cr>', "noremap")
-map("o", "iu", '<cmd>lua require("treesitter-unit").select()<cr>', "noremap")
-map("o", "au", '<cmd>lua require("treesitter-unit").select(true)<cr>', "noremap")
+map("o", "iu", 'lua require("treesitter-unit").select()', { "noremap", "cmd" })
+map("o", "au", 'lua require("treesitter-unit").select(true)', { "noremap", "cmd" })
 
 do
   local timer = vim.loop.new_timer()

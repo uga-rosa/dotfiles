@@ -57,9 +57,7 @@ M.open = function()
 end
 
 M.setup = function()
-  map("n", "<leader>rn", function()
-    M.open()
-  end, "noremap")
+  map("n", "<leader>r", M.open)
 end
 
 return M

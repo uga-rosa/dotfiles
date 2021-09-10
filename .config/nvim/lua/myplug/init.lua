@@ -5,12 +5,21 @@ local map = utils.map
 
 M.panda = function()
   local panda = require("myplug.panda")
+  panda.setup()
+
   local slide_opt = {
     css = false,
-    _opt = { "-s", "-t", "revealjs", "-V", "theme=moon" },
+    _opt = {
+      "-s",
+      "-t",
+      "revealjs",
+      "-V",
+      "theme=moon",
+    },
   }
 
-  map("n", "<leader>m", function()
+  map("n", "<leader>pn", function()
+    vim.g.panda_started = true
     local firstline = vim.fn.getline(1)
     if firstline:match("^%%") then
       panda.run(slide_opt)
@@ -22,17 +31,12 @@ M.panda = function()
   augroup({
     panda = {
       {
-        "VimLeavePre",
-        "*",
-        function()
-          panda.terminate()
-          panda.unlink()
-        end,
-      },
-      {
         "BufWritePost",
         "*.md",
         function()
+          if not vim.g.panda_started then
+            return
+          end
           local firstline = vim.fn.getline(1)
           if firstline:match("^%%") then
             panda.convert(slide_opt)

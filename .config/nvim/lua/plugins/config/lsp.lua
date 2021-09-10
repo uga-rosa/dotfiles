@@ -100,9 +100,9 @@ command({
 vim.cmd("autocmd BufWritePre *.lua,*.json,*.py Format")
 
 -- mapping
-map("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", "noremap")
-map("n", "[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>", "noremap")
-map("n", "]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<cr>", "noremap")
+map("n", "K", "lua vim.lsp.buf.hover()", { "noremap", "cmd" })
+map("n", "[d", "lua vim.lsp.diagnostic.goto_prev()", { "noremap", "cmd" })
+map("n", "]d", "lua vim.lsp.diagnostic.goto_next()", { "noremap", "cmd" })
 
 -- sign
 -- same with galaxyline

@@ -4,6 +4,7 @@ local fn = vim.fn
 local api = vim.api
 
 local map = utils.map
+local command = utils.command
 local augroup = utils.augroup
 
 local sep = "|"
@@ -17,11 +18,25 @@ local split = function(str, delim)
   return res
 end
 
-M.make = function()
-  local size = fn.input("Input table size (line, column): ")
-  size = split(size, " ,")
-  assert(#size == 2, "Input two number")
-  local line, col = tonumber(size[1]), tonumber(size[2])
+M.make = function(...)
+  local args = { ... }
+
+  local line, col = (function()
+    if #args == 2 then
+      return tonumber(args[1]), tonumber(args[2])
+    elseif #args == 0 then
+      local input = fn.input("Input table size (line, column): ")
+      input = split(input, " ,")
+      if #input == 2 then
+        return tonumber(input[1]), tonumber(input[2])
+      else
+        error("Only two arguments.")
+      end
+    else
+      error("Only two arguments.")
+    end
+  end)()
+
   local text = {}
   for i = 1, line + 1 do
     if i == 2 then
@@ -73,10 +88,11 @@ local max_col_len = function(arr)
   local res = {}
   for i, v in ipairs(arr) do
     for j, u in ipairs(v) do
+      local width = fn.strwidth(u)
       if i == 1 then
-        res[j] = #u
+        res[j] = width
       else
-        res[j] = res[j] < #u and #u or res[j]
+        res[j] = res[j] < width and width or res[j]
       end
     end
   end
@@ -144,17 +160,15 @@ M.mapping = function()
 end
 
 M.setup = function()
-  vim.cmd("command! TableMake lua require('myplug.table').make()")
-  vim.cmd("command! -range TableFormat lua require('myplug.table').format()")
+  command({ "-nargs=*", "TableMake", M.make })
+  command({ "TableFormat", M.format })
   M.mapping()
   augroup({
     table = {
       {
         "FileType",
         "markdown",
-        function()
-          M.mapping()
-        end,
+        M.mapping,
       },
     },
   })
