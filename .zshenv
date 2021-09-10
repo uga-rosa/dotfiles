@@ -1,10 +1,10 @@
 export LIBGL_ALWAYS_INDIRECT=1
 
 # brew
-[ -d /home/linuxbrew ] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+[[ -d /home/linuxbrew ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 
 # rust
-[[ -e $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
+[[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
 
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -13,8 +13,8 @@ eval "$(pyenv init --path)"
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # windows_commands
 export PATH=$HOME/.windows_command:$PATH
