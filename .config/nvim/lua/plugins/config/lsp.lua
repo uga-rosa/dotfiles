@@ -2,13 +2,13 @@ local res, lspinstall = pcall(require, "lspinstall")
 local res2, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 local res3, lspconfig = pcall(require, "lspconfig")
 local res4, luadev = pcall(require, "lua-dev")
-if not (res and res2 and res3 and res4) then
+local res5, saga = pcall(require, "lspsaga")
+if not (res and res2 and res3 and res4 and res5) then
   return
 end
 
 local map = utils.map
 local command = utils.command
-local augroup = utils.augroup
 
 -- cmp source
 cmp_nvim_lsp.setup()
@@ -86,27 +86,42 @@ require("lspconfig").nimls.setup({})
 
 -- format
 command({ "-bar", "Format", vim.lsp.buf.formatting_sync })
-augroup({
-  format = {
-    { "BufWritePre", "*.lua,*.py", "Format" },
-    { "BufWritePost", "*.json", "Format|w" },
-  },
+--augroup({
+--  format = {
+--    { "BufWritePre", "*.lua,*.py", "Format" },
+--    { "BufWritePost", "*.json", "Format|w" },
+--  },
+--})
+
+saga.init_lsp_saga({
+  use_saga_diagnostic_sign = true,
+  error_sign = " ",
+  warn_sign = " ",
+  hint_sign = " ",
+  infor_sign = " ",
 })
 
--- mapping
-map("n", "K", "lua vim.lsp.buf.hover()", { "noremap", "cmd" })
-map("n", "[d", "lua vim.lsp.diagnostic.goto_prev()", { "noremap", "cmd" })
-map("n", "]d", "lua vim.lsp.diagnostic.goto_next()", { "noremap", "cmd" })
+local action = require("lspsaga.action")
 
--- sign
--- same with galaxyline
-vim.cmd([[
-highlight LspDiagnosticsSignError guifg=#fc514e
-highlight LspDiagnosticsSignWarning guifg=#f78c6c
-highlight LspDiagnosticsSignHint guifg=#7fdbca
-highlight LspDiagnosticsSignInformation guifg=#82aaff
-sign define LspDiagnosticsSignError text= texthl=LspDiagnosticsSignError
-sign define LspDiagnosticsSignWarning text= texthl=LspDiagnosticsSignWarning
-sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint
-sign define LspDiagnosticsSignInformation text= texthl=LspDiagnosticsSignInformation
-]])
+-- show hover doc
+map("n", "K", function ()
+  require("lspsaga.hover").render_hover_doc()
+end)
+-- scroll hover doc
+map("n", "<C-f>", function ()
+  action.smart_scroll_with_saga(1)
+end)
+map("n", "<C-b>", function ()
+  action.smart_scroll_with_saga(-1)
+end)
+-- rename
+map("n", "<leader>r", function ()
+  require("lspsaga.rename").rename()
+end)
+-- jump diagnostics
+map("n", "[d", function ()
+  require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()
+end)
+map("n", "]d", function ()
+  require("lspsaga.diagnostic").lsp_jump_diagnostic_next()
+end)

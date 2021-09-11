@@ -1,4 +1,4 @@
-utils = {}
+_G.utils = {}
 
 local api = vim.api
 local cmd = vim.cmd
@@ -10,14 +10,13 @@ _G.myluafunc = setmetatable({}, {
 })
 
 ---Return a string for vim from a lua function.
----Functions are stored in \_G.myluafunc.
+---Functions are stored in _G.myluafunc.
 ---@param func function
----@return string
+---@return string VimFunctionString
 local func2str = function(func)
   local idx = #_G.myluafunc + 1
   _G.myluafunc[idx] = func
-  local command = ("lua myluafunc(%s)"):format(idx)
-  return command
+  return ("lua myluafunc(%s)"):format(idx)
 end
 
 utils.t = function(str)
@@ -107,7 +106,7 @@ end
 ---API for augroup. Supports for a lua function.
 ---
 ---@param augrps table
---@param augrps's key: group name, value: an argument of utils.autocmd
+-- augrps key: group name, value: an argument of utils.autocmd
 utils.augroup = function(augrps)
   for group, aus in pairs(augrps) do
     cmd("augroup " .. group)
@@ -138,7 +137,7 @@ end
 
 ---Execute a string as a function.
 ---@param inStr string
----@return any
+---@return any ReturnFunction
 utils.eval = function(inStr)
   return assert(load(inStr))()
 end

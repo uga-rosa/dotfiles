@@ -50,8 +50,6 @@ M.panda = function()
 end
 
 M.setup = function()
-  require("myplug.rename").setup()
-
   augroup({
     markdown = {
       {

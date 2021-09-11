@@ -56,7 +56,7 @@ fzf_lua.setup({
   files = {
     prompt = "Files❯ ",
     cmd = "fd -t f",
-    git_icons = false,
+    git_icons = true,
     file_icons = true,
     color_icons = true,
     actions = {
@@ -96,6 +96,8 @@ fzf_lua.setup({
   manpages = { previewer = { split = "topleft" } },
 
   file_icon_padding = " ",
+
+  lua_io = true,
 })
 
 local map = utils.map

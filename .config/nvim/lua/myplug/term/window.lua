@@ -1,4 +1,3 @@
----@class Window
 local Window = {}
 
 ---@param opt table

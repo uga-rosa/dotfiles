@@ -16,11 +16,6 @@ return packer.startup({
     })
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
-    -- help in Japanese
-    use({
-      "vim-jp/vimdoc-ja",
-      config = 'vim.o.helplang = "ja,en"',
-    })
     -- colorscheme
     use({ "bluz71/vim-nightfly-guicolors" })
     -- statusline
@@ -41,9 +36,7 @@ return packer.startup({
       requires = {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
-        "hrsh7th/cmp-emoji",
         "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-nvim-lua",
         "saadparwaiz1/cmp_luasnip",
       },
       config = 'require("plugins.config.cmp")',
@@ -65,6 +58,7 @@ return packer.startup({
       requires = {
         "kabouzeid/nvim-lspinstall",
         "folke/lua-dev.nvim",
+        "glepnir/lspsaga.nvim",
       },
       config = 'require("plugins.config.lsp")',
     })
@@ -87,11 +81,6 @@ return packer.startup({
       },
       run = ":TSUpdate",
       config = 'require("plugins.config.treesitter")',
-    })
-    -- terminal helper
-    use({
-      "kassio/neoterm",
-      config = 'require("plugins.config.neoterm")',
     })
     -- git
     use({

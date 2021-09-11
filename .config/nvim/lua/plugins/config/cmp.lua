@@ -3,8 +3,6 @@ if not res then
   return
 end
 
-local augroup = utils.augroup
-
 _G.source_list = function(arr)
   local config = {
     buffer = {
@@ -16,10 +14,8 @@ _G.source_list = function(arr)
       },
     },
     path = { name = "path" },
-    emoji = { name = "emoji" },
     lsp = { name = "nvim_lsp" },
     luasnip = { name = "luasnip" },
-    nvim_lua = { name = "nvim_lua" },
   }
   return vim.tbl_map(function(name)
     return config[name]
@@ -67,13 +63,10 @@ cmp.setup({
       vim_item.menu = ({
         buffer = "[Buffer]",
         path = "[Path]",
-        emoji = "[emoji]",
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
-        nvim_lua = "[Lua]",
       })[entry.source.name]
       vim_item.dup = ({
-        nvim_lua = 0,
         buffer = 0,
       })[entry.source.name] or 1
       return vim_item
@@ -88,19 +81,5 @@ cmp.setup({
       select = true,
     }),
   },
-  sources = source_list({ "luasnip", "lsp", "buffer", "path", "emoji" }),
-})
-
-augroup({
-  MyCmp = {
-    {
-      "FileType",
-      "lua",
-      function()
-        require("cmp").setup.buffer({
-          sources = source_list({ "luasnip", "lsp", "nvim_lua", "buffer", "path" }),
-        })
-      end,
-    },
-  },
+  sources = source_list({ "luasnip", "lsp", "buffer", "path" }),
 })
