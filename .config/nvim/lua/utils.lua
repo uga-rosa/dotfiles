@@ -9,8 +9,10 @@ _G.myluafunc = setmetatable({}, {
   end,
 })
 
---@param func: function
---@param map:  boolean
+---Return a string for vim from a lua function.
+---Functions are stored in \_G.myluafunc.
+---@param func function
+---@return string
 local func2str = function(func)
   local idx = #_G.myluafunc + 1
   _G.myluafunc[idx] = func
@@ -22,11 +24,14 @@ utils.t = function(str)
   return api.nvim_replace_termcodes(str, true, true, true)
 end
 
---@param modes: string or array
---@param lhs:   string
---@param rhs:   string or function
---@param opts:  string or array (including "buffer", "cmd")
--- opts.cmd: format to <cmd>%s<cr>
+---API for key mapping.
+---
+---@param lhs string
+---@param modes string|table
+---@param rhs string|function
+---@param opts string|table
+--- opts.buffer: current buffer only
+--- opts.cmd: command (format to <cmd>%s<cr>)
 utils.map = function(modes, lhs, rhs, opts)
   modes = type(modes) == "string" and { modes } or modes
   opts = opts or {}
@@ -78,12 +83,20 @@ utils.map = function(modes, lhs, rhs, opts)
   end
 end
 
+---Exchange of two key
+---
+---@param modes any
+---@param a string
+---@param b string
+---@param opts string|table
 utils.map_conv = function(modes, a, b, opts)
   utils.map(modes, a, b, opts)
   utils.map(modes, b, a, opts)
 end
 
---@param au: string or array
+---API for autocmd. Supports for a lua funcion.
+---
+---@param au table
 utils.autocmd = function(au)
   if type(au[#au]) == "function" then
     au[#au] = func2str(au[#au])
@@ -91,7 +104,10 @@ utils.autocmd = function(au)
   cmd(table.concat(vim.tbl_flatten({ "au", au }), " "))
 end
 
---@param augrps: table (key: group name, value: autocmd (array-like table))
+---API for augroup. Supports for a lua function.
+---
+---@param augrps table
+--@param augrps's key: group name, value: an argument of utils.autocmd
 utils.augroup = function(augrps)
   for group, aus in pairs(augrps) do
     cmd("augroup " .. group)
@@ -107,6 +123,9 @@ utils.augroup = function(augrps)
   end
 end
 
+---API for command. Supports for a lua function
+---
+---@param command string|table
 utils.command = function(command)
   if type(command) == "table" then
     if type(command[#command]) == "function" then
@@ -117,6 +136,9 @@ utils.command = function(command)
   cmd("com!" .. command)
 end
 
+---Execute a string as a function.
+---@param inStr string
+---@return any
 utils.eval = function(inStr)
   return assert(load(inStr))()
 end

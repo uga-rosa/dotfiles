@@ -62,7 +62,10 @@ return packer.startup({
     -- LSP
     use({
       "neovim/nvim-lspconfig",
-      requires = "kabouzeid/nvim-lspinstall",
+      requires = {
+        "kabouzeid/nvim-lspinstall",
+        "folke/lua-dev.nvim",
+      },
       config = 'require("plugins.config.lsp")',
     })
     -- fuzzy finder

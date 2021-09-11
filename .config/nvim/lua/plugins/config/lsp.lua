@@ -1,7 +1,8 @@
 local res, lspinstall = pcall(require, "lspinstall")
 local res2, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 local res3, lspconfig = pcall(require, "lspconfig")
-if not (res and res2 and res3) then
+local res4, luadev = pcall(require, "lua-dev")
+if not (res and res2 and res3 and res4) then
   return
 end
 
@@ -34,22 +35,11 @@ local default = {
 
 local opts = {}
 
-opts.lua = {
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim", "jit", "package", "utils", "Luasnip_current_nodes" },
-      },
-      workspace = {
-        library = {
-          [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-          [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-        },
-      },
-    },
+opts.lua = luadev.setup({
+  lspconfig = {
+    capabilities = capabilities,
   },
-  capabilities = capabilities,
-}
+})
 
 opts.efm = {
   filetypes = { "markdown", "json", "lua", "python", "sh", "yaml" },

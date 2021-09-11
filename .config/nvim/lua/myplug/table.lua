@@ -48,7 +48,9 @@ M.make = function(...)
   api.nvim_buf_set_lines(0, fn.line("."), fn.line("."), true, text)
 end
 
---@param dir (int): 1 for normal direction, -1 for opposite direction.
+---Jump between cells.
+---dir == 1 mean normal direction, dir == -1 mean opposite direction.
+---@param dir integer
 M.jump = function(dir)
   local line = fn.getline(".")
   local col = fn.col(".")

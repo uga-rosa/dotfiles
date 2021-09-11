@@ -38,15 +38,15 @@ end
 
 local output = {}
 
---@param opts: options
--- opts.dir: output directory
--- opts.name: output file name (without extension)
--- opts.css: overwrite css
--- opts.css_name: overwrite css_name
--- opts.update: overwrite update
--- opts.browser: overwrite browser
--- opts.opt: overwrite opt
--- opts.\_opt: add pandoc option (merge with settings.opt, not overwrite)
+---@param opts table
+--- opts.dir: output directory
+--- opts.name: output file name (without extension)
+--- opts.css: overwrite css
+--- opts.css_name: overwrite css_name
+--- opts.update: overwrite update
+--- opts.browser: overwrite browser
+--- opts.opt: overwrite opt
+--- opts.\_opt: add pandoc option (merge with settings.opt, not overwrite)
 M.convert = function(opts)
   opts = opts or {}
 
