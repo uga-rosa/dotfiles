@@ -9,6 +9,7 @@ end
 
 local map = utils.map
 local command = utils.command
+local augroup = utils.augroup
 
 -- cmp source
 cmp_nvim_lsp.setup()
@@ -86,12 +87,12 @@ require("lspconfig").nimls.setup({})
 
 -- format
 command({ "-bar", "Format", vim.lsp.buf.formatting_sync })
---augroup({
---  format = {
---    { "BufWritePre", "*.lua,*.py", "Format" },
---    { "BufWritePost", "*.json", "Format|w" },
---  },
---})
+augroup({
+  format = {
+    { "BufWritePre", "*.lua,*.py", "Format" },
+    { "BufWritePost", "*.json", "Format|w" },
+  },
+})
 
 saga.init_lsp_saga({
   use_saga_diagnostic_sign = true,

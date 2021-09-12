@@ -28,8 +28,15 @@ ls.snippets = {
       }),
     }),
     s("bracket", {
-      c(1, { t([[\left(]]), t([[\left\{]]), t([[\left[]]) }),
+      t("\\left"),
+      c(1, { t("("), t("\\{"), t("[") }),
+      t(" "),
       i(0),
+      t(" \\right"),
+      f(function(args)
+        local open2close = { ["("] = ")", ["\\{"] = "\\}", ["["] = "]" }
+        return open2close[args[1][1]]
+      end, 1),
     }),
   },
 }

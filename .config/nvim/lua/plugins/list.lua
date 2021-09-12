@@ -94,6 +94,11 @@ return packer.startup({
       requires = "nvim-lua/plenary.nvim",
       config = 'require("plugins.config.gitsigns")',
     })
+    -- terminal
+    use({
+      "kassio/neoterm",
+      config = 'require("plugins.config.neoterm")',
+    })
     -- surround operator
     use({
       "machakann/vim-sandwich",

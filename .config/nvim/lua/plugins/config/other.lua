@@ -23,6 +23,12 @@ M.colorizer = function()
   })
 end
 
+M.term = function()
+  local res, term = pcall(require, "termwrapper")
+  term.setup({})
+  map({ "n", "t" }, "<M-t>", "Ttoggle", "cmd")
+end
+
 M.easyalign = function()
   map({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
 end

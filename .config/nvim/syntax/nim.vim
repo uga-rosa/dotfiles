@@ -5,7 +5,6 @@ if exists('b:current_syntax')
   finish
 endif
 
-" Keep user-supplied options
 if !exists('nim_highlight_numbers')
   let nim_highlight_numbers = 1
 endif
@@ -64,8 +63,6 @@ syn region  nimComment       start="#\[" end="\]#" contains=nimTodo,@Spell
 syn keyword nimTodo          TODO FIXME XXX contained
 syn keyword nimBoolean       true false
 
-
-" Strings
 syn region nimString start=+'+ skip=+\\\\\|\\'\|\\$+ excludenl end=+'+ end=+$+ keepend contains=nimEscape,nimEscapeError,@Spell
 syn region nimString start=+"+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end=+$+ keepend contains=nimEscape,nimEscapeError,@Spell
 syn region nimString start=+"""+ end=+"""+ keepend contains=nimEscape,nimEscapeError,@Spell
@@ -80,7 +77,6 @@ syn match  nimEscape		"\\$"
 syn match nimEscapeError "\\x\x\=\X" display contained
 
 if nim_highlight_numbers == 1
-  " numbers (including longs and complex)
   let s:dec_num = '\d%(_?\d)*'
   let s:int_suf = '%(''%(%(i|I|u|U)%(8|16|32|64)|u|U))'
   let s:float_suf = '%(''%(%(f|F)%(32|64|128)?|d|D))'
@@ -94,7 +90,6 @@ if nim_highlight_numbers == 1
 endif
 
 if nim_highlight_builtins == 1
-  " builtin functions, types and objects, not really part of the syntax
   syn keyword nimBuiltin int int8 int16 int32 int64 uint uint8 uint16 uint32 uint64 float float32 float64
   syn keyword nimBuiltin bool void chr char string cstring pointer range array openarray openArray seq varargs varArgs
   syn keyword nimBuiltin set Byte Natural Positive Conversion
@@ -126,7 +121,6 @@ if nim_highlight_builtins == 1
 endif
 
 if nim_highlight_exceptions == 1
-  " builtin exceptions and warnings
   syn keyword nimException E_Base EAsynch ESynch ESystem EIO EOS
   syn keyword nimException ERessourceExhausted EArithmetic EDivByZero
   syn keyword nimException EOverflow EAccessViolation EAssertionFailed
@@ -141,9 +135,7 @@ if nim_highlight_exceptions == 1
 endif
 
 if nim_highlight_space_errors == 1
-  " trailing whitespace
   syn match   nimSpaceError   display excludenl "\S\s\+$"ms=s+1
-  " any tabs are illegal in nim
   syn match   nimSpaceError   display "\t"
 endif
 
@@ -163,7 +155,6 @@ if v:version >= 508 || !exists('did_nim_syn_inits')
     command -nargs=+ HiLink hi def link <args>
   endif
 
-  " The default methods for highlighting.  Can be overridden later
   HiLink nimBrackets       Operator
   HiLink nimKeyword	      Keyword
   HiLink nimFunction	    	Function
