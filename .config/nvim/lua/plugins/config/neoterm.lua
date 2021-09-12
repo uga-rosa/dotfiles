@@ -7,7 +7,7 @@ vim.g.neoterm_autoinsert = true
 
 map("t", "<esc>", "<C-\\><C-n>", "noremap")
 map("t", "<C-h>", "<bs>", "noremap")
-map({ "n", "t" }, "<M-t>", "Ttoggle", { "noremap", "cmd" })
+map({ "n", "t" }, "<C-t>", "Ttoggle", { "noremap", "cmd" })
 
 augroup({
   neoterm = {

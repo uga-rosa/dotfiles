@@ -88,6 +88,11 @@ require("lspconfig").nimls.setup({})
 -- format
 command({ "-bar", "Format", vim.lsp.buf.formatting_sync })
 augroup({
+  lspinfo = {
+    "FileType",
+    "lspinfo",
+    "nnoremap <buffer><nowait> q <cmd>bd<cr>",
+  },
   format = {
     { "BufWritePre", "*.lua,*.py", "Format" },
     { "BufWritePost", "*.json", "Format|w" },
@@ -105,24 +110,24 @@ saga.init_lsp_saga({
 local action = require("lspsaga.action")
 
 -- show hover doc
-map("n", "K", function ()
+map("n", "K", function()
   require("lspsaga.hover").render_hover_doc()
 end)
 -- scroll hover doc
-map("n", "<C-f>", function ()
+map("n", "<C-f>", function()
   action.smart_scroll_with_saga(1)
 end)
-map("n", "<C-b>", function ()
+map("n", "<C-b>", function()
   action.smart_scroll_with_saga(-1)
 end)
 -- rename
-map("n", "<leader>r", function ()
+map("n", "<leader>r", function()
   require("lspsaga.rename").rename()
 end)
 -- jump diagnostics
-map("n", "[d", function ()
+map("n", "[d", function()
   require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()
 end)
-map("n", "]d", function ()
+map("n", "]d", function()
   require("lspsaga.diagnostic").lsp_jump_diagnostic_next()
 end)

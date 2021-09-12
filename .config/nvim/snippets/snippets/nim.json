@@ -1,0 +1,59 @@
+{
+  "if": {
+    "prefix": [
+      "if"
+    ],
+    "body": [
+      "if ${1:cond}:",
+      "  $2"
+    ]
+  },
+  "if else": {
+    "prefix": [
+      "if else"
+    ],
+    "body": [
+      "if ${1:cond}:",
+      "  $2",
+      "else:",
+      "  $3"
+    ]
+  },
+  "elif": {
+    "prefix": [
+      "elif"
+    ],
+    "body": [
+      "elif ${1:cond}:",
+      "  $2"
+    ]
+  },
+  "else": {
+    "prefix": [
+      "else"
+    ],
+    "body": [
+      "else:",
+      "  $1"
+    ]
+  },
+  "case": {
+    "prefix": [
+      "case"
+    ],
+    "body": [
+      "case ${1:var}",
+      "of ${2:value}:",
+      "  $3"
+    ]
+  },
+  "of": {
+    "prefix": [
+      "of"
+    ],
+    "body": [
+      "of ${1:value}:",
+      "  $2"
+    ]
+  }
+}

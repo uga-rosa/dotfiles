@@ -50,6 +50,12 @@
           "packmol"
         ],
         "path": "./snippets/packmol.json"
+      },
+      {
+        "language": [
+          "nim"
+        ],
+        "path" : "./snippets/nim.json"
       }
     ]
   }

@@ -4,6 +4,7 @@ if not res then
 end
 
 local map = utils.map
+local augroup = utils.augroup
 
 map({ "i", "s" }, "<C-j>", function(fallback)
   if luasnip.jumpable(1) then
@@ -29,8 +30,18 @@ map({ "i", "s" }, "<C-l>", function(fallback)
   end
 end)
 
-require("snippets")
+require("mysnippets")
 
 require("luasnip.loaders.from_vscode").load({
   paths = { vim.fn.stdpath("config") .. "/snippets" },
+})
+
+augroup({
+  luasnip_mysetting = {
+    "TextChanged,InsertLeave",
+    "*.lua",
+    function()
+      luasnip.unlink_current_if_deleted()
+    end,
+  },
 })

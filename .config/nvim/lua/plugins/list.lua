@@ -152,5 +152,7 @@ return packer.startup({
       "qnighy/satysfi.vim",
       ft = "satysfi",
     })
+    -- nim
+    use("alaviss/nim.nvim")
   end,
 })
