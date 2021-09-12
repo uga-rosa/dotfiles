@@ -6,8 +6,6 @@ stty stop undef
 stty start undef
 # unbind C-g
 bindkey -r "^G"
-# zpty
-zmodload zsh/zpty
 # unique path
 typeset -U path PATH
 
@@ -45,7 +43,6 @@ zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-autosuggestions
 
 zinit light zsh-users/zsh-completions
-autoload -Uz compinit && compinit
 
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 

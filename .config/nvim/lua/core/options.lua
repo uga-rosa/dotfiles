@@ -84,9 +84,5 @@ augroup({
       end
     end,
   },
-  mypacker = {
-    "BufWrite",
-    "*list.lua",
-    "PackerCompile",
-  },
+  mypacker = { "BufWrite", "*list.lua", "PackerCompile" },
 })

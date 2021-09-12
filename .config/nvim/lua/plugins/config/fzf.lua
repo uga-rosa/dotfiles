@@ -96,8 +96,6 @@ fzf_lua.setup({
   manpages = { previewer = { split = "topleft" } },
 
   file_icon_padding = " ",
-
-  lua_io = true,
 })
 
 local map = utils.map
