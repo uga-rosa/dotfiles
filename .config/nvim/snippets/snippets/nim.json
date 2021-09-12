@@ -55,5 +55,23 @@
       "of ${1:value}:",
       "  $2"
     ]
+  },
+  "while": {
+    "prefix": [
+      "while"
+    ],
+    "body": [
+      "while ${1:cond}:",
+      "  $2"
+    ]
+  },
+  "for": {
+    "prefix": [
+      "for"
+    ],
+    "body": [
+      "for ${1:i} in ${2:iter}:",
+      "  $3"
+    ]
   }
 }

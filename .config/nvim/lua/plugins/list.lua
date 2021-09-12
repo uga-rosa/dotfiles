@@ -16,6 +16,12 @@ return packer.startup({
     })
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
+    -- filer
+    use({
+      "uga-rosa/filittle.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
+      config = 'require("plugins.config.other").filittle()',
+    })
     -- colorscheme
     use({ "bluz71/vim-nightfly-guicolors" })
     -- statusline
@@ -133,14 +139,8 @@ return packer.startup({
       },
       setup = 'require("plugins.config.other").openbrowser()',
     })
-    -- filer
-    use({
-      "uga-rosa/filittle.nvim",
-      requires = {
-        "kyazdani42/nvim-web-devicons",
-      },
-      config = 'require("plugins.config.other").filittle()',
-    })
+    -- comment out
+    use("tpope/vim-commentary")
     -- rust
     use({
       "simrat39/rust-tools.nvim",
@@ -153,6 +153,6 @@ return packer.startup({
       ft = "satysfi",
     })
     -- nim
-    use("alaviss/nim.nvim")
+    use("zah/nim.vim")
   end,
 })
