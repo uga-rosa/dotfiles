@@ -1,11 +1,24 @@
-# emacs key binding
-bindkey -e
+# key binding
+bindkey -v
+
+bindkey -M viins 'jj' vi-cmd-mode
+bindkey -M viins '^F' forward-char
+bindkey -M viins '^B' backward-char
+bindkey -M viins '^P' up-line-or-history
+bindkey -M viins '^N' down-line-or-history
+bindkey -M viins '^A' beginning-of-line
+bindkey -M viins '^E' end-of-line
+bindkey -M viins '^K' kill-line
+bindkey -M viins '^U' backward-kill-line
+bindkey -M viins '^W' backward-kill-word
+bindkey -M viins '^H' backward-delete-char
+bindkey -M viins '^D' delete-char
+
+bindkey -r "^G"
 
 # unbind C-S/Q
 stty stop undef
 stty start undef
-# unbind C-g
-bindkey -r "^G"
 # unique path
 typeset -U path PATH
 
