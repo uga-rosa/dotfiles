@@ -9,8 +9,96 @@ bindkey -r "^G"
 # unique path
 typeset -U path PATH
 
-# load ~./zsh/*
-for i (~/.zsh/*) . $i
+export EDITOR=nvim
+export TERM=xterm-256color
+export HISTFILE=$HOME/.zsh_history
+export HISTSIZE=1000
+export SAVEHIST=100000
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt inc_append_history
+setopt share_history
+setopt AUTO_PARAM_KEYS
+
+# nvim alias
+alias nv="nvim"
+
+# lazygit
+alias g="lazygit"
+
+# cd git root
+function g-root() {
+if [[ $(git rev-parse --is-inside-work-tree) ]]; then
+  cd $(git rev-parse --show-toplevel)
+fi
+}
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='fd --type f'
+export FZF_DEFAULT_OPTS='--height 50% --reverse'
+export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_CTRL_T_OPTS='--preview "bat --color=always --style=header,grid --line-range :100 {}"'
+export FZF_ALT_C_COMMAND='fd --type d'
+
+# exa
+if [[ $(command -v exa) ]]; then
+  alias e='exa --icons'
+  alias l=e
+  alias ls=e
+  alias ea='exa -a --icons'
+  alias la=ea
+  alias ee='exa -aal --icons'
+  alias ll=ee
+  alias et='exa -T -L 3 -a -I "node_modules|.git|.cache" --icons'
+  alias lt=et
+  alias eta='exa -T -a -I "node_modules|.git|.cache" --color=always --icons | less -r'
+  alias lta=eta
+fi
+
+# zoxide
+eval "$(zoxide init zsh)"
+
+# pyenv
+eval "$(pyenv init -)"
+
+# starship
+eval "$(starship init zsh)"
+
+# windows chrome
+function chrome() {
+  [[ -z ${1} ]] && return 1
+  chrome.exe $(wslpath -w ${1})
+}
+
+# tmux-session-select
+function tmux_session_select() {
+  ID=$(tmux list-sessions)
+  if [[ -z $ID ]]; then
+    BUFFER="tmux new-session"
+    zle accept-line
+  fi
+  if [[ -z $TMUX ]]; then
+    create_new_session="\nCreate New Session"
+  else
+    create_new_session=""
+  fi
+  ID=$ID${create_new_session}:
+  ID=$(echo "$ID" | fzf | cut -d: -f1)
+  if [[ "\n$ID" == "${create_new_session}" ]]; then
+    BUFFER="tmux new-session"
+    zle accept-line
+  elif [[ -n $ID ]]; then
+    in_out="switch"
+    [[ -z $TMUX ]] && in_out="attach-session"
+    BUFFER="tmux $in_out -t $ID"
+    zle accept-line
+  else
+    :
+  fi
+}
+zle -N tmux_session_select
+bindkey '^S' tmux_session_select
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
