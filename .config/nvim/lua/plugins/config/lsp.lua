@@ -1,11 +1,8 @@
-local res, lspinstall = pcall(require, "lspinstall")
-local res2, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-local res3, lspconfig = pcall(require, "lspconfig")
-local res4, luadev = pcall(require, "lua-dev")
-local res5, saga = pcall(require, "lspsaga")
-if not (res and res2 and res3 and res4 and res5) then
-  return
-end
+local lspinstall = require("lspinstall")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local lspconfig = require("lspconfig")
+local luadev = require("lua-dev")
+local saga = require("lspsaga")
 
 local map = utils.map
 local command = utils.command

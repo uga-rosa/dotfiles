@@ -1,7 +1,4 @@
-local res, luasnip = pcall(require, "luasnip")
-if not res then
-  return
-end
+local luasnip = require("luasnip")
 
 local map = utils.map
 local augroup = utils.augroup

@@ -1,10 +1,5 @@
-local res = pcall(require, "nvim-treesitter")
-local res2, tsunit = pcall(require, "treesitter-unit")
-if not (res and res2) then
-  return
-end
-
 local map = utils.map
+local augroup = utils.augroup
 
 require("nvim-treesitter.configs").setup({
   ensure_installed = "maintained",
@@ -39,27 +34,11 @@ map("x", "au", ':lua require("treesitter-unit").select(true)<cr>', "noremap")
 map("o", "iu", 'lua require("treesitter-unit").select()', { "noremap", "cmd" })
 map("o", "au", 'lua require("treesitter-unit").select(true)', { "noremap", "cmd" })
 
-do
-  local timer = vim.loop.new_timer()
-  timer:start(
-    0,
-    100,
-    vim.schedule_wrap(function()
-      local mode = vim.fn.mode(1)
-      if vim.g.treesitter_unit_highlight and mode == "n" then
-        tsunit.disable_highlighting()
-        vim.g.treesitter_unit_highlight = false
-      end
-    end)
-  )
-end
-
-_G.TSUnitHlEnable = function()
-  tsunit.enable_highlighting()
-  vim.g.treesitter_unit_highlight = true
-end
+local tsunit = require("treesitter-unit")
 
 local operators = { "c", "d", "y", "=", "<", ">" }
 for _, o in ipairs(operators) do
-  map("n", o, "<cmd>lua TSUnitHlEnable()<cr>" .. o, "noremap")
+  map("n", o, '<cmd>lua require("treesitter-unit").enable_highlighting()<cr>' .. o, "noremap")
 end
+
+augroup({ tsunit = { "CursorMoved", "*", tsunit.disable_highlighting } })

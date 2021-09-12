@@ -3,16 +3,6 @@ local M = {}
 local map = utils.map
 local command = utils.command
 
-M.lualine = function()
-  local res, lualine = pcall(require, "lualine")
-
-  if res and vim.fn.exists("vim_starting") == 1 then
-    lualine.setup({
-      options = { theme = "nightfly" },
-    })
-  end
-end
-
 M.colorizer = function()
   command({
     "ColorizerSetup",
@@ -23,18 +13,12 @@ M.colorizer = function()
   })
 end
 
-M.term = function()
-  local res, term = pcall(require, "termwrapper")
-  term.setup({})
-  map({ "n", "t" }, "<M-t>", "Ttoggle", "cmd")
-end
-
 M.easyalign = function()
   map({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
 end
 
 M.operator_replace = function()
-  map("n", "s", "<Plug>(operator-replace)")
+  map("n", "_", "<Plug>(operator-replace)")
 end
 
 M.openbrowser = function()
@@ -45,11 +29,7 @@ M.openbrowser = function()
 end
 
 M.filittle = function()
-  local res, filittle = pcall(require, "filittle")
-  if not res then
-    return
-  end
-  filittle.setup({
+  require("filittle").setup({
     devicons = true,
     mappings = {
       ["<cr>"] = "open",
@@ -65,6 +45,16 @@ M.filittle = function()
       ["m"] = "mkdir",
       ["d"] = "delete",
       ["r"] = "rename",
+    },
+  })
+
+  require("nvim-web-devicons").setup({
+    override = {
+      nim = {
+        icon = "",
+        color = "#ffff00",
+        name = "Nim",
+      },
     },
   })
 end

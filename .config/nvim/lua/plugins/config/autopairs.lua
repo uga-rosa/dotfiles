@@ -1,9 +1,4 @@
-local res, npairs = pcall(require, "nvim-autopairs")
-if not res then
-  return
-end
-
-npairs.setup({
+require("nvim-autopairs").setup({
   ignored_next_char = string.gsub([[ [%w%%%[%.] ]], "%s+", ""),
 })
 

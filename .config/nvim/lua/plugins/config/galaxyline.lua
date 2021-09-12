@@ -1,8 +1,4 @@
-local res, gl = pcall(require, "galaxyline")
-if not res then
-  return
-end
-
+local gl = require("galaxyline")
 local gls = gl.section
 local cond = require("galaxyline.condition")
 

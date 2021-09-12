@@ -1,11 +1,6 @@
-local res, fzf_lua = pcall(require, "fzf-lua")
-if not res then
-  return
-end
-
 local actions = require("fzf-lua.actions")
 
-fzf_lua.setup({
+require("fzf-lua").setup({
   winopts = {
     win_height = 0.85,
     win_width = 0.80,

@@ -1,7 +1,4 @@
-local res, cmp = pcall(require, "cmp")
-if not res then
-  return
-end
+local cmp = require("cmp")
 
 _G.source_list = function(arr)
   local config = {

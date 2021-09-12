@@ -1,9 +1,4 @@
-local res, gitsigns = pcall(require, "gitsigns")
-if not res then
-  return
-end
-
-gitsigns.setup({
+require("gitsigns").setup({
   keymaps = {
     noremap = true,
 
