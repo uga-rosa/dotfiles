@@ -153,6 +153,6 @@ return packer.startup({
       ft = "satysfi",
     })
     -- nim
-    use("alaviss/nim.nvim")
+    use("uga-rosa/nim.nvim")
   end,
 })

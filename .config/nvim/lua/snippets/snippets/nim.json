@@ -82,5 +82,38 @@
       "block ${1:name}:",
       "  $2"
     ]
+  },
+  "proc": {
+    "prefix": [
+      "proc"
+    ],
+    "body": [
+      "proc ${1:name}(${2:param}: ${3:type}): ${4:type} =",
+      "  $5"
+    ]
+  },
+  "discard": {
+    "prefix": [
+      "discard"
+    ],
+    "body": [
+      "discard "
+    ]
+  },
+  "rt": {
+    "prefix": [
+      "rt"
+    ],
+    "body": [
+      "return "
+    ]
+  },
+  "result": {
+    "prefix": [
+      "result"
+    ],
+    "body": [
+      "result = "
+    ]
   }
 }

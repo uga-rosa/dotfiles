@@ -7,6 +7,9 @@ vim.g.mapleader = " "
 map("n", "<esc><esc>", "nohlsearch", { "noremap", "cmd" })
 map("n", "<leader><cr>", "o<esc>", "noremap")
 
+map("n", "<C-e>", "zz", "noremap")
+map("i", "<C-v>", "<C-o>zz", "noremap")
+
 map("n", "Q", "q", "noremap")
 
 map("v", "<", "<gv", "noremap")
@@ -60,4 +63,4 @@ silent! command PackerUpdate lua require('plugins.list') require('packer').updat
 silent! command PackerSync lua require('plugins.list') require('packer').sync()
 ]])
 
-map("n", "<leader>ps", "PackerSync", { "noremap", "cmd" })
+map("n", "<leader>ps", "PackerSync", "cmd")

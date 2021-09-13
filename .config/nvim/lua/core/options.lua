@@ -52,7 +52,9 @@ augroup({
   myfiletype = {
     { "BufNewFile,BufRead", "*.inp", "set ft=packmol" },
     { "BufNewFile,BufRead", "*.saty,*.satyh", "set ft=satysfi" },
-    { "BufNewFile,BufRead", "*.nim,*.nims,*.nimble", "set ft=nim" },
+  },
+  nim = {
+    { "FileType", "nim", "setl foldmethod=manual" },
   },
   nocomment = { "BufEnter", "*", "setlocal formatoptions-=ro" },
   quit_help = {

@@ -33,13 +33,11 @@ M.filittle = function()
     devicons = true,
   })
 
-  require("nvim-web-devicons").setup({
-    override = {
-      nim = {
-        icon = "",
-        color = "#ffff00",
-        name = "Nim",
-      },
+  require("nvim-web-devicons").set_icon({
+    nim = {
+      icon = "",
+      color = "#ffff00",
+      name = "Nim",
     },
   })
 end
