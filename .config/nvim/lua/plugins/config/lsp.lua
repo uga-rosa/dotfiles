@@ -110,27 +110,13 @@ saga.init_lsp_saga({
   },
 })
 
-local action = require("lspsaga.action")
-
 -- show hover doc
-map("n", "K", function()
-  require("lspsaga.hover").render_hover_doc()
-end)
+map("n", "K", "Lspsaga hover_doc", "cmd")
 -- scroll hover doc
-map("n", "<C-f>", function()
-  action.smart_scroll_with_saga(1)
-end)
-map("n", "<C-b>", function()
-  action.smart_scroll_with_saga(-1)
-end)
+map("n", "<C-f>", "lua require('lspsaga.action').smart_scroll_with_saga(1)", "cmd")
+map("n", "<C-b>", "lua require('lspsaga.action').smart_scroll_with_saga(-1)", "cmd")
 -- rename
-map("n", "<leader>rn", function()
-  require("lspsaga.rename").rename()
-end)
+map("n", "<leader>rn", "Lspsaga rename", "cmd")
 -- jump diagnostics
-map("n", "[d", function()
-  require("lspsaga.diagnostic").lsp_jump_diagnostic_prev()
-end)
-map("n", "]d", function()
-  require("lspsaga.diagnostic").lsp_jump_diagnostic_next()
-end)
+map("n", "[d", "Lspsaga diagnostic_jump_next", "cmd")
+map("n", "]d", "Lspsaga diagnostic_jump_prev", "cmd")

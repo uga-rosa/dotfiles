@@ -1,6 +1,17 @@
 local actions = require("fzf-lua.actions")
 
 require("fzf-lua").setup({
+  previewers = {
+    builtin = {
+      title = false,
+      keymap = {
+        page_up = "<C-u>",
+        page_down = "<C-d>",
+        page_reset = "<C-g>",
+      },
+    },
+  },
+
   files = {
     cmd = "fd -t f",
     actions = {

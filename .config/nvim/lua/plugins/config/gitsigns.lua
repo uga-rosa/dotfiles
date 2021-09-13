@@ -14,7 +14,7 @@ require("gitsigns").setup({
     ["n <leader>gp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
 
     -- Text objects
-    ["o ig"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-    ["x ig"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
+    ["o ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
+    ["x ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
   },
 })
