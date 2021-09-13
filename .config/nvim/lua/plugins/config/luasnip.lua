@@ -1,7 +1,7 @@
 local luasnip = require("luasnip")
 
-local map = utils.map
-local augroup = utils.augroup
+local map = myutils.map
+local augroup = myutils.augroup
 
 map({ "i", "s" }, "<C-j>", function(fallback)
   if luasnip.jumpable(1) then

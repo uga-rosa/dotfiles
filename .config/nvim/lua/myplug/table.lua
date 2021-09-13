@@ -3,9 +3,9 @@ local M = {}
 local fn = vim.fn
 local api = vim.api
 
-local map = utils.map
-local command = utils.command
-local augroup = utils.augroup
+local map = myutils.map
+local command = myutils.command
+local augroup = myutils.augroup
 
 local sep = "|"
 

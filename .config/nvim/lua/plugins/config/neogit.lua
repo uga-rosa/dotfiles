@@ -1,7 +1,11 @@
-local neogit = require("neogit")
+local M = {}
 
-local map = utils.map
+M.setup = function()
+  myutils.map("n", "<leader>n", "Neogit kind=split", "cmd")
+end
 
-neogit.setup()
+M.config = function()
+  require("neogit").setup({})
+end
 
-map("n", "<leader>n", "Neogit kind=split", "cmd")
+return M

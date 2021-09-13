@@ -4,9 +4,9 @@ local lspconfig = require("lspconfig")
 local luadev = require("lua-dev")
 local saga = require("lspsaga")
 
-local map = utils.map
-local command = utils.command
-local augroup = utils.augroup
+local map = myutils.map
+local command = myutils.command
+local augroup = myutils.augroup
 
 -- cmp source
 cmp_nvim_lsp.setup()

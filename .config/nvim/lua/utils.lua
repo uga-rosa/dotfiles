@@ -1,13 +1,13 @@
-_G.utils = {}
-
-local api = vim.api
-local cmd = vim.cmd
+_G.myutils = {}
 
 _G.myluafunc = setmetatable({}, {
   __call = function(self, num)
     return self[num]()
   end,
 })
+
+local api = vim.api
+local cmd = vim.cmd
 
 ---Return a string for vim from a lua function.
 ---Functions are stored in _G.myluafunc.
@@ -34,7 +34,7 @@ end
 ---@param opts string|table
 --- opts.buffer: current buffer only
 --- opts.cmd: command (format to <cmd>%s<cr>)
-utils.map = function(modes, lhs, rhs, opts)
+myutils.map = function(modes, lhs, rhs, opts)
   opts = opts or {}
 
   opts = type(opts) == "string" and { opts } or opts
@@ -94,15 +94,15 @@ end
 ---@param a string
 ---@param b string
 ---@param opts string|table
-utils.map_conv = function(modes, a, b, opts)
-  utils.map(modes, a, b, opts)
-  utils.map(modes, b, a, opts)
+myutils.map_conv = function(modes, a, b, opts)
+  myutils.map(modes, a, b, opts)
+  myutils.map(modes, b, a, opts)
 end
 
 ---API for autocmd. Supports for a lua funcion.
 ---
 ---@param au table
-utils.autocmd = function(au)
+myutils.autocmd = function(au)
   if type(au[#au]) == "function" then
     au[#au] = func2str(au[#au])
   end
@@ -113,16 +113,16 @@ end
 ---
 ---@param augrps table
 -- augrps key: group name, value: an argument of utils.autocmd
-utils.augroup = function(augrps)
+myutils.augroup = function(augrps)
   for group, aus in pairs(augrps) do
     cmd("augroup " .. group)
     cmd("au!")
     for _, au in ipairs(aus) do
       if type(au) ~= "table" then
-        utils.autocmd(aus)
+        myutils.autocmd(aus)
         break
       end
-      utils.autocmd(au)
+      myutils.autocmd(au)
     end
     cmd("augroup END")
   end
@@ -131,7 +131,7 @@ end
 ---API for command. Supports for a lua function
 ---
 ---@param command string|table
-utils.command = function(command)
+myutils.command = function(command)
   if type(command) == "table" then
     if type(command[#command]) == "function" then
       command[#command] = func2str(command[#command])
@@ -144,6 +144,6 @@ end
 ---Execute a string as a function.
 ---@param inStr string
 ---@return any ReturnFunction
-utils.eval = function(inStr)
+myutils.eval = function(inStr)
   return assert(load(inStr))()
 end

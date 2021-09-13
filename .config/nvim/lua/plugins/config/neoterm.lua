@@ -1,5 +1,5 @@
-local map = utils.map
-local augroup = utils.augroup
+local map = myutils.map
+local augroup = myutils.augroup
 
 vim.g.neoterm_default_mod = "botright"
 vim.g.neoterm_size = 15

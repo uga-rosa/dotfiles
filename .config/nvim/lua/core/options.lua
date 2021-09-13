@@ -1,5 +1,5 @@
-local augroup = utils.augroup
-local map = utils.map
+local augroup = myutils.augroup
+local map = myutils.map
 
 vim.o.fileencoding = "utf-8"
 vim.o.hidden = true
@@ -20,6 +20,7 @@ vim.o.termguicolors = true
 vim.o.clipboard = "unnamedplus"
 vim.o.inccommand = "split"
 vim.o.signcolumn = "yes"
+vim.o.shell = "/bin/bash"
 
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0

@@ -3,7 +3,7 @@ local M = {}
 local fn = vim.fn
 local uv = vim.loop
 
-local augroup = utils.augroup
+local augroup = myutils.augroup
 
 local css_dir = fn.stdpath("config") .. "/lua/myplug/panda/css/"
 

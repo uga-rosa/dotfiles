@@ -1,7 +1,7 @@
 local M = {}
 
-local map = utils.map
-local command = utils.command
+local map = myutils.map
+local command = myutils.command
 
 M.colorizer = function()
   command({

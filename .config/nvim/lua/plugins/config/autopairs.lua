@@ -8,4 +8,4 @@ require("nvim-autopairs.completion.cmp").setup({
   auto_select = true,
 })
 
-utils.map("i", "<C-h>", "<bs>")
+myutils.map("i", "<C-h>", "<bs>")

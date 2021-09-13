@@ -1,7 +1,7 @@
 local M = {}
 
-local augroup = utils.augroup
-local map = utils.map
+local augroup = myutils.augroup
+local map = myutils.map
 
 M.panda = function()
   local panda = require("myplug.panda")
