@@ -118,7 +118,7 @@ map("n", "<C-b>", function()
   action.smart_scroll_with_saga(-1)
 end)
 -- rename
-map("n", "<leader>r", function()
+map("n", "<leader>rn", function()
   require("lspsaga.rename").rename()
 end)
 -- jump diagnostics

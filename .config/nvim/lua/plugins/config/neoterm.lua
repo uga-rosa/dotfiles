@@ -6,6 +6,7 @@ vim.g.neoterm_size = 15
 vim.g.neoterm_autoinsert = true
 
 map("t", "<esc>", "<C-\\><C-n>", "noremap")
+map("t", "<C-w>", "<C-\\><C-n><C-w>", "noremap")
 map("t", "<C-h>", "<bs>", "noremap")
 map({ "n", "t" }, "<C-t>", "Ttoggle", { "noremap", "cmd" })
 
@@ -24,8 +25,8 @@ augroup({
       "FileType",
       "nim",
       function()
-        map("n", "@r", "<cmd>T nim c -r %<cr><cmd>Topen<cr>", { "noremap", "buffer" })
-        map("n", "@c", "<cmd>T nim c %<cr><cmd>Topen<cr><C-\\><C-n><C-w>k", { "noremap", "buffer" })
+        map("n", "@r", { "w", "T nim c -r %", "Topen" }, { "noremap", "buffer", "cmd" })
+        map("n", "@c", { "w", "T nim c %", "Topen" }, { "noremap", "buffer", "cmd" })
       end,
     },
   },

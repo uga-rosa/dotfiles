@@ -19,39 +19,25 @@ local func2str = function(func)
   return ("lua myluafunc(%s)"):format(idx)
 end
 
-utils.t = function(str)
-  return api.nvim_replace_termcodes(str, true, true, true)
+local fallback = function(key, mode)
+  mode = mode or "n"
+  return function()
+    api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode, true)
+  end
 end
 
 ---API for key mapping.
 ---
 ---@param lhs string
 ---@param modes string|table
----@param rhs string|function
+---@param rhs string|function|table
 ---@param opts string|table
 --- opts.buffer: current buffer only
 --- opts.cmd: command (format to <cmd>%s<cr>)
 utils.map = function(modes, lhs, rhs, opts)
-  modes = type(modes) == "string" and { modes } or modes
   opts = opts or {}
+
   opts = type(opts) == "string" and { opts } or opts
-
-  local fallback = function()
-    return api.nvim_feedkeys(utils.t(lhs), "n", true)
-  end
-
-  local _rhs = (function()
-    if type(rhs) == "function" then
-      opts.noremap = true
-      opts.cmd = true
-      return func2str(function()
-        rhs(fallback)
-      end)
-    else
-      return rhs
-    end
-  end)()
-
   for key, opt in ipairs(opts) do
     opts[opt] = true
     opts[key] = nil
@@ -64,21 +50,40 @@ utils.map = function(modes, lhs, rhs, opts)
     end
   end)()
 
-  _rhs = (function()
-    if opts.cmd then
-      opts.cmd = nil
-      opts.noremap = true
-      return ("<cmd>%s<cr>"):format(_rhs)
-    else
-      return _rhs
-    end
-  end)()
+  rhs = type(rhs) ~= "table" and { rhs } or rhs
+  rhs = table.concat(vim.tbl_map(function(r)
+    local _rhs = (function()
+      if type(r) == "function" then
+        opts.cmd = true
+        return func2str(function()
+          r(fallback(lhs))
+        end)
+      else
+        return r
+      end
+    end)()
 
+    _rhs = (function()
+      if opts.cmd then
+        return ("<cmd>%s<cr>"):format(_rhs)
+      else
+        return _rhs
+      end
+    end)()
+    return _rhs
+  end, rhs))
+
+  if opts.cmd then
+    opts.noremap = true
+    opts.cmd = nil
+  end
+
+  modes = type(modes) == "string" and { modes } or modes
   for _, mode in ipairs(modes) do
     if buffer then
-      api.nvim_buf_set_keymap(0, mode, lhs, _rhs, opts)
+      api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
     else
-      api.nvim_set_keymap(mode, lhs, _rhs, opts)
+      api.nvim_set_keymap(mode, lhs, rhs, opts)
     end
   end
 end
