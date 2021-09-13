@@ -27,10 +27,10 @@ map({ "i", "s" }, "<C-l>", function(fallback)
   end
 end)
 
-require("mysnippets")
+require("snippets.uga")
 
 require("luasnip.loaders.from_vscode").load({
-  paths = { vim.fn.stdpath("config") .. "/snippets" },
+  paths = { vim.fn.stdpath("config") .. "/lua/snippets" },
 })
 
 augroup({
