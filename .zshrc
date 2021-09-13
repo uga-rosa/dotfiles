@@ -80,8 +80,11 @@ eval "$(starship init zsh)"
 
 # windows chrome
 function chrome() {
-  [[ -z ${1} ]] && return 1
-  chrome.exe $(wslpath -w ${1})
+  if [[ -z $1 ]]; then
+    chrome.exe
+  else
+    chrome.exe $(wslpath -w ${1})
+  fi
 }
 
 # tmux-session-select
