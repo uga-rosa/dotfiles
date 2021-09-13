@@ -16,12 +16,6 @@ return packer.startup({
     })
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
-    -- filer
-    use({
-      "uga-rosa/filittle.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
-      config = 'require("plugins.config.other").filittle()',
-    })
     -- colorscheme
     use({ "bluz71/vim-nightfly-guicolors" })
     -- statusline
@@ -30,6 +24,11 @@ return packer.startup({
       branch = "main",
       requires = "kyazdani42/nvim-web-devicons",
       config = 'require("plugins.config.galaxyline")',
+    })
+    -- filer
+    use({
+      "uga-rosa/filittle.nvim",
+      config = 'require("plugins.config.other").filittle()',
     })
     -- colorizer
     use({
@@ -90,10 +89,9 @@ return packer.startup({
     })
     -- git
     use({
-      "kdheepak/lazygit.nvim",
-      config = function()
-        utils.map("n", "<leader>l", "LazyGit", { "cmd", "noremap" })
-      end,
+      "TimUntersberger/neogit",
+      requires = "nvim-lua/plenary.nvim",
+      config = 'require("plugins.config.neogit")',
     })
     use({
       "lewis6991/gitsigns.nvim",
@@ -153,6 +151,6 @@ return packer.startup({
       ft = "satysfi",
     })
     -- nim
-    use("zah/nim.vim")
+    use("alaviss/nim.nvim")
   end,
 })

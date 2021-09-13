@@ -67,6 +67,7 @@ utils.map = function(modes, lhs, rhs, opts)
   _rhs = (function()
     if opts.cmd then
       opts.cmd = nil
+      opts.noremap = true
       return ("<cmd>%s<cr>"):format(_rhs)
     else
       return _rhs

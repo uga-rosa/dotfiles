@@ -73,5 +73,14 @@
       "for ${1:i} in ${2:iter}:",
       "  $3"
     ]
+  },
+  "block": {
+    "prefix": [
+      "block"
+    ],
+    "body": [
+      "block ${1:name}:",
+      "  $2"
+    ]
   }
 }
