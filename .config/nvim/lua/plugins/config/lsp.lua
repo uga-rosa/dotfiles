@@ -40,7 +40,7 @@ opts.lua = luadev.setup({
 })
 
 opts.efm = {
-  filetypes = { "markdown", "json", "lua", "python", "sh", "yaml" },
+  filetypes = { "markdown", "json", "lua", "python", "sh" },
   capabilities = capabilities,
 }
 
@@ -83,7 +83,33 @@ end
 require("lspconfig").nimls.setup({})
 
 -- format
-command({ "-bar", "Format", vim.lsp.buf.formatting_sync })
+local nim_format = function()
+  vim.loop.spawn(
+    "nimpretty",
+    { args = { "--indent:2", "--maxLineLen:120", vim.fn.expand("%:p") } },
+    vim.schedule_wrap(function(code, _)
+      if code == 0 then
+        vim.cmd("e")
+        -- print("Format success")
+        -- else
+        -- print("Format failure")
+      end
+    end)
+  )
+end
+
+command({
+  "-bar",
+  "Format",
+  function()
+    if vim.bo.filetype == "nim" then
+      nim_format()
+      return
+    end
+    vim.lsp.buf.formatting_sync()
+  end,
+})
+
 augroup({
   lspinfo = {
     "FileType",
@@ -92,7 +118,7 @@ augroup({
   },
   format = {
     { "BufWritePre", "*.lua,*.py", "Format" },
-    { "BufWritePost", "*.json", "Format|w" },
+    { "BufWritePost", "*.json,*.nim", "Format" },
   },
 })
 

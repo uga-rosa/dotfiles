@@ -100,6 +100,42 @@
       "discard "
     ]
   },
+  "iter": {
+    "prefix": [
+      "iter"
+    ],
+    "body": [
+      "iterator ${1:name}(${2:param}: ${3:type}): ${4:type} =",
+      "  $5"
+    ]
+  },
+  "type": {
+    "prefix": [
+      "type"
+    ],
+    "body": [
+      "type",
+      "  "
+    ]
+  },
+  "enum": {
+    "prefix": [
+      "enum"
+    ],
+    "body": [
+      "enum",
+      "  "
+    ]
+  },
+  "object": {
+    "prefix": [
+      "object"
+    ],
+    "body": [
+      "object",
+      "  "
+    ]
+  },
   "rt": {
     "prefix": [
       "rt"
@@ -112,8 +148,5 @@
     "prefix": [
       "result"
     ],
-    "body": [
-      "result = "
-    ]
-  }
+    "body": [ "result = " ] }
 }

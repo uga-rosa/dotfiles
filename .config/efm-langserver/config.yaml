@@ -32,10 +32,6 @@ tools:
     format-command: 'shfmt -ci -s -bn -i 2'
     format-stdin: true
 
-  yamllint: &yamllint
-    lint-command: 'yamllint -f parsable -c ~/.yamllint -'
-    lint-stdin: true
-
 languages:
   markdown:
     - <<: *markdown-textlint
@@ -52,6 +48,3 @@ languages:
 
   sh:
     - <<: *shfmt
-
-  yaml:
-    - <<: *yamllint

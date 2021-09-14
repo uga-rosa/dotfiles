@@ -85,16 +85,5 @@
       "\t$0",
       "end"
     ]
-  },
-  "tbl map": {
-    "prefix": [
-      "tbl map"
-    ],
-    "body": [
-      "vim.tbl_map(function(${1:var})",
-      "\t$3",
-      "\treturn $4",
-      "end, ${2:table})"
-    ]
   }
 }

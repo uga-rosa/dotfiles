@@ -53,6 +53,13 @@ cmp.setup({
       require("luasnip").lsp_expand(args.body)
     end,
   },
+  completion = {
+    get_trigger_characters = function(trigger_characters)
+      return vim.tbl_filter(function(char)
+        return char ~= " "
+      end, trigger_characters)
+    end,
+  },
   formatting = {
     deprecated = false,
     format = function(entry, vim_item)
