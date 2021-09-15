@@ -5,6 +5,15 @@
     ],
     "body": [
       "if $1:",
+      "  $2"
+    ]
+  },
+  "if else": {
+    "prefix": [
+      "if else"
+    ],
+    "body": [
+      "if $1:",
       "  $2",
       "else:",
       "  $3"
@@ -88,7 +97,7 @@
       "discard"
     ],
     "body": [
-      "discard"
+      "discard "
     ]
   },
   "iter": {
@@ -106,7 +115,7 @@
     ],
     "body": [
       "type",
-      ""
+      "  "
     ]
   },
   "enum": {
@@ -115,7 +124,7 @@
     ],
     "body": [
       "enum",
-      ""
+      "  "
     ]
   },
   "object": {
@@ -124,7 +133,7 @@
     ],
     "body": [
       "object",
-      ""
+      "  "
     ]
   },
   "rt": {
@@ -132,7 +141,7 @@
       "rt"
     ],
     "body": [
-      "return"
+      "return "
     ]
   },
   "rs": {
@@ -140,7 +149,7 @@
       "rs"
     ],
     "body": [
-      "result ="
+      "result = "
     ]
   },
   "cligen": {
@@ -178,7 +187,7 @@
     ],
     "body": [
       "when isMainModule:",
-      ""
+      "  "
     ]
   }
 }
