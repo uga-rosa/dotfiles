@@ -1,0 +1,12 @@
+snippet init
+tolerance ${1:2.0}
+output ${2:filename}.pdb
+filetype pdb
+endsnippet
+
+snippet structure
+structure ${1:filename}.pdb
+    number $2
+    ${3|inside box,fixed|} 0. 0. 0. ${4:0. 0. 0. }
+end structure
+endsnippet

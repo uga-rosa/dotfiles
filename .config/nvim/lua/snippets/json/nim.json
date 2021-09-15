@@ -4,16 +4,7 @@
       "if"
     ],
     "body": [
-      "if ${1:cond}:",
-      "  $2"
-    ]
-  },
-  "if else": {
-    "prefix": [
-      "if else"
-    ],
-    "body": [
-      "if ${1:cond}:",
+      "if $1:",
       "  $2",
       "else:",
       "  $3"
@@ -24,7 +15,7 @@
       "elif"
     ],
     "body": [
-      "elif ${1:cond}:",
+      "elif $1:",
       "  $2"
     ]
   },
@@ -42,8 +33,8 @@
       "case"
     ],
     "body": [
-      "case ${1:var}",
-      "of ${2:value}:",
+      "case $1",
+      "of $2:",
       "  $3"
     ]
   },
@@ -52,7 +43,7 @@
       "of"
     ],
     "body": [
-      "of ${1:value}:",
+      "of $1:",
       "  $2"
     ]
   },
@@ -61,7 +52,7 @@
       "while"
     ],
     "body": [
-      "while ${1:cond}:",
+      "while $1:",
       "  $2"
     ]
   },
@@ -70,7 +61,7 @@
       "for"
     ],
     "body": [
-      "for ${1:i} in ${2:iter}:",
+      "for ${1:i} in $2:",
       "  $3"
     ]
   },
@@ -79,7 +70,7 @@
       "block"
     ],
     "body": [
-      "block ${1:name}:",
+      "block$1:",
       "  $2"
     ]
   },
@@ -88,7 +79,7 @@
       "proc"
     ],
     "body": [
-      "proc ${1:name}(${2:param}: ${3:type}): ${4:type} =",
+      "proc $1($2: $3): $4 =",
       "  $5"
     ]
   },
@@ -97,7 +88,7 @@
       "discard"
     ],
     "body": [
-      "discard "
+      "discard"
     ]
   },
   "iter": {
@@ -105,7 +96,7 @@
       "iter"
     ],
     "body": [
-      "iterator ${1:name}(${2:param}: ${3:type}): ${4:type} =",
+      "iterator $1($2: $3): $4 =",
       "  $5"
     ]
   },
@@ -115,7 +106,7 @@
     ],
     "body": [
       "type",
-      "  "
+      ""
     ]
   },
   "enum": {
@@ -124,7 +115,7 @@
     ],
     "body": [
       "enum",
-      "  "
+      ""
     ]
   },
   "object": {
@@ -133,23 +124,23 @@
     ],
     "body": [
       "object",
-      "  "
+      ""
     ]
   },
-  "return": {
+  "rt": {
     "prefix": [
       "rt"
     ],
     "body": [
-      "return "
+      "return"
     ]
   },
-  "result": {
+  "rs": {
     "prefix": [
       "rs"
     ],
     "body": [
-      "result"
+      "result ="
     ]
   },
   "cligen": {
@@ -168,7 +159,7 @@
     "body": [
       "try:",
       "  $1",
-      "except ${2}:",
+      "except $2:",
       "  $3"
     ]
   },
@@ -177,8 +168,8 @@
       "except"
     ],
     "body": [
-      "except ${1:error}:",
-      "  "
+      "except $1:",
+      "  $2"
     ]
   },
   "main": {
@@ -187,7 +178,7 @@
     ],
     "body": [
       "when isMainModule:",
-      "  "
+      ""
     ]
   }
 }

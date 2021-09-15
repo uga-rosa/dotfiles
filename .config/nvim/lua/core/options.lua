@@ -39,6 +39,7 @@ augroup({
   myfiletype = {
     { "BufNewFile,BufRead", "*.inp", "set ft=packmol" },
     { "BufNewFile,BufRead", "*.saty,*.satyh", "set ft=satysfi" },
+    { "BufNewFile,BufRead", "*.snip", "set ft=snip" },
   },
   nim = {
     { "FileType", "nim", "setl foldmethod=manual" },
@@ -59,7 +60,8 @@ augroup({
     "BufWrite",
     "*",
     function()
-      if vim.bo.filetype ~= "markdown" then
+      local ft = vim.bo.filetype
+      if not (ft == "markdown" or ft == "snip") then
         vim.cmd([[%s/ \+$//e]])
       end
     end,

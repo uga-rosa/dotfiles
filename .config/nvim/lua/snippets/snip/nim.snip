@@ -1,0 +1,106 @@
+snippet if
+if $1:
+  $2
+endsnippet
+
+snippet if else
+if $1:
+  $2
+else:
+  $3
+endsnippet
+
+snippet elif
+elif $1:
+  $2
+endsnippet
+
+snippet else
+else:
+  $1
+endsnippet
+
+snippet case
+case $1
+of $2:
+  $3
+endsnippet
+
+snippet of
+of $1:
+  $2
+endsnippet
+
+snippet while
+while $1:
+  $2
+endsnippet
+
+snippet for
+for ${1:i} in $2:
+  $3
+endsnippet
+
+snippet block
+block$1:
+  $2
+endsnippet
+
+snippet proc
+proc $1($2: $3): $4 =
+  $5
+endsnippet
+
+snippet discard
+discard 
+endsnippet
+
+snippet iter
+iterator $1($2: $3): $4 =
+  $5
+endsnippet
+
+snippet type
+type
+  
+endsnippet
+
+snippet enum
+enum
+  
+endsnippet
+
+snippet object
+object
+  
+endsnippet
+
+snippet rt
+return 
+endsnippet
+
+snippet rs
+result = 
+endsnippet
+
+snippet cligen
+import cligen
+dispatch($1)
+endsnippet
+
+snippet try
+try:
+  $1
+except $2:
+  $3
+endsnippet
+
+snippet except
+except $1:
+  $2
+endsnippet
+
+snippet main
+when isMainModule:
+  
+endsnippet

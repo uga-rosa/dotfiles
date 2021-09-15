@@ -41,9 +41,9 @@
       },
       {
         "language": [
-          "json"
+          "snip"
         ],
-        "path": "./json/json.json"
+        "path": "./json/snip.json"
       },
       {
         "language": [
@@ -55,7 +55,7 @@
         "language": [
           "nim"
         ],
-        "path" : "./json/nim.json"
+        "path": "./json/nim.json"
       }
     ]
   }

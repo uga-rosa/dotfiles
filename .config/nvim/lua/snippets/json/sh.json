@@ -1,10 +1,11 @@
 {
-  "shebang": {
+  "init": {
     "prefix": [
-      "shebang"
+      "init"
     ],
     "body": [
-      "#!/bin/${1|bash,zsh|}",
+      "#!/bin/bash",
+      "set -eu",
       ""
     ]
   }

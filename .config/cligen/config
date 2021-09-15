@@ -1,5 +1,4 @@
-# This is a Nim parsecfg config file
-[include__LC_THEME__lightBG] # get [fb][hue|HUE] defs from ${LC_THEME-"lightBG"}
+[include__LC_THEME__darkBG]
 
 [color]
 optKeys  = fhue5
@@ -10,7 +9,6 @@ command = bold
 #doc     = italic
 #args    = underline
 
-# How to render .rst/.md-like text style markup from `doc`/`help[param]`
 [render]
 singleStar = "italic     ; -italic"
 doubleStar = "bold       ; -bold"
@@ -19,14 +17,14 @@ singleBQuo = "underline  ; -underline"
 doubleBQuo = "inverse    ; -inverse"
 
 [layout]
-#rowSep  = "\n"   # Default is ""; "\n" => double-spaced
-colGap  = 1      # colors make tighter format more tolerable
-#minLast = 16    # This is the default
-cols    = "clOptKeys: clValType clDescrip"
+#rowSep  = "\n"
+colGap  = 1
+#minLast = 16
+cols    = "clOptKeys clValType clDescrip"
 
-[syntax] # Changing can EASILY break cfg files|script-usage of programs!
-#reqSep   = off  # This is the default
-sepChars = "="   # Do not use Araq's weird : convention
+[syntax]
+#reqSep   = off
+sepChars = "="
 
 [templates]
 useHdr   = "Usage:\n  "
@@ -36,5 +34,6 @@ useMulti = """${doc}Usage:
 where {SUBCMD} is one of:
 $subcmds
 $command {-h|--help} or with no args at all prints this message.
+$command --help-syntax gives general cligen syntax help.
 Run "$command {help SUBCMD|SUBCMD --help}" to see help for just SUBCMD.
 Run "$command help" to get *comprehensive* help.${ifVersion}"""

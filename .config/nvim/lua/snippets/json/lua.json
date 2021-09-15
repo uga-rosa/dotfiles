@@ -4,7 +4,7 @@
       "snippet"
     ],
     "body": [
-      "s(\"${1:trig}\",{",
+      "s(\"${1:trig}\", {",
       "  ${2:body}",
       "}),"
     ]
@@ -17,18 +17,7 @@
       "${1|t,i,f,c,sn|}($2),"
     ]
   },
-  "pcall_require": {
-    "prefix": [
-      "pcall_require"
-    ],
-    "body": [
-      "local res$2, ${1:module} = pcall(require, \"$1\")",
-      "if not res$2 then",
-      "\treturn",
-      "end"
-    ]
-  },
-  "require": {
+  "req": {
     "prefix": [
       "req"
     ],
@@ -36,23 +25,23 @@
       "require(\"${1:module}\")"
     ]
   },
-  "return": {
+  "rt": {
     "prefix": [
       "rt"
     ],
     "body": [
-      "return "
+      "return"
     ]
   },
-  "local": {
+  "l": {
     "prefix": [
       "l"
     ],
     "body": [
-      "local "
+      "local"
     ]
   },
-  "local require": {
+  "lreq": {
     "prefix": [
       "lreq"
     ],
@@ -60,7 +49,7 @@
       "local ${1:var} = require(\"${2:module}\")"
     ]
   },
-  "class": {
+  "cl": {
     "prefix": [
       "cl"
     ],
@@ -68,21 +57,21 @@
       "${1:classname} = {}",
       "",
       "$1.${2:new} = function($3)",
-      "\tlocal ${4:varName} = ${5:{}}",
+      "  local ${4:varName} = ${5:{}}",
       "",
-      "\t${6:--code}",
+      "  ${6:--code}",
       "",
-      "\treturn $4",
+      "  return $4",
       "end"
     ]
   },
-  "local function": {
+  "lfun": {
     "prefix": [
       "lfun"
     ],
     "body": [
-      "local $1 = function($2)",
-      "\t$0",
+      "local ${1:name} = function($2)",
+      "  $0",
       "end"
     ]
   }

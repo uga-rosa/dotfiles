@@ -1,0 +1,12 @@
+{
+  "snippet": {
+    "prefix": [
+      "snippet"
+    ],
+    "body": [
+      "snippet ${1:prefix}",
+      "$2",
+      "endsnippet"
+    ]
+  }
+}
