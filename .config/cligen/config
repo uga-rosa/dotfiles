@@ -1,0 +1,40 @@
+# This is a Nim parsecfg config file
+[include__LC_THEME__lightBG] # get [fb][hue|HUE] defs from ${LC_THEME-"lightBG"}
+
+[color]
+optKeys  = fhue5
+valType  = fhue2
+dflval   = NONE
+#descrip  = fhue0
+command = bold
+#doc     = italic
+#args    = underline
+
+# How to render .rst/.md-like text style markup from `doc`/`help[param]`
+[render]
+singleStar = "italic     ; -italic"
+doubleStar = "bold       ; -bold"
+tripleStar = "bold italic; -bold -italic"
+singleBQuo = "underline  ; -underline"
+doubleBQuo = "inverse    ; -inverse"
+
+[layout]
+#rowSep  = "\n"   # Default is ""; "\n" => double-spaced
+colGap  = 1      # colors make tighter format more tolerable
+#minLast = 16    # This is the default
+cols    = "clOptKeys: clValType clDescrip"
+
+[syntax] # Changing can EASILY break cfg files|script-usage of programs!
+#reqSep   = off  # This is the default
+sepChars = "="   # Do not use Araq's weird : convention
+
+[templates]
+useHdr   = "Usage:\n  "
+use      = "$command $args\n${doc}options:\n$options"
+useMulti = """${doc}Usage:
+  $command {SUBCMD}  [sub-command options & parameters]
+where {SUBCMD} is one of:
+$subcmds
+$command {-h|--help} or with no args at all prints this message.
+Run "$command {help SUBCMD|SUBCMD --help}" to see help for just SUBCMD.
+Run "$command help" to get *comprehensive* help.${ifVersion}"""

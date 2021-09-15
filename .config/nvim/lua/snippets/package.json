@@ -6,56 +6,56 @@
         "language": [
           "lua"
         ],
-        "path": "./snippets/lua.json"
+        "path": "./json/lua.json"
       },
       {
         "language": [
           "rust"
         ],
-        "path": "./snippets/rust.json"
+        "path": "./json/rust.json"
       },
       {
         "language": [
           "python"
         ],
-        "path": "./snippets/python.json"
+        "path": "./json/python.json"
       },
       {
         "language": [
           "sh",
           "zsh"
         ],
-        "path": "./snippets/sh.json"
+        "path": "./json/sh.json"
       },
       {
         "language": [
           "vim"
         ],
-        "path": "./snippets/vim.json"
+        "path": "./json/vim.json"
       },
       {
         "language": [
           "markdown"
         ],
-        "path": "./snippets/markdown.json"
+        "path": "./json/markdown.json"
       },
       {
         "language": [
           "json"
         ],
-        "path": "./snippets/json.json"
+        "path": "./json/json.json"
       },
       {
         "language": [
           "packmol"
         ],
-        "path": "./snippets/packmol.json"
+        "path": "./json/packmol.json"
       },
       {
         "language": [
           "nim"
         ],
-        "path" : "./snippets/nim.json"
+        "path" : "./json/nim.json"
       }
     ]
   }
