@@ -39,4 +39,18 @@ ls.snippets = {
       end, 1),
     }),
   },
+  nim = {
+    s("import", {
+      t("import "),
+      i(1, "module"),
+      c(2, { t(""), sn(nil, { t(" except "), i(1, "symbol") }) }),
+    }),
+    s("from import", {
+      t("from "),
+      i(1, "module"),
+      c(3, { t(""), sn(nil, { t(" as "), i(1, "name") }) }),
+      t(" import "),
+      i(2, "symbol"),
+    }),
+  },
 }

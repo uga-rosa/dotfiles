@@ -19,14 +19,6 @@ map({ "i", "s" }, "<C-k>", function(fallback)
   end
 end)
 
-map({ "i", "s" }, "<C-l>", function(fallback)
-  if luasnip.choice_active() then
-    luasnip.change_choice(1)
-  else
-    fallback()
-  end
-end)
-
 require("snippets.uga")
 
 require("luasnip.loaders.from_vscode").load({

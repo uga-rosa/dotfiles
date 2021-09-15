@@ -136,7 +136,7 @@
       "  "
     ]
   },
-  "rt": {
+  "return": {
     "prefix": [
       "rt"
     ],
@@ -146,7 +146,48 @@
   },
   "result": {
     "prefix": [
-      "result"
+      "rs"
     ],
-    "body": [ "result = " ] }
+    "body": [
+      "result"
+    ]
+  },
+  "cligen": {
+    "prefix": [
+      "cligen"
+    ],
+    "body": [
+      "import cligen",
+      "dispatch($1)"
+    ]
+  },
+  "try": {
+    "prefix": [
+      "try"
+    ],
+    "body": [
+      "try:",
+      "  $1",
+      "except ${2}:",
+      "  $3"
+    ]
+  },
+  "except": {
+    "prefix": [
+      "except"
+    ],
+    "body": [
+      "except ${1:error}:",
+      "  "
+    ]
+  },
+  "main": {
+    "prefix": [
+      "main"
+    ],
+    "body": [
+      "when isMainModule:",
+      "  "
+    ]
+  }
 }

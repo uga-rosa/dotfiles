@@ -1,4 +1,5 @@
 local cmp = require("cmp")
+local luasnip = require("luasnip")
 
 _G.source_list = function(arr)
   local config = {
@@ -77,8 +78,26 @@ cmp.setup({
     end,
   },
   mapping = {
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-n>"] = cmp.mapping.select_next_item(),
+    ["<C-n>"] = cmp.mapping(function()
+      if luasnip.choice_active() then
+        luasnip.change_choice(1)
+      else
+        cmp.select_next_item()
+      end
+    end, {
+      "i",
+      "s",
+    }),
+    ["<C-p>"] = cmp.mapping(function()
+      if luasnip.choice_active() then
+        luasnip.change_choice(-1)
+      else
+        cmp.select_prev_item()
+      end
+    end, {
+      "i",
+      "s",
+    }),
     ["<C-e>"] = cmp.mapping.close(),
     ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
