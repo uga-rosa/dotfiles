@@ -90,9 +90,9 @@ local nim_format = function()
     vim.schedule_wrap(function(code, _)
       if code == 0 then
         vim.cmd("e")
-        -- print("Format success")
-        -- else
-        -- print("Format failure")
+        print("Format success")
+      else
+        print("Format failure")
       end
     end)
   )
@@ -118,7 +118,7 @@ augroup({
   },
   format = {
     { "BufWritePre", "*.lua,*.py", "Format" },
-    { "BufWritePost", "*.json,*.nim", "Format" },
+    { "BufWritePost", "*.json", "Format" },
   },
 })
 
