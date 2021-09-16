@@ -189,5 +189,13 @@
       "when isMainModule:",
       "  "
     ]
+  },
+  "stdwrite": {
+    "prefix": [
+      "stdwrite"
+    ],
+    "body": [
+      "stdout.write(\"$1\")"
+    ]
   }
 }

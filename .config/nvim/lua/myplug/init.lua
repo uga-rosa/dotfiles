@@ -2,6 +2,7 @@ local M = {}
 
 local augroup = myutils.augroup
 local map = myutils.map
+local command = myutils.command
 
 M.panda = function()
   local panda = require("myplug.panda")
@@ -64,6 +65,20 @@ M.setup = function()
         end,
       },
     },
+  })
+  -- snip2json
+  command({
+    "SnipOpen",
+    function()
+      local ft = vim.bo.filetype
+      vim.cmd("e " .. "~/.config/nvim/lua/snippets/snip/" .. ft .. ".snip")
+    end,
+  })
+  command({
+    "Snip2Json",
+    function()
+      vim.fn.jobstart("snip2json", { cwd = vim.fn.stdpath("config") .. "/lua/snippets" })
+    end,
   })
 end
 

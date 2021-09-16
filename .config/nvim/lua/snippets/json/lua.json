@@ -30,7 +30,7 @@
       "rt"
     ],
     "body": [
-      "return"
+      "return "
     ]
   },
   "l": {
@@ -38,7 +38,7 @@
       "l"
     ],
     "body": [
-      "local"
+      "local "
     ]
   },
   "lreq": {
