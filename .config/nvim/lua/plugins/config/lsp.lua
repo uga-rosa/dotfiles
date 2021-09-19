@@ -1,6 +1,7 @@
 local lspinstall = require("lspinstall")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local lspconfig = require("lspconfig")
+local util = require("lspconfig.util")
 local luadev = require("lua-dev")
 local saga = require("lspsaga")
 
@@ -46,6 +47,7 @@ opts.efm = {
 
 opts.bash = {
   filetypes = { "sh", "zsh" },
+  capabilities = capabilities,
 }
 
 -- automatically install
@@ -81,6 +83,13 @@ end
 
 -- Nim (manual installed)
 require("lspconfig").nimls.setup({})
+
+-- Haskell (manual installed)
+opts.haskell = {
+  util.root_pattern("*.cabal", "stack.yaml", "package.yaml"),
+  capabilities = capabilities,
+}
+require("lspconfig").hls.setup(opts.haskell)
 
 -- format
 local nim_format = function()

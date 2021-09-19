@@ -20,8 +20,7 @@ return packer.startup({
     use({ "bluz71/vim-nightfly-guicolors" })
     -- statusline
     use({
-      "glepnir/galaxyline.nvim",
-      branch = "main",
+      "NTBBloodbath/galaxyline.nvim",
       requires = "kyazdani42/nvim-web-devicons",
       config = 'require("plugins.config.galaxyline")',
     })
@@ -100,15 +99,16 @@ return packer.startup({
       requires = "nvim-lua/plenary.nvim",
       config = 'require("plugins.config.gitsigns")',
     })
-    -- terminal
+    -- quickrun
     use({
-      "kassio/neoterm",
-      config = 'require("plugins.config.neoterm")',
+      "thinca/vim-quickrun",
+      requires = "lambdalisue/vim-quickrun-neovim-job",
+      config = 'require("plugins.config.quickrun")',
     })
     -- surround operator
     use({
       "machakann/vim-sandwich",
-      config = 'require("plugins.config.sandwich")',
+      config = 'require("plugins.config.other").sandwich()',
     })
     -- easy align
     use({
@@ -153,6 +153,9 @@ return packer.startup({
       ft = "satysfi",
     })
     -- nim
-    use("uga-rosa/nim.nvim")
+    use({
+      "uga-rosa/nim.nvim",
+      config = "vim.g.nim_highlight_wait = true",
+    })
   end,
 })

@@ -47,7 +47,7 @@ augroup({
   nocomment = { "BufEnter", "*", "setlocal formatoptions-=ro" },
   quit_help = {
     "FileType",
-    "help",
+    "help,qf",
     function()
       map("n", "q", "quit", { "nowait", "buffer", "cmd" })
     end,

@@ -92,6 +92,15 @@
       "  $5"
     ]
   },
+  "func": {
+    "prefix": [
+      "func"
+    ],
+    "body": [
+      "func $1($2: $3): $4 =",
+      "  $5"
+    ]
+  },
   "discard": {
     "prefix": [
       "discard"

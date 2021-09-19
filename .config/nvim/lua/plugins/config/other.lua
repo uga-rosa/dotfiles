@@ -28,6 +28,10 @@ M.openbrowser = function()
   }
 end
 
+M.sandwich = function()
+  vim.cmd([[runtime macros/sandwich/keymap/surround.vim]])
+end
+
 M.filittle = function()
   require("filittle").setup({
     devicons = true,
