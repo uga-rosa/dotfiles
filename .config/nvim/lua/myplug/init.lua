@@ -80,6 +80,8 @@ M.setup = function()
       vim.fn.jobstart("snip2json", { cwd = vim.fn.stdpath("config") .. "/lua/snippets" })
     end,
   })
+  require("myplug.calc")
+  require("myplug.term")
 end
 
 return M

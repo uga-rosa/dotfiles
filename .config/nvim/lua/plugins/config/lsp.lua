@@ -1,9 +1,9 @@
 local lspinstall = require("lspinstall")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local lspconfig = require("lspconfig")
-local util = require("lspconfig.util")
 local luadev = require("lua-dev")
 local saga = require("lspsaga")
+local sign = require("lsp_signature")
 
 local map = myutils.map
 local command = myutils.command
@@ -30,25 +30,24 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 
 local default = {
   capabilities = capabilities,
+  on_attach = function()
+    sign.on_attach()
+  end,
 }
 
 local opts = {}
 
 opts.lua = luadev.setup({
-  lspconfig = {
-    capabilities = capabilities,
-  },
+  lspconfig = default,
 })
 
-opts.efm = {
+opts.efm = setmetatable({
   filetypes = { "markdown", "json", "lua", "python", "sh" },
-  capabilities = capabilities,
-}
+}, { __index = default })
 
-opts.bash = {
+opts.bash = setmetatable({
   filetypes = { "sh", "zsh" },
-  capabilities = capabilities,
-}
+}, { __index = default })
 
 -- automatically install
 local servers = { "lua", "rust", "python", "bash", "efm", "vim", "typescript" }
@@ -86,7 +85,6 @@ require("lspconfig").nimls.setup({})
 
 -- Haskell (manual installed)
 opts.haskell = {
-  util.root_pattern("*.cabal", "stack.yaml", "package.yaml"),
   capabilities = capabilities,
 }
 require("lspconfig").hls.setup(opts.haskell)
@@ -126,7 +124,7 @@ augroup({
     "nnoremap <buffer><nowait> q <cmd>bd<cr>",
   },
   format = {
-    { "BufWritePre", "*.lua,*.py", "Format" },
+    { "BufWritePre", "*.lua,*.py,*.hs", "Format" },
     { "BufWritePost", "*.json", "Format" },
   },
 })

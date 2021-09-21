@@ -15,7 +15,7 @@ return packer.startup({
       config = 'pcall(require, "impatient")',
     })
     -- itself
-    use({ "wbthomason/packer.nvim", opt = true })
+    use({ "wbthomason/packer.nvim" })
     -- colorscheme
     use({ "bluz71/vim-nightfly-guicolors" })
     -- statusline
@@ -42,7 +42,9 @@ return packer.startup({
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
         "saadparwaiz1/cmp_luasnip",
+        "hrsh7th/cmp-vsnip",
       },
+      branch = "custom-menu",
       config = 'require("plugins.config.cmp")',
     })
     -- auto close parentheses
@@ -63,6 +65,7 @@ return packer.startup({
         "kabouzeid/nvim-lspinstall",
         "folke/lua-dev.nvim",
         "glepnir/lspsaga.nvim",
+        "ray-x/lsp_signature.nvim",
       },
       config = 'require("plugins.config.lsp")',
     })

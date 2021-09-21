@@ -18,4 +18,15 @@ vim.g.quickrun_config = {
 }
 
 local map = myutils.map
+local aug = myutils.augroup
+
 map("n", "@r", { "w", "QuickRun" }, "cmd")
+aug({
+  haskell = {
+    "BufEnter",
+    "quickrun://output",
+    function()
+      map("n", "q", "quit", { "nowait", "buffer", "cmd" })
+    end,
+  },
+})

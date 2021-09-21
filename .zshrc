@@ -36,6 +36,9 @@ setopt AUTO_PARAM_KEYS
 # nvim alias
 alias nv="nvim"
 
+# stack
+alias ghci="stack ghci"
+
 # lazygit
 alias g="lazygit"
 
