@@ -86,6 +86,11 @@ require("lspconfig").nimls.setup({})
 -- Haskell (manual installed)
 opts.haskell = {
   capabilities = capabilities,
+  settings = {
+    haskell = {
+      formattingProvider = "stylish-haskell",
+    },
+  },
 }
 require("lspconfig").hls.setup(opts.haskell)
 
@@ -124,8 +129,7 @@ augroup({
     "nnoremap <buffer><nowait> q <cmd>bd<cr>",
   },
   format = {
-    { "BufWritePre", "*.lua,*.py,*.hs", "Format" },
-    { "BufWritePost", "*.json", "Format" },
+    { "BufWritePre", "*.lua,*.py,*.hs,*.json", "Format" },
   },
 })
 

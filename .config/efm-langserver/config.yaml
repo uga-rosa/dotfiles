@@ -4,15 +4,9 @@ root-markers:
   - .git/
 
 tools:
-  markdown-textlint: &markdown-textlint
-    lint-command: 'textlint -f unix --stdin --stdin-filename ${INPUT}'
-    lint-ignore-exit-code: true
-    lint-stdin: true
-    lint-formats:
-      - '%f:%l:%c: %m [%trror/%r]'
-
   fixjson: &fixjson
     format-command: 'fixjson'
+    format-stdin: true
 
   jsonlint: &jsonlint
     lint-command: 'jsonlint -c'
@@ -33,9 +27,6 @@ tools:
     format-stdin: true
 
 languages:
-  markdown:
-    - <<: *markdown-textlint
-
   json:
     - <<: *fixjson
     - <<: *jsonlint

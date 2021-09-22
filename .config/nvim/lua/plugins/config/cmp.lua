@@ -18,6 +18,7 @@ _G.source_list = function(arr)
     path = { name = "path" },
     lsp = { name = "nvim_lsp" },
     luasnip = { name = "luasnip" },
+    vsnip = { name = "vsnip" },
   }
   return vim.tbl_map(function(name)
     return config[name]
@@ -55,7 +56,8 @@ local lspkind = {
 cmp.setup({
   snippet = {
     expand = function(args)
-      require("luasnip").lsp_expand(args.body)
+      luasnip.lsp_expand(args.body)
+      -- vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   completion = {
@@ -74,6 +76,7 @@ cmp.setup({
         path = "[Path]",
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
+        vsnip = "[VSnip]",
       })[entry.source.name]
       vim_item.dup = ({
         buffer = 0,
@@ -92,4 +95,5 @@ cmp.setup({
     }),
   },
   sources = source_list({ "luasnip", "lsp", "buffer", "path" }),
+  -- sources = source_list({ "vsnip", "lsp", "buffer", "path" }),
 })
