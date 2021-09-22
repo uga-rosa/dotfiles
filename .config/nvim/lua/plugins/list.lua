@@ -75,13 +75,12 @@ return packer.startup({
     })
     -- fuzzy finder
     use({
-      "ibhagwan/fzf-lua",
+      "nvim-telescope/telescope.nvim",
       requires = {
-        "vijaymarupudi/nvim-fzf",
-        "kyazdani42/nvim-web-devicons",
-        { "junegunn/fzf", run = "./install --all" },
+        "nvim-lua/plenary.nvim",
+        { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
       },
-      config = 'require("plugins.config.fzf")',
+      config = 'require("plugins.config.telescope")',
     })
     -- treesitter
     use({
