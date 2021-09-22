@@ -82,27 +82,10 @@ cmp.setup({
     end,
   },
   mapping = {
-    ["<C-n>"] = cmp.mapping(function()
-      if luasnip.choice_active() then
-        luasnip.change_choice(1)
-      else
-        cmp.select_next_item()
-      end
-    end, {
-      "i",
-      "s",
-    }),
-    ["<C-p>"] = cmp.mapping(function()
-      if luasnip.choice_active() then
-        luasnip.change_choice(-1)
-      else
-        cmp.select_prev_item()
-      end
-    end, {
-      "i",
-      "s",
-    }),
+    ["<C-n>"] = cmp.mapping.select_next_item(),
+    ["<C-p>"] = cmp.mapping.select_prev_item(),
     ["<C-e>"] = cmp.mapping.close(),
+    ["<C-space>"] = cmp.mapping.complete(),
     ["<CR>"] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,

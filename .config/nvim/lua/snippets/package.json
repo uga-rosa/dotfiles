@@ -56,6 +56,12 @@
           "nim"
         ],
         "path": "./json/nim.json"
+      },
+      {
+        "language": [
+          "haskell"
+        ],
+        "path": "./json/haskell.json"
       }
     ]
   }

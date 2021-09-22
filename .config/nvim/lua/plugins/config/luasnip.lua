@@ -19,6 +19,14 @@ map({ "i", "s" }, "<C-k>", function(fallback)
   end
 end)
 
+map({ "i", "s" }, "<C-l>", function(fallback)
+  if luasnip.choice_active() then
+    luasnip.change_choice(1)
+  else
+    fallback()
+  end
+end)
+
 require("snippets")
 
 require("luasnip.loaders.from_vscode").load({
@@ -28,7 +36,7 @@ require("luasnip.loaders.from_vscode").load({
 augroup({
   luasnip_mysetting = {
     "TextChanged,InsertLeave",
-    "*.lua",
+    "*",
     function()
       luasnip.unlink_current_if_deleted()
     end,
