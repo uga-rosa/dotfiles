@@ -20,9 +20,9 @@ return packer.startup({
     use({ "bluz71/vim-nightfly-guicolors" })
     -- statusline
     use({
-      "NTBBloodbath/galaxyline.nvim",
+      "hoob3rt/lualine.nvim",
       requires = "kyazdani42/nvim-web-devicons",
-      config = 'require("plugins.config.galaxyline")',
+      config = 'require("plugins.config.lualine")',
     })
     -- filer
     use({
@@ -87,6 +87,7 @@ return packer.startup({
       "nvim-treesitter/nvim-treesitter",
       requires = {
         "nvim-treesitter/nvim-treesitter-textobjects",
+        "p00f/nvim-ts-rainbow",
         "David-Kunz/treesitter-unit",
       },
       run = ":TSUpdate",

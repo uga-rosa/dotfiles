@@ -27,6 +27,11 @@ require("nvim-treesitter.configs").setup({
       },
     },
   },
+  rainbow = {
+    enable = true,
+    extend_mode = true,
+    max_file_lines = nil,
+  },
 })
 
 map("x", "iu", ':lua require("treesitter-unit").select()<cr>', "noremap")

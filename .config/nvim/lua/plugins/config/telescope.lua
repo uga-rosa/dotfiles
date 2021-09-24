@@ -21,6 +21,7 @@ map("n", "<leader>h", "Telescope help_tags", "cmd")
 map("n", "<leader>m", "Telescope man_pages", "cmd")
 map("n", "<leader>rg", "Telescope live_grep", "cmd")
 map("n", "<leader>/", "Telescope current_buffer_fuzzy_find", "cmd")
+map("n", "<leader>t", "Telescope treesitter", "cmd")
 map("n", "q:", "Telescope command_history", "cmd")
 map("n", "q/", "Telescope search_history", "cmd")
 
