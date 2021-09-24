@@ -15,9 +15,9 @@ return packer.startup({
       config = 'pcall(require, "impatient")',
     })
     -- itself
-    use({ "wbthomason/packer.nvim" })
+    use({ "wbthomason/packer.nvim", opt = true })
     -- colorscheme
-    use({ "bluz71/vim-nightfly-guicolors" })
+    use("bluz71/vim-nightfly-guicolors")
     -- statusline
     use({
       "hoob3rt/lualine.nvim",
