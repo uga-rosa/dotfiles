@@ -1,18 +1,18 @@
-local lualine_loaded = false
+local loaded = false
 
-if lualine_loaded then
+if loaded then
   return
 end
-lualine_loaded = true
+loaded = true
+
+local f = vim.fn
 
 -- reset
 local sections = {
-  lualine_a = {},
   lualine_b = {},
   lualine_c = {},
   lualine_x = {},
   lualine_y = {},
-  lualine_z = {},
 }
 
 -- insert component
@@ -21,13 +21,18 @@ local lhs = function(component)
 end
 
 local rhs = function(component)
-  sections.lualine_z[#sections.lualine_z + 1] = component
+  sections.lualine_x[#sections.lualine_x + 1] = component
+end
+
+-- highlight setting
+local highlight_set = function(name, fg, bg)
+  vim.cmd(("highlight! %s guifg=%s guibg=%s"):format(name, fg, bg))
 end
 
 local icons = {
   diagnostic = {
     error = "  ",
-    warning = "  ",
+    warn = "  ",
     hint = "  ",
     info = "  ",
   },
@@ -36,7 +41,6 @@ local icons = {
     changed = " ",
     removed = " ",
   },
-  git = " ",
 }
 
 local colors = {
@@ -67,53 +71,150 @@ local colors = {
   green = "#a1cd5e",
 }
 
-local highlight_set = function(name, fg, bg)
-  vim.cmd(("highlight %s guifg=%s guibg=%s"):format(name, fg, bg))
-end
+-- theme
+local theme = {
+  replace = {
+    a = { fg = colors.purple, bg = colors.watermelon, gui = "bold" },
+    b = { fg = colors.white_blue, bg = colors.bg },
+  },
+  inactive = {
+    a = { fg = colors.cadet_blue, bg = colors.bg, gui = "bold" },
+    b = { fg = colors.cadet_blue, bg = colors.bg },
+    c = { fg = colors.cadet_blue, bg = colors.bg },
+  },
+  normal = {
+    a = { fg = colors.dark_blue, bg = colors.blue, gui = "bold" },
+    b = { fg = colors.white_blue, bg = colors.bg },
+    c = { fg = colors.white_blue, bg = colors.bg },
+  },
+  visual = {
+    a = { fg = colors.dark_blue, bg = colors.purple, gui = "bold" },
+    b = { fg = colors.white_blue, bg = colors.bg },
+  },
+  insert = {
+    a = { fg = colors.dark_blue, bg = colors.white_blue, gui = "bold" },
+    b = { fg = colors.white_blue, bg = colors.bg },
+  },
+}
 
+-- file name & icon
+lhs({
+  function()
+    local name, ext = f.expand("%:t"), f.expand("%:e")
+    if name == "" then
+      return
+    end
+    local icon, icon_color = require("nvim-web-devicons").get_icon_color(name, ext, { default = true })
+    if not icon then
+      return
+    end
+    highlight_set("LualineIcon", icon_color, colors.bg)
+    return icon
+  end,
+  color = "LualineIcon",
+})
+
+lhs({
+  function()
+    return f.expand("%:t")
+  end,
+  color = { fg = colors.violet },
+})
+
+lhs({
+  "diagnostics",
+  sources = { "nvim_lsp" },
+  symbols = icons.diagnostic,
+  color_error = colors.red,
+  color_warn = colors.yellow,
+  color_info = colors.blue,
+})
+
+----------
+-- center
+lhs({
+  function()
+    return "%="
+  end,
+})
+
+-- lsp servers
+lhs({
+  function()
+    local buf_ft = vim.bo.filetype
+    local lsp = vim.tbl_map(function(client)
+      local filetypes = client.config.filetypes
+      if vim.tbl_contains(filetypes, buf_ft) then
+        return client.name
+      end
+    end, vim.lsp.get_active_clients())
+    return table.concat(lsp, "; ")
+  end,
+  icon = " LSP:",
+  color = { fg = colors.turquoise },
+})
+
+----------
+-- right
+
+-- git branch
+rhs({
+  "branch",
+  color = { fg = colors.violet },
+})
+
+-- git diff
+rhs({
+  function()
+    local status = vim.b.gitsigns_status_dict
+    if not status then
+      return
+    end
+    local added = status.added
+    if added and added ~= 0 then
+      return icons.diff.added .. added
+    end
+  end,
+  color = "git_added",
+})
 highlight_set("git_added", colors.emerald, colors.bg)
+
+rhs({
+  function()
+    local status = vim.b.gitsigns_status_dict
+    if not status then
+      return
+    end
+    local changed = status.changed
+    if changed and changed ~= 0 then
+      return icons.diff.changed .. changed
+    end
+  end,
+  color = "git_changed",
+})
 highlight_set("git_changed", colors.yellow, colors.bg)
+
+rhs({
+  function()
+    local status = vim.b.gitsigns_status_dict
+    if not status then
+      return
+    end
+    local removed = status.removed
+    if removed and removed ~= 0 then
+      return icons.diff.removed .. removed
+    end
+  end,
+  color = "git_removed",
+})
 highlight_set("git_removed", colors.red, colors.bg)
 
-local git_added = function()
-  local status = vim.b.gitsigns_status_dict
-  if not status then
-    return
-  end
-  local added = status.added
-  if added and added ~= 0 then
-    return icons.diff.added .. added
-  end
-end
-
-local git_changed = function()
-  local status = vim.b.gitsigns_status_dict
-  if not status then
-    return
-  end
-  local changed = status.changed
-  if changed and changed ~= 0 then
-    return icons.diff.changed .. changed
-  end
-end
-
-local git_removed = function()
-  local status = vim.b.gitsigns_status_dict
-  if not status then
-    return
-  end
-  local removed = status.removed
-  if removed and removed ~= 0 then
-    return icons.diff.removed .. removed
-  end
-end
-
-lhs({ git_added, color = "git_added" })
-lhs({ git_changed, color = "git_changed" })
-lhs({ git_removed, color = "git_removed" })
-
+-- initialize
 require("lualine").setup({
   options = {
+    component_separators = "",
+    section_separators = { "", "" },
+    theme = theme,
     disabled_filetypes = { "filittle" },
   },
   sections = sections,

@@ -21,12 +21,13 @@ return packer.startup({
     -- statusline
     use({
       "hoob3rt/lualine.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
+      requires = "uga-rosa/nvim-web-devicons",
       config = 'require("plugins.config.lualine")',
     })
     -- filer
     use({
       "uga-rosa/filittle.nvim",
+      requires = "uga-rosa/nvim-web-devicons",
       config = 'require("plugins.config.other").filittle()',
     })
     -- colorizer
