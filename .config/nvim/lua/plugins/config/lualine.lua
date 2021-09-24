@@ -45,16 +45,8 @@ local icons = {
 
 local colors = {
   bg = "#1d3b53",
-  black_blue = "#081e2f",
   dark_blue = "#092236",
-  deep_blue = "#0e293f",
-  slate_blue = "#2c3043",
-  regal_blue = "#1d3b53",
-  cyan_blue = "#296596",
-  steel_blue = "#4b6479",
-  grey_blue = "#7c8f8f",
   cadet_blue = "#a1aab8",
-  ash_blue = "#acb4c2",
   white_blue = "#d6deeb",
   yellow = "#e3d18a",
   peach = "#ffcb8b",
@@ -164,47 +156,33 @@ rhs({
 })
 
 -- git diff
-rhs({
-  function()
+local git_diff = function(kind)
+  return function()
     local status = vim.b.gitsigns_status_dict
     if not status then
       return
     end
-    local added = status.added
-    if added and added ~= 0 then
-      return icons.diff.added .. added
+    local count = status[kind]
+    if count and count ~= 0 then
+      return icons.diff[kind] .. count
     end
-  end,
+  end
+end
+
+rhs({
+  git_diff("added"),
   color = "git_added",
 })
 highlight_set("git_added", colors.emerald, colors.bg)
 
 rhs({
-  function()
-    local status = vim.b.gitsigns_status_dict
-    if not status then
-      return
-    end
-    local changed = status.changed
-    if changed and changed ~= 0 then
-      return icons.diff.changed .. changed
-    end
-  end,
+  git_diff("changed"),
   color = "git_changed",
 })
 highlight_set("git_changed", colors.yellow, colors.bg)
 
 rhs({
-  function()
-    local status = vim.b.gitsigns_status_dict
-    if not status then
-      return
-    end
-    local removed = status.removed
-    if removed and removed ~= 0 then
-      return icons.diff.removed .. removed
-    end
-  end,
+  git_diff("removed"),
   color = "git_removed",
 })
 highlight_set("git_removed", colors.red, colors.bg)
