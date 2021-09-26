@@ -133,14 +133,11 @@ lhs({
 -- lsp servers
 lhs({
   function()
-    local buf_ft = vim.bo.filetype
-    local lsp = vim.tbl_map(function(client)
-      local filetypes = client.config.filetypes
-      if vim.tbl_contains(filetypes, buf_ft) then
-        return client.name
-      end
-    end, vim.lsp.get_active_clients())
-    return table.concat(lsp, "; ")
+    local clients = {}
+    for _, client in pairs(vim.lsp.buf_get_clients(0)) do
+      clients[#clients + 1] = client.name
+    end
+    return table.concat(clients, "; ")
   end,
   icon = " LSP:",
   color = { fg = colors.turquoise },
