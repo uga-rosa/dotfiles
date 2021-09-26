@@ -14,6 +14,8 @@ return packer.startup({
       rocks = "mpack",
       config = 'pcall(require, "impatient")',
     })
+    -- faster filetype.vim
+    use("nathom/filetype.nvim")
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
     -- colorscheme
