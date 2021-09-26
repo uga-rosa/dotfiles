@@ -20,6 +20,7 @@ vim.o.termguicolors = true
 vim.o.clipboard = "unnamedplus"
 vim.o.inccommand = "split"
 vim.o.signcolumn = "yes"
+vim.o.dictionary = "~/dotfiles/doc/vim_dictionary"
 
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0

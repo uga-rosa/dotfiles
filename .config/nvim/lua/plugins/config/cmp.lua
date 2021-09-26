@@ -18,7 +18,7 @@ _G.source_list = function(arr)
     path = { name = "path" },
     lsp = { name = "nvim_lsp" },
     luasnip = { name = "luasnip" },
-    vsnip = { name = "vsnip" },
+    dictionary = { name = "user_dictionary" },
   }
   return vim.tbl_map(function(name)
     return config[name]
@@ -57,7 +57,6 @@ cmp.setup({
   snippet = {
     expand = function(args)
       luasnip.lsp_expand(args.body)
-      -- vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   completion = {
@@ -76,7 +75,7 @@ cmp.setup({
         path = "[Path]",
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
-        vsnip = "[VSnip]",
+        user_dictionary = "[Dictionary]",
       })[entry.source.name]
       vim_item.dup = ({
         buffer = 0,
@@ -94,6 +93,7 @@ cmp.setup({
       select = true,
     }),
   },
-  sources = source_list({ "luasnip", "lsp", "buffer", "path" }),
-  -- sources = source_list({ "vsnip", "lsp", "buffer", "path" }),
+  sources = source_list({ "luasnip", "lsp", "buffer", "path", "dictionary" }),
 })
+
+require("cmp.utils.highlight").inherit("CmpItemAbbrMatchFuzzy", "Normal", { guibg = "NONE" })

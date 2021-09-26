@@ -10,5 +10,5 @@ end
 
 require("myplug").setup()
 
-vim.g.nightflyItalics = 0
+vim.g.nightflyItalics = false
 pcall(vim.cmd, "colorscheme nightfly")

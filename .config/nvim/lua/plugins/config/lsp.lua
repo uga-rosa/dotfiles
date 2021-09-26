@@ -42,7 +42,7 @@ opts.lua = luadev.setup({
 })
 
 opts.efm = setmetatable({
-  filetypes = { "markdown", "json", "lua", "python", "sh" },
+  filetypes = { "json", "lua", "python", "sh" },
 }, { __index = default })
 
 opts.bash = setmetatable({
@@ -81,17 +81,18 @@ for _, server in ipairs(lspinstall.installed_servers()) do
 end
 
 -- Nim (manual installed)
-require("lspconfig").nimls.setup({})
+require("lspconfig").nimls.setup(default)
 
 -- Haskell (manual installed)
-opts.haskell = {
-  capabilities = capabilities,
+opts.haskell = setmetatable({
   settings = {
     haskell = {
       formattingProvider = "stylish-haskell",
     },
   },
-}
+}, {
+  __index = default,
+})
 require("lspconfig").hls.setup(opts.haskell)
 
 -- format

@@ -147,3 +147,7 @@ end
 myutils.eval = function(inStr)
   return assert(load(inStr))()
 end
+
+_G.dump = function(ctx)
+  print(vim.inspect(ctx))
+end
