@@ -95,5 +95,3 @@ cmp.setup({
   },
   sources = source_list({ "luasnip", "lsp", "buffer", "path", "dictionary" }),
 })
-
-require("cmp.utils.highlight").inherit("CmpItemAbbrMatchFuzzy", "Normal", { guibg = "NONE" })

@@ -1,8 +1,23 @@
 local fn = vim.fn
 local map = myutils.map
 local map_conv = myutils.map_conv
+local feedkey = myutils.feedkey
 
 vim.g.mapleader = " "
+
+-- no delay jj
+map("i", "j", function()
+  local before_char = function()
+    local line = vim.api.nvim_get_current_line()
+    local pos = vim.fn.col(".")
+    return line:sub(pos - 1, pos - 1)
+  end
+  if before_char() == "j" then
+    feedkey("<esc>x", "n")
+  else
+    feedkey("j", "n")
+  end
+end)
 
 map("n", "<esc><esc>", "nohlsearch", { "noremap", "cmd" })
 map("n", "<leader><cr>", "o<esc>", "noremap")
