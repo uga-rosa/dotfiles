@@ -13,7 +13,7 @@ map("i", "j", function()
     return line:sub(pos - 1, pos - 1)
   end
   if before_char() == "j" then
-    feedkey("<esc>x", "n")
+    feedkey("<bs><esc>", "n")
   else
     feedkey("j", "n")
   end

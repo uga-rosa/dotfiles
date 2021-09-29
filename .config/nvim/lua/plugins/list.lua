@@ -45,7 +45,6 @@ return packer.startup({
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
         "saadparwaiz1/cmp_luasnip",
-        -- "hrsh7th/cmp-vsnip",
       },
       branch = "custom-menu",
       config = 'require("plugins.config.cmp")',
@@ -61,10 +60,6 @@ return packer.startup({
       "L3MON4D3/LuaSnip",
       config = 'require("plugins.config.luasnip")',
     })
-    -- use({
-    --   "hrsh7th/vim-vsnip",
-    --   config = 'require("plugins.config.vsnip")',
-    -- })
     -- LSP
     use({
       "neovim/nvim-lspconfig",
@@ -101,7 +96,10 @@ return packer.startup({
     use({
       "TimUntersberger/neogit",
       key = "Neogit",
-      requires = "nvim-lua/plenary.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "sindrets/diffview.nvim",
+      },
       setup = 'require("plugins.config.neogit").setup()',
       config = 'require("plugins.config.neogit").config()',
     })
