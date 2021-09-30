@@ -70,7 +70,7 @@ local servers = {
   "rust_analyzer",
   "pyright",
   "bashls",
-  -- "hls",
+  "hls",
   "efm",
   "vimls",
 }
