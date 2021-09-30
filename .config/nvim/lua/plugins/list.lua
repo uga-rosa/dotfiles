@@ -45,6 +45,7 @@ return packer.startup({
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
         "saadparwaiz1/cmp_luasnip",
+        "uga-rosa/cmp-dictionary",
       },
       branch = "custom-menu",
       config = 'require("plugins.config.cmp")',

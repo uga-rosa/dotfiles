@@ -79,7 +79,7 @@ cmp.setup({
         path = "[Path]",
         nvim_lsp = "[LSP]",
         luasnip = "[LuaSnip]",
-        user_dictionary = "[Dictionary]",
+        dictionary = "[Dictionary]",
       })[entry.source.name]
       vim_item.dup = ({
         buffer = 0,
