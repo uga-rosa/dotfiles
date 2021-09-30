@@ -1,7 +1,7 @@
-local lspinstall = require("lspinstall")
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local lspconfig = require("lspconfig")
+local lspinstaller = require("nvim-lsp-installer")
 local luadev = require("lua-dev")
+local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local saga = require("lspsaga")
 local sign = require("lsp_signature")
 
@@ -37,54 +37,24 @@ local default = {
 
 local opts = {}
 
-opts.lua = luadev.setup({
-  lspconfig = default,
-})
+opts.sumneko_lua = {
+  luadev.setup({
+    library = {
+      plugins = false,
+    },
+    lspconfig = default,
+  }),
+}
 
 opts.efm = setmetatable({
   filetypes = { "json", "lua", "python", "sh" },
 }, { __index = default })
 
-opts.bash = setmetatable({
+opts.bashls = setmetatable({
   filetypes = { "sh", "zsh" },
 }, { __index = default })
 
--- automatically install
-local servers = { "lua", "rust", "python", "bash", "efm", "vim", "typescript" }
-
-local uninstalled = (function()
-  local installed = lspinstall.installed_servers()
-  return vim.tbl_filter(function(v)
-    return not vim.tbl_contains(installed, v)
-  end, servers)
-end)()
-
-for _, lsp in ipairs(uninstalled) do
-  lspinstall.install_server(lsp)
-end
-
--- reinstall command
-command({
-  "LspReinstallAll",
-  function()
-    for _, v in ipairs(lspinstall.installed_servers()) do
-      lspinstall.install_server(v)
-    end
-  end,
-})
-
--- setup
-lspinstall.setup()
-for _, server in ipairs(lspinstall.installed_servers()) do
-  local opt = opts[server] or default
-  lspconfig[server].setup(opt)
-end
-
--- Nim (manual installed)
-require("lspconfig").nimls.setup(default)
-
--- Haskell (manual installed)
-opts.haskell = setmetatable({
+opts.hls = setmetatable({
   settings = {
     haskell = {
       formattingProvider = "stylish-haskell",
@@ -93,7 +63,37 @@ opts.haskell = setmetatable({
 }, {
   __index = default,
 })
-require("lspconfig").hls.setup(opts.haskell)
+
+-- automatically install
+local servers = {
+  "sumneko_lua",
+  "rust_analyzer",
+  "pyright",
+  "bashls",
+  -- "hls",
+  "efm",
+  "vimls",
+}
+
+local installed = vim.tbl_map(function(server)
+  return server.name
+end, lspinstaller.get_installed_servers())
+
+for _, server in ipairs(servers) do
+  if not vim.tbl_contains(installed, server) then
+    lspinstaller.install(server)
+  end
+end
+
+-- setup
+lspinstaller.on_server_ready(function(server)
+  local opt = opts[server.name] or default
+  server:setup(opt)
+  vim.cmd([[do User LspAttachBuffers]])
+end)
+
+-- Nim (manual installed)
+lspconfig.nimls.setup(default)
 
 -- format
 local nim_format = function()

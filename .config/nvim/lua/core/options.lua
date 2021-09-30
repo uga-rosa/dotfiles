@@ -1,26 +1,26 @@
 local augroup = myutils.augroup
 local map = myutils.map
 
-vim.o.fileencoding = "utf-8"
-vim.o.hidden = true
-vim.o.title = true
-vim.o.number = true
-vim.o.relativenumber = true
-vim.o.showmatch = true
-vim.o.expandtab = true
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
-vim.o.softtabstop = 2
-vim.o.smartindent = true
-vim.o.swapfile = false
-vim.o.scrolloff = 3
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.o.termguicolors = true
-vim.o.clipboard = "unnamedplus"
-vim.o.inccommand = "split"
-vim.o.signcolumn = "yes"
-vim.o.dictionary = "~/dotfiles/doc/vim_dictionary"
+vim.opt.fileencoding = "utf-8"
+vim.opt.hidden = true
+vim.opt.title = true
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.showmatch = true
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.softtabstop = 2
+vim.opt.smartindent = true
+vim.opt.swapfile = false
+vim.opt.scrolloff = 3
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.termguicolors = true
+vim.opt.clipboard = "unnamedplus"
+vim.opt.inccommand = "split"
+vim.opt.signcolumn = "yes"
+vim.opt.dictionary:append("/usr/share/dict/words")
 
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0

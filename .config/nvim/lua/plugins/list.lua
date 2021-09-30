@@ -64,7 +64,7 @@ return packer.startup({
     use({
       "neovim/nvim-lspconfig",
       requires = {
-        "kabouzeid/nvim-lspinstall",
+        "williamboman/nvim-lsp-installer",
         "folke/lua-dev.nvim",
         "glepnir/lspsaga.nvim",
         "ray-x/lsp_signature.nvim",

@@ -18,7 +18,11 @@ _G.source_list = function(arr)
     path = { name = "path" },
     lsp = { name = "nvim_lsp" },
     luasnip = { name = "luasnip" },
-    dictionary = { name = "user_dictionary" },
+    dictionary = {
+      name = "user_dictionary",
+      keyword_length = 2,
+    },
+    base = { name = "base_conversion" },
   }
   return vim.tbl_map(function(name)
     return config[name]
@@ -79,6 +83,7 @@ cmp.setup({
       })[entry.source.name]
       vim_item.dup = ({
         buffer = 0,
+        user_dictionary = 0,
       })[entry.source.name] or 1
       return vim_item
     end,
@@ -93,5 +98,5 @@ cmp.setup({
       select = true,
     }),
   },
-  sources = source_list({ "luasnip", "lsp", "buffer", "path", "dictionary" }),
+  sources = source_list({ "luasnip", "lsp", "path", "buffer", "dictionary", "base" }),
 })
