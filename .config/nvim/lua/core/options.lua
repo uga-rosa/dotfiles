@@ -39,14 +39,15 @@ vim.g.did_load_filetypes = 1
 
 augroup({
   myfiletype = {
-    { "BufNewFile,BufRead", "*.inp", "set ft=packmol" },
-    { "BufNewFile,BufRead", "*.saty,*.satyh", "set ft=satysfi" },
-    { "BufNewFile,BufRead", "*.snip", "set ft=snip" },
+    { "BufNewFile,BufRead", "*.inp", "se ft=packmol" },
+    { "BufNewFile,BufRead", "*.saty,*.satyh", "se ft=satysfi" },
+    { "BufNewFile,BufRead", "*.snip", "se ft=snip" },
+    { "BufNewFile,BufRead", "*.yaml", "se ft=yaml.ansible" },
   },
   nim = {
     { "FileType", "nim", "setl foldmethod=manual" },
   },
-  nocomment = { "BufEnter", "*", "setlocal formatoptions-=ro" },
+  nocomment = { "BufEnter", "*", "setl formatoptions-=ro" },
   quit_help = {
     "FileType",
     "help,qf",
@@ -55,8 +56,7 @@ augroup({
     end,
   },
   indent4 = {
-    { "FileType", "python", "setlocal tabstop=4" },
-    { "FileType", "python", "setlocal shiftwidth=4" },
+    { "FileType", "python", "setl ts=4 sw=4" },
   },
   RemoveTrailingWhitespace = {
     "BufWrite",

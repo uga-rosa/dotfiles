@@ -19,7 +19,7 @@ _G.source_list = function(arr)
     lsp = { name = "nvim_lsp" },
     luasnip = { name = "luasnip" },
     dictionary = {
-      name = "user_dictionary",
+      name = "dictionary",
       keyword_length = 2,
     },
     base = { name = "base_conversion" },

@@ -93,32 +93,22 @@ lspinstaller.on_server_ready(function(server)
 end)
 
 -- Nim (manual installed)
-lspconfig.nimls.setup(default)
+opts.nimls = setmetatable({
+  settings = {
+    nim = {
+      nimprettyMaxLineLen = 120,
+    },
+  },
+}, {
+  __index = default,
+})
+lspconfig.nimls.setup(opts.nimls)
 
 -- format
-local nim_format = function()
-  vim.loop.spawn(
-    "nimpretty",
-    { args = { "--indent:2", "--maxLineLen:120", vim.fn.expand("%:p") } },
-    vim.schedule_wrap(function(code, _)
-      if code == 0 then
-        vim.cmd("e")
-        print("Format success")
-      else
-        print("Format failure")
-      end
-    end)
-  )
-end
-
 command({
   "-bar",
   "Format",
   function()
-    if vim.bo.filetype == "nim" then
-      nim_format()
-      return
-    end
     vim.lsp.buf.formatting_sync()
   end,
 })

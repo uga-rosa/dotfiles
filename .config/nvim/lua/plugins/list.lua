@@ -14,10 +14,10 @@ return packer.startup({
       rocks = "mpack",
       config = 'pcall(require, "impatient")',
     })
-    -- faster filetype.vim
-    use("nathom/filetype.nvim")
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
+    -- faster filetype.vim
+    use("nathom/filetype.nvim")
     -- colorscheme
     use("bluz71/vim-nightfly-guicolors")
     -- statusline
@@ -155,6 +155,11 @@ return packer.startup({
       "simrat39/rust-tools.nvim",
       ft = "rust",
       config = 'require("rust-tools").setup({})',
+    })
+    -- yaml
+    use({
+      "pearofducks/ansible-vim",
+      ft = "yaml.ansible",
     })
     -- SATySFi
     use({
