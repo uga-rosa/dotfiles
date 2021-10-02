@@ -23,21 +23,3 @@ endsnippet
 snippet lreq
 local ${1:var} = require("${2:module}")
 endsnippet
-
-snippet cl
-${1:classname} = {}
-
-$1.${2:new} = function($3)
-  local ${4:varName} = ${5:{}}
-
-  ${6:--code}
-
-  return $4
-end
-endsnippet
-
-snippet lfun
-local ${1:name} = function($2)
-  $0
-end
-endsnippet

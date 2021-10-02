@@ -48,31 +48,5 @@
     "body": [
       "local ${1:var} = require(\"${2:module}\")"
     ]
-  },
-  "cl": {
-    "prefix": [
-      "cl"
-    ],
-    "body": [
-      "${1:classname} = {}",
-      "",
-      "$1.${2:new} = function($3)",
-      "  local ${4:varName} = ${5:{}}",
-      "",
-      "  ${6:--code}",
-      "",
-      "  return $4",
-      "end"
-    ]
-  },
-  "lfun": {
-    "prefix": [
-      "lfun"
-    ],
-    "body": [
-      "local ${1:name} = function($2)",
-      "  $0",
-      "end"
-    ]
   }
 }

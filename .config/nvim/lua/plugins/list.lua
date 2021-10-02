@@ -17,7 +17,7 @@ return packer.startup({
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
     -- faster filetype.vim
-    use("nathom/filetype.nvim")
+    -- use("nathom/filetype.nvim")
     -- colorscheme
     use("bluz71/vim-nightfly-guicolors")
     -- statusline
@@ -36,6 +36,13 @@ return packer.startup({
     use({
       "norcalli/nvim-colorizer.lua",
       config = 'require("plugins.config.other").colorizer()',
+    })
+    -- coc
+    use({
+      "neoclide/coc.nvim",
+      branch = "master",
+      run = "yarn install --frozen-lockfile",
+      config = 'require("plugins.config.coc")',
     })
     -- completion
     use({
@@ -66,7 +73,6 @@ return packer.startup({
       "neovim/nvim-lspconfig",
       requires = {
         "williamboman/nvim-lsp-installer",
-        "folke/lua-dev.nvim",
         "glepnir/lspsaga.nvim",
         "ray-x/lsp_signature.nvim",
       },

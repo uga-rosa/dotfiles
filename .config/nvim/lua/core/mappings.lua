@@ -6,16 +6,16 @@ local feedkey = myutils.feedkey
 vim.g.mapleader = " "
 
 -- no delay jj
-map("i", "j", function()
-  local before_char = function()
+map("i", "j", function(fallback)
+  local function before_char()
     local line = vim.api.nvim_get_current_line()
     local pos = vim.fn.col(".")
     return line:sub(pos - 1, pos - 1)
   end
   if before_char() == "j" then
-    feedkey("<bs><esc>", "n")
+    feedkey("<bs><esc>", "m")
   else
-    feedkey("j", "n")
+    fallback()
   end
 end)
 

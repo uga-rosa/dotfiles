@@ -1,3 +1,6 @@
+local api = vim.api
+local cmd = vim.cmd
+
 _G.myutils = {}
 
 _G.myluafunc = setmetatable({}, {
@@ -6,14 +9,10 @@ _G.myluafunc = setmetatable({}, {
   end,
 })
 
-local api = vim.api
-local cmd = vim.cmd
-
----Return a string for vim from a lua function.
----Functions are stored in _G.myluafunc.
+---Return a string for vim from a lua function. Functions are stored in _G.myluafunc.
 ---@param func function
 ---@return string VimFunctionString
-local func2str = function(func)
+local function func2str(func)
   local idx = #_G.myluafunc + 1
   _G.myluafunc[idx] = func
   return ("lua myluafunc(%s)"):format(idx)
@@ -27,23 +26,21 @@ myutils.feedkey = function(key, mode)
   api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
-local fallback = function(key, mode)
+local function fallback(key)
   return function()
-    myutils.feedkey(key, mode)
+    myutils.feedkey(key, "n")
   end
 end
 
 ---API for key mapping.
----
 ---@param lhs string
 ---@param modes string|table
----@param rhs string|function|table
+---@param rhs string|fun(fallback: function|nil)|table
 ---@param opts string|table
 --- opts.buffer: current buffer only
 --- opts.cmd: command (format to <cmd>%s<cr>)
 myutils.map = function(modes, lhs, rhs, opts)
   opts = opts or {}
-
   opts = type(opts) == "string" and { opts } or opts
   for key, opt in ipairs(opts) do
     opts[opt] = true
@@ -96,7 +93,6 @@ myutils.map = function(modes, lhs, rhs, opts)
 end
 
 ---Exchange of two key
----
 ---@param modes any
 ---@param a string
 ---@param b string
@@ -107,7 +103,6 @@ myutils.map_conv = function(modes, a, b, opts)
 end
 
 ---API for autocmd. Supports for a lua funcion.
----
 ---@param au table
 myutils.autocmd = function(au)
   if type(au[#au]) == "function" then
@@ -117,7 +112,6 @@ myutils.autocmd = function(au)
 end
 
 ---API for augroup. Supports for a lua function.
----
 ---@param augrps table
 -- augrps key: group name, value: an argument of utils.autocmd
 myutils.augroup = function(augrps)
@@ -136,7 +130,6 @@ myutils.augroup = function(augrps)
 end
 
 ---API for command. Supports for a lua function
----
 ---@param command string|table
 myutils.command = function(command)
   if type(command) == "table" then
@@ -153,6 +146,14 @@ end
 ---@return any ReturnFunction
 myutils.eval = function(inStr)
   return assert(load(inStr))()
+end
+
+myutils.getkeys = function(t)
+  local res = {}
+  for k, _ in pairs(t) do
+    res[#res + 1] = k
+  end
+  return res
 end
 
 _G.dump = function(ctx)

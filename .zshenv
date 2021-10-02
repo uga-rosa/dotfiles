@@ -29,3 +29,7 @@ export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
 
 # nim
 export PATH="$PATH:$HOME/.nimble/bin"
+
+# lua
+eval $(luarocks path)
+export LUA_PATH="$LUA_PATH;$HOME/.lua/share/?.lua"

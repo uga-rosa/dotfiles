@@ -27,6 +27,11 @@ map({ "i", "s" }, "<C-l>", function(fallback)
   end
 end)
 
+map({ "i", "s" }, "<esc>", function(fallback)
+  -- luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] = nil
+  fallback()
+end)
+
 require("snippets")
 
 require("luasnip.loaders.from_vscode").load({

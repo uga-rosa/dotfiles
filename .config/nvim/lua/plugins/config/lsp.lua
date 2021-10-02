@@ -1,10 +1,10 @@
 local lspconfig = require("lspconfig")
 local lspinstaller = require("nvim-lsp-installer")
-local luadev = require("lua-dev")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local saga = require("lspsaga")
 local sign = require("lsp_signature")
 
+local f = vim.fn
 local map = myutils.map
 local command = myutils.command
 local augroup = myutils.augroup
@@ -28,31 +28,70 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
   },
 }
 
-local default = {
-  capabilities = capabilities,
-  on_attach = function()
-    sign.on_attach()
-  end,
+local opts = {
+  default = {
+    capabilities = capabilities,
+    on_attach = function()
+      sign.on_attach()
+    end,
+  },
 }
 
-local opts = {}
+local library = (function()
+  local res = {}
 
-opts.sumneko_lua = {
-  luadev.setup({
-    library = {
-      plugins = false,
+  local function add(lib, filter)
+    local paths = f.expand(lib .. "/lua", false, true)
+    for i = 1, #paths do
+      local p = vim.loop.fs_realpath(paths[i])
+      if p then
+        res[p] = not filter or filter[f.fnamemodify(p, ":h:t")]
+      end
+    end
+  end
+
+  add("$VIMRUNTIME")
+
+  add("~/.local/share/nvim/site/pack/*/start/*")
+  add("~/.local/share/nvim/site/pack/*/opt/*")
+
+  return res
+end)()
+
+local runtime_path = {}
+runtime_path[#runtime_path + 1] = "lua/?.lua"
+runtime_path[#runtime_path + 1] = "lua/?/init.lua"
+for i = 1, #library do
+  runtime_path[#runtime_path + 1] = library[i] .. "/?.lua"
+  runtime_path[#runtime_path + 1] = library[i] .. "/?/init.lua"
+end
+
+opts.sumneko_lua = setmetatable({
+  settings = {
+    Lua = {
+      runtime = {
+        version = "lua 5.4",
+        path = runtime_path,
+      },
+      workspace = {
+        library = library,
+        maxPreload = 1000,
+        preloadFileSize = 150,
+      },
+      telemetry = { enable = false },
     },
-    lspconfig = default,
-  }),
-}
+  },
+}, {
+  __index = opts.default,
+})
 
 opts.efm = setmetatable({
   filetypes = { "json", "lua", "python", "sh" },
-}, { __index = default })
+}, { __index = opts.default })
 
 opts.bashls = setmetatable({
   filetypes = { "sh", "zsh" },
-}, { __index = default })
+}, { __index = opts.default })
 
 opts.hls = setmetatable({
   settings = {
@@ -61,7 +100,7 @@ opts.hls = setmetatable({
     },
   },
 }, {
-  __index = default,
+  __index = opts.default,
 })
 
 -- automatically install
@@ -87,7 +126,7 @@ end
 
 -- setup
 lspinstaller.on_server_ready(function(server)
-  local opt = opts[server.name] or default
+  local opt = opts[server.name] or opts.default
   server:setup(opt)
   vim.cmd([[do User LspAttachBuffers]])
 end)
@@ -100,18 +139,12 @@ opts.nimls = setmetatable({
     },
   },
 }, {
-  __index = default,
+  __index = opts.default,
 })
 lspconfig.nimls.setup(opts.nimls)
 
 -- format
-command({
-  "-bar",
-  "Format",
-  function()
-    vim.lsp.buf.formatting_sync()
-  end,
-})
+command({ "Format", vim.lsp.buf.formatting_sync })
 
 augroup({
   lspinfo = {
