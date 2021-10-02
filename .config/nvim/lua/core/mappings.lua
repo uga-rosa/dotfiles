@@ -5,7 +5,6 @@ local feedkey = myutils.feedkey
 
 vim.g.mapleader = " "
 
--- no delay jj
 map("i", "j", function(fallback)
   local function before_char()
     local line = vim.api.nvim_get_current_line()
@@ -17,6 +16,10 @@ map("i", "j", function(fallback)
   else
     fallback()
   end
+end)
+
+map("n", "<M-h>", function()
+  vim.cmd("h " .. fn.expand("<cword>"))
 end)
 
 map("n", "<esc><esc>", "nohlsearch", { "noremap", "cmd" })

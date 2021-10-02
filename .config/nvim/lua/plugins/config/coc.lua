@@ -1,5 +1,7 @@
 local command = myutils.command
 
+vim.g.coc_start_at_startup = 0
+
 command({
   "Switch2coc",
   function()

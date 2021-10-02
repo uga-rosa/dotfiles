@@ -41,7 +41,7 @@ local library = (function()
   local res = {}
 
   local function add(lib, filter)
-    local paths = f.expand(lib .. "/lua", false, true)
+    local paths = f.expand(lib, false, true)
     for i = 1, #paths do
       local p = vim.loop.fs_realpath(paths[i])
       if p then
@@ -50,10 +50,16 @@ local library = (function()
     end
   end
 
-  add("$VIMRUNTIME")
+  add("$VIMRUNTIME/lua")
 
-  add("~/.local/share/nvim/site/pack/*/start/*")
-  add("~/.local/share/nvim/site/pack/*/opt/*")
+  local filter = {
+    ["plenary.nvim"] = true,
+  }
+
+  add("~/.local/share/nvim/site/pack/*/start/*/lua", filter)
+  add("~/.local/share/nvim/site/pack/*/opt/*/lua", filter)
+
+  add("~/.lua/5.4/share")
 
   return res
 end)()
@@ -61,9 +67,9 @@ end)()
 local runtime_path = {}
 runtime_path[#runtime_path + 1] = "lua/?.lua"
 runtime_path[#runtime_path + 1] = "lua/?/init.lua"
-for i = 1, #library do
-  runtime_path[#runtime_path + 1] = library[i] .. "/?.lua"
-  runtime_path[#runtime_path + 1] = library[i] .. "/?/init.lua"
+for lib, _ in pairs(library) do
+  runtime_path[#runtime_path + 1] = lib .. "/?.lua"
+  runtime_path[#runtime_path + 1] = lib .. "/?/init.lua"
 end
 
 opts.sumneko_lua = setmetatable({
@@ -75,8 +81,6 @@ opts.sumneko_lua = setmetatable({
       },
       workspace = {
         library = library,
-        maxPreload = 1000,
-        preloadFileSize = 150,
       },
       telemetry = { enable = false },
     },

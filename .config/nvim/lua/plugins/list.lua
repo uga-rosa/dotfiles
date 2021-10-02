@@ -17,7 +17,10 @@ return packer.startup({
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
     -- faster filetype.vim
-    -- use("nathom/filetype.nvim")
+    use({
+      "nathom/filetype.nvim",
+      branch = "dev",
+    })
     -- colorscheme
     use("bluz71/vim-nightfly-guicolors")
     -- statusline
@@ -36,13 +39,6 @@ return packer.startup({
     use({
       "norcalli/nvim-colorizer.lua",
       config = 'require("plugins.config.other").colorizer()',
-    })
-    -- coc
-    use({
-      "neoclide/coc.nvim",
-      branch = "master",
-      run = "yarn install --frozen-lockfile",
-      config = 'require("plugins.config.coc")',
     })
     -- completion
     use({
@@ -178,5 +174,12 @@ return packer.startup({
       "uga-rosa/nim.nvim",
       config = "vim.g.nim_highlight_wait = true",
     })
+    -- coc
+    -- use({
+    --   "neoclide/coc.nvim",
+    --   branch = "master",
+    --   run = "yarn install --frozen-lockfile",
+    --   config = 'require("plugins.config.coc")',
+    -- })
   end,
 })
