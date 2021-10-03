@@ -92,16 +92,7 @@ function M.resolve()
   end
 end
 
-function M.setup(opts)
-  vim.cmd([[
-  augroup filetype_nvim
-    au!
-    au BufNewFile,BufRead * lua require("filetype").resolve()
-  augroup END
-  ]])
-  if not opts then
-    return
-  end
+function M.override(opts)
   for name, t in pairs(opts) do
     for k, v in pairs(t) do
       mappings[name][k] = v

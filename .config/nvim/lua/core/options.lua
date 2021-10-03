@@ -37,7 +37,8 @@ vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
 vim.g.did_load_filetypes = 1
 
-require("filetype").setup({
+local filetype = require("filetype")
+filetype.override({
   extensions = {
     inp = "packmol",
     saty = "satisfy",
@@ -51,6 +52,13 @@ require("filetype").setup({
 })
 
 augroup({
+  filetype_nvim = {
+    "BufNewFile,BufRead",
+    "*",
+    function()
+      filetype.resolve()
+    end,
+  },
   nim = {
     { "FileType", "nim", "setl foldmethod=manual" },
   },
