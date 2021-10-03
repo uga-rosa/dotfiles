@@ -27,11 +27,6 @@ map({ "i", "s" }, "<C-l>", function(fallback)
   end
 end)
 
-map({ "i", "s" }, "<esc>", function(fallback)
-  -- luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] = nil
-  fallback()
-end)
-
 require("snippets")
 
 require("luasnip.loaders.from_vscode").load({
@@ -125,11 +120,25 @@ luasnip_popup.close = function()
   end
 end
 
-vim.cmd([[
-augroup choice_popup
-au!
-au User LuasnipChoiceNodeEnter lua luasnip_popup.open(require("luasnip").session.event_node)
-au User LuasnipChoiceNodeLeave lua luasnip_popup.close()
-au User LuasnipChangeChoice lua luasnip_popup.update(require("luasnip").session.event_node)
-augroup END
-]])
+augroup({
+  choice_popup = {
+    {
+      "User LuasnipChoiceNodeEnter",
+      function()
+        luasnip_popup.open(luasnip.session.event_node)
+      end,
+    },
+    {
+      "User LuasnipChoiceNodeLeave",
+      function()
+        luasnip_popup.close()
+      end,
+    },
+    {
+      "User LuasnipChangeChoice",
+      function()
+        luasnip_popup.update(luasnip.session.event_node)
+      end,
+    },
+  },
+})
