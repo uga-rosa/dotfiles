@@ -92,6 +92,14 @@ local comps = {
       end,
       right_sep = " ",
     },
+    fullpath = {
+      provider = function()
+        return f.expand("%:p")
+      end,
+      hl = {
+        fg = colors.emerald,
+      },
+    },
   },
   lsp = {
     servers = {
@@ -217,10 +225,15 @@ local comps = {
 
 local components = {
   active = { {}, {}, {} },
+  inactive = { {}, {}, {} },
 }
 
 function components.active_add(self, n, x)
   self.active[n][#self.active[n] + 1] = x
+end
+
+function components.inactive_add(self, n, x)
+  self.inactive[n][#self.inactive[n] + 1] = x
 end
 
 components:active_add(1, comps.vi_mode)
@@ -237,6 +250,7 @@ components:active_add(2, comps.git.diff.remove)
 components:active_add(3, comps.lsp.servers)
 components:active_add(3, comps.cursor.pos_per)
 components:active_add(3, comps.cursor.bar)
+components:inactive_add(1, comps.file.fullpath)
 
 require("feline").setup({
   colors = { bg = colors.bg },
@@ -244,8 +258,6 @@ require("feline").setup({
   vi_mode_colors = vi_mode_colors,
   force_inactive = {
     filetypes = {
-      "packer",
-      "TelescopePrompt",
       "filittle",
     },
   },

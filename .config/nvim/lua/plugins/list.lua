@@ -27,12 +27,13 @@ return packer.startup({
     -- statusline
     use({
       "famiu/feline.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
       config = 'require("plugins.config.feline")',
     })
     -- filer
     use({
       "uga-rosa/filittle.nvim",
-      -- requires = "kyazdani42/nvim-web-devicons",
+      requires = "kyazdani42/nvim-web-devicons",
       config = 'require("plugins.config.other").filittle()',
     })
     -- colorizer
@@ -79,7 +80,7 @@ return packer.startup({
       "nvim-telescope/telescope.nvim",
       requires = {
         "nvim-lua/plenary.nvim",
-        -- "kyazdani42/nvim-web-devicons",
+        "kyazdani42/nvim-web-devicons",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
       },
       config = 'require("plugins.config.telescope")',
