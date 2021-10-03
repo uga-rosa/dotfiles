@@ -156,6 +156,9 @@ local comps = {
         local head, icon = git.git_branch(0)
         return icon .. head
       end,
+      enabled = function()
+        return git.git_branch(0) ~= ""
+      end,
       hl = {
         fg = colors.purple,
       },
