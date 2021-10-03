@@ -23,3 +23,15 @@ endsnippet
 snippet lreq
 local ${1:var} = require("${2:module}")
 endsnippet
+
+snippet lfun
+local function$1($2)
+  $3
+end
+endsnippet
+
+snippet for i = 1, #t
+for i = ${1:1}, #${2:t} do
+  $3
+end
+endsnippet

@@ -48,5 +48,25 @@
     "body": [
       "local ${1:var} = require(\"${2:module}\")"
     ]
+  },
+  "lfun": {
+    "prefix": [
+      "lfun"
+    ],
+    "body": [
+      "local function$1($2)",
+      "  $3",
+      "end"
+    ]
+  },
+  "for i = 1, #t": {
+    "prefix": [
+      "for i = 1, #t"
+    ],
+    "body": [
+      "for i = ${1:1}, #${2:t} do",
+      "  $3",
+      "end"
+    ]
   }
 }

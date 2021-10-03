@@ -52,14 +52,14 @@ local library = (function()
 
   add("$VIMRUNTIME/lua")
 
-  local filter = {
-    ["feline.nvim"] = true,
-  }
+  -- local filter = {
+  --   ["feline.nvim"] = true,
+  -- }
 
-  add("~/.local/share/nvim/site/pack/*/start/*/lua", filter)
-  add("~/.local/share/nvim/site/pack/*/opt/*/lua", filter)
+  -- add("~/.local/share/nvim/site/pack/*/start/*/lua", filter)
+  -- add("~/.local/share/nvim/site/pack/*/opt/*/lua", filter)
 
-  add("~/.lua/5.4/share")
+  add("~/.luarocks/share/lua/5.4")
 
   return res
 end)()

@@ -37,13 +37,20 @@ vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
 vim.g.did_load_filetypes = 1
 
-augroup({
-  myfiletype = {
-    { "BufNewFile,BufRead", "*.inp", "se ft=packmol" },
-    { "BufNewFile,BufRead", "*.saty,*.satyh", "se ft=satysfi" },
-    { "BufNewFile,BufRead", "*.snip", "se ft=snip" },
-    { "BufNewFile,BufRead", "*.yaml", "se ft=yaml.ansible" },
+require("filetype").setup({
+  extensions = {
+    inp = "packmol",
+    saty = "satisfy",
+    satyh = "satisfy",
+    snip = "snip",
+    yaml = "yaml.ansible",
+    nim = "nim",
+    nims = "nim",
+    nimble = "nim",
   },
+})
+
+augroup({
   nim = {
     { "FileType", "nim", "setl foldmethod=manual" },
   },
