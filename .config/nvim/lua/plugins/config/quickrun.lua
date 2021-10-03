@@ -15,9 +15,6 @@ vim.g.quickrun_config = {
     cmdopt = "run",
     exec = "%c %o",
   },
-  lua = {
-    command = "luajit",
-  },
 }
 
 local map = myutils.map

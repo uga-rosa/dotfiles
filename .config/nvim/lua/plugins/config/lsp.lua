@@ -53,7 +53,7 @@ local library = (function()
   add("$VIMRUNTIME/lua")
 
   local filter = {
-    ["plenary.nvim"] = true,
+    ["feline.nvim"] = true,
   }
 
   add("~/.local/share/nvim/site/pack/*/start/*/lua", filter)
@@ -82,6 +82,9 @@ opts.sumneko_lua = setmetatable({
       workspace = {
         library = library,
       },
+      -- diagnostics = {
+      --   disable = { "" },
+      -- },
       telemetry = { enable = false },
     },
   },

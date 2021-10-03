@@ -25,14 +25,13 @@ return packer.startup({
     use("bluz71/vim-nightfly-guicolors")
     -- statusline
     use({
-      "hoob3rt/lualine.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
-      config = 'require("plugins.config.lualine")',
+      "famiu/feline.nvim",
+      config = 'require("plugins.config.feline")',
     })
     -- filer
     use({
       "uga-rosa/filittle.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
+      -- requires = "kyazdani42/nvim-web-devicons",
       config = 'require("plugins.config.other").filittle()',
     })
     -- colorizer
@@ -79,7 +78,7 @@ return packer.startup({
       "nvim-telescope/telescope.nvim",
       requires = {
         "nvim-lua/plenary.nvim",
-        "kyazdani42/nvim-web-devicons",
+        -- "kyazdani42/nvim-web-devicons",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
       },
       config = 'require("plugins.config.telescope")',
@@ -174,12 +173,5 @@ return packer.startup({
       "uga-rosa/nim.nvim",
       config = "vim.g.nim_highlight_wait = true",
     })
-    -- coc
-    -- use({
-    --   "neoclide/coc.nvim",
-    --   branch = "master",
-    --   run = "yarn install --frozen-lockfile",
-    --   config = 'require("plugins.config.coc")',
-    -- })
   end,
 })

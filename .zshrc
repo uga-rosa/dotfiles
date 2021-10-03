@@ -19,8 +19,6 @@ bindkey -r "^G"
 # unbind C-S/Q
 stty stop undef
 stty start undef
-# unique path
-typeset -U path PATH
 
 export EDITOR=nvim
 export TERM=xterm-256color
