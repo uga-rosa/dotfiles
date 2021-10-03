@@ -194,14 +194,24 @@ local comps = {
       },
     },
   },
-  right = {
-    provider = "▊",
-    hl = function()
-      return {
-        fg = vi_mode_utils.get_mode_color(),
-      }
-    end,
-    left_sep = " ",
+  cursor = {
+    pos_per = {
+      provider = function()
+        local c = require("feline.providers.cursor")
+        return " " .. c.position() .. " " .. c.line_percentage() .. " "
+      end,
+      hl = {
+        fg = colors.bg,
+        bg = colors.emerald,
+      },
+      left_sep = " ",
+    },
+    bar = {
+      provider = "scroll_bar",
+      hl = {
+        fg = colors.emerald,
+      },
+    },
   },
 }
 
@@ -225,7 +235,8 @@ components:active_add(2, comps.git.diff.add)
 components:active_add(2, comps.git.diff.change)
 components:active_add(2, comps.git.diff.remove)
 components:active_add(3, comps.lsp.servers)
-components:active_add(3, comps.right)
+components:active_add(3, comps.cursor.pos_per)
+components:active_add(3, comps.cursor.bar)
 
 require("feline").setup({
   colors = { bg = colors.bg },

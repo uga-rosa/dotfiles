@@ -17,10 +17,11 @@ return packer.startup({
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
     -- faster filetype.vim
-    use({
-      "nathom/filetype.nvim",
-      branch = "dev",
-    })
+    -- use({
+    --   "uga-rosa/filetype.nvim",
+    --   branch = "user_setting",
+    --   config = 'require("plugins.config.other").filetype()',
+    -- })
     -- colorscheme
     use("bluz71/vim-nightfly-guicolors")
     -- statusline
