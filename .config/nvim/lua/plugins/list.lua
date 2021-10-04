@@ -16,12 +16,6 @@ return packer.startup({
     })
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
-    -- faster filetype.vim
-    -- use({
-    --   "uga-rosa/filetype.nvim",
-    --   branch = "user_setting",
-    --   config = 'require("plugins.config.other").filetype()',
-    -- })
     -- colorscheme
     use("bluz71/vim-nightfly-guicolors")
     -- statusline
@@ -49,7 +43,7 @@ return packer.startup({
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
         "saadparwaiz1/cmp_luasnip",
-        "uga-rosa/cmp-dictionary",
+        -- "uga-rosa/cmp-dictionary",
       },
       branch = "custom-menu",
       config = 'require("plugins.config.cmp")',
@@ -72,6 +66,7 @@ return packer.startup({
         "williamboman/nvim-lsp-installer",
         "glepnir/lspsaga.nvim",
         "ray-x/lsp_signature.nvim",
+        "folke/lua-dev.nvim",
       },
       config = 'require("plugins.config.lsp")',
     })

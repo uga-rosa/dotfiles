@@ -1,6 +1,5 @@
 local lspconfig = require("lspconfig")
 local lspinstaller = require("nvim-lsp-installer")
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local saga = require("lspsaga")
 local sign = require("lsp_signature")
 
@@ -10,23 +9,8 @@ local command = myutils.command
 local augroup = myutils.augroup
 
 -- cmp source
-cmp_nvim_lsp.setup()
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown" }
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.preselectSupport = true
-capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    "documentation",
-    "detail",
-    "additionalTextEdits",
-  },
-}
+capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
 local opts = {
   default = {
@@ -37,60 +21,44 @@ local opts = {
   },
 }
 
-local library = (function()
-  local res = {}
+local mode = "nvim"
+-- local mode = "5.4"
 
-  local function add(lib, filter)
-    local paths = f.expand(lib, false, true)
-    for i = 1, #paths do
-      local p = vim.loop.fs_realpath(paths[i])
-      if p then
-        res[p] = not filter or filter[f.fnamemodify(p, ":h:t")]
-      end
-    end
-  end
-
-  add("$VIMRUNTIME/lua")
-
-  -- local filter = {
-  --   ["feline.nvim"] = true,
-  -- }
-
-  -- add("~/.local/share/nvim/site/pack/*/start/*/lua", filter)
-  -- add("~/.local/share/nvim/site/pack/*/opt/*/lua", filter)
-
-  add("~/.luarocks/share/lua/5.4")
-
-  return res
-end)()
-
-local runtime_path = {}
-runtime_path[#runtime_path + 1] = "lua/?.lua"
-runtime_path[#runtime_path + 1] = "lua/?/init.lua"
-for lib, _ in pairs(library) do
-  runtime_path[#runtime_path + 1] = lib .. "/?.lua"
-  runtime_path[#runtime_path + 1] = lib .. "/?/init.lua"
-end
-
-opts.sumneko_lua = setmetatable({
-  settings = {
-    Lua = {
-      runtime = {
-        version = "lua 5.4",
-        path = runtime_path,
-      },
-      workspace = {
-        library = library,
-      },
-      -- diagnostics = {
-      --   disable = { "" },
-      -- },
-      telemetry = { enable = false },
+if mode == "nvim" then
+  opts.sumneko_lua = require("lua-dev").setup({
+    library = {
+      vimruntime = true,
+      types = true,
+      plugins = false,
     },
-  },
-}, {
-  __index = opts.default,
-})
+    lspconfig = opts.default,
+  })
+elseif mode == "5.4" then
+  -- local path = vim.split(f.expand("$LUA_PATH"), ";")
+  local path = {
+    f.expand("~/.luarocks/share/lua/5.4") .. "/?.lua",
+    f.expand("~/.luarocks/share/lua/5.4") .. "/?/init.lua",
+  }
+  local library = {
+    [f.expand("~/.luarocks/share/lua/5.4")] = true,
+  }
+  opts.sumneko_lua = setmetatable({
+    settings = {
+      Lua = {
+        runtime = {
+          version = "Lua 5.4",
+          path = path,
+        },
+        workspace = {
+          library = library,
+        },
+        telemetry = { enable = false },
+      },
+    },
+  }, {
+    __index = opts.default,
+  })
+end
 
 opts.efm = setmetatable({
   filetypes = { "json", "lua", "python", "sh" },

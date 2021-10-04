@@ -21,6 +21,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.inccommand = "split"
 vim.opt.signcolumn = "yes"
 vim.opt.dictionary:append("/usr/share/dict/words")
+-- vim.opt.dictionary:append("~/dotfiles/doc/vim_dictionary")
 
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0

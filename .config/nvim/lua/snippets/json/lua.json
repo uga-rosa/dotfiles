@@ -54,7 +54,7 @@
       "lfun"
     ],
     "body": [
-      "local function$1($2)",
+      "local function $1($2)",
       "  $3",
       "end"
     ]

@@ -52,9 +52,8 @@ local function window_for_choiceNode(choiceNode)
   local buf_text = {}
   local row_selection = 0
   local row_offset = 0
-  local text
   for _, node in ipairs(choiceNode.choices) do
-    text = node:get_docstring()
+    local text = node:get_docstring()
     if node == choiceNode.active_choice then
       row_selection = #buf_text
       row_offset = #text

@@ -20,7 +20,7 @@ _G.source_list = function(arr)
     luasnip = { name = "luasnip" },
     dictionary = {
       name = "dictionary",
-      keyword_length = 2,
+      -- keyword_length = 2,
     },
     base = { name = "base_conversion" },
   }
