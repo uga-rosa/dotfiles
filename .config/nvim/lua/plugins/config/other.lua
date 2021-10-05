@@ -33,10 +33,6 @@ M.sandwich = function()
 end
 
 M.filittle = function()
-  require("filittle").setup({
-    devicons = true,
-  })
-
   require("nvim-web-devicons").set_icon({
     nim = {
       icon = "",

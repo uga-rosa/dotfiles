@@ -136,6 +136,8 @@ return packer.startup({
       },
       setup = 'require("plugins.config.other").operator_replace()',
     })
+    -- useful f, F, t and T
+    use("rhysd/clever-f.vim")
     -- show registers
     use("tversteeg/registers.nvim")
     -- open browser

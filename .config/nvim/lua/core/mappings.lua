@@ -47,14 +47,6 @@ map("", "L", "$", "noremap")
 map_conv("n", "j", "gj", "noremap")
 map_conv("n", "k", "gk", "noremap")
 
-local motions = { ["<C-j>"] = "、", ["<C-k>"] = "。" }
-local operators = { "f", "F", "t", "T" }
-for _, o in ipairs(operators) do
-  for before, after in pairs(motions) do
-    map("n", o .. before, o .. after, "noremap")
-  end
-end
-
 map({ "i", "c" }, "<C-f>", "<right>", "noremap")
 map({ "i", "c" }, "<C-b>", "<left>", "noremap")
 map({ "i", "c" }, "<C-d>", "<delete>", "noremap")

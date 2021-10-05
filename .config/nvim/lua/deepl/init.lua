@@ -30,9 +30,10 @@ function M.create_window(lines, width, row, col)
   return { win = win, buf = buf }
 end
 
-function M.translate(line1, line2, from, to)
+function M.translate(line1, line2, from, to, mode)
   local texts = a.nvim_buf_get_lines(0, line1 - 1, line2, true)
   local txt = table.concat(texts, " "):gsub("%s+", " ")
+
   local args = {
     "https://api-free.deepl.com/v2/translate",
     "-s",
@@ -46,9 +47,18 @@ function M.translate(line1, line2, from, to)
     '"target_lang=' .. to .. '"',
   }
   local cmd = "curl " .. table.concat(args, " ")
+
   local file = io.popen(cmd, "r")
   local text = json.decode(file:read("*a")).translations[1].text
   file:close()
+
+  if mode == "r" then
+    a.nvim_buf_set_lines(0, line1 - 1, line2, true, { text })
+    return
+  elseif mode ~= "f" then
+    return
+  end
+
   local lines = {}
   local width = math.floor(a.nvim_win_get_width(0) * 0.8)
   if width % 2 == 1 then
@@ -73,8 +83,10 @@ end
 
 function M.setup()
   vim.cmd([[
-  command! -range TransJA2EN lua require("deepl").translate(<line1>, <line2>, "JA", "EN")
-  command! -range TransEN2JA lua require("deepl").translate(<line1>, <line2>, "EN", "JA")
+  command! -range TransJA2ENf lua require("deepl").translate(<line1>, <line2>, "JA", "EN", "f")
+  command! -range TransEN2JAf lua require("deepl").translate(<line1>, <line2>, "EN", "JA", "f")
+  command! -range TransJA2ENr lua require("deepl").translate(<line1>, <line2>, "JA", "EN", "r")
+  command! -range TransEN2JAr lua require("deepl").translate(<line1>, <line2>, "EN", "JA", "r")
   command! TransClose lua require("deepl").close()
   ]])
 end
