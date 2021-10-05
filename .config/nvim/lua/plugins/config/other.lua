@@ -42,4 +42,13 @@ M.filittle = function()
   })
 end
 
+M.eft = function()
+  map({ "n", "x" }, ";", "<Plug>(eft-repeat)")
+  map({ "n", "x", "o" }, "f", "<Plug>(eft-f)")
+  map({ "n", "x", "o" }, "F", "<Plug>(eft-F)")
+  map({ "n", "x", "o" }, "t", "<Plug>(eft-t)")
+  map({ "n", "x", "o" }, "T", "<Plug>(eft-T)")
+  vim.cmd("let g:eft_index_function = {'all': { -> v:true}}")
+end
+
 return M
