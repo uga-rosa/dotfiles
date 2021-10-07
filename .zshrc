@@ -48,7 +48,7 @@ fi
 }
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS='--height 50% --reverse'
 export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
@@ -79,9 +79,6 @@ fi
 
 # zoxide
 eval "$(zoxide init zsh)"
-
-# pyenv
-eval "$(pyenv init -)"
 
 # starship
 eval "$(starship init zsh)"

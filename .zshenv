@@ -12,7 +12,11 @@ export LIBGL_ALWAYS_INDIRECT=1
 # pyenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
+pyenv() {
+  unset -f $0
+  source < (pyenv init -)
+  $0 "$@"
+}
 
 # windows_commands
 export PATH=$HOME/.windows_command:$PATH
@@ -34,6 +38,4 @@ export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
 export PATH="$PATH:$HOME/.nimble/bin"
 
 # lua
-eval $(luarocks path)
-mylua="$HOME/lua/5.4/share/?.lua;$HOME/lua/5.4/share/?/init.lua"
-[[ ! $LUA_PATH == *$mylua ]] && export LUA_PATH="$LUA_PATH;$mylua"
+export LUA_PATH="$HOME/.luarocks/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?/init.lua;$HOME/lua/5.4/share/?.lua;$HOME/lua/5.4/share/?/init.lua"

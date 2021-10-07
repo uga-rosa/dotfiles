@@ -857,7 +857,7 @@ M.endswith = {
   ["lvs"] = "dracula",
 }
 
-M.complex = {
+M.pattern = {
   ["%.tmux.*%.conf"] = "tmux",
   [".*%.git/modules/.*/config"] = "gitconfig",
   [".*git/config"] = "gitconfig",
@@ -892,9 +892,6 @@ M.complex = {
   ["named.*%.conf"] = "named",
   ["rndc.*%.conf"] = "named",
   ["rndc.*%.key"] = "named",
-}
-
-M.star_sets = {
   [".*/etc/Muttrc%.d/.*"] = "muttrc",
   [".*/etc/proftpd/.*%.conf.*"] = "apachestyle",
   [".*/etc/proftpd/conf%..*/.*"] = "apachestyle",
@@ -1143,10 +1140,9 @@ M.function_extensions = {
     end
   end,
   ["asp"] = function()
-    local getline = vim.fn.getline
     if vim.g.filetype_asp ~= nil then
       return vim.g.filetype_asp
-    elseif (getline(1) .. getline(2) .. getline(3)):find("perlscript") then
+    elseif getlines(1, 3):find("perlscript") then
       return "aspperl"
     else
       return "aspvbs"
@@ -1160,8 +1156,7 @@ M.function_extensions = {
     end
   end,
   ["cmd"] = function()
-    local getline = vim.fn.getline
-    if getline(1):find("^%/%*") then
+    if vim.fn.getline(1):find("^%/%*") then
       return "rexx"
     else
       return "dosbatch"
@@ -1383,6 +1378,7 @@ M.function_extensions = {
     vim.cmd([[call dist#ft#SQL()]])
   end,
 }
+
 M.function_simple = {
   ["xorg.conf-4"] = function()
     vim.b.xf86conf_xfree86_version = 4
