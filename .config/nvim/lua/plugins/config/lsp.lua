@@ -128,9 +128,9 @@ augroup({
     "lspinfo",
     "nnoremap <buffer><nowait> q <cmd>bd<cr>",
   },
-  -- format = {
-  --   { "BufWritePre", "*.lua,*.py,*.hs,*.json", "Format" },
-  -- },
+  format = {
+    { "BufWritePre", "*.lua,*.py,*.hs,*.json", "Format" },
+  },
 })
 
 saga.init_lsp_saga({

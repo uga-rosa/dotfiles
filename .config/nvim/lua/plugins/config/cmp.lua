@@ -17,12 +17,15 @@ _G.source_list = function(arr)
     },
     path = { name = "path" },
     lsp = { name = "nvim_lsp" },
-    luasnip = { name = "luasnip" },
+    luasnip = {
+      name = "luasnip",
+      priority = 200,
+    },
     dictionary = {
       name = "dictionary",
       keyword_length = 2,
+      priority = 1,
     },
-    base = { name = "base_conversion" },
   }
   return vim.tbl_map(function(name)
     return config[name]
@@ -71,7 +74,6 @@ cmp.setup({
     end,
   },
   formatting = {
-    deprecated = false,
     format = function(entry, vim_item)
       vim_item.kind = lspkind[vim_item.kind] .. " " .. vim_item.kind
       vim_item.menu = ({
@@ -83,10 +85,20 @@ cmp.setup({
       })[entry.source.name]
       vim_item.dup = ({
         buffer = 0,
-        user_dictionary = 0,
+        dictionary = 0,
       })[entry.source.name] or 1
       return vim_item
     end,
+  },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.score,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
   },
   mapping = {
     ["<C-n>"] = cmp.mapping.select_next_item(),
@@ -98,5 +110,5 @@ cmp.setup({
       select = true,
     }),
   },
-  sources = source_list({ "luasnip", "lsp", "path", "buffer", "dictionary", "base" }),
+  sources = source_list({ "luasnip", "lsp", "path", "buffer", "dictionary" }),
 })
