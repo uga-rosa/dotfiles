@@ -9,15 +9,6 @@ export LIBGL_ALWAYS_INDIRECT=1
 # rust
 [[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
 
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-pyenv() {
-  unset -f $0
-  source < (pyenv init -)
-  $0 "$@"
-}
-
 # windows_commands
 export PATH=$HOME/.windows_command:$PATH
 
@@ -38,4 +29,4 @@ export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
 export PATH="$PATH:$HOME/.nimble/bin"
 
 # lua
-export LUA_PATH="$HOME/.luarocks/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?/init.lua;$HOME/lua/5.4/share/?.lua;$HOME/lua/5.4/share/?/init.lua"
+export LUA_PATH="$HOME/.luarocks/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?/init.lua;$HOME/lua/5.4/share/?.lua;$HOME/lua/5.4/share/?/init.lua;./?.lua;./?/init.lua"

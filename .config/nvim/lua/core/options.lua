@@ -1,5 +1,4 @@
 local augroup = myutils.augroup
-local map = myutils.map
 
 vim.opt.fileencoding = "utf-8"
 vim.opt.hidden = true
@@ -50,6 +49,11 @@ filetype.override({
     nims = "nim",
     nimble = "nim",
   },
+})
+
+require("deepl").setup({
+  key = require("key"),
+  plan = "free",
 })
 
 augroup({

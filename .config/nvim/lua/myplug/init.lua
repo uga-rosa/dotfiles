@@ -82,8 +82,6 @@ M.setup = function()
   })
   -- toggle terminal
   require("myplug.term")
-  -- translate
-  require("deepl").setup()
   -- calc
   require("myplug.calc")
 end

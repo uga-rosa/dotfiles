@@ -77,6 +77,16 @@ if [[ $(command -v exa) ]]; then
   alias lta=eta
 fi
 
+# pyenv
+source "$HOME/.zsh.d/lazyenv.sh"
+_pyenv_init() {
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+}
+eval "$(lazyenv.load _pyenv_init pyenv python pip)"
+
 # zoxide
 eval "$(zoxide init zsh)"
 
