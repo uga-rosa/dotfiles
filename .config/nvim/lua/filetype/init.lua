@@ -26,8 +26,8 @@ local function is_frozen(path)
   return false
 end
 
-local function try_regex(path, maps, check)
-  if check and is_frozen(path) then
+local function try_regex(path, maps, star_set)
+  if star_set and is_frozen(path) then
     return false
   end
   for regex, ft in pairs(maps) do
@@ -69,8 +69,10 @@ function M.resolve()
     set_filetype(literal)
   end
 
-  if try_regex(fullpath, mappings.endswith) then
-    return
+  for ends, ft in pairs(mappings.endswith) do
+    if vim.endswith(fullpath, ends) then
+      set_filetype(ft)
+    end
   end
 
   if try_regex(fullpath, mappings.complex) then
