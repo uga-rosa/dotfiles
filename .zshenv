@@ -35,4 +35,5 @@ export PATH="$PATH:$HOME/.nimble/bin"
 
 # lua
 eval $(luarocks path)
-export LUA_PATH="$LUA_PATH;$HOME/.lua/5.4/share/?.lua"
+mylua="$HOME/lua/5.4/share/?.lua;$HOME/lua/5.4/share/?/init.lua"
+[[ ! $LUA_PATH == *$mylua ]] && export LUA_PATH="$LUA_PATH;$mylua"

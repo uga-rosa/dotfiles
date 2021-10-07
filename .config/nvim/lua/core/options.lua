@@ -60,16 +60,10 @@ augroup({
       filetype.resolve()
     end,
   },
-  nim = {
-    { "FileType", "nim", "setl foldmethod=manual" },
-  },
-  nocomment = { "BufEnter", "*", "setl formatoptions-=ro" },
   quit_help = {
     "FileType",
     "help,qf",
-    function()
-      map("n", "q", "quit", { "nowait", "buffer", "cmd" })
-    end,
+    "nnoremap <buffer><nowait> q <cmd>quit<cr>",
   },
   indent4 = {
     { "FileType", "python", "setl ts=4 sw=4" },

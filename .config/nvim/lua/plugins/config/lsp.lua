@@ -21,8 +21,8 @@ local opts = {
   },
 }
 
-local mode = "nvim"
--- local mode = "5.4"
+-- local mode = "nvim"
+local mode = "5.4"
 
 if mode == "nvim" then
   opts.sumneko_lua = require("lua-dev").setup({
@@ -35,11 +35,11 @@ if mode == "nvim" then
     lspconfig = opts.default,
   })
 elseif mode == "5.4" then
-  -- local path = vim.split(f.expand("$LUA_PATH"), ";")
-  local path = {
-    f.expand("~/.luarocks/share/lua/5.4") .. "/?.lua",
-    f.expand("~/.luarocks/share/lua/5.4") .. "/?/init.lua",
-  }
+  local path = vim.split(f.expand("$LUA_PATH"), ";")
+  -- local path = {
+  --   f.expand("~/.luarocks/share/lua/5.4") .. "/?.lua",
+  --   f.expand("~/.luarocks/share/lua/5.4") .. "/?/init.lua",
+  -- }
   local library = {
     [f.expand("~/.luarocks/share/lua/5.4")] = true,
   }
