@@ -22,6 +22,8 @@ map("n", "<M-h>", function()
   vim.cmd("h " .. fn.expand("<cword>"))
 end)
 
+map("n", "<M-k>", "EiwaPopup", "cmd")
+
 map("n", "<esc><esc>", "nohlsearch", { "noremap", "cmd" })
 map("n", "<leader><cr>", "o<esc>", "noremap")
 

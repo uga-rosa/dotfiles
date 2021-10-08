@@ -43,9 +43,8 @@ return packer.startup({
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
         "saadparwaiz1/cmp_luasnip",
-        -- "uga-rosa/cmp-dictionary",
+        "uga-rosa/cmp-dictionary",
       },
-      branch = "custom-menu",
       config = 'require("plugins.config.cmp")',
     })
     -- auto close parentheses
@@ -66,7 +65,7 @@ return packer.startup({
         "williamboman/nvim-lsp-installer",
         "glepnir/lspsaga.nvim",
         "ray-x/lsp_signature.nvim",
-        -- "folke/lua-dev.nvim",
+        "uga-rosa/lua-dev.nvim",
       },
       config = 'require("plugins.config.lsp")',
     })
@@ -175,5 +174,7 @@ return packer.startup({
       "uga-rosa/nim.nvim",
       config = "vim.g.nim_highlight_wait = true",
     })
+    -- translate
+    use("uga-rosa/deepl.nvim")
   end,
 })

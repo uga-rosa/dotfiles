@@ -21,8 +21,8 @@ local opts = {
   },
 }
 
-local mode = "nvim"
--- local mode = "5.4"
+-- local mode = "nvim"
+local mode = "5.4"
 
 if mode == "nvim" then
   opts.sumneko_lua = require("lua-dev").setup({
