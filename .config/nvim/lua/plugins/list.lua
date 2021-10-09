@@ -9,11 +9,7 @@ local use = packer.use
 return packer.startup({
   function()
     -- improve require
-    use({
-      "lewis6991/impatient.nvim",
-      rocks = "mpack",
-      config = 'pcall(require, "impatient")',
-    })
+    use("lewis6991/impatient.nvim")
     -- itself
     use({ "wbthomason/packer.nvim", opt = true })
     -- colorscheme
@@ -31,10 +27,7 @@ return packer.startup({
       config = 'require("plugins.config.other").filittle()',
     })
     -- colorizer
-    use({
-      "norcalli/nvim-colorizer.lua",
-      config = 'require("plugins.config.other").colorizer()',
-    })
+    use("norcalli/nvim-colorizer.lua")
     -- completion
     use({
       "hrsh7th/nvim-cmp",

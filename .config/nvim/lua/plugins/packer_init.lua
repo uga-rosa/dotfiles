@@ -26,13 +26,12 @@ end
 
 packer.init({
   display = {
-    open_fn = function()
-      return require("packer.util").float({ border = "single" })
-    end,
+    open_fn = require("packer.util").float,
   },
   git = {
     clone_timeout = 600,
   },
+  compile_path = vim.fn.stdpath("config") .. "/lua/packer_compiled.lua",
 })
 
 return true

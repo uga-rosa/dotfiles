@@ -1,17 +1,6 @@
 local M = {}
 
 local map = myutils.map
-local command = myutils.command
-
-M.colorizer = function()
-  command({
-    "ColorizerSetup",
-    function()
-      require("colorizer").setup()
-      vim.cmd("e")
-    end,
-  })
-end
 
 M.easyalign = function()
   map({ "n", "x" }, "ga", "<Plug>(EasyAlign)")

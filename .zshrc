@@ -1,7 +1,6 @@
 # key binding
 bindkey -v
 
-bindkey -M viins 'jj' vi-cmd-mode
 bindkey -M viins '^F' forward-char
 bindkey -M viins '^B' backward-char
 bindkey -M viins '^P' up-line-or-history

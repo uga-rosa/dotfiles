@@ -29,4 +29,4 @@ export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
 export PATH="$PATH:$HOME/.nimble/bin"
 
 # julia
-export PATH="$PATH:$HOME/.julia/bin"
+export PATH="$PATH:$HOME/.local/julia/bin"

@@ -3,7 +3,6 @@ local lspinstaller = require("nvim-lsp-installer")
 local saga = require("lspsaga")
 local sign = require("lsp_signature")
 
-local f = vim.fn
 local map = myutils.map
 local command = myutils.command
 local augroup = myutils.augroup
@@ -90,6 +89,7 @@ opts.nimls = setmetatable({
 lspconfig.nimls.setup(opts.nimls)
 
 -- Julia (manual installed)
+lspconfig.julials.setup(opts.default)
 
 -- format
 command({ "Format", vim.lsp.buf.formatting_sync })
