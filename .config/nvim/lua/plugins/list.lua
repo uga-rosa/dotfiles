@@ -176,5 +176,6 @@ return packer.startup({
     })
     -- translate
     use("uga-rosa/deepl.nvim")
+    use("uga-rosa/eiwa_dic.nvim")
   end,
 })

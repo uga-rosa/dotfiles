@@ -28,5 +28,5 @@ export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
 # nim
 export PATH="$PATH:$HOME/.nimble/bin"
 
-# lua
-export LUA_PATH="$HOME/.luarocks/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?/init.lua;$HOME/lua/5.4/share/?.lua;$HOME/lua/5.4/share/?/init.lua;./?.lua;./?/init.lua"
+# julia
+export PATH="$PATH:$HOME/.julia/bin"

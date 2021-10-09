@@ -21,42 +21,15 @@ local opts = {
   },
 }
 
--- local mode = "nvim"
-local mode = "5.4"
-
-if mode == "nvim" then
-  opts.sumneko_lua = require("lua-dev").setup({
-    library = {
-      vimruntime = true,
-      types = true,
-      plugins = false,
-    },
-    snippet = false,
-    lspconfig = opts.default,
-  })
-elseif mode == "5.4" then
-  local path = vim.split(f.expand("$LUA_PATH"), ";")
-  local library = {
-    [f.expand("~/.luarocks/share/lua/5.4")] = true,
-    [f.expand("~/lua/5.4/share")] = true,
-  }
-  opts.sumneko_lua = setmetatable({
-    settings = {
-      Lua = {
-        runtime = {
-          version = "Lua 5.4",
-          path = path,
-        },
-        workspace = {
-          library = library,
-        },
-        telemetry = { enable = false },
-      },
-    },
-  }, {
-    __index = opts.default,
-  })
-end
+opts.sumneko_lua = require("lua-dev").setup({
+  library = {
+    vimruntime = true,
+    types = true,
+    plugins = false,
+  },
+  snippet = false,
+  lspconfig = opts.default,
+})
 
 opts.efm = setmetatable({
   filetypes = { "json", "lua", "python", "sh" },
@@ -115,6 +88,8 @@ opts.nimls = setmetatable({
   __index = opts.default,
 })
 lspconfig.nimls.setup(opts.nimls)
+
+-- Julia (manual installed)
 
 -- format
 command({ "Format", vim.lsp.buf.formatting_sync })
