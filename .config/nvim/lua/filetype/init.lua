@@ -2,13 +2,20 @@ local M = {}
 
 local mappings = require("filetype.mappings")
 
-local function set_filetype(name)
-  if type(name) == "function" then
-    name = name()
-  end
-  if type(name) == "string" then
-    vim.bo.filetype = name
+local function setf(ft)
+  if vim.fn.did_filetype() == 0 then
+    vim.bo.filetype = ft
     return true
+  end
+  return false
+end
+
+local function set_filetype(ft)
+  if type(ft) == "function" then
+    ft = ft()
+  end
+  if type(ft) == "string" then
+    return setf(ft)
   end
   return false
 end
@@ -18,18 +25,6 @@ if vim.g.ft_ignore_pat == nil then
 end
 local ft_ignore_pat = vim.regex(vim.g.ft_ignore_pat)
 
-local function try_regex(path, maps)
-  if ft_ignore_pat:match_str(path) then
-    return false
-  end
-  for regex, ft in pairs(maps) do
-    if path:find(regex) then
-      return set_filetype(ft) -- true
-    end
-  end
-  return false
-end
-
 local function analyze_shebang()
   local fstline = vim.api.nvim_buf_get_lines(0, 0, 1, true)[1]
   if fstline then
@@ -38,41 +33,41 @@ local function analyze_shebang()
 end
 
 function M.resolve()
-  local fullpath = vim.fn.expand("%:p")
   local filename = vim.fn.expand("%:t")
-  local ext = vim.fn.expand("%:e")
-
   if filename == "" then
     return
   end
+  local ext = filename:match("^.*%.(.*)$")
 
   if ext then
     local filetype = mappings.extensions[ext] or mappings.function_extensions[ext]
-    if filetype then
-      set_filetype(filetype)
+    if filetype and set_filetype(filetype) then
       return
     end
   end
 
   local literal = mappings.literal[filename] or mappings.function_simple[filename]
-  if literal then
-    set_filetype(literal)
+  if literal and set_filetype(literal) then
     return
   end
 
+  local fullpath = vim.fn.expand("%:p")
+
   for ends, ft in pairs(mappings.endswith) do
-    if vim.endswith(fullpath, ends) then
-      set_filetype(ft)
+    if vim.endswith(fullpath, ends) and set_filetype(ft) then
       return
     end
   end
 
-  if try_regex(fullpath, mappings.pattern) then
-    return
+  if not ft_ignore_pat:match_str(fullpath) then
+    for regex, ft in pairs(mappings.pattern) do
+      if fullpath:find(regex) and set_filetype(ft) then
+        return
+      end
+    end
   end
 
-  if ext then
-    set_filetype(ext)
+  if ext and set_filetype(ext) then
     return
   end
 

@@ -37,20 +37,6 @@ vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
 vim.g.did_load_filetypes = 1
 
-local filetype = require("filetype")
-filetype.override({
-  extensions = {
-    inp = "packmol",
-    saty = "satisfy",
-    satyh = "satisfy",
-    snip = "snip",
-    yaml = "yaml.ansible",
-    nim = "nim",
-    nims = "nim",
-    nimble = "nim",
-  },
-})
-
 require("deepl").setup({
   key = require("key"),
   plan = "free",
@@ -61,7 +47,7 @@ augroup({
     "BufNewFile,BufRead",
     "*",
     function()
-      filetype.resolve()
+      require("filetype").resolve()
     end,
   },
   quit_help = {
