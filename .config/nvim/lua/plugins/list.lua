@@ -56,9 +56,9 @@ return packer.startup({
       "neovim/nvim-lspconfig",
       requires = {
         "williamboman/nvim-lsp-installer",
-        "glepnir/lspsaga.nvim",
+        "tami5/lspsaga.nvim",
         "ray-x/lsp_signature.nvim",
-        "uga-rosa/lua-dev.nvim",
+        "folke/lua-dev.nvim",
       },
       config = 'require("plugins.config.lsp")',
     })

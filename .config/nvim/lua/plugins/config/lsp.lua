@@ -1,6 +1,5 @@
 local lspconfig = require("lspconfig")
 local lspinstaller = require("nvim-lsp-installer")
-local saga = require("lspsaga")
 local sign = require("lsp_signature")
 
 local map = myutils.map
@@ -26,7 +25,6 @@ opts.sumneko_lua = require("lua-dev").setup({
     types = true,
     plugins = false,
   },
-  snippet = false,
   lspconfig = opts.default,
 })
 
@@ -105,7 +103,7 @@ augroup({
   },
 })
 
-saga.init_lsp_saga({
+require("lspsaga").init_lsp_saga({
   error_sign = " ",
   warn_sign = " ",
   hint_sign = " ",
@@ -121,9 +119,8 @@ saga.init_lsp_saga({
 
 -- show hover doc
 map("n", "K", "Lspsaga hover_doc", "cmd")
--- scroll hover doc
-map("n", "<C-f>", "lua require('lspsaga.action').smart_scroll_with_saga(1)", "cmd")
-map("n", "<C-b>", "lua require('lspsaga.action').smart_scroll_with_saga(-1)", "cmd")
+map("n", "<C-f>", "lua require'lspsaga.action'.smart_scroll_with_saga(1)", "cmd")
+map("n", "<C-b>", "lua require'lspsaga.action'.smart_scroll_with_saga(-1)", "cmd")
 -- rename
 map("n", "<leader>rn", "Lspsaga rename", "cmd")
 -- jump diagnostics

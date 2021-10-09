@@ -33,12 +33,18 @@ local function fallback(key)
 end
 
 ---API for key mapping.
+---T : fun(fallback: function)
+---@generic T fun(fallback: function)
+---@param modes string|string[]
 ---@param lhs string
----@param modes string|table
----@param rhs string|fun(fallback: function|nil)|table
----@param opts string|table
---- opts.buffer: current buffer only
---- opts.cmd: command (format to <cmd>%s<cr>)
+---@param rhs string|string[]|T|T[]
+---@param opts string|string[]
+---@overload fun(modes: string, lhs: string, rhs: string)
+---opts.nowait: This make a shortest match.
+---opts.silent: No echo.
+---opts.expr: Deprecated. Use feedkeys().
+---opts.buffer: current buffer only
+---opts.cmd: command (format to <cmd>%s<cr>)
 myutils.map = function(modes, lhs, rhs, opts)
   opts = opts or {}
   opts = type(opts) == "string" and { opts } or opts
@@ -93,17 +99,24 @@ myutils.map = function(modes, lhs, rhs, opts)
 end
 
 ---Exchange of two key
----@param modes any
+---@param modes string|string[]
 ---@param a string
 ---@param b string
----@param opts string|table
+---@param opts string|string[]
+---@overload fun(modes: string, a: string, b: string)
+---opts.nowait: This make a shortest match.
+---opts.silent: No echo.
+---opts.expr: Deprecated. Use feedkeys().
+---opts.buffer: current buffer only
+---opts.cmd: command (format to <cmd>%s<cr>)
 myutils.map_conv = function(modes, a, b, opts)
   myutils.map(modes, a, b, opts)
   myutils.map(modes, b, a, opts)
 end
 
 ---API for autocmd. Supports for a lua funcion.
----@param au table
+---@param au string[]
+---The last element of au can be a function.
 myutils.autocmd = function(au)
   if type(au[#au]) == "function" then
     au[#au] = func2str(au[#au])
@@ -112,18 +125,19 @@ myutils.autocmd = function(au)
 end
 
 ---API for augroup. Supports for a lua function.
----@param augrps table
--- augrps key: group name, value: an argument of utils.autocmd
-myutils.augroup = function(augrps)
-  for group, aus in pairs(augrps) do
+---@param augroups table<string,string[]>
+---augroups' key: group named
+---augroups' value: an argument of myutils.autocmd
+myutils.augroup = function(augroups)
+  for group, aus in pairs(augroups) do
     cmd("augroup " .. group)
     cmd("au!")
-    for _, au in ipairs(aus) do
-      if type(au) ~= "table" then
-        myutils.autocmd(aus)
-        break
+    if type(aus[1]) == "table" then
+      for i = 1, #aus do
+        myutils.autocmd(aus[i])
       end
-      myutils.autocmd(au)
+    else
+      myutils.autocmd(aus)
     end
     cmd("augroup END")
   end
@@ -138,7 +152,7 @@ myutils.command = function(command)
     end
     command = table.concat(command, " ")
   end
-  cmd("com!" .. command)
+  cmd("com! " .. command)
 end
 
 ---Execute a string as a function.
@@ -148,14 +162,8 @@ myutils.eval = function(inStr)
   return assert(load(inStr))()
 end
 
-myutils.getkeys = function(t)
-  local res = {}
-  for k, _ in pairs(t) do
-    res[#res + 1] = k
-  end
-  return res
-end
-
+---Transforms ctx into a human readable representation.
+---@param ctx any
 _G.dump = function(ctx)
   print(vim.inspect(ctx))
 end
