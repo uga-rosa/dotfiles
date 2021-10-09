@@ -36,15 +36,15 @@ opts.bashls = setmetatable({
   filetypes = { "sh", "zsh" },
 }, { __index = opts.default })
 
-opts.hls = setmetatable({
-  settings = {
-    haskell = {
-      formattingProvider = "stylish-haskell",
-    },
-  },
-}, {
-  __index = opts.default,
-})
+-- opts.hls = setmetatable({
+--   settings = {
+--     haskell = {
+--       formattingProvider = "stylish-haskell",
+--     },
+--   },
+-- }, {
+--   __index = opts.default,
+-- })
 
 -- automatically install
 local servers = {
@@ -52,9 +52,9 @@ local servers = {
   "rust_analyzer",
   "pyright",
   "bashls",
-  "hls",
   "efm",
   "vimls",
+  -- "hls",
 }
 
 local installed = vim.tbl_map(function(server)
@@ -87,14 +87,16 @@ opts.nimls = setmetatable({
 lspconfig.nimls.setup(opts.nimls)
 
 -- Julia (manual installed)
-opts.julials = {
+opts.julials = setmetatable({
   cmd = {
     "julia",
     "--startup-file=no",
     "--history-file=no",
     vim.fn.stdpath("config") .. "/julia/startls.jl",
   },
-}
+}, {
+  __index = opts.default,
+})
 lspconfig.julials.setup(opts.julials)
 
 -- format

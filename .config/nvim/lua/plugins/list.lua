@@ -20,6 +20,12 @@ return packer.startup({
       requires = "kyazdani42/nvim-web-devicons",
       config = 'require("plugins.config.feline")',
     })
+    -- tab bar
+    use({
+      "romgrk/barbar.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
+      config = 'require("plugins.config.barbar")',
+    })
     -- filer
     use({
       "uga-rosa/filittle.nvim",
