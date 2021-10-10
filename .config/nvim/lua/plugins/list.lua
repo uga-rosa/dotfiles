@@ -155,24 +155,19 @@ return packer.startup({
     -- rust
     use({
       "simrat39/rust-tools.nvim",
-      ft = "rust",
       config = 'require("rust-tools").setup({})',
     })
     -- yaml
-    use({
-      "pearofducks/ansible-vim",
-      ft = "yaml.ansible",
-    })
+    use("pearofducks/ansible-vim")
     -- SATySFi
-    use({
-      "qnighy/satysfi.vim",
-      ft = "satysfi",
-    })
+    use("qnighy/satysfi.vim")
     -- nim
     use({
       "uga-rosa/nim.nvim",
       config = "vim.g.nim_highlight_wait = true",
     })
+    -- julia
+    use("uga-rosa/julia-vim")
     -- translate
     use("uga-rosa/deepl.nvim")
     use("uga-rosa/eiwa_dic.nvim")

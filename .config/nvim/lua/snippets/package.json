@@ -59,6 +59,12 @@
       },
       {
         "language": [
+          "julia"
+        ],
+        "path": "./json/julia.json"
+      },
+      {
+        "language": [
           "haskell"
         ],
         "path": "./json/haskell.json"

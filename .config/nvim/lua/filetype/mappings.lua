@@ -260,6 +260,7 @@ M.extensions = {
   ["jj"] = "javacc",
   ["jjt"] = "javacc",
   ["jl"] = "julia",
+  ["jmd"] = "markdown",
   ["jov"] = "jovial",
   ["jovial"] = "jovial",
   ["jpl"] = "jam",

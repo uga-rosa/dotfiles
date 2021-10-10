@@ -2,7 +2,7 @@ local map = myutils.map
 
 vim.g.bufferline = {
   auto_hide = true,
-  exclude_ft = { "filittle" },
+  exclude_ft = { "filittle", "quickrun" },
 }
 
 map("n", "<A-,>", "BufferPrevious", { "noremap", "cmd" })
