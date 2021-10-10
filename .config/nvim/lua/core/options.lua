@@ -37,11 +37,6 @@ vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
 vim.g.did_load_filetypes = 1
 
-require("deepl").setup({
-  key = require("key"),
-  plan = "free",
-})
-
 augroup({
   filetype_nvim = {
     "BufNewFile,BufRead",

@@ -18,6 +18,7 @@ return packer.startup({
     use({
       "famiu/feline.nvim",
       requires = "kyazdani42/nvim-web-devicons",
+      branch = "develop",
       config = 'require("plugins.config.feline")',
     })
     -- tab bar
@@ -169,7 +170,11 @@ return packer.startup({
     -- julia
     use("uga-rosa/julia-vim")
     -- translate
-    use("uga-rosa/deepl.nvim")
+    -- use("uga-rosa/deepl.nvim")
     use("uga-rosa/eiwa_dic.nvim")
+    use({
+      "uga-rosa/translate-shell.nvim",
+      config = 'require("plugins.config.translate")',
+    })
   end,
 })
