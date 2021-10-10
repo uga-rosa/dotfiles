@@ -10,8 +10,9 @@ for _, v in ipairs(config) do
   require(v)
 end
 
-require("packer_compiled")
 require("myplug").setup()
+
+require("packer_compiled")
 
 vim.g.nightflyItalics = false
 pcall(vim.cmd, "colorscheme nightfly")

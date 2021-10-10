@@ -87,17 +87,17 @@ opts.nimls = setmetatable({
 lspconfig.nimls.setup(opts.nimls)
 
 -- Julia (manual installed)
-opts.julials = setmetatable({
-  cmd = {
-    "julia",
-    "--startup-file=no",
-    "--history-file=no",
-    vim.fn.stdpath("config") .. "/julia/startls.jl",
-  },
-}, {
-  __index = opts.default,
-})
-lspconfig.julials.setup(opts.julials)
+-- opts.julials = setmetatable({
+--   cmd = {
+--     "julia",
+--     "--startup-file=no",
+--     "--history-file=no",
+--     vim.fn.stdpath("config") .. "/julia/startls.jl",
+--   },
+-- }, {
+--   __index = opts.default,
+-- })
+lspconfig.julials.setup(opts.default)
 
 -- format
 command({ "Format", vim.lsp.buf.formatting_sync })

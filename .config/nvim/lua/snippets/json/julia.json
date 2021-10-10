@@ -74,5 +74,15 @@
       "  $0",
       "end"
     ]
+  },
+  "open() do f ... end": {
+    "prefix": [
+      "open() do f ... end"
+    ],
+    "body": [
+      "open($1) do ${2:f}",
+      "  $3",
+      "end"
+    ]
   }
 }

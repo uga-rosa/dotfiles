@@ -18,7 +18,6 @@ return packer.startup({
     use({
       "famiu/feline.nvim",
       requires = "kyazdani42/nvim-web-devicons",
-      branch = "develop",
       config = 'require("plugins.config.feline")',
     })
     -- tab bar

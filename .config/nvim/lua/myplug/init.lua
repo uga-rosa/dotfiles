@@ -4,7 +4,7 @@ local augroup = myutils.augroup
 local map = myutils.map
 local command = myutils.command
 
-M.panda = function()
+local function panda_setup()
   local panda = require("myplug.panda")
   panda.setup()
 
@@ -61,7 +61,7 @@ M.setup = function()
           vim.g.markdown_fenced_languages = { "lua", "python", "rust" }
           require("myplug.pasteimage").setup()
           require("myplug.table").setup()
-          require("myplug").panda()
+          panda_setup()
         end,
       },
     },
@@ -82,8 +82,6 @@ M.setup = function()
   })
   -- toggle terminal
   require("myplug.term")
-  -- calc
-  require("myplug.calc")
 end
 
 return M
