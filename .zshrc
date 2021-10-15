@@ -54,6 +54,11 @@ export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_T_OPTS='--preview "bat --color=always --style=header,grid --line-range :100 {}"'
 export FZF_ALT_C_COMMAND='fd --type d'
 
+if [[ -d /usr/local/share/doc/fzf ]]; then
+  source /usr/share/doc/fzf/examples/key-bindings.zsh
+  source /usr/share/doc/fzf/examples/completion.zsh
+fi
+
 function fzf-upgrade() {
 cd ~/.fzf
 git pull
