@@ -61,19 +61,22 @@ myutils.map = function(modes, lhs, rhs, opts)
   end)()
 
   rhs = type(rhs) ~= "table" and { rhs } or rhs
+  local _rhs = {}
+
   for i = 1, #rhs do
-    local r = rhs[i]
-    if type(r) == "function" then
+    if type(rhs[i]) == "function" then
       opts.cmd = true
-      r = func2str(function()
-        r(fallback(lhs))
+      _rhs[i] = func2str(function()
+        rhs[i](fallback(lhs))
       end)
+    else
+      _rhs[i] = rhs[i]
     end
     if opts.cmd then
-      r = "<cmd>" .. r .. "<cr>"
+      _rhs[i] = "<cmd>" .. _rhs[i] .. "<cr>"
     end
-    rhs[i] = r
   end
+  _rhs = table.concat(_rhs, "")
 
   if opts.cmd then
     opts.noremap = true
@@ -83,9 +86,9 @@ myutils.map = function(modes, lhs, rhs, opts)
   modes = type(modes) == "string" and { modes } or modes
   for _, mode in ipairs(modes) do
     if buffer then
-      api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
+      api.nvim_buf_set_keymap(0, mode, lhs, _rhs, opts)
     else
-      api.nvim_set_keymap(mode, lhs, rhs, opts)
+      api.nvim_set_keymap(mode, lhs, _rhs, opts)
     end
   end
 end
