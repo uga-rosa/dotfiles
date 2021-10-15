@@ -61,27 +61,19 @@ myutils.map = function(modes, lhs, rhs, opts)
   end)()
 
   rhs = type(rhs) ~= "table" and { rhs } or rhs
-  rhs = table.concat(vim.tbl_map(function(r)
-    local _rhs = (function()
-      if type(r) == "function" then
-        opts.cmd = true
-        return func2str(function()
-          r(fallback(lhs))
-        end)
-      else
-        return r
-      end
-    end)()
-
-    _rhs = (function()
-      if opts.cmd then
-        return ("<cmd>%s<cr>"):format(_rhs)
-      else
-        return _rhs
-      end
-    end)()
-    return _rhs
-  end, rhs))
+  for i = 1, #rhs do
+    local r = rhs[i]
+    if type(r) == "function" then
+      opts.cmd = true
+      r = func2str(function()
+        r(fallback(lhs))
+      end)
+    end
+    if opts.cmd then
+      r = "<cmd>" .. r .. "<cr>"
+    end
+    rhs[i] = r
+  end
 
   if opts.cmd then
     opts.noremap = true

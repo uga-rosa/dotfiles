@@ -169,7 +169,6 @@ return packer.startup({
     -- julia
     use("uga-rosa/julia-vim")
     -- translate
-    -- use("uga-rosa/deepl.nvim")
     use("uga-rosa/eiwa_dic.nvim")
     use({
       "uga-rosa/translate-shell.nvim",

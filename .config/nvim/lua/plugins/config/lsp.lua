@@ -1,6 +1,7 @@
 local lspconfig = require("lspconfig")
 local lspinstaller = require("nvim-lsp-installer")
 local sign = require("lsp_signature")
+local array = require("steel.array")
 
 local map = myutils.map
 local command = myutils.command
@@ -23,7 +24,7 @@ opts.sumneko_lua = require("lua-dev").setup({
   library = {
     vimruntime = true,
     types = true,
-    plugins = false,
+    plugins = { "steelarray.nvim" },
   },
   lspconfig = opts.default,
 })
@@ -36,36 +37,27 @@ opts.bashls = setmetatable({
   filetypes = { "sh", "zsh" },
 }, { __index = opts.default })
 
--- opts.hls = setmetatable({
---   settings = {
---     haskell = {
---       formattingProvider = "stylish-haskell",
---     },
---   },
--- }, {
---   __index = opts.default,
--- })
-
 -- automatically install
-local servers = {
+local servers = array.new({
   "sumneko_lua",
   "rust_analyzer",
   "pyright",
   "bashls",
   "efm",
   "vimls",
-  -- "hls",
-}
+})
 
-local installed = vim.tbl_map(function(server)
+local installed = array.new(lspinstaller.get_installed_servers()):map(function(server)
   return server.name
-end, lspinstaller.get_installed_servers())
+end)
 
-for _, server in ipairs(servers) do
-  if not vim.tbl_contains(installed, server) then
+servers
+  :filter(function(server)
+    return not installed:contain(server)
+  end)
+  :map(function(server)
     lspinstaller.install(server)
-  end
-end
+  end)
 
 -- setup
 lspinstaller.on_server_ready(function(server)

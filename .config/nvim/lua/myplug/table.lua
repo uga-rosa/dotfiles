@@ -86,15 +86,15 @@ local trim = function(str)
   return str:gsub("^%s*(.-)%s*$", "%1")
 end
 
-local max_col_len = function(arr)
+local max_str_width = function(arr)
   local res = {}
   for i, v in ipairs(arr) do
     for j, u in ipairs(v) do
       local width = fn.strwidth(u)
       if i == 1 then
         res[j] = width
-      else
-        res[j] = res[j] < width and width or res[j]
+      elseif res[j] < width then
+        res[j] = width
       end
     end
   end
@@ -123,13 +123,15 @@ M.format = function()
 
   local tables = api.nvim_buf_get_lines(0, start - 1, last, true)
 
-  local table_split = vim.tbl_map(function(v)
-    return vim.tbl_map(function(w)
-      return trim(w)
-    end, split(v, sep))
-  end, tables)
+  local table_split = {}
+  for i = 1, #tables do
+    table_split[i] = {}
+    for j in vim.gsplit(table[i], sep) do
+      table.insert(table_split[i], trim(j))
+    end
+  end
 
-  local col_len = max_col_len(table_split)
+  local col_len = max_str_width(table_split)
 
   local formatted = {}
   for i, v in ipairs(table_split) do

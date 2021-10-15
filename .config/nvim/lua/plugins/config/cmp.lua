@@ -27,9 +27,11 @@ _G.source_list = function(arr)
       priority = 1,
     },
   }
-  return vim.tbl_map(function(name)
-    return config[name]
-  end, arr)
+  local res = {}
+  for i = 1, #arr do
+    res[i] = config[arr[i]]
+  end
+  return res
 end
 
 local lspkind = {

@@ -103,28 +103,28 @@ function chrome() {
 
 # tmux-session-select
 function tmux_session_select() {
-  ID=$(tmux list-sessions)
-  if [[ -z $ID ]]; then
-    BUFFER="tmux new-session"
-    zle accept-line
-  fi
+  ID=$(tmux list-sessions 2>&1)
   if [[ -z $TMUX ]]; then
-    create_new_session="\nCreate New Session"
+    create_new_session="Create New Session"
+    ID="$ID\n"
   else
     create_new_session=""
   fi
-  ID=$ID${create_new_session}:
+  if [[ $ID =~ 'no server running on' ]]; then
+    ID=""
+  fi
+  ID=$ID$create_new_session:
   ID=$(echo "$ID" | fzf | cut -d: -f1)
-  if [[ "\n$ID" == "${create_new_session}" ]]; then
+  if [[ $ID == $create_new_session && -n $selectd ]]; then
     BUFFER="tmux new-session"
     zle accept-line
   elif [[ -n $ID ]]; then
-    in_out="switch"
-    [[ -z $TMUX ]] && in_out="attach-session"
-    BUFFER="tmux $in_out -t $ID"
+    if [[ -n $TMUX ]]; then
+      BUFFER="tmux switch -t $ID"
+    else
+      BUFFER="tmux attach-session -t $ID"
+    fi
     zle accept-line
-  else
-    :
   fi
 }
 zle -N tmux_session_select
