@@ -30,3 +30,10 @@ export PATH="$PATH:$HOME/.nimble/bin"
 
 # julia
 export PATH="$PATH:$HOME/.local/julia/bin"
+
+# lua
+for i in $(ls -d ~/lua/lib/*/lua); do
+  luapath="$i/?.lua;$luapath"
+  luapath="$i/?/init.lua;$luapath"
+done
+export LUA_PATH=$luapath

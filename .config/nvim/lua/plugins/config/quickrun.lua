@@ -5,12 +5,12 @@ vim.g.quickrun_config = {
     ["outputter/buffer/opener"] = "botright 10sp",
     ["outputter/buffer/close_on_empty"] = true,
   },
-  haskell = {
-    command = "stack",
-    cmdopt = "run",
-    exec = "%c %o",
-  },
   nim = {
+    command = "nim",
+    cmdopt = "r",
+    exec = "%c %o -d:release",
+  },
+  nimble = {
     command = "nimble",
     cmdopt = "run",
     exec = "%c %o",
@@ -22,11 +22,18 @@ local aug = myutils.augroup
 
 map("n", "@r", { "w", "QuickRun" }, "cmd")
 aug({
-  haskell = {
+  quickrun_quit = {
     "BufEnter",
     "quickrun://output",
     function()
       map("n", "q", "quit", { "nowait", "buffer", "cmd" })
+    end,
+  },
+  luafile = {
+    "FileType",
+    "lua",
+    function()
+      map("n", "@R", { "w", "luafile %" }, { "cmd", "buffer" })
     end,
   },
 })

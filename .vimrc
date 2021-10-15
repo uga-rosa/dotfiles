@@ -1,20 +1,5 @@
 let mapleader = "\<Space>"
 
-call plug#begin('~/.vim/plugged')
-Plug 'bluz71/vim-nightfly-guicolors'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'kana/vim-operator-user'
-Plug 'kana/vim-operator-replace'
-Plug 'itchyny/lightline.vim'
-Plug 'myusuf3/numbers.vim'
-Plug 'junegunn/vim-easy-align'
-call plug#end()
-
-set termguicolors
-colorscheme nightfly
-let g:lightline = {'colorscheme': 'nightfly'}
-
 set fileencoding=utf-8
 set fileformats=unix,dos,mac
 set hidden
@@ -50,18 +35,17 @@ endif
 
 autocmd FileType * setlocal formatoptions-=ro
 
-nnoremap <silent> <leader><esc> <cmd>noh<cr>
+nnoremap <silent> <esc><esc> <cmd>noh<cr>
+nnoremap <leader><cr> o<esc>
 
 vnoremap < <gv
 vnoremap > >gv
 
-nnoremap <leader><cr> o<esc>
-
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
+cnoremap <C-d> <Del>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
-cnoremap <C-d> <Del>
 
 inoremap <C-b> <Left>
 inoremap <C-f> <Right>
@@ -80,19 +64,3 @@ noremap H ^
 noremap L $
 
 nnoremap Y y$
-
-nnoremap f<C-j> f、
-nnoremap f<C-k> f。
-nnoremap F<C-j> F、
-nnoremap F<C-k> F。
-nnoremap t<C-j> t、
-nnoremap t<C-k> t。
-nnoremap T<C-j> T、
-nnoremap T<C-k> T。
-
-" vim-operator-replace
-nmap _ <Plug>(operator-replace)
-
-" vim-easy-align
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
