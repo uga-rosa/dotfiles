@@ -81,6 +81,7 @@ return packer.startup({
     -- treesitter
     use({
       "nvim-treesitter/nvim-treesitter",
+      event = "BufRead",
       requires = {
         "nvim-treesitter/nvim-treesitter-textobjects",
         "p00f/nvim-ts-rainbow",
