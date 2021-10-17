@@ -119,11 +119,12 @@ function tmux_session_select() {
     ID=""
   fi
   ID=$ID$create_new_session:
-  ID=$(echo "$ID" | fzf | cut -d: -f1)
-  if [[ $ID == $create_new_session ]]; then
+  selected=$(echo "$ID" | fzf | cut -d: -f1)
+  echo $selected
+  if [[ -n $selected && $selected == $create_new_session ]]; then
     BUFFER="tmux new-session"
     zle accept-line
-  elif [[ -n $ID ]]; then
+  elif [[ -n $selected ]]; then
     if [[ -n $TMUX ]]; then
       BUFFER="tmux switch -t $ID"
     else

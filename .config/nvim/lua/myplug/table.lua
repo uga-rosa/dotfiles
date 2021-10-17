@@ -9,15 +9,6 @@ local augroup = myutils.augroup
 
 local sep = "|"
 
-local split = function(str, delim)
-  delim = delim or " "
-  local res = {}
-  for i in str:gmatch(("[^%s]+"):format(delim)) do
-    res[#res + 1] = i
-  end
-  return res
-end
-
 M.make = function(...)
   local args = { ... }
 
@@ -26,26 +17,27 @@ M.make = function(...)
       return tonumber(args[1]), tonumber(args[2])
     elseif #args == 0 then
       local input = fn.input("Input table size (line, column): ")
-      input = split(input, " ,")
+      input = vim.split(input, "[ ,]")
       if #input == 2 then
         return tonumber(input[1]), tonumber(input[2])
-      else
-        error("Only two arguments.")
       end
-    else
-      error("Only two arguments.")
     end
+    error("Only two arguments.")
   end)()
 
-  local text = {}
-  for i = 1, line + 1 do
-    if i == 2 then
-      text[#text + 1] = sep .. string.rep(" --- ", col, sep) .. sep
-    else
-      text[#text + 1] = sep .. string.rep("     ", col, sep) .. sep
-    end
+  assert(line >= 2, "line too small")
+  assert(col >= 1, "col too small")
+
+  local thd = sep .. string.rep("     ", col, sep) .. sep
+  local boundary = sep .. string.rep(" --- ", col, sep) .. sep
+
+  local tables = { thd, boundary }
+  for i = 1, line - 1 do
+    tables[i + 2] = thd
   end
-  api.nvim_buf_set_lines(0, fn.line("."), fn.line("."), true, text)
+
+  local currentline = fn.line(".")
+  api.nvim_buf_set_lines(0, currentline, currentline, true, tables)
 end
 
 ---Jump between cells.
@@ -72,77 +64,76 @@ M.jump = function(dir)
   end
 end
 
-local table_range = function(start, dir)
-  while true do
-    if not fn.getline(start + dir):match(sep) then
-      break
-    end
-    start = start + dir
-  end
-  return start
+local function trim(str)
+  return str:match("^%s*(.-)%s*$")
 end
 
-local trim = function(str)
-  return str:gsub("^%s*(.-)%s*$", "%1")
-end
-
-local max_str_width = function(arr)
+local function transpose(t)
   local res = {}
-  for i, v in ipairs(arr) do
-    for j, u in ipairs(v) do
-      local width = fn.strwidth(u)
-      if i == 1 then
-        res[j] = width
-      elseif res[j] < width then
-        res[j] = width
-      end
+  for i = 1, #t do
+    for j = 1, #t[i] do
+      res[j] = res[j] or {}
+      res[j][i] = t[i][j]
     end
   end
   return res
 end
 
-local ljust = function(str, num, is2)
-  if is2 then
+local function _max_width(t)
+  local res = fn.strwidth(t[1])
+  for i = 2, #t do
+    local width = fn.strwidth(t[i])
+    if res < width then
+      res = width
+    end
+  end
+  return res
+end
+
+local function max_col_width(arr)
+  local res = {}
+  local t = transpose(arr)
+  for i = 1, #t do
+    res[i] = _max_width(t[i])
+  end
+  return res
+end
+
+local function ljust(str, num, is_boundary)
+  if is_boundary then
     local bars = string.rep("-", num - 2)
     return str:gsub("^(.)%-*(.)$", "%1" .. bars .. "%2")
   else
-    return str .. string.rep(" ", num - #str)
+    return str .. string.rep(" ", num - fn.strwidth(str))
   end
 end
 
-M.format = function()
-  local line_num = tonumber(fn.line("."))
-  local line = fn.getline(line_num)
+M.format = function(line1, line2)
+  local first, last = line1, line2
 
-  if not line:match(sep) then
-    return
-  end
-
-  local start = table_range(line_num, -1)
-  local last = table_range(line_num, 1)
-
-  local tables = api.nvim_buf_get_lines(0, start - 1, last, true)
-
-  local table_split = {}
+  local tables = api.nvim_buf_get_lines(0, first - 1, last, true)
+  local tbl_list = {}
   for i = 1, #tables do
-    table_split[i] = {}
-    for j in vim.gsplit(table[i], sep) do
-      table.insert(table_split[i], trim(j))
+    tbl_list[i] = {}
+    for j in vim.gsplit(tables[i], sep) do
+      if j ~= "" then
+        table.insert(tbl_list[i], trim(j))
+      end
     end
   end
 
-  local col_len = max_str_width(table_split)
+  local col_width = max_col_width(tbl_list)
 
   local formatted = {}
-  for i, v in ipairs(table_split) do
+  for i = 1, #tbl_list do
     local temp = {}
-    for j, u in ipairs(v) do
-      temp[j] = " " .. ljust(u, col_len[j], i == 2) .. " "
+    for j = 1, #tbl_list[i] do
+      temp[j] = " " .. ljust(tbl_list[i][j], col_width[j], i == 2) .. " "
     end
     formatted[i] = sep .. table.concat(temp, sep) .. sep
   end
 
-  api.nvim_buf_set_lines(0, start - 1, last, true, formatted)
+  api.nvim_buf_set_lines(0, first - 1, last, true, formatted)
 end
 
 M.mapping = function()
@@ -165,7 +156,7 @@ end
 
 M.setup = function()
   command({ "-nargs=*", "TableMake", M.make })
-  command({ "TableFormat", M.format })
+  command({ "-range", "TableFormat", 'lua require("myplug.table").format(<line1>, <line2>)' })
   M.mapping()
   augroup({
     table = {
