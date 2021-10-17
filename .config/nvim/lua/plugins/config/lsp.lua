@@ -11,11 +11,40 @@ local augroup = myutils.augroup
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
+-- lsp saga
+require("lspsaga").setup({
+  error_sign = " ",
+  warn_sign = " ",
+  hint_sign = " ",
+  infor_sign = " ",
+  code_action_prompt = {
+    enable = false,
+  },
+  code_action_keys = {
+    quit = { "<C-c>", "<esc>", "q" },
+    exec = "<cr>",
+  },
+  rename_action_keys = {
+    quit = { "<C-c>", "<esc>" },
+    exec = "<cr>",
+  },
+})
+
 local opts = {
   default = {
     capabilities = capabilities,
     on_attach = function()
+      -- lsp_signature
       sign.on_attach()
+      -- lspsaga
+      map("n", "K", "Lspsaga hover_doc", { "cmd", "buffer" })
+      map("n", "<C-f>", "lua require'lspsaga.action'.smart_scroll_with_saga(1)", { "cmd", "buffer" })
+      map("n", "<C-b>", "lua require'lspsaga.action'.smart_scroll_with_saga(-1)", { "cmd", "buffer" })
+      map("n", "[d", "Lspsaga diagnostic_jump_next", { "cmd", "buffer" })
+      map("n", "]d", "Lspsaga diagnostic_jump_prev", { "cmd", "buffer" })
+      map("n", "<leader>x", "Lspsaga code_action", { "cmd", "buffer" })
+      map("x", "<leader>x", "Lspsaga range_code_action", { "cmd", "buffer" })
+      map("n", "<leader>rn", "Lspsaga rename", { "cmd", "buffer" })
     end,
   },
 }
@@ -30,7 +59,7 @@ opts.sumneko_lua = require("lua-dev").setup({
 })
 
 opts.efm = setmetatable({
-  filetypes = { "json", "lua", "python", "sh" },
+  filetypes = { "json", "lua", "python", "sh", "zsh" },
 }, { __index = opts.default })
 
 opts.bashls = setmetatable({
@@ -79,16 +108,6 @@ opts.nimls = setmetatable({
 lspconfig.nimls.setup(opts.nimls)
 
 -- Julia (manual installed)
--- opts.julials = setmetatable({
---   cmd = {
---     "julia",
---     "--startup-file=no",
---     "--history-file=no",
---     vim.fn.stdpath("config") .. "/julia/startls.jl",
---   },
--- }, {
---   __index = opts.default,
--- })
 lspconfig.julials.setup(opts.default)
 
 -- format
@@ -104,27 +123,3 @@ augroup({
     { "BufWritePre", "*.lua,*.py,*.hs,*.json", "Format" },
   },
 })
-
-require("lspsaga").init_lsp_saga({
-  error_sign = " ",
-  warn_sign = " ",
-  hint_sign = " ",
-  infor_sign = " ",
-  code_action_prompt = {
-    enable = false,
-  },
-  rename_action_keys = {
-    quit = { "<C-c>", "<esc>" },
-    exec = "<cr>",
-  },
-})
-
--- show hover doc
-map("n", "K", "Lspsaga hover_doc", "cmd")
-map("n", "<C-f>", "lua require'lspsaga.action'.smart_scroll_with_saga(1)", "cmd")
-map("n", "<C-b>", "lua require'lspsaga.action'.smart_scroll_with_saga(-1)", "cmd")
--- rename
-map("n", "<leader>rn", "Lspsaga rename", "cmd")
--- jump diagnostics
-map("n", "[d", "Lspsaga diagnostic_jump_next", "cmd")
-map("n", "]d", "Lspsaga diagnostic_jump_prev", "cmd")
