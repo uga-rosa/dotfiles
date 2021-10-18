@@ -27,9 +27,6 @@ map("n", "<M-k>", "EiwaPopup", "cmd")
 map("n", "<esc><esc>", "nohlsearch", { "noremap", "cmd" })
 map("n", "<leader><cr>", "o<esc>", "noremap")
 
-map("n", "<C-e>", "zz", "noremap")
-map("i", "<C-v>", "<C-o>zz", "noremap")
-
 map("n", "Q", "q", "noremap")
 
 map("v", "<", "<gv", "noremap")

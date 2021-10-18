@@ -175,5 +175,10 @@ return packer.startup({
       "uga-rosa/translate-shell.nvim",
       config = 'require("plugins.config.translate")',
     })
+    -- smooth scroll
+    use({
+      "karb94/neoscroll.nvim",
+      config = 'require("neoscroll").setup()',
+    })
   end,
 })
