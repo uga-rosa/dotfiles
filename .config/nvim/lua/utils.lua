@@ -18,17 +18,9 @@ local function func2str(func)
   return ("lua myluafunc(%s)"):format(idx)
 end
 
----Insert a key
----@param key string
----@param mode string
-myutils.feedkey = function(key, mode)
-  mode = mode or "n"
-  api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
 local function fallback(key)
   return function()
-    myutils.feedkey(key, "n")
+    api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), "n", true)
   end
 end
 
