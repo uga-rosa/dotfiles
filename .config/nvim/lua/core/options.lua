@@ -2,9 +2,7 @@ local augroup = myutils.augroup
 
 vim.opt.fileencoding = "utf-8"
 vim.opt.hidden = true
-vim.opt.title = true
 vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.showmatch = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 2
@@ -15,12 +13,12 @@ vim.opt.swapfile = false
 vim.opt.scrolloff = 3
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+vim.opt.pumheight = 25
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 vim.opt.inccommand = "split"
 vim.opt.signcolumn = "yes"
-vim.opt.dictionary:append("/usr/share/dict/words")
--- vim.opt.dictionary:append("~/dotfiles/doc/vim_dictionary")
+vim.opt.dictionary = "/usr/share/dict/words"
 
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
