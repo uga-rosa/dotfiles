@@ -18,6 +18,16 @@ map("i", "j", function(fallback)
   end
 end)
 
+map("n", "O", function(fallback)
+  vim.cmd("normal zz")
+  fallback()
+end)
+
+map("n", "o", function(fallback)
+  vim.cmd("normal zz")
+  fallback()
+end)
+
 map("n", "<M-h>", function()
   vim.cmd("h " .. fn.expand("<cword>"))
 end)
@@ -54,14 +64,6 @@ map("c", "<C-e>", "<end>", "noremap")
 map("c", "<C-x>", [[expand('%:p')]], { "noremap", "expr" })
 
 map("i", "<C-g>", "<C-d>", "noremap")
-
-map("n", "0", function(fallback)
-  if fn.getline("."):sub(1, fn.col(".") - 1):match("^%s+$") then
-    vim.api.nvim_feedkeys("0", "n", true)
-  else
-    fallback()
-  end
-end)
 
 -- packer.nvim
 vim.cmd([[

@@ -58,10 +58,6 @@ opts.sumneko_lua = require("lua-dev").setup({
   lspconfig = opts.default,
 })
 
-opts.efm = setmetatable({
-  filetypes = { "json", "lua", "python", "sh", "zsh" },
-}, { __index = opts.default })
-
 opts.bashls = setmetatable({
   filetypes = { "sh", "zsh" },
 }, { __index = opts.default })
@@ -72,7 +68,6 @@ local servers = array.new({
   "rust_analyzer",
   "pyright",
   "bashls",
-  "efm",
   "vimls",
 })
 
@@ -109,6 +104,9 @@ lspconfig.nimls.setup(opts.nimls)
 
 -- Julia (manual installed)
 lspconfig.julials.setup(opts.default)
+
+-- null-ls
+lspconfig["null-ls"].setup(opts.default)
 
 -- format
 command({ "Format", vim.lsp.buf.formatting_sync })

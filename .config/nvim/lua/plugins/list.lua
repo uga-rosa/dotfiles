@@ -68,6 +68,15 @@ return packer.startup({
       },
       config = 'require("plugins.config.lsp")',
     })
+    -- Use neovim as a LSP
+    use({
+      "jose-elias-alvarez/null-ls.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "neovim/nvim-lspconfig",
+      },
+      config = 'require("plugins.config.null_ls")',
+    })
     -- fuzzy finder
     use({
       "nvim-telescope/telescope.nvim",
@@ -81,7 +90,6 @@ return packer.startup({
     -- treesitter
     use({
       "nvim-treesitter/nvim-treesitter",
-      event = "BufRead",
       requires = {
         "nvim-treesitter/nvim-treesitter-textobjects",
         "p00f/nvim-ts-rainbow",
@@ -174,11 +182,6 @@ return packer.startup({
     use({
       "uga-rosa/translate-shell.nvim",
       config = 'require("plugins.config.translate")',
-    })
-    -- smooth scroll
-    use({
-      "karb94/neoscroll.nvim",
-      config = 'require("neoscroll").setup()',
     })
   end,
 })
