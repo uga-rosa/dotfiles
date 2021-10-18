@@ -120,15 +120,14 @@ function tmux_session_select() {
   fi
   ID=$ID$create_new_session:
   selected=$(echo "$ID" | fzf | cut -d: -f1)
-  echo $selected
   if [[ -n $selected && $selected == $create_new_session ]]; then
     BUFFER="tmux new-session"
     zle accept-line
   elif [[ -n $selected ]]; then
     if [[ -n $TMUX ]]; then
-      BUFFER="tmux switch -t $ID"
+      BUFFER="tmux switch -t $selected"
     else
-      BUFFER="tmux attach-session -t $ID"
+      BUFFER="tmux attach-session -t $selected"
     fi
     zle accept-line
   fi
