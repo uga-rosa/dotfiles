@@ -51,6 +51,8 @@ local vi_mode_colors = {
   NONE = colors.yellow,
 }
 
+local scroll_bar_blocks = { "█", "▇", "▆", "▅", "▄", "▃", "▂", "▁", " " }
+
 local vi_mode_utils = require("feline.providers.vi_mode")
 local lsp = require("feline.providers.lsp")
 local git = require("feline.providers.git")
@@ -218,9 +220,14 @@ local comps = {
       left_sep = " ",
     },
     bar = {
-      provider = "scroll_bar",
+      provider = function()
+        local curr_line = vim.api.nvim_win_get_cursor(0)[1]
+        local lines = vim.api.nvim_buf_line_count(0)
+        return string.rep(scroll_bar_blocks[math.floor(curr_line / lines * 8) + 1], 2)
+      end,
       hl = {
-        fg = colors.emerald,
+        fg = colors.bg,
+        bg = colors.emerald,
       },
     },
   },

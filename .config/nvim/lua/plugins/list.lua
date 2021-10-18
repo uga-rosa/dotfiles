@@ -22,9 +22,9 @@ return packer.startup({
     })
     -- tab bar
     use({
-      "romgrk/barbar.nvim",
+      "alvarosevilla95/luatab.nvim",
       requires = "kyazdani42/nvim-web-devicons",
-      config = 'require("plugins.config.barbar")',
+      config = 'require("plugins.config.other").luatab()',
     })
     -- filer
     use({
