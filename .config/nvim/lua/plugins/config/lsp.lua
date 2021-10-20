@@ -1,11 +1,8 @@
 local lspconfig = require("lspconfig")
 local lspinstaller = require("nvim-lsp-installer")
-local sign = require("lsp_signature")
 local array = require("steel.array")
 
 local map = myutils.map
-local command = myutils.command
-local augroup = myutils.augroup
 
 -- cmp source
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -30,12 +27,16 @@ require("lspsaga").setup({
   },
 })
 
+-- format command
+vim.cmd("command! Format lua vim.lsp.buf.formatting_sync()")
+
+-- LSP setting
 local opts = {
   default = {
     capabilities = capabilities,
     on_attach = function()
-      -- lsp_signature
-      sign.on_attach()
+      -- auto formatting
+      vim.cmd("autocmd BufWritePre <buffer> Format")
       -- lspsaga
       map("n", "K", "Lspsaga hover_doc", { "cmd", "buffer" })
       map("n", "<C-f>", "lua require'lspsaga.action'.smart_scroll_with_saga(1)", { "cmd", "buffer" })
@@ -45,6 +46,8 @@ local opts = {
       map("n", "<leader>x", "Lspsaga code_action", { "cmd", "buffer" })
       map("x", "<leader>x", "Lspsaga range_code_action", { "cmd", "buffer" })
       map("n", "<leader>rn", "Lspsaga rename", { "cmd", "buffer" })
+      -- lsp_signature
+      require("lsp_signature").on_attach()
     end,
   },
 }
@@ -62,15 +65,17 @@ opts.bashls = setmetatable({
   filetypes = { "sh", "zsh" },
 }, { __index = opts.default })
 
--- automatically install
+-- LSP list
 local servers = array.new({
   "sumneko_lua",
   "rust_analyzer",
   "pyright",
   "bashls",
   "vimls",
+  "clangd",
 })
 
+-- automatically install
 local installed = array.new(lspinstaller.get_installed_servers()):map(function(server)
   return server.name
 end)
@@ -104,20 +109,3 @@ lspconfig.nimls.setup(opts.nimls)
 
 -- Julia (manual installed)
 lspconfig.julials.setup(opts.default)
-
--- null-ls
-lspconfig["null-ls"].setup(opts.default)
-
--- format
-command({ "Format", vim.lsp.buf.formatting_sync })
-
-augroup({
-  lspinfo = {
-    "FileType",
-    "lspinfo",
-    "nnoremap <buffer><nowait> q <cmd>bd<cr>",
-  },
-  format = {
-    { "BufWritePre", "*.lua,*.py,*.hs,*.json", "Format" },
-  },
-})

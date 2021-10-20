@@ -22,3 +22,6 @@ local sources = {
 }
 
 null.config({ sources = sources })
+
+-- lsp setup
+require("lspconfig")["null-ls"].setup({})
