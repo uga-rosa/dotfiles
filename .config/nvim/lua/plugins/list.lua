@@ -14,6 +14,8 @@ return packer.startup({
     use({ "wbthomason/packer.nvim", opt = true })
     -- colorscheme
     use("bluz71/vim-nightfly-guicolors")
+    -- fast filetype.vim
+    -- use("uga-rosa/filetype.nvim")
     -- statusline
     use({
       "famiu/feline.nvim",
