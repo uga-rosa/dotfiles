@@ -2,7 +2,17 @@ local lspconfig = require("lspconfig")
 local lspinstaller = require("nvim-lsp-installer")
 local array = require("steel.array")
 
+local augroup = myutils.augroup
 local map = myutils.map
+
+-- lspinfo close
+augroup({
+  lspinfo_close = {
+    "FileType",
+    "lspinfo",
+    "nnoremap <buffer><nowait> q <cmd>q<cr>",
+  },
+})
 
 -- cmp source
 local capabilities = vim.lsp.protocol.make_client_capabilities()
