@@ -1,5 +1,4 @@
 local cmp = require("cmp")
-local luasnip = require("luasnip")
 
 _G.source_list = function(arr)
   local config = {
@@ -19,6 +18,10 @@ _G.source_list = function(arr)
     lsp = { name = "nvim_lsp" },
     luasnip = {
       name = "luasnip",
+      priority = 200,
+    },
+    vsnip = {
+      name = "vsnip",
       priority = 200,
     },
     dictionary = {
@@ -62,14 +65,10 @@ local lspkind = {
   TypeParameter = "",
 }
 
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
 cmp.setup({
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
+      vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   completion = {
@@ -86,7 +85,7 @@ cmp.setup({
         buffer = "[Buffer]",
         path = "[Path]",
         nvim_lsp = "[LSP]",
-        luasnip = "[LuaSnip]",
+        vsnip = "[Vsnip]",
         dictionary = "[Dictionary]",
       })[entry.source.name]
       vim_item.dup = ({
@@ -116,5 +115,5 @@ cmp.setup({
       select = true,
     }),
   },
-  sources = source_list({ "luasnip", "lsp", "path", "buffer", "dictionary" }),
+  sources = source_list({ "vsnip", "lsp", "path", "buffer", "dictionary" }),
 })

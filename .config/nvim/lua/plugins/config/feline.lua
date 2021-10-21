@@ -34,6 +34,40 @@ local colors = {
   green = "#a1cd5e",
 }
 
+local mode_alias = {
+  ["n"] = "NORMAL",
+  ["no"] = "OP",
+  ["nov"] = "OP",
+  ["noV"] = "OP",
+  ["no"] = "OP",
+  ["niI"] = "NORMAL",
+  ["niR"] = "NORMAL",
+  ["niV"] = "NORMAL",
+  ["nt"] = "NORMAL",
+  ["v"] = "VISUAL",
+  ["V"] = "LINES",
+  [""] = "BLOCK",
+  ["s"] = "SELECT",
+  ["S"] = "SELECT",
+  [""] = "BLOCK",
+  ["i"] = "INSERT",
+  ["ic"] = "INSERT",
+  ["ix"] = "INSERT",
+  ["R"] = "REPLACE",
+  ["Rc"] = "REPLACE",
+  ["Rv"] = "V-REPLACE",
+  ["Rx"] = "REPLACE",
+  ["c"] = "COMMAND",
+  ["cv"] = "COMMAND",
+  ["ce"] = "COMMAND",
+  ["r"] = "ENTER",
+  ["rm"] = "MORE",
+  ["r?"] = "CONFIRM",
+  ["!"] = "SHELL",
+  ["t"] = "TERM",
+  ["null"] = "NONE",
+}
+
 local vi_mode_colors = {
   NORMAL = colors.indigo,
   OP = colors.indigo,
@@ -51,9 +85,22 @@ local vi_mode_colors = {
   NONE = colors.yellow,
 }
 
+local function get_vim_mode()
+  local mode = vim.api.nvim_get_mode().mode
+  if mode then
+    return mode_alias[mode]
+  end
+end
+
+local function get_mode_color()
+  local mode = get_vim_mode()
+  if mode then
+    return vi_mode_colors[mode] or colors.bg
+  end
+end
+
 local scroll_bar_blocks = { "█", "▇", "▆", "▅", "▄", "▃", "▂", "▁", " " }
 
-local vi_mode_utils = require("feline.providers.vi_mode")
 local lsp = require("feline.providers.lsp")
 local git = require("feline.providers.git")
 local devicons = require("nvim-web-devicons")
@@ -61,12 +108,16 @@ local devicons = require("nvim-web-devicons")
 local comps = {
   vi_mode = {
     provider = function()
-      return "  " .. vi_mode_utils.get_vim_mode() .. " "
+      local mode = get_vim_mode()
+      mode = mode or "TERM"
+      if mode then
+        return "  " .. mode .. " "
+      end
     end,
     hl = function()
       return {
         fg = colors.dark_blue,
-        bg = vi_mode_utils.get_mode_color(),
+        bg = get_mode_color(),
       }
     end,
     right_sep = " ",
@@ -265,7 +316,6 @@ components:inactive_add(1, comps.file.fullpath)
 require("feline").setup({
   colors = { bg = colors.bg },
   components = components,
-  vi_mode_colors = vi_mode_colors,
   force_inactive = {
     filetypes = {
       "filittle",

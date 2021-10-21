@@ -1,4 +1,7 @@
-require("nvim-autopairs").setup({
+local npairs = require("nvim-autopairs")
+local Rule = require("nvim-autopairs.rule")
+
+npairs.setup({
   ignored_next_char = string.gsub([[ [%w%%%[%.] ]], "%s+", ""),
 })
 
@@ -14,3 +17,9 @@ require("nvim-autopairs.completion.cmp").setup({
 })
 
 myutils.map("i", "<C-h>", "<bs>")
+
+npairs.add_rules({
+  Rule("\\left(", "\\right)", "markdown"),
+  Rule("\\left\\{", "\\right\\}", "markdown"),
+  Rule("\\left[", "\\right]", "markdown"),
+})

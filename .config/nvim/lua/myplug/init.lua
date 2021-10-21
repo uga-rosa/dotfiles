@@ -71,13 +71,13 @@ M.setup = function()
     "SnipOpen",
     function()
       local ft = vim.bo.filetype
-      vim.cmd("e " .. "~/.config/nvim/lua/snippets/snip/" .. ft .. ".snip")
+      vim.cmd("e " .. "~/.config/nvim/snippets/snip/" .. ft .. ".snip")
     end,
   })
   command({
     "Snip2Json",
     function()
-      vim.fn.jobstart("snip2json", { cwd = vim.fn.stdpath("config") .. "/lua/snippets" })
+      vim.fn.jobstart("snip2json", { cwd = vim.fn.stdpath("config") .. "/snippets" })
     end,
   })
   -- toggle terminal

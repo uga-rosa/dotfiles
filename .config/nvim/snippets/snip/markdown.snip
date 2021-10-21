@@ -1,3 +1,34 @@
+snippet slide_init
+% ${1:Title}
+% 中井 剛志
+% ${VIM:system("date '+%Y/%m/%d'")}
+
+
+endsnippet
+
+snippet pandoc_init
+---
+title: ${1:Title}
+author: 分子集積化学研究室 計算グループ B4 中井 剛志
+date: ${VIM:system("date '+%Y/%m/%d'")}
+
+---
+
+
+endsnippet
+
+snippet left(
+\\left( $0 \\right)
+endsnippet
+
+snippet left\{
+\\left\\{ $0 \\right\\}
+endsnippet
+
+snippet left[
+\\left[ $0 \\right]
+endsnippet
+
 snippet incremental
 :::incremental
 
@@ -19,14 +50,14 @@ snippet right
 endsnippet
 
 snippet frac
-${1|,\displaystyle|}\frac{$2}{$3}
+${1|,\\displaystyle|}\\frac{$2}{$3}
 endsnippet
 
 snippet formula_multi
 $$
-\begin{${1|aligned,multiline|}}
+\\begin{${1|aligned,multiline|}}
 $0
-\end{$1}
+\\end{$1}
 $$
 endsnippet
 
@@ -37,49 +68,49 @@ $$
 endsnippet
 
 snippet matrix
-\begin{${1|p,v|}matrix}
+\\begin{${1|p,v|}matrix}
 $0
-\end{$1matrix}
+\\end{$1matrix}
 endsnippet
 
 snippet sum
-\sum_{${1:i=1}}^{${2:n}}
+\\sum_{${1:i=1}}^{${2:n}}
 endsnippet
 
 snippet prod
-\prod_{${1:i=1}}^{${2:n}}
+\\prod_{${1:i=1}}^{${2:n}}
 endsnippet
 
 snippet int
-\int_{${1:0}}^{${2:\infty}}
+\\int_{${1:0}}^{${2:\\infty}}
 endsnippet
 
 snippet tag
-\tag{$1}
+\\tag{$1}
 endsnippet
 
 snippet sqrt
-\sqrt{$1}
+\\sqrt{$1}
 endsnippet
 
 snippet arrow
-${1|\right,\Right,\left,\Left|}arrow
+${1|\\right,\\Right,\\left,\\Left|}arrow
 endsnippet
 
 snippet infinity
-\infty
+\\infty
 endsnippet
 
 snippet partial
-\partial
+\\partial
 endsnippet
 
 snippet vector
-${1|\bm,\overrightarrow|}{$2}
+${1|\\bm,\\overrightarrow|}{$2}
 endsnippet
 
 snippet overline
-\overline$1
+\\overline$1
 endsnippet
 
 snippet slide_title

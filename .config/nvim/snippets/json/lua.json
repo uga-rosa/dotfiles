@@ -1,22 +1,4 @@
 {
-  "snippet": {
-    "prefix": [
-      "snippet"
-    ],
-    "body": [
-      "s(\"${1:trig}\", {",
-      "  ${2:body}",
-      "}),"
-    ]
-  },
-  "node": {
-    "prefix": [
-      "node"
-    ],
-    "body": [
-      "${1|t,i,f,c,sn|}($2),"
-    ]
-  },
   "req": {
     "prefix": [
       "req"
