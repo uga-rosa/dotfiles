@@ -43,8 +43,8 @@ return packer.startup({
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
-        -- "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-vsnip",
+        "dcampos/cmp-snippy",
         "uga-rosa/cmp-dictionary",
       },
       config = 'require("plugins.config.cmp")',
@@ -60,10 +60,6 @@ return packer.startup({
       "hrsh7th/vim-vsnip",
       config = 'require("plugins.config.vsnip")',
     })
-    -- use({
-    --   "L3MON4D3/LuaSnip",
-    --   config = 'require("plugins.config.luasnip")',
-    -- })
     -- LSP
     use({
       "neovim/nvim-lspconfig",

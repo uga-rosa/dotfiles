@@ -19,6 +19,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.inccommand = "split"
 vim.opt.signcolumn = "yes"
 vim.opt.dictionary = "/usr/share/dict/words"
+-- vim.opt.dictionary = "~/dotfiles/doc/vim_dictionary"
 
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
@@ -51,7 +52,7 @@ augroup({
     "*",
     function()
       local ft = vim.bo.filetype
-      if not (ft == "markdown" or ft == "snip") then
+      if not (ft == "markdown" or ft == "snip" or ft == "snippets") then
         vim.cmd([[%s/ \+$//e]])
       end
     end,

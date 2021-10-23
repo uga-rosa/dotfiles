@@ -1,0 +1,75 @@
+snippet import
+	import ${1:module}${2: except ${3:symbol}}
+snippet from import
+	from ${1:module}${2: as ${3:name}} import ${4:symbol}
+snippet if
+	if $1:
+		$2
+snippet if else
+	if $1:
+		$2
+	else:
+		$3
+snippet elif
+	elif $1:
+		$2
+snippet else
+	else:
+		$1
+snippet case
+	case $1
+	of $2:
+		$3
+snippet of
+	of $1:
+		$2
+snippet while
+	while $1:
+		$2
+snippet for
+	for ${1:i} in $2:
+		$3
+snippet block
+	block$1:
+		$2
+snippet proc
+	proc $1($2: $3): $4 =
+		$5
+snippet func
+	func $1($2: $3): $4 =
+		$5
+snippet discard
+	discard 
+snippet iter
+	iterator $1($2: $3): $4 =
+		$5
+snippet type
+	type
+		$0
+snippet enum
+	enum
+		$0
+snippet object
+	object
+		$0
+snippet rt
+	return $0
+snippet rs
+	result = $0
+snippet cligen
+	import cligen
+	dispatch($1)
+snippet try
+	try:
+		$1
+	except $2:
+		$3
+snippet except
+	except $1:
+		$2
+snippet main
+	when isMainModule:
+		$0
+snippet stdwrite
+	stdout.write("$1")
+	endsnippet

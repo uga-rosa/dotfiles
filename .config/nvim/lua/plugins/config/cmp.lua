@@ -16,8 +16,8 @@ _G.source_list = function(arr)
     },
     path = { name = "path" },
     lsp = { name = "nvim_lsp" },
-    luasnip = {
-      name = "luasnip",
+    snippy = {
+      name = "snippy",
       priority = 200,
     },
     vsnip = {
@@ -68,7 +68,8 @@ local lspkind = {
 cmp.setup({
   snippet = {
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
+      -- vim.fn["vsnip#anonymous"](args.body)
+      require("snippy").expand_snippet(args.body)
     end,
   },
   completion = {
@@ -86,6 +87,7 @@ cmp.setup({
         path = "[Path]",
         nvim_lsp = "[LSP]",
         vsnip = "[Vsnip]",
+        snippy = "[Snippy]",
         dictionary = "[Dictionary]",
       })[entry.source.name]
       vim_item.dup = ({
@@ -115,5 +117,17 @@ cmp.setup({
       select = true,
     }),
   },
-  sources = source_list({ "vsnip", "lsp", "path", "buffer", "dictionary" }),
+  sources = source_list({ "snippy", "lsp", "path", "buffer", "dictionary" }),
+})
+
+local map = require("snippy.mapping")
+map.setup({
+  ["<C-j>"] = {
+    func = map.jump_next(),
+    mode = { "i", "s" },
+  },
+  ["<C-k>"] = {
+    func = map.jump_prev(),
+    mode = { "i", "s" },
+  },
 })
