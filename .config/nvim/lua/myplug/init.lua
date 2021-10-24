@@ -2,10 +2,9 @@ local M = {}
 
 local augroup = myutils.augroup
 local map = myutils.map
-local command = myutils.command
 
 local function panda_setup()
-  local panda = require("myplug.panda")
+  local panda = require("panda")
   panda.setup()
 
   local slide_opt = {
@@ -65,20 +64,6 @@ M.setup = function()
         end,
       },
     },
-  })
-  -- snip2json
-  command({
-    "SnipOpen",
-    function()
-      local ft = vim.bo.filetype
-      vim.cmd("e " .. "~/.config/nvim/snippets/snip/" .. ft .. ".snip")
-    end,
-  })
-  command({
-    "Snip2Json",
-    function()
-      vim.fn.jobstart("snip2json", { cwd = vim.fn.stdpath("config") .. "/snippets" })
-    end,
   })
   -- toggle terminal
   require("myplug.term")

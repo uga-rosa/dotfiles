@@ -43,7 +43,7 @@ return packer.startup({
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-vsnip",
+        -- "hrsh7th/cmp-vsnip",
         "dcampos/cmp-snippy",
         "uga-rosa/cmp-dictionary",
       },
@@ -56,10 +56,10 @@ return packer.startup({
       config = 'require("plugins.config.autopairs")',
     })
     -- snippet engine
-    use({
-      "hrsh7th/vim-vsnip",
-      config = 'require("plugins.config.vsnip")',
-    })
+    -- use({
+    --   "hrsh7th/vim-vsnip",
+    --   config = 'require("plugins.config.vsnip")',
+    -- })
     -- LSP
     use({
       "neovim/nvim-lspconfig",

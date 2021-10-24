@@ -86,7 +86,7 @@ cmp.setup({
         buffer = "[Buffer]",
         path = "[Path]",
         nvim_lsp = "[LSP]",
-        vsnip = "[Vsnip]",
+        -- vsnip = "[Vsnip]",
         snippy = "[Snippy]",
         dictionary = "[Dictionary]",
       })[entry.source.name]
@@ -142,3 +142,5 @@ map.setup({
     mode = { "i", "s" },
   },
 })
+
+myutils.map("s", "<C-h>", "x<bs>", "noremap")
