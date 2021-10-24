@@ -185,5 +185,11 @@ return packer.startup({
       "uga-rosa/translate-shell.nvim",
       config = 'require("plugins.config.translate")',
     })
+    -- markdown previewer
+    use({
+      "uga-rosa/panda.nvim",
+      ft = "markdown",
+      config = 'require("plugins.config.panda")',
+    })
   end,
 })
