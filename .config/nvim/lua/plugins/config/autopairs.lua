@@ -19,7 +19,6 @@ require("nvim-autopairs.completion.cmp").setup({
 myutils.map("i", "<C-h>", "<bs>")
 
 npairs.add_rules({
-  Rule("\\left(", "\\right)", "markdown"),
-  Rule("\\left\\{", "\\right\\}", "markdown"),
-  Rule("\\left[", "\\right]", "markdown"),
+  Rule("$", "$", "markdown"),
+  Rule("$$", "$$", "markdown"),
 })

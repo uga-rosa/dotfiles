@@ -106,6 +106,15 @@ function chrome() {
   fi
 }
 
+# pandoc
+function md2pptx() {
+  if [[ -z $1 ]]; then
+    1
+  else
+    pandoc -s $1 -o ${1%.*}.pptx --reference-doc="/home/uga/slide/theme/reference.pptx"
+  fi
+}
+
 # tmux-session-select
 function tmux_session_select() {
   ID=$(tmux list-sessions 2>&1)

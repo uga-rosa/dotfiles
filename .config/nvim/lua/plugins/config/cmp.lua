@@ -131,16 +131,4 @@ cmp.setup({
   sources = source_list({ "snippy", "lsp", "path", "buffer", "dictionary" }),
 })
 
-local map = require("snippy.mapping")
-map.setup({
-  ["<C-j>"] = {
-    func = map.jump_next(),
-    mode = { "i", "s" },
-  },
-  ["<C-k>"] = {
-    func = map.jump_prev(),
-    mode = { "i", "s" },
-  },
-})
-
-myutils.map("s", "<C-h>", "x<bs>", "noremap")
+require("plugins.config.snippy")

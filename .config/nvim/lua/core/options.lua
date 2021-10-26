@@ -15,6 +15,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.pumheight = 25
 vim.opt.termguicolors = true
+vim.opt.foldenable = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.inccommand = "split"
 vim.opt.signcolumn = "yes"

@@ -16,7 +16,7 @@ local slide_opt = {
 }
 
 map("n", "<leader>pn", function()
-  vim.g.panda_started = true
+  vim.b.panda_started = true
   local firstline = vim.fn.getline(1)
   if firstline:match("^%%") then
     panda.run(slide_opt)
@@ -31,7 +31,7 @@ augroup({
       "BufWritePost",
       "*.md",
       function()
-        if not vim.g.panda_started then
+        if not vim.b.panda_started then
           return
         end
         local firstline = vim.fn.getline(1)
