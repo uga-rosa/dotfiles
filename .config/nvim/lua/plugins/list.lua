@@ -187,9 +187,9 @@ return packer.startup({
         })
         -- markdown previewer
         use({
-            "uga-rosa/panda.nvim",
-            ft = "markdown",
-            config = 'require("plugins.config.panda")',
+            "iamcco/markdown-preview.nvim",
+            run = "cd app && yarn install",
+            config = 'require("plugins.config.other").mkdp()',
         })
     end,
 })

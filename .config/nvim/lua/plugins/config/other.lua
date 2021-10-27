@@ -58,4 +58,9 @@ M.eft = function()
     vim.cmd("let g:eft_index_function = {'all': { -> v:true}}")
 end
 
+M.mkdp = function()
+    vim.g.mkdp_refresh_slow = 1
+    map("n", "<leader>pn", "MarkdownPreview", "cmd")
+end
+
 return M
