@@ -1,42 +1,5 @@
 local cmp = require("cmp")
 
-_G.source_list = function(arr)
-  local config = {
-    buffer = {
-      name = "buffer",
-      opts = {
-        get_bufnrs = function()
-          local bufs = {}
-          for _, win in ipairs(vim.api.nvim_list_wins()) do
-            bufs[vim.api.nvim_win_get_buf(win)] = true
-          end
-          return vim.tbl_keys(bufs)
-        end,
-      },
-    },
-    path = { name = "path" },
-    lsp = { name = "nvim_lsp" },
-    snippy = {
-      name = "snippy",
-      priority = 200,
-    },
-    vsnip = {
-      name = "vsnip",
-      priority = 200,
-    },
-    dictionary = {
-      name = "dictionary",
-      keyword_length = 2,
-      priority = 1,
-    },
-  }
-  local res = {}
-  for i = 1, #arr do
-    res[i] = config[arr[i]]
-  end
-  return res
-end
-
 local lspkind = {
   Text = "",
   Method = "",
@@ -119,16 +82,48 @@ cmp.setup({
     },
   },
   mapping = {
-    ["<C-n>"] = cmp.mapping.select_next_item(),
-    ["<C-p>"] = cmp.mapping.select_prev_item(),
-    ["<C-e>"] = cmp.mapping.close(),
-    ["<C-space>"] = cmp.mapping.complete(),
-    ["<CR>"] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+    ["<C-space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<C-e>"] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
     }),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
   },
-  sources = source_list({ "snippy", "lsp", "path", "buffer", "dictionary" }),
+  sources = {
+    { name = "snippy", priority = 200 },
+    { name = "nvim_lsp" },
+    { name = "path" },
+    {
+      name = "buffer",
+      opts = {
+        get_bufnrs = function()
+          local bufs = {}
+          for _, win in ipairs(vim.api.nvim_list_wins()) do
+            bufs[vim.api.nvim_win_get_buf(win)] = true
+          end
+          return vim.tbl_keys(bufs)
+        end,
+      },
+    },
+    {
+      name = "dictionary",
+      keyword_length = 2,
+      priority = 1,
+    },
+  },
+})
+
+cmp.setup.cmdline("/", {
+  sources = {
+    { name = "buffer" },
+  },
+})
+
+cmp.setup.cmdline(":", {
+  sources = {
+    { name = "cmdline", keyword_length = 2 },
+    { name = "path" },
+  },
 })
 
 require("plugins.config.snippy")

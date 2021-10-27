@@ -1,17 +1,16 @@
-local map = require("snippy.mapping")
-map.setup({
-  ["<C-j>"] = {
-    func = map.jump_next(),
-    mode = { "i", "s" },
-  },
-  ["<C-k>"] = {
-    func = map.jump_prev(),
-    mode = { "i", "s" },
-  },
-  ["<leader>c"] = {
-    str = "<Plug>(snippy-cut-text)",
-    mode = { "n", "x" },
+local snippy = require("snippy")
+snippy.setup({
+  mappings = {
+    [{ "i", "s" }] = {
+      ["<C-j>"] = "next",
+      ["<C-k>"] = "previous",
+    },
+    [{ "n", "x" }] = {
+      ["<leader>c"] = "cut_text",
+    },
   },
 })
 
 myutils.map("s", "<C-h>", "x<bs>", "noremap")
+
+vim.g.snippy_choice_delay = 100
