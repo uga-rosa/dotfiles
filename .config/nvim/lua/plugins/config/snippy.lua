@@ -1,14 +1,14 @@
 local snippy = require("snippy")
 snippy.setup({
-  mappings = {
-    [{ "i", "s" }] = {
-      ["<C-j>"] = "next",
-      ["<C-k>"] = "previous",
+    mappings = {
+        [{ "i", "s" }] = {
+            ["<C-j>"] = "next",
+            ["<C-k>"] = "previous",
+        },
+        [{ "n", "x" }] = {
+            ["<leader>c"] = "cut_text",
+        },
     },
-    [{ "n", "x" }] = {
-      ["<leader>c"] = "cut_text",
-    },
-  },
 })
 
 myutils.map("s", "<C-h>", "x<bs>", "noremap")

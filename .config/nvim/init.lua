@@ -1,13 +1,13 @@
 pcall(require, "impatient")
 
 local config = {
-  "utils",
-  "core.options",
-  "core.mappings",
+    "utils",
+    "core.options",
+    "core.mappings",
 }
 
 for _, v in ipairs(config) do
-  require(v)
+    require(v)
 end
 
 require("myplug").setup()

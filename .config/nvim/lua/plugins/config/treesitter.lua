@@ -2,36 +2,36 @@ local map = myutils.map
 local augroup = myutils.augroup
 
 require("nvim-treesitter.configs").setup({
-  ensure_installed = "all",
-  highlight = {
-    enable = true,
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
+    ensure_installed = "all",
+    highlight = {
+        enable = true,
     },
-    swap = {
-      enable = true,
-      swap_next = {
-        ["<leader>s"] = "@parameter.inner",
-      },
-      swap_previous = {
-        ["<leader>S"] = "@parameter.inner",
-      },
+    textobjects = {
+        select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+            },
+        },
+        swap = {
+            enable = true,
+            swap_next = {
+                ["<leader>s"] = "@parameter.inner",
+            },
+            swap_previous = {
+                ["<leader>S"] = "@parameter.inner",
+            },
+        },
     },
-  },
-  rainbow = {
-    enable = true,
-    extend_mode = true,
-    max_file_lines = nil,
-  },
+    rainbow = {
+        enable = true,
+        extend_mode = true,
+        max_file_lines = nil,
+    },
 })
 
 map("x", "iu", ':lua require("treesitter-unit").select()<cr>', "noremap")
@@ -43,7 +43,7 @@ local tsunit = require("treesitter-unit")
 
 local operators = { "c", "d", "y", "=", "<", ">" }
 for _, o in ipairs(operators) do
-  map("n", o, '<cmd>lua require("treesitter-unit").enable_highlighting()<cr>' .. o, "noremap")
+    map("n", o, '<cmd>lua require("treesitter-unit").enable_highlighting()<cr>' .. o, "noremap")
 end
 
 augroup({ tsunit = { "CursorMoved", "*", tsunit.disable_highlighting } })

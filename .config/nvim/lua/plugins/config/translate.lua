@@ -5,7 +5,7 @@ command! -range TransEn2JaFloat lua require("translate_shell").translate(<line1>
 command! -range TransEn2JaReplace lua require("translate_shell").translate(<line1>, <line2>, "en", "ja", "r")
 
 augroup _translate
-  autocmd!
-  au CursorMoved * lua require("translate_shell").close()
+    autocmd!
+    autocmd CursorMoved * lua require("translate_shell").close()
 augroup END
 ]])
