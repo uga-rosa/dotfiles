@@ -40,6 +40,11 @@ if pcall(require, "filetype") then
 end
 
 augroup({
+    zenhan = {
+        "InsertLeave",
+        "*",
+        "call system('zenhan.exe 0')",
+    },
     quit_help = {
         "FileType",
         "help,qf",
