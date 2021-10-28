@@ -1,22 +1,8 @@
 local fn = vim.fn
 local map = myutils.map
 local map_conv = myutils.map_conv
-local feedkey = myutils.feedkey
 
 vim.g.mapleader = " "
-
-map("i", "j", function(fallback)
-    local function before_char()
-        local line = vim.api.nvim_get_current_line()
-        local pos = vim.fn.col(".")
-        return line:sub(pos - 1, pos - 1)
-    end
-    if before_char() == "j" then
-        feedkey("<bs><esc>", "m")
-    else
-        fallback()
-    end
-end)
 
 map("n", "O", function(fallback)
     vim.cmd("normal zz")

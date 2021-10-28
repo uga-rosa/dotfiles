@@ -1,11 +1,11 @@
 local snippy = require("snippy")
 snippy.setup({
     mappings = {
-        [{ "i", "s" }] = {
+        is = {
             ["<C-j>"] = "next",
             ["<C-k>"] = "previous",
         },
-        [{ "n", "x" }] = {
+        nx = {
             ["<leader>c"] = "cut_text",
         },
     },

@@ -8,10 +8,10 @@ local use = packer.use
 
 return packer.startup({
     function()
-        -- improve require
-        use("lewis6991/impatient.nvim")
         -- itself
         use({ "wbthomason/packer.nvim", opt = true })
+        -- improve require
+        use("lewis6991/impatient.nvim")
         -- colorscheme
         use("bluz71/vim-nightfly-guicolors")
         -- fast filetype.vim
@@ -57,8 +57,8 @@ return packer.startup({
         })
         -- snippet engine
         -- use({
-        --   "hrsh7th/vim-vsnip",
-        --   config = 'require("plugins.config.vsnip")',
+        --     "dcampos/nvim-snippy",
+        --     config = 'require("plugins.config.snippy")',
         -- })
         -- LSP
         use({
@@ -87,6 +87,7 @@ return packer.startup({
                 "nvim-lua/plenary.nvim",
                 "kyazdani42/nvim-web-devicons",
                 { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+                "jvgrootveld/telescope-zoxide",
             },
             config = 'require("plugins.config.telescope")',
         })
@@ -191,5 +192,6 @@ return packer.startup({
             run = "cd app && yarn install",
             config = 'require("plugins.config.other").mkdp()',
         })
+        use("uga-rosa/vim-markdown")
     end,
 })

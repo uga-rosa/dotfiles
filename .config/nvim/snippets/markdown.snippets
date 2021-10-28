@@ -6,7 +6,9 @@ snippet slide_init
 snippet pandoc_init
 	---
 	title: ${1:Title}
-	author: 分子集積化学研究室 計算グループ B4 中井 剛志
+	author:
+		- 分子集積化学研究室 計算グループ
+		- B4 中井 剛志
 	date: `system("date '+%Y/%m/%d'")`
 	---
 
@@ -88,3 +90,5 @@ snippet ket
 	| $1 \\rangle
 snippet braket
 	\\langle $1 | $2 | $3 \\rangle
+snippet hermit
+	^{\dagger}

@@ -1,4 +1,5 @@
 local augroup = myutils.augroup
+local fn = vim.fn
 
 vim.opt.fileencoding = "utf-8"
 vim.opt.hidden = true
@@ -50,18 +51,19 @@ augroup({
         "help,qf",
         "nnoremap <buffer><nowait> q <cmd>quit<cr>",
     },
-    indent4 = {
-        { "FileType", "python", "setl ts=4 sw=4" },
-    },
     automkdir = {
         "BufWritePre",
         "*",
         function()
-            local dir = vim.fn.expand("%:p:h")
-            if vim.fn.isdirectory(dir) then
-                vim.fn.mkdir(dir, "p")
+            local dir = fn.expand("%:p:h")
+            if fn.isdirectory(dir) == 0 then
+                fn.mkdir(dir, "p")
             end
         end,
+    },
+    better_escape = {
+        { "InsertCharPre", "*", 'lua require("core.escape").escape()' },
+        { "InsertLeave", "*", 'lua require("core.escape").leave()' },
     },
     mypacker = { "BufWrite", "*list.lua", "PackerCompile" },
 })

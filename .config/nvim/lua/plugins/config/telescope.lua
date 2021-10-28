@@ -12,6 +12,7 @@ require("telescope").setup({
 })
 
 require("telescope").load_extension("fzf")
+require("telescope").load_extension("zoxide")
 
 map("n", "<F1>", "Telescope builtin", "cmd")
 map("n", "<leader>f", "Telescope fd", "cmd")
@@ -31,3 +32,5 @@ map("n", "<leader>I", "Telescope lsp_workspace_diagnostics", "cmd")
 map("n", "<leader>a", "Telescope lsp_code_actions", "cmd")
 map("n", "gd", "Telescope lsp_definitions", "cmd")
 map("n", "gr", "Telescope lsp_references", "cmd")
+
+map("n", "<leader>z", "Telescope zoxide list", "cmd")
