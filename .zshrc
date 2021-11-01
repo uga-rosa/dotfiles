@@ -12,6 +12,10 @@ if ! zgen saved; then
     zgen save
 fi
 
+# completion config
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:default' menu select=1
+
 # key binding
 bindkey -v
 

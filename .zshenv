@@ -33,10 +33,8 @@ export PATH="$PATH:$HOME/.local/julia/bin"
 
 # lua
 eval $(luarocks path)
-if [[ -d ~/lua/lib ]]; then
-  for i in $(ls -d ~/lua/lib/*/lua); do
-    luapath="$i/?.lua;$luapath"
-    luapath="$i/?/init.lua;$luapath"
-  done
-  export LUA_PATH="$LUA_PATH;$luapath"
+if [[ -d ~/lua/lib && ! $LUA_PATH =~ /lua/lib/ ]]; then
+    for i in $(ls -d ~/lua/lib/*/lua); do
+        export LUA_PATH="$LUA_PATH;$i/?.lua;$i/?/init.lua"
+    done
 fi
