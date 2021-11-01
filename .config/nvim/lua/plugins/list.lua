@@ -117,12 +117,6 @@ return packer.startup({
             requires = "nvim-lua/plenary.nvim",
             config = 'require("plugins.config.gitsigns")',
         })
-        -- code runner
-        use({
-            "thinca/vim-quickrun",
-            requires = "lambdalisue/vim-quickrun-neovim-job",
-            config = 'require("plugins.config.quickrun")',
-        })
         -- surround operator
         use({
             "machakann/vim-sandwich",
