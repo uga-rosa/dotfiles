@@ -121,6 +121,7 @@ return packer.startup({
         use({
             "michaelb/sniprun",
             run = "bash ./install.sh",
+            config = 'require("plugins.config.sniprun")',
         })
         -- surround operator
         use({

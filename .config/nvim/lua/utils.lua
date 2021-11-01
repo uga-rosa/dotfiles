@@ -35,7 +35,7 @@ end
 ---@param modes string|string[]
 ---@param lhs string
 ---@param rhs string|string[]|T|T[]
----@param opts string|string[]
+---@param opts? string|string[]
 ---@overload fun(modes: string, lhs: string, rhs: string)
 ---opts.nowait: This make a shortest match.
 ---opts.silent: No echo.
@@ -44,20 +44,19 @@ end
 ---opts.cmd: command (format to <cmd>%s<cr>)
 myutils.map = function(modes, lhs, rhs, opts)
     opts = opts or {}
-    opts = type(opts) == "string" and { opts } or opts
+    opts = type(opts) == "table" and opts or { opts }
     for key, opt in ipairs(opts) do
         opts[opt] = true
         opts[key] = nil
     end
 
-    local buffer = (function()
-        if opts.buffer then
-            opts.buffer = nil
-            return true
-        end
-    end)()
+    local buffer = false
+    if opts.buffer then
+        buffer = true
+        opts.buffer = nil
+    end
 
-    rhs = type(rhs) ~= "table" and { rhs } or rhs
+    rhs = type(rhs) == "table" and rhs or { rhs }
     local _rhs = {}
 
     for i = 1, #rhs do
