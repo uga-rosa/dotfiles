@@ -5,12 +5,9 @@ npairs.setup({
     ignored_next_char = string.gsub([[ [%w%%%[%.] ]], "%s+", ""),
 })
 
-require("nvim-autopairs.completion.cmp").setup({
-    map_cr = true,
-    map_complete = true,
-    auto_select = true,
-    insert = false,
-})
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+local cmp = require("cmp")
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 myutils.map("i", "<C-h>", "<bs>")
 

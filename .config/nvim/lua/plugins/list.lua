@@ -43,7 +43,6 @@ return packer.startup({
                 "hrsh7th/cmp-buffer",
                 "hrsh7th/cmp-path",
                 "hrsh7th/cmp-nvim-lsp",
-                "hrsh7th/cmp-cmdline",
                 "dcampos/cmp-snippy",
                 "uga-rosa/cmp-dictionary",
             },
@@ -118,11 +117,10 @@ return packer.startup({
             requires = "nvim-lua/plenary.nvim",
             config = 'require("plugins.config.gitsigns")',
         })
-        -- quickrun
+        -- code runner
         use({
-            "thinca/vim-quickrun",
-            requires = "lambdalisue/vim-quickrun-neovim-job",
-            config = 'require("plugins.config.quickrun")',
+            "michaelb/sniprun",
+            run = "bash ./install.sh",
         })
         -- surround operator
         use({

@@ -31,7 +31,6 @@ local lspkind = {
 cmp.setup({
     snippet = {
         expand = function(args)
-            -- vim.fn["vsnip#anonymous"](args.body)
             require("snippy").expand_snippet(args.body)
         end,
     },
@@ -49,7 +48,6 @@ cmp.setup({
                 buffer = "[Buffer]",
                 path = "[Path]",
                 nvim_lsp = "[LSP]",
-                -- vsnip = "[Vsnip]",
                 snippy = "[Snippy]",
                 dictionary = "[Dictionary]",
             })[entry.source.name]
@@ -102,23 +100,6 @@ cmp.setup({
                 end,
             },
         },
-        {
-            name = "dictionary",
-            keyword_length = 2,
-            priority = 1,
-        },
-    },
-})
-
-cmp.setup.cmdline("/", {
-    sources = {
-        { name = "buffer" },
-    },
-})
-
-cmp.setup.cmdline(":", {
-    sources = {
-        { name = "cmdline", keyword_length = 2 },
-        { name = "path" },
+        { name = "dictionary", keyword_length = 2, priority = 1 },
     },
 })
