@@ -13,3 +13,16 @@ snippy.setup({
 })
 
 myutils.map("s", "<C-h>", "x<bs>", "noremap")
+
+local snippet_dir = vim.fn.stdpath("config") .. "/snippets/"
+myutils.command({
+    "SnipEdit",
+    function()
+        local ft = vim.bo.filetype
+        if ft == "" then
+            print("No file type is set.")
+        else
+            vim.cmd("split " .. snippet_dir .. vim.bo.filetype .. ".snippets")
+        end
+    end,
+})

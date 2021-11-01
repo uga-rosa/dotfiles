@@ -2,3 +2,18 @@ snippet init
 	#!/bin/bash
 	set -eu
 	$0
+snippet getoptions
+	# shellcheck disable=2034
+	VERSION="0.1"
+
+	parser_definition() {
+		setup   REST help:usage -- "Usage: `expand("%:t")` [options]... [arguments]..." ''
+		msg -- 'Options:'
+		flag    FLAG    -f --flag                 -- "takes no arguments"
+		param   PARAM   -p --param                -- "takes one argument"
+		option  OPTION  -o --option on:"default"  -- "takes one optional argument"
+		disp    :usage  -h --help
+		disp    VERSION    --version
+	}
+
+	eval "$(getoptions parser_definition) exit 1"

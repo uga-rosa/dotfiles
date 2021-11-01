@@ -1,3 +1,17 @@
+# zgen
+if [[ ! -d ~/.zgen ]]; then
+    git clone https://github.com/tarjoilija/zgen.git ~/.zgen
+fi
+source ~/.zgen/zgen.zsh
+
+if ! zgen saved; then
+    echo "Creating a zgen save"
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load zsh-users/zsh-autosuggestions
+    zgen load zsh-users/zsh-completions src
+    zgen save
+fi
+
 # key binding
 bindkey -v
 
@@ -33,20 +47,24 @@ setopt AUTO_PARAM_KEYS
 # nvim alias
 alias nv="nvim"
 
-# stack
-alias ghci="stack ghci"
-
 # lazygit
 alias g="lazygit"
 
 # cd git root
 function g-root() {
 if [[ $(git rev-parse --is-inside-work-tree) ]]; then
-  cd $(git rev-parse --show-toplevel)
+    cd $(git rev-parse --show-toplevel)
 fi
 }
 
 # fzf
+## automatically install
+if [[ ! -d ~/.fzf ]]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --all
+fi
+
+## config
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS='--height 50% --reverse'
@@ -54,11 +72,7 @@ export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_T_OPTS='--preview "bat --color=always --style=header,grid --line-range :100 {}"'
 export FZF_ALT_C_COMMAND='fd --type d'
 
-if [[ -d /usr/local/share/doc/fzf ]]; then
-  source /usr/share/doc/fzf/examples/key-bindings.zsh
-  source /usr/share/doc/fzf/examples/completion.zsh
-fi
-
+## upgrade function
 function fzf-upgrade() {
 cd ~/.fzf
 git pull
@@ -68,26 +82,26 @@ cd -
 
 # exa
 if [[ $(command -v exa) ]]; then
-  alias e='exa --icons'
-  alias l=e
-  alias ls=e
-  alias ea='exa -a --icons'
-  alias la=ea
-  alias ee='exa -aal --icons'
-  alias ll=ee
-  alias et='exa -T -L 3 -a -I "node_modules|.git|.cache" --icons'
-  alias lt=et
-  alias eta='exa -T -a -I "node_modules|.git|.cache" --color=always --icons | less -r'
-  alias lta=eta
+    alias e='exa --icons'
+    alias l=e
+    alias ls=e
+    alias ea='exa -a --icons'
+    alias la=ea
+    alias ee='exa -aal --icons'
+    alias ll=ee
+    alias et='exa -T -L 3 -a -I "node_modules|.git|.cache" --icons'
+    alias lt=et
+    alias eta='exa -T -a -I "node_modules|.git|.cache" --color=always --icons | less -r'
+    alias lta=eta
 fi
 
 # pyenv
 source "$HOME/.zsh.d/lazyenv.sh"
 _pyenv_init() {
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
 }
 eval "$(lazyenv.load _pyenv_init pyenv python pip)"
 
@@ -99,86 +113,50 @@ eval "$(starship init zsh)"
 
 # windows chrome
 function chrome() {
-  if [[ -z $1 ]]; then
-    chrome.exe
-  else
-    chrome.exe $(wslpath -w ${1})
-  fi
+    if [[ -z $1 ]]; then
+        chrome.exe
+    else
+        chrome.exe $(wslpath -w ${1})
+    fi
 }
 
 # pandoc
 function md2pptx() {
-  if [[ -z $1 ]]; then
-    1
-  else
-    pandoc -s $1 -o ${1%.*}.pptx --reference-doc="/home/uga/slide/theme/reference.pptx"
-  fi
+    if [[ -z $1 ]]; then
+        1
+    else
+        pandoc -s $1 -o ${1%.*}.pptx --reference-doc="/home/uga/slide/theme/reference.pptx"
+    fi
 }
 
 # tmux-session-select
 function tmux_session_select() {
-  ID=$(tmux list-sessions 2>&1)
-  if [[ -z $TMUX ]]; then
-    create_new_session="Create New Session"
-    ID="$ID\n"
-  else
-    create_new_session=""
-  fi
-  if [[ $ID =~ 'no server running on' ]]; then
-    ID=""
-  fi
-  ID=$ID$create_new_session:
-  selected=$(echo "$ID" | fzf | cut -d: -f1)
-  if [[ -n $selected && $selected == $create_new_session ]]; then
-    BUFFER="tmux new-session"
-    zle accept-line
-  elif [[ -n $selected ]]; then
-    if [[ -n $TMUX ]]; then
-      BUFFER="tmux switch -t $selected"
+    ID=$(tmux list-sessions 2>&1)
+    if [[ -z $TMUX ]]; then
+        create_new_session="Create New Session"
+        ID="$ID\n"
     else
-      BUFFER="tmux attach-session -t $selected"
+        create_new_session=""
     fi
-    zle accept-line
-  fi
+    if [[ $ID =~ 'no server running on' ]]; then
+        ID=""
+    fi
+    ID=$ID$create_new_session:
+    selected=$(echo "$ID" | fzf | cut -d: -f1)
+    if [[ -n $selected && $selected == $create_new_session ]]; then
+        BUFFER="tmux new-session"
+        zle accept-line
+    elif [[ -n $selected ]]; then
+        if [[ -n $TMUX ]]; then
+            BUFFER="tmux switch -t $selected"
+        else
+            BUFFER="tmux attach-session -t $selected"
+        fi
+        zle accept-line
+    fi
 }
 zle -N tmux_session_select
 bindkey '^S' tmux_session_select
-
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-  print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-  command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-  command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-    print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-    print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
-
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-  zinit-zsh/z-a-rust \
-  zinit-zsh/z-a-as-monitor \
-  zinit-zsh/z-a-patch-dl \
-  zinit-zsh/z-a-bin-gem-node
-
-## End of Zinit's installer chunk
-
-# for zoxide
-unalias zi
-
-zinit light zsh-users/zsh-syntax-highlighting
-
-zinit light zsh-users/zsh-autosuggestions
-
-zinit light zsh-users/zsh-completions
-
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-zstyle ':completion:*:default' menu select=1
 
 # gromacs
 [[ -f /usr/local/gromacs/bin/GMXRC ]] && source /usr/local/gromacs/bin/GMXRC
