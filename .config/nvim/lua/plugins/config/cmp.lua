@@ -83,10 +83,7 @@ cmp.setup({
     },
     mapping = {
         ["<C-space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-        ["<C-e>"] = cmp.mapping({
-            i = cmp.mapping.abort(),
-            c = cmp.mapping.close(),
-        }),
+        ["<C-e>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
@@ -125,5 +122,3 @@ cmp.setup.cmdline(":", {
         { name = "path" },
     },
 })
-
-require("plugins.config.snippy")

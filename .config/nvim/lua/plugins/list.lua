@@ -56,10 +56,10 @@ return packer.startup({
             config = 'require("plugins.config.autopairs")',
         })
         -- snippet engine
-        -- use({
-        --     "dcampos/nvim-snippy",
-        --     config = 'require("plugins.config.snippy")',
-        -- })
+        use({
+            "dcampos/nvim-snippy",
+            config = 'require("plugins.config.snippy")',
+        })
         -- LSP
         use({
             "neovim/nvim-lspconfig",

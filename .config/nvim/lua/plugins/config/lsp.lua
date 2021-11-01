@@ -82,7 +82,7 @@ local servers = array.new({
     "pyright",
     "bashls",
     "vimls",
-    "clangd",
+    "gopls",
 })
 
 -- automatically install

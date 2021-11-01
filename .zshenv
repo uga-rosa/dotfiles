@@ -32,10 +32,11 @@ export PATH="$PATH:$HOME/.nimble/bin"
 export PATH="$PATH:$HOME/.local/julia/bin"
 
 # lua
+eval $(luarocks path)
 if [[ -d ~/lua/lib ]]; then
   for i in $(ls -d ~/lua/lib/*/lua); do
     luapath="$i/?.lua;$luapath"
     luapath="$i/?/init.lua;$luapath"
   done
-  export LUA_PATH=$luapath
+  export LUA_PATH="$LUA_PATH;$luapath"
 fi

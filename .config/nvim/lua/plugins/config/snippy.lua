@@ -9,8 +9,7 @@ snippy.setup({
             ["<leader>c"] = "cut_text",
         },
     },
+    choice_delay = 0,
 })
 
 myutils.map("s", "<C-h>", "x<bs>", "noremap")
-
-vim.g.snippy_choice_delay = 100
