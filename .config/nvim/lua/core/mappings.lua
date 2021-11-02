@@ -1,6 +1,6 @@
 local fn = vim.fn
-local map = myutils.map
-local map_conv = myutils.map_conv
+local map = vim_api.map
+local map_conv = vim_api.map_conv
 
 vim.g.mapleader = " "
 

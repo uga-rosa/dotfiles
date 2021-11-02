@@ -1,5 +1,5 @@
-local map = myutils.map
-local augroup = myutils.augroup
+local map = vim_api.map
+local augroup = vim_api.augroup
 
 require("nvim-treesitter.configs").setup({
     ensure_installed = "all",

@@ -1,4 +1,4 @@
-local map = myutils.map
+local map = vim_api.map
 local f = vim.fn
 local c = vim.cmd
 

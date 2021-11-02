@@ -1,7 +1,7 @@
 local api = vim.api
 local cmd = vim.cmd
 
-_G.myutils = {}
+_G.vim_api = {}
 
 _G.myluafunc = setmetatable({}, {
     __call = function(self, num)
@@ -18,14 +18,14 @@ local function func2str(func)
     return ("lua myluafunc(%s)"):format(idx)
 end
 
-function myutils.feedkey(key, mode)
+function vim_api.feedkey(key, mode)
     mode = mode or "n"
     api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
 local function fallback(key)
     return function()
-        myutils.feedkey(key)
+        vim_api.feedkey(key)
     end
 end
 
@@ -42,7 +42,7 @@ end
 ---opts.expr: Deprecated. Use feedkeys().
 ---opts.buffer: current buffer only
 ---opts.cmd: command (format to <cmd>%s<cr>)
-myutils.map = function(modes, lhs, rhs, opts)
+vim_api.map = function(modes, lhs, rhs, opts)
     opts = opts or {}
     opts = type(opts) == "table" and opts or { opts }
     for key, opt in ipairs(opts) do
@@ -100,15 +100,15 @@ end
 ---opts.expr: Deprecated. Use feedkeys().
 ---opts.buffer: current buffer only
 ---opts.cmd: command (format to <cmd>%s<cr>)
-myutils.map_conv = function(modes, a, b, opts)
-    myutils.map(modes, a, b, opts)
-    myutils.map(modes, b, a, opts)
+vim_api.map_conv = function(modes, a, b, opts)
+    vim_api.map(modes, a, b, opts)
+    vim_api.map(modes, b, a, opts)
 end
 
 ---API for autocmd. Supports for a lua funcion.
 ---@param au string[]
 ---The last element of au can be a function.
-myutils.autocmd = function(au)
+vim_api.autocmd = function(au)
     if type(au[#au]) == "function" then
         au[#au] = func2str(au[#au])
     end
@@ -119,16 +119,16 @@ end
 ---@param augroups table<string,string[]>
 ---augroups' key: group named
 ---augroups' value: an argument of myutils.autocmd
-myutils.augroup = function(augroups)
+vim_api.augroup = function(augroups)
     for group, aus in pairs(augroups) do
         cmd("augroup " .. group)
         cmd("au!")
         if type(aus[1]) == "table" then
             for i = 1, #aus do
-                myutils.autocmd(aus[i])
+                vim_api.autocmd(aus[i])
             end
         else
-            myutils.autocmd(aus)
+            vim_api.autocmd(aus)
         end
         cmd("augroup END")
     end
@@ -136,7 +136,7 @@ end
 
 ---API for command. Supports for a lua function
 ---@param command string|table
-myutils.command = function(command)
+vim_api.command = function(command)
     if type(command) == "table" then
         if type(command[#command]) == "function" then
             command[#command] = func2str(command[#command])
@@ -149,8 +149,48 @@ end
 ---Execute a string as a function.
 ---@param inStr string
 ---@return any ReturnFunction
-myutils.eval = function(inStr)
+vim_api.eval = function(inStr)
     return assert(load(inStr))()
+end
+
+_G.array = {}
+
+function array.new(t)
+    return setmetatable(t, { __index = array })
+end
+
+function array:map(func, no_return)
+    if no_return then
+        for i = 1, #self do
+            func(self[i])
+        end
+    else
+        local res = {}
+        for i = 1, #self do
+            res[i] = func(self[i])
+        end
+        return array.new(res)
+    end
+end
+
+function array:filter(func)
+    local res, c = {}, 0
+    for i = 1, #self do
+        if func(self[i]) then
+            c = c + 1
+            res[c] = self[i]
+        end
+    end
+    return array.new(res)
+end
+
+function array:contain(e)
+    for i = 1, #self do
+        if self[i] == e then
+            return true
+        end
+    end
+    return false
 end
 
 ---Transforms ctx into a human readable representation.

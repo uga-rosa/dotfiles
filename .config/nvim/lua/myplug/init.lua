@@ -1,6 +1,6 @@
 local M = {}
 
-local augroup = myutils.augroup
+local augroup = vim_api.augroup
 
 M.setup = function()
     augroup({

@@ -101,5 +101,8 @@ cmp.setup({
             },
         },
         { name = "dictionary", keyword_length = 2, priority = 1 },
+        { name = "cmp_git" },
     },
 })
+
+require("cmp_git").setup()

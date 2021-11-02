@@ -1,9 +1,8 @@
 local lspconfig = require("lspconfig")
 local lspinstaller = require("nvim-lsp-installer")
-local array = require("steel.array")
 
-local augroup = myutils.augroup
-local map = myutils.map
+local augroup = vim_api.augroup
+local map = vim_api.map
 
 -- lspinfo close
 augroup({
@@ -75,8 +74,12 @@ opts.bashls = setmetatable({
     filetypes = { "sh", "zsh" },
 }, { __index = opts.default })
 
--- LSP list
-local servers = array.new({
+-- automatically install
+local installed = array.map(lspinstaller.get_installed_servers(), function(server)
+    return server.name
+end)
+
+array.new({
     "sumneko_lua",
     "rust_analyzer",
     "pyright",
@@ -84,19 +87,12 @@ local servers = array.new({
     "vimls",
     "gopls",
 })
-
--- automatically install
-local installed = array.new(lspinstaller.get_installed_servers()):map(function(server)
-    return server.name
-end)
-
-servers
     :filter(function(server)
         return not installed:contain(server)
     end)
     :map(function(server)
         lspinstaller.install(server)
-    end)
+    end, true)
 
 -- setup
 lspinstaller.on_server_ready(function(server)

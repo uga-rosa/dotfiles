@@ -1,6 +1,6 @@
 local M = {}
 
-local map = myutils.map
+local map = vim_api.map
 
 M.luatab = function()
     vim.o.tabline = "%!v:lua.require'luatab'.tabline()"

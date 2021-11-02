@@ -12,10 +12,10 @@ snippy.setup({
     choice_delay = 0,
 })
 
-myutils.map("s", "<C-h>", "x<bs>", "noremap")
+vim_api.map("s", "<C-h>", "x<bs>", "noremap")
 
 local snippet_dir = vim.fn.stdpath("config") .. "/snippets/"
-myutils.command({
+vim_api.command({
     "SnipEdit",
     function()
         local ft = vim.bo.filetype

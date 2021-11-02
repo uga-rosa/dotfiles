@@ -1,7 +1,7 @@
 local M = {}
 
 M.setup = function()
-    myutils.map("n", "<leader>n", "Neogit kind=tab", "cmd")
+    vim_api.map("n", "<leader>n", "Neogit kind=tab", "cmd")
 end
 
 M.config = function()

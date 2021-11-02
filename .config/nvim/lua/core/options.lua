@@ -1,4 +1,4 @@
-local augroup = myutils.augroup
+local augroup = vim_api.augroup
 local fn = vim.fn
 
 vim.opt.fileencoding = "utf-8"

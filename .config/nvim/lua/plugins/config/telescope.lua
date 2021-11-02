@@ -1,4 +1,4 @@
-local map = myutils.map
+local map = vim_api.map
 
 require("telescope").setup({
     extensions = {

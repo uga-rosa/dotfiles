@@ -45,6 +45,7 @@ return packer.startup({
                 "hrsh7th/cmp-nvim-lsp",
                 "dcampos/cmp-snippy",
                 "uga-rosa/cmp-dictionary",
+                { "petertriho/cmp-git", requires = "nvim-lua/plenary.nvim" },
             },
             config = 'require("plugins.config.cmp")',
         })
