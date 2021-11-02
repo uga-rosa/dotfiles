@@ -131,7 +131,7 @@ return packer.startup({
             },
             setup = 'require("plugins.config.other").easyalign()',
         })
-        -- replace
+        -- operator replace
         use({
             "kana/vim-operator-replace",
             requires = "kana/vim-operator-user",
@@ -174,17 +174,18 @@ return packer.startup({
         })
         -- julia
         use("uga-rosa/julia-vim")
-        -- translate
-        use({
-            "uga-rosa/translate-shell.nvim",
-            config = 'require("plugins.config.translate")',
-        })
+        -- markdown
+        use("uga-rosa/vim-markdown")
         -- markdown previewer
         use({
             "iamcco/markdown-preview.nvim",
             run = "cd app && yarn install",
             config = 'require("plugins.config.other").mkdp()',
         })
-        use("uga-rosa/vim-markdown")
+        -- translate
+        use({
+            "uga-rosa/translate-shell.nvim",
+            config = 'require("plugins.config.translate")',
+        })
     end,
 })
