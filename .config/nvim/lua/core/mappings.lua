@@ -36,8 +36,8 @@ map("n", "Y", "y$", "noremap")
 map("n", "x", '"_x', "noremap")
 map("n", "s", '"_s', "noremap")
 
-map("", "H", "^", "noremap")
-map("", "L", "$", "noremap")
+map({ "n", "x", "o" }, "H", "^", "noremap")
+map({ "n", "x", "o" }, "L", "$", "noremap")
 
 map_conv("n", "j", "gj", "noremap")
 map_conv("n", "k", "gk", "noremap")

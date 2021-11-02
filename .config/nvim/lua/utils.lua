@@ -3,7 +3,7 @@ local cmd = vim.cmd
 
 _G.vim_api = {}
 
-_G.myluafunc = setmetatable({}, {
+vim_api.func = setmetatable({}, {
     __call = function(self, num)
         return self[num]()
     end,
@@ -13,9 +13,9 @@ _G.myluafunc = setmetatable({}, {
 ---@param func function
 ---@return string VimFunctionString
 local function func2str(func)
-    local idx = #_G.myluafunc + 1
-    _G.myluafunc[idx] = func
-    return ("lua myluafunc(%s)"):format(idx)
+    local idx = #vim_api.func + 1
+    vim_api.func[idx] = func
+    return "lua vim_api.func(" .. idx .. ")"
 end
 
 function vim_api.feedkey(key, mode)
@@ -153,12 +153,22 @@ vim_api.eval = function(inStr)
     return assert(load(inStr))()
 end
 
+---@class Array
 _G.array = {}
 
+---Returns a instance of class Array
+---@param t table
+---@return Array
 function array.new(t)
     return setmetatable(t, { __index = array })
 end
 
+---Returns a new array with func applied to each elements.
+---If no_return is true, returns nothing.
+---@param self Array
+---@param func function
+---@param no_return boolean
+---@return Array
 function array:map(func, no_return)
     if no_return then
         for i = 1, #self do
@@ -173,6 +183,10 @@ function array:map(func, no_return)
     end
 end
 
+---Returns a new array with all the elements of self that fulfilled func
+---@param self Array
+---@param func fun(a: any): boolean
+---@return Array
 function array:filter(func)
     local res, c = {}, 0
     for i = 1, #self do
@@ -184,6 +198,10 @@ function array:filter(func)
     return array.new(res)
 end
 
+---Returns true if e is contained in self, false otherwise.
+---@param self Array
+---@param e any
+---@return boolean
 function array:contain(e)
     for i = 1, #self do
         if self[i] == e then
