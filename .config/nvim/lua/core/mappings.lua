@@ -60,4 +60,4 @@ silent! command PackerUpdate lua require('plugins.list') require('packer').updat
 silent! command PackerSync lua require('plugins.list') require('packer').sync()
 ]])
 
-map("n", "<leader>ps", "PackerSync", "cmd")
+map("n", "<leader>ps", { "w", "so %", "PackerSync" }, "cmd")

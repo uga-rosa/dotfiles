@@ -7,7 +7,7 @@ vim.opt.number = true
 vim.opt.showmatch = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
-vim.opt.shiftwidth = 0
+vim.opt.shiftwidth = 4
 vim.opt.smartindent = true
 vim.opt.swapfile = false
 vim.opt.scrolloff = 3
@@ -66,4 +66,21 @@ augroup({
     },
     mypacker = { "BufWrite", "*list.lua", "PackerCompile" },
     lua_run = { "FileType", "lua", "nnoremap <buffer> @R <cmd>w<cr><cmd>luafile %<cr>" },
+    read_stylua_toml = {
+        "FileType",
+        "lua",
+        function()
+            local path = vim.fn.getcwd() .. "/stylua.toml"
+            if vim.fn.filereadable(path) == 1 then
+                for line in io.lines(path) do
+                    if line:match("indent_width") then
+                        local indent = tonumber(line:match("%d+"))
+                        vim.opt_local.tabstop = indent
+                        vim.opt_local.shiftwidth = indent
+                        break
+                    end
+                end
+            end
+        end,
+    },
 })

@@ -56,9 +56,9 @@ alias g="lazygit"
 
 # cd git root
 function g-root() {
-if [[ $(git rev-parse --is-inside-work-tree) ]]; then
-    cd $(git rev-parse --show-toplevel)
-fi
+    if [[ $(git rev-parse --is-inside-work-tree) ]]; then
+        cd $(git rev-parse --show-toplevel)
+    fi
 }
 
 # fzf
@@ -78,10 +78,10 @@ export FZF_ALT_C_COMMAND='fd --type d'
 
 ## upgrade function
 function fzf-upgrade() {
-cd ~/.fzf
-git pull
-./install --all
-cd -
+    cd ~/.fzf
+    git pull
+    ./install --all
+    cd -
 }
 
 # exa

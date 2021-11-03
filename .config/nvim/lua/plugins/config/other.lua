@@ -28,6 +28,19 @@ M.operator_replace = function()
     map("n", "_", "<Plug>(operator-replace)")
 end
 
+M.textobj = function()
+    vim.fn["textobj#user#plugin"]("formula", {
+        ["dollar-a"] = {
+            pattern = [[\$.\{-}\$]],
+            select = { "a$" },
+        },
+        ["dollar-i"] = {
+            pattern = [[\$\zs.\{-}\ze\$]],
+            select = { "i$" },
+        },
+    })
+end
+
 M.openbrowser = function()
     map({ "n", "x" }, "<M-o>", "<Plug>(openbrowser-smart-search)")
     vim.g.openbrowser_browser_commands = {

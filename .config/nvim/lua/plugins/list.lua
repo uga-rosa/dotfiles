@@ -12,6 +12,8 @@ return packer.startup({
         use({ "wbthomason/packer.nvim", opt = true })
         -- improve require
         use("lewis6991/impatient.nvim")
+        -- improve cursorhold performance
+        use("antoinemadec/FixCursorHold.nvim")
         -- colorscheme
         use("bluz71/vim-nightfly-guicolors")
         -- fast filetype.vim
@@ -141,6 +143,11 @@ return packer.startup({
             },
             setup = 'require("plugins.config.other").operator_replace()',
         })
+        -- textobj
+        use({
+            "kana/vim-textobj-user",
+            config = 'require("plugins.config.other").textobj()',
+        })
         -- useful f, F, t and T
         use({
             "hrsh7th/vim-eft",
@@ -158,7 +165,10 @@ return packer.startup({
             setup = 'require("plugins.config.other").openbrowser()',
         })
         -- comment out
-        use("tpope/vim-commentary")
+        use({
+            "numToStr/Comment.nvim",
+            config = 'require("Comment").setup()',
+        })
         -- rust
         use({
             "simrat39/rust-tools.nvim",
