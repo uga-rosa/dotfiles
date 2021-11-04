@@ -17,7 +17,7 @@ export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 
 # X server
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 
 # pkg-config
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
@@ -34,7 +34,7 @@ export PATH="$PATH:$HOME/.local/julia/bin"
 # lua
 eval $(luarocks path)
 if [[ -d ~/lua/lib && ! $LUA_PATH =~ /lua/lib/ ]]; then
-    for i in $(ls -d ~/lua/lib/*/lua); do
+    for i in $(ls -d ~/lua/lib/*/src); do
         export LUA_PATH="$LUA_PATH;$i/?.lua;$i/?/init.lua"
     done
 fi

@@ -133,6 +133,9 @@ function md2pptx() {
     fi
 }
 
+# tmux
+export TERM="tmux-256color"
+
 # tmux-session-select
 function tmux_session_select() {
     ID=$(tmux list-sessions 2>&1)
