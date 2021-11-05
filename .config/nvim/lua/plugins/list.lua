@@ -104,11 +104,12 @@ return packer.startup({
             run = ":TSUpdate",
             config = 'require("plugins.config.treesitter")',
         })
-        -- general purpose task runner
+        -- code runner
         use({
-            "thinca/vim-quickrun",
-            requires = "lambdalisue/vim-quickrun-neovim-job",
-            config = 'require("plugins.config.quickrun")',
+            "michaelb/sniprun",
+            requires = "rcarriga/nvim-notify",
+            run = "bash ./install.sh",
+            config = 'require("plugins.config.sniprun")',
         })
         -- git
         use({
