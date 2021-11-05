@@ -1,3 +1,9 @@
+snippet p
+	fmt.${1|Print,Println,Printf|}($2)
+snippet sp
+	fmt.${1|Sprint,Sprintln,Sprintf|}($2)
+snippet fp
+	fmt.${1|Fprint,Fprintln,Fprintf|}($2)
 snippet func
 	func $1($2) $3 {
 		$0
@@ -14,15 +20,34 @@ snippet else
 	else {
 		$0
 	}
-snippet if else
+snippet if_else
 	if $1 {
 		$2
 	} else {
 		$0
 	}
-snippet p
-	fmt.${1|Print,Println,Printf|}($2)
-snippet sp
-	fmt.${1|Sprint,Sprintln,Sprintf|}($2)
-snippet fp
-	fmt.${1|Fprint,Fprintln,Fprintf|}($2)
+snippet if_err
+	if err != nil {
+		$0
+	}
+snippet for_inc
+	for ${1:i} := ${2:0}; i < ${3:10}; ${4:i++} {
+		$0
+	}
+snippet for_range
+	for ${1:i, v} := range $2 {
+		$0
+	}
+snippet switch
+	switch $1 {
+	case $2:
+		$0
+	}
+snippet case
+	case $1:
+		$0
+snippet default
+	default:
+		$0
+snippet rt
+	return $0
