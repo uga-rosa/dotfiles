@@ -17,7 +17,6 @@ local sources = {
     }),
     b.formatting.fixjson,
     b.formatting.black,
-    b.formatting.trim_whitespace,
     b.diagnostics.shellcheck.with({ diagnostics_format = "#{m} [#{c}]" }),
     b.diagnostics.teal,
 }

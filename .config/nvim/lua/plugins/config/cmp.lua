@@ -34,6 +34,7 @@ cmp.setup({
             require("snippy").expand_snippet(args.body)
         end,
     },
+    preselect = cmp.PreselectMode.None,
     completion = {
         get_trigger_characters = function(trigger_characters)
             return vim.tbl_filter(function(char)

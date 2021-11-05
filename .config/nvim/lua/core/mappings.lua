@@ -60,4 +60,14 @@ silent! command PackerUpdate lua require('plugins.list') require('packer').updat
 silent! command PackerSync lua require('plugins.list') require('packer').sync()
 ]])
 
-map("n", "<leader>ps", { "w", "so %", "PackerSync" }, "cmd")
+map("n", "<leader>ps", function()
+    local filename = vim.fn.expand("%:p")
+    if filename ~= "" then
+        vim.cmd("w")
+    end
+    if filename == "list.lua" then
+        vim.cmd("so %")
+    end
+    require("plugins.list")
+    require("packer").sync()
+end)

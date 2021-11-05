@@ -23,7 +23,8 @@ export PATH=$HOME/.local/bin:$PATH
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
 
 # go
-export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
+export GOPATH="$HOME/.go"
+export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 
 # nim
 export PATH="$PATH:$HOME/.nimble/bin"
