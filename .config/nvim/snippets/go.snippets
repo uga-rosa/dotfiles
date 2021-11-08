@@ -5,14 +5,18 @@ snippet sp
 snippet fp
 	fmt.${1|Fprint,Fprintln,Fprintf|}($2)
 snippet func
-	func $1($2) $3 {
+	func ${1:name}($2) $3 {
+		$0
+	}
+snippet method
+	func (${1:a *A}) ${2:name}($3) $4 {
 		$0
 	}
 snippet if
 	if $1 {
 		$2
 	}
-snippet else if
+snippet else_if
 	else if $1 {
 		$2
 	}
@@ -27,7 +31,7 @@ snippet if_else
 		$0
 	}
 snippet if_err
-	if err != nil {
+	if ${1:err} != nil {
 		$0
 	}
 snippet for_inc
@@ -51,3 +55,20 @@ snippet default
 		$0
 snippet rt
 	return $0
+snippet type
+	type $1 $0
+snippet struct
+	struct {
+		$0
+	}
+snippet _readlines
+	func readlines(filename string) []string {
+		file, err := os.Open(filename)
+		check(err)
+		scanner := bufio.NewScanner(file)
+		lines := make([]string, 0)
+		for scanner.Scan() {
+			lines = append(lines, scanner.Text())
+		}
+		return lines
+	}

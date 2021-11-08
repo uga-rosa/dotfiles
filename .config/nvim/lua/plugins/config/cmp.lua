@@ -81,8 +81,22 @@ cmp.setup({
         },
     },
     mapping = {
-        ["<C-space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
-        ["<C-e>"] = cmp.mapping(cmp.mapping.close(), { "i", "c" }),
+        ["<Down>"] = cmp.config.disable,
+        ["<Up>"] = cmp.config.disable,
+        ["<C-e>"] = cmp.config.disable,
+        ["<Tab>"] = cmp.config.disable,
+        ["<S-Tab>"] = cmp.config.disable,
+        ["<C-y>"] = cmp.config.disable,
+        ["<C-space>"] = cmp.mapping(function()
+            if cmp.visible() then
+                cmp.close()
+            else
+                cmp.complete()
+            end
+        end, {
+            "i",
+            "c",
+        }),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
