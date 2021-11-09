@@ -60,6 +60,15 @@ augroup({
             end
         end,
     },
+    autosave_on_leave = {
+        "BufLeave",
+        "*",
+        function()
+            if vim.fn.expand("%") ~= "" and vim.opt.buftype ~= "" then
+                vim.cmd("w")
+            end
+        end,
+    },
     better_escape = {
         { "InsertCharPre", "*", 'lua require("core.escape").escape()' },
         { "InsertLeave", "*", 'lua require("core.escape").leave()' },

@@ -74,6 +74,7 @@ cmp.setup({
                     return false
                 end
             end,
+            cmp.config.compare.recently_used,
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
             cmp.config.compare.length,
@@ -95,12 +96,11 @@ cmp.setup({
             end
         end, {
             "i",
-            "c",
         }),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
-        { name = "snippy", priority = 200 },
+        { name = "snippy" },
         { name = "nvim_lsp" },
         { name = "path" },
         {

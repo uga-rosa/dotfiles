@@ -1,15 +1,12 @@
 local snippy = require("snippy")
 snippy.setup({
+    choice_delay = 0,
     mappings = {
         is = {
             ["<C-j>"] = "next",
             ["<C-k>"] = "previous",
         },
-        nx = {
-            ["<leader>c"] = "cut_text",
-        },
     },
-    choice_delay = 0,
 })
 
 vim_api.map("s", "<C-h>", "x<bs>", "noremap")
