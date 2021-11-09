@@ -61,7 +61,7 @@ silent! command PackerSync lua require('plugins.list') require('packer').sync()
 ]])
 
 map("n", "<leader>ps", function()
-    local filename = vim.fn.expand("%:p")
+    local filename = vim.fn.expand("%:t")
     if filename ~= "" then
         vim.cmd("w")
     end

@@ -45,9 +45,10 @@ return packer.startup({
                 "hrsh7th/cmp-buffer",
                 "hrsh7th/cmp-path",
                 "hrsh7th/cmp-nvim-lsp",
+                "hrsh7th/cmp-cmdline",
+                "hrsh7th/cmp-nvim-lsp-document-symbol",
                 "dcampos/cmp-snippy",
                 "uga-rosa/cmp-dictionary",
-                { "petertriho/cmp-git", requires = "nvim-lua/plenary.nvim" },
             },
             config = 'require("plugins.config.cmp")',
         })
@@ -61,6 +62,13 @@ return packer.startup({
         use({
             "dcampos/nvim-snippy",
             config = 'require("plugins.config.snippy")',
+        })
+        -- templete
+        use({
+            "mattn/vim-sonictemplate",
+            config = function()
+                vim.g.sonictemplate_vim_template_dir = vim.fn.stdpath("config") .. "/template"
+            end,
         })
         -- LSP
         use({

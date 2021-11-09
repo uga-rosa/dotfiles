@@ -20,7 +20,6 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.inccommand = "split"
 vim.opt.signcolumn = "yes"
 vim.opt.dictionary = "/usr/share/dict/words"
--- vim.opt.dictionary = "~/dotfiles/doc/vim_dictionary"
 
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
@@ -64,7 +63,7 @@ augroup({
         "BufLeave",
         "*",
         function()
-            if vim.fn.expand("%") ~= "" and vim.opt.buftype ~= "" then
+            if vim.api.nvim_buf_get_name(0) ~= "" and vim.api.nvim_buf_get_option(0, "buftype") == "" then
                 vim.cmd("w")
             end
         end,

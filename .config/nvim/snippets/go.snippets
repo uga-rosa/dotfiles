@@ -34,6 +34,10 @@ snippet if_err
 	if ${1:err} != nil {
 		$0
 	}
+snippet for
+	for $1{
+		$0
+	}
 snippet for_inc
 	for ${1:i} := ${2:0}; i < ${3:10}; ${4:i++} {
 		$0
@@ -64,15 +68,4 @@ snippet struct
 snippet interface
 	interface {
 		$0
-	}
-snippet _readlines
-	func readlines(filename string) []string {
-		file, err := os.Open(filename)
-		check(err)
-		scanner := bufio.NewScanner(file)
-		lines := make([]string, 0)
-		for scanner.Scan() {
-			lines = append(lines, scanner.Text())
-		}
-		return lines
 	}

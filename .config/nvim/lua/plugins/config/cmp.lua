@@ -1,4 +1,5 @@
 local cmp = require("cmp")
+local snippy = require("snippy")
 
 local lspkind = {
     Text = "",
@@ -82,12 +83,33 @@ cmp.setup({
         },
     },
     mapping = {
-        ["<Down>"] = cmp.config.disable,
-        ["<Up>"] = cmp.config.disable,
         ["<C-e>"] = cmp.config.disable,
-        ["<Tab>"] = cmp.config.disable,
-        ["<S-Tab>"] = cmp.config.disable,
-        ["<C-y>"] = cmp.config.disable,
+        ["<C-j>"] = cmp.mapping(function(fallback)
+            if snippy.can_jump(1) then
+                if cmp.visible() then
+                    cmp.close()
+                end
+                snippy.next()
+            else
+                fallback()
+            end
+        end, {
+            "i",
+            "s",
+        }),
+        ["<C-k>"] = cmp.mapping(function(fallback)
+            if snippy.can_jump(-1) then
+                if cmp.visible() then
+                    cmp.close()
+                end
+                snippy.previous()
+            else
+                fallback()
+            end
+        end, {
+            "i",
+            "s",
+        }),
         ["<C-space>"] = cmp.mapping(function()
             if cmp.visible() then
                 cmp.close()
@@ -96,13 +118,13 @@ cmp.setup({
             end
         end, {
             "i",
+            "c",
         }),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
-        { name = "snippy" },
-        { name = "nvim_lsp" },
-        { name = "path" },
+        { name = "snippy", group_index = 1 },
+        { name = "nvim_lsp", group_index = 1 },
         {
             name = "buffer",
             opts = {
@@ -114,10 +136,28 @@ cmp.setup({
                     return vim.tbl_keys(bufs)
                 end,
             },
+            group_index = 2,
         },
-        { name = "dictionary", keyword_length = 2, priority = 1 },
-        { name = "cmp_git" },
+        {
+            name = "dictionary",
+            keyword_length = 2,
+            priority = 1,
+            group_index = 2,
+        },
+        { name = "path", group_index = 2 },
     },
 })
 
-require("cmp_git").setup()
+cmp.setup.cmdline("/", {
+    sources = {
+        { name = "nvim_lsp_document_symbol" },
+        { name = "buffer" },
+    },
+})
+
+cmp.setup.cmdline(":", {
+    sources = {
+        { name = "path", group_index = 1 },
+        { name = "cmdline", group_index = 2 },
+    },
+})
