@@ -3,7 +3,7 @@ local M = {}
 local map = vim_api.map
 
 M.luatab = function()
-    vim.o.tabline = "%!v:lua.require'luatab'.tabline()"
+    require("luatab").setup({})
     map("n", "<M-1>", "1gt", "noremap")
     map("n", "<M-2>", "2gt", "noremap")
     map("n", "<M-3>", "3gt", "noremap")
@@ -18,6 +18,11 @@ M.luatab = function()
     map("n", "<M-h>", "tabfirst", "cmd")
     map("n", "<M-l>", "tablast", "cmd")
     map("n", "<M-c>", { "w", "tabclose" }, "cmd")
+end
+
+M.lazygit = function()
+    vim.g.lazygit_floating_window_use_plenary = true
+    map("n", "<leader>l", "LazyGit", "cmd")
 end
 
 M.easyalign = function()

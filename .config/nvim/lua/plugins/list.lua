@@ -121,14 +121,9 @@ return packer.startup({
         })
         -- git
         use({
-            "TimUntersberger/neogit",
-            key = "Neogit",
-            requires = {
-                "nvim-lua/plenary.nvim",
-                "sindrets/diffview.nvim",
-            },
-            setup = 'require("plugins.config.neogit").setup()',
-            config = 'require("plugins.config.neogit").config()',
+            "kdheepak/lazygit.nvim",
+            requires = "nvim-lua/plenary.nvim",
+            config = 'require("plugins.config.other").lazygit()',
         })
         use({
             "lewis6991/gitsigns.nvim",
