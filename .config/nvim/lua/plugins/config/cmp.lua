@@ -1,5 +1,4 @@
 local cmp = require("cmp")
-local snippy = require("snippy")
 
 local lspkind = {
     Text = "",
@@ -84,32 +83,6 @@ cmp.setup({
     },
     mapping = {
         ["<C-e>"] = cmp.config.disable,
-        ["<C-j>"] = cmp.mapping(function(fallback)
-            if snippy.can_jump(1) then
-                if cmp.visible() then
-                    cmp.close()
-                end
-                snippy.next()
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-        }),
-        ["<C-k>"] = cmp.mapping(function(fallback)
-            if snippy.can_jump(-1) then
-                if cmp.visible() then
-                    cmp.close()
-                end
-                snippy.previous()
-            else
-                fallback()
-            end
-        end, {
-            "i",
-            "s",
-        }),
         ["<C-space>"] = cmp.mapping(function()
             if cmp.visible() then
                 cmp.close()

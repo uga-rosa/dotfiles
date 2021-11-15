@@ -42,7 +42,7 @@ end
 ---opts.expr: Deprecated. Use feedkeys().
 ---opts.buffer: current buffer only
 ---opts.cmd: command (format to <cmd>%s<cr>)
-vim_api.map = function(modes, lhs, rhs, opts)
+function vim_api.map(modes, lhs, rhs, opts)
     opts = opts or {}
     opts = type(opts) == "table" and opts or { opts }
     for key, opt in ipairs(opts) do
@@ -100,7 +100,7 @@ end
 ---opts.expr: Deprecated. Use feedkeys().
 ---opts.buffer: current buffer only
 ---opts.cmd: command (format to <cmd>%s<cr>)
-vim_api.map_conv = function(modes, a, b, opts)
+function vim_api.map_conv(modes, a, b, opts)
     vim_api.map(modes, a, b, opts)
     vim_api.map(modes, b, a, opts)
 end
@@ -108,7 +108,7 @@ end
 ---API for autocmd. Supports for a lua funcion.
 ---@param au string[]
 ---The last element of au can be a function.
-vim_api.autocmd = function(au)
+function vim_api.autocmd(au)
     if type(au[#au]) == "function" then
         au[#au] = func2str(au[#au])
     end
@@ -119,7 +119,7 @@ end
 ---@param augroups table<string,string[]>
 ---augroups' key: group named
 ---augroups' value: an argument of myutils.autocmd
-vim_api.augroup = function(augroups)
+function vim_api.augroup(augroups)
     for group, aus in pairs(augroups) do
         cmd("augroup " .. group)
         cmd("au!")
@@ -136,7 +136,7 @@ end
 
 ---API for command. Supports for a lua function
 ---@param command string|table
-vim_api.command = function(command)
+function vim_api.command(command)
     if type(command) == "table" then
         if type(command[#command]) == "function" then
             command[#command] = func2str(command[#command])
@@ -146,73 +146,10 @@ vim_api.command = function(command)
     cmd("com! " .. command)
 end
 
----Execute a string as a function.
----@param inStr string
----@return any ReturnFunction
-vim_api.eval = function(inStr)
-    return assert(load(inStr))()
-end
-
----@class Array
-_G.array = {}
-
----Returns a instance of class Array
----@param t table
----@return Array
-function array.new(t)
-    return setmetatable(t, { __index = array })
-end
-
----Returns a new array with func applied to each elements.
----If no_return is true, returns nothing.
----@param self Array
----@param func function
----@param no_return boolean
----@return Array
-function array:map(func, no_return)
-    if no_return then
-        for i = 1, #self do
-            func(self[i])
-        end
-    else
-        local res = {}
-        for i = 1, #self do
-            res[i] = func(self[i])
-        end
-        return array.new(res)
-    end
-end
-
----Returns a new array with all the elements of self that fulfilled func
----@param self Array
----@param func fun(a: any): boolean
----@return Array
-function array:filter(func)
-    local res, c = {}, 0
-    for i = 1, #self do
-        if func(self[i]) then
-            c = c + 1
-            res[c] = self[i]
-        end
-    end
-    return array.new(res)
-end
-
----Returns true if e is contained in self, false otherwise.
----@param self Array
----@param e any
----@return boolean
-function array:contain(e)
-    for i = 1, #self do
-        if self[i] == e then
-            return true
-        end
-    end
-    return false
-end
-
 ---Transforms ctx into a human readable representation.
----@param ctx any
-_G.dump = function(ctx)
-    print(vim.inspect(ctx))
+---@vararg any
+_G.dump = function(...)
+    for _, ctx in ipairs({ ... }) do
+        print(vim.inspect(ctx))
+    end
 end

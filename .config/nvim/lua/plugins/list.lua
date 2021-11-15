@@ -208,5 +208,7 @@ return packer.startup({
             "uga-rosa/translate-shell.nvim",
             config = 'require("plugins.config.translate")',
         })
+        -- useful functions
+        use({ "uga-rosa/steelarray.nvim" })
     end,
 })

@@ -31,11 +31,3 @@ export PATH="$PATH:$HOME/.nimble/bin"
 
 # julia
 export PATH="$PATH:$HOME/.local/julia/bin"
-
-# lua
-eval $(luarocks path)
-if [[ -d ~/lua/lib && ! $LUA_PATH =~ /lua/lib/ ]]; then
-    for i in $(ls -d ~/lua/lib/*/src); do
-        export LUA_PATH="$LUA_PATH;$i/?.lua;$i/?/init.lua"
-    done
-fi
