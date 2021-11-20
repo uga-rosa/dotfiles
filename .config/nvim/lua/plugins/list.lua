@@ -47,6 +47,7 @@ return packer.startup({
                 "hrsh7th/cmp-nvim-lsp",
                 "hrsh7th/cmp-cmdline",
                 "hrsh7th/cmp-nvim-lsp-document-symbol",
+                "hrsh7th/cmp-nvim-lsp-signature-help",
                 "dcampos/cmp-snippy",
                 "uga-rosa/cmp-dictionary",
             },
@@ -76,7 +77,6 @@ return packer.startup({
             requires = {
                 "williamboman/nvim-lsp-installer",
                 "tami5/lspsaga.nvim",
-                "ray-x/lsp_signature.nvim",
                 "folke/lua-dev.nvim",
             },
             config = 'require("plugins.config.lsp")',

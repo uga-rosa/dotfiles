@@ -17,8 +17,6 @@ M.setup = function()
             },
         },
     })
-    -- toggle terminal
-    require("myplug.term")
 end
 
 return M

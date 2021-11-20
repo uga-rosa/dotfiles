@@ -57,10 +57,6 @@ local opts = {
             map("n", "<leader>x", "Lspsaga code_action", { "cmd", "buffer" })
             map("x", "<leader>x", "Lspsaga range_code_action", { "cmd", "buffer" })
             map("n", "<leader>rn", "Lspsaga rename", { "cmd", "buffer" })
-            -- lsp_signature
-            require("lsp_signature").on_attach({
-                toggle_key = "<C-e>",
-            })
         end,
     },
 }
