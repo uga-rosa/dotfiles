@@ -114,10 +114,9 @@ return packer.startup({
         })
         -- code runner
         use({
-            "michaelb/sniprun",
-            requires = "rcarriga/nvim-notify",
-            run = "bash ./install.sh",
-            config = 'require("plugins.config.sniprun")',
+            "thinca/vim-quickrun",
+            requires = "lambdalisue/vim-quickrun-neovim-job",
+            config = 'require("plugins.config.quickrun")',
         })
         -- git
         use({
