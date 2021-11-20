@@ -90,9 +90,9 @@ array.new({
     :filter(function(server)
         return not installed:contains(server)
     end)
-    :map(function(server)
+    :foreach(function(server)
         lspinstaller.install(server)
-    end, true)
+    end)
 
 -- setup
 lspinstaller.on_server_ready(function(server)
