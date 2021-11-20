@@ -34,7 +34,7 @@ end
 ---@generic T fun(fallback: function)
 ---@param modes string|string[]
 ---@param lhs string
----@param rhs string|string[]|T|T[]
+---@param rhss string|string[]|T|T[]
 ---@param opts? string|string[]
 ---@overload fun(modes: string, lhs: string, rhs: string)
 ---opts.nowait: This make a shortest match.
@@ -42,7 +42,7 @@ end
 ---opts.expr: Deprecated. Use feedkeys().
 ---opts.buffer: current buffer only
 ---opts.cmd: command (format to <cmd>%s<cr>)
-function vim_api.map(modes, lhs, rhs, opts)
+function vim_api.map(modes, lhs, rhss, opts)
     opts = opts or {}
     opts = type(opts) == "table" and opts or { opts }
     for key, opt in ipairs(opts) do
@@ -56,23 +56,23 @@ function vim_api.map(modes, lhs, rhs, opts)
         opts.buffer = nil
     end
 
-    rhs = type(rhs) == "table" and rhs or { rhs }
-    local _rhs = {}
+    rhss = type(rhss) == "table" and rhss or { rhss }
+    local rhs = {}
 
-    for i = 1, #rhs do
-        if type(rhs[i]) == "function" then
+    for i, r in ipairs(rhss) do
+        if type(r) == "function" then
             opts.cmd = true
-            _rhs[i] = func2str(function()
-                rhs[i](fallback(lhs))
+            rhs[i] = func2str(function()
+                r(fallback(lhs))
             end)
         else
-            _rhs[i] = rhs[i]
+            rhs[i] = r
         end
         if opts.cmd then
-            _rhs[i] = "<cmd>" .. _rhs[i] .. "<cr>"
+            rhs[i] = "<cmd>" .. rhs[i] .. "<cr>"
         end
     end
-    _rhs = table.concat(_rhs, "")
+    rhs = table.concat(rhs, "")
 
     if opts.cmd then
         opts.noremap = true
@@ -82,9 +82,9 @@ function vim_api.map(modes, lhs, rhs, opts)
     modes = type(modes) == "string" and { modes } or modes
     for _, mode in ipairs(modes) do
         if buffer then
-            api.nvim_buf_set_keymap(0, mode, lhs, _rhs, opts)
+            api.nvim_buf_set_keymap(0, mode, lhs, rhs, opts)
         else
-            api.nvim_set_keymap(mode, lhs, _rhs, opts)
+            api.nvim_set_keymap(mode, lhs, rhs, opts)
         end
     end
 end
