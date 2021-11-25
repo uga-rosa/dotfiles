@@ -19,6 +19,7 @@ vim.opt.foldenable = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.inccommand = "split"
 vim.opt.signcolumn = "yes"
+-- vim.opt.dictionary = "/usr/share/dict/words,/tmp/polish"
 vim.opt.dictionary = "/usr/share/dict/words"
 
 vim.g.loaded_python_provider = 0
@@ -34,9 +35,6 @@ vim.g.loaded_tar = 1
 vim.g.loaded_tarPlugin = 1
 vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
-if pcall(require, "filetype") then
-    vim.g.did_load_filetypes = 1
-end
 
 augroup({
     zenhan = {

@@ -47,7 +47,7 @@ local opts = {
         capabilities = capabilities,
         on_attach = function()
             -- auto formatting
-            vim.cmd("autocmd BufWritePre <buffer> Format")
+            -- vim_api.augroup({ format = { "BufWritePre", "<buffer>", "Format" } })
             -- lspsaga
             map("n", "K", "Lspsaga hover_doc", { "cmd", "buffer" })
             map("n", "<C-f>", "lua require'lspsaga.action'.smart_scroll_with_saga(1)", { "cmd", "buffer" })

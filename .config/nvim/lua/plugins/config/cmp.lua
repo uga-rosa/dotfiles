@@ -49,6 +49,7 @@ cmp.setup({
                 buffer = "[Buffer]",
                 path = "[Path]",
                 nvim_lsp = "[LSP]",
+                nvim_lsp_signature_help = "[SignatureHelp]",
                 snippy = "[Snippy]",
                 dictionary = "[Dictionary]",
             })[entry.source.name]
@@ -98,9 +99,10 @@ cmp.setup({
     sources = {
         { name = "snippy", group_index = 1 },
         { name = "nvim_lsp", group_index = 1 },
+        { name = "nvim_lsp_signature_help", group_index = 1 },
         {
             name = "buffer",
-            opts = {
+            option = {
                 get_bufnrs = function()
                     local bufs = {}
                     for _, win in ipairs(vim.api.nvim_list_wins()) do

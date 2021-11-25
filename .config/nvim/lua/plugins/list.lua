@@ -16,8 +16,6 @@ return packer.startup({
         use("antoinemadec/FixCursorHold.nvim")
         -- colorscheme
         use("bluz71/vim-nightfly-guicolors")
-        -- fast filetype.vim
-        use("uga-rosa/filetype.nvim")
         -- statusline
         use({
             "famiu/feline.nvim",
@@ -49,14 +47,13 @@ return packer.startup({
                 "hrsh7th/cmp-nvim-lsp-document-symbol",
                 "hrsh7th/cmp-nvim-lsp-signature-help",
                 "dcampos/cmp-snippy",
-                "uga-rosa/cmp-dictionary",
+                -- "uga-rosa/cmp-dictionary",
             },
             config = 'require("plugins.config.cmp")',
         })
         -- auto close parentheses
         use({
             "windwp/nvim-autopairs",
-            event = "InsertEnter",
             config = 'require("plugins.config.autopairs")',
         })
         -- snippet engine
@@ -92,14 +89,12 @@ return packer.startup({
         })
         -- fuzzy finder
         use({
-            "nvim-telescope/telescope.nvim",
+            "ibhagwan/fzf-lua",
             requires = {
-                "nvim-lua/plenary.nvim",
+                "vijaymarupudi/nvim-fzf",
                 "kyazdani42/nvim-web-devicons",
-                { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-                "jvgrootveld/telescope-zoxide",
             },
-            config = 'require("plugins.config.telescope")',
+            config = 'require("plugins.config.fzf")',
         })
         -- treesitter
         use({
