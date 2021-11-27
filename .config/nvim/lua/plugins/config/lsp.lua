@@ -39,7 +39,26 @@ require("lspsaga").setup({
 })
 
 -- format command
-vim.cmd("command! Format lua vim.lsp.buf.formatting_sync()")
+vim_api.command({
+    "Format",
+    function()
+        if vim.g.enable_format then
+            vim.lsp.buf.formatting_sync()
+        end
+    end,
+})
+vim_api.command({
+    "FormatOn",
+    function()
+        vim.g.enable_format = true
+    end,
+})
+vim_api.command({
+    "FormatOff",
+    function()
+        vim.g.enable_format = false
+    end,
+})
 
 -- LSP setting
 local opts = {
@@ -47,7 +66,7 @@ local opts = {
         capabilities = capabilities,
         on_attach = function()
             -- auto formatting
-            -- vim_api.augroup({ format = { "BufWritePre", "<buffer>", "Format" } })
+            vim_api.augroup({ format = { "BufWritePre", "<buffer>", "Format" } })
             -- lspsaga
             map("n", "K", "Lspsaga hover_doc", { "cmd", "buffer" })
             map("n", "<C-f>", "lua require'lspsaga.action'.smart_scroll_with_saga(1)", { "cmd", "buffer" })

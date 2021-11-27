@@ -1,4 +1,6 @@
-require("fzf-lua").setup({
+local fzf = require("fzf-lua")
+
+fzf.setup({
     keymap = {
         builtin = {
             ["<F3>"] = "toggle-preview-wrap",
@@ -40,5 +42,7 @@ map("n", "q/", "FzfLua search_history", "cmd")
 map("n", "<leader>i", "FzfLua lsp_document_diagnostics", "cmd")
 map("n", "<leader>I", "FzfLua lsp_workspace_diagnostics", "cmd")
 map("n", "<leader>a", "FzfLua lsp_code_actions", "cmd")
-map("n", "gd", "FzfLua lsp_definitions", "cmd")
+map("n", "gd", function()
+    fzf.lsp_definitions({ jump_to_single_result = true })
+end, "cmd")
 map("n", "gr", "FzfLua lsp_references", "cmd")
