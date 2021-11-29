@@ -1,4 +1,3 @@
-local fn = vim.fn
 local map = vim_api.map
 local map_conv = vim_api.map_conv
 
@@ -13,12 +12,6 @@ map("n", "o", function(fallback)
     vim.cmd("normal zz")
     fallback()
 end)
-
-map("n", "<M-h>", function()
-    vim.cmd("h " .. fn.expand("<cword>"))
-end)
-
-map("n", "<M-k>", "EiwaPopup", "cmd")
 
 map("n", "<esc><esc>", "nohlsearch", { "noremap", "cmd" })
 map("n", "<leader><cr>", "o<esc>", "noremap")

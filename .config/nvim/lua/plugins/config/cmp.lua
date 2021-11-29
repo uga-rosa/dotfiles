@@ -50,12 +50,14 @@ cmp.setup({
                 path = "[Path]",
                 nvim_lsp = "[LSP]",
                 nvim_lsp_signature_help = "[SignatureHelp]",
+                nvim_lua = "[NvimLua]",
                 snippy = "[Snippy]",
                 dictionary = "[Dictionary]",
             })[entry.source.name]
             vim_item.dup = ({
                 buffer = 0,
                 dictionary = 0,
+                nvim_lua = 0,
             })[entry.source.name] or 1
             return vim_item
         end,
@@ -100,6 +102,7 @@ cmp.setup({
         { name = "snippy", group_index = 1 },
         { name = "nvim_lsp", group_index = 1 },
         { name = "nvim_lsp_signature_help", group_index = 1 },
+        { name = "nvim_lua", group_index = 1 },
         {
             name = "buffer",
             option = {
