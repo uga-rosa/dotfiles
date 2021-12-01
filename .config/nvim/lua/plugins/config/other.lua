@@ -81,4 +81,10 @@ M.mkdp = function()
     map("n", "<leader>pn", "MarkdownPreview", "cmd")
 end
 
+function M.translate()
+    vim.cmd("command! -range TransJa2En TranslateF ja en")
+    vim.cmd("command! -range TransEn2Ja TranslateF en ja")
+    vim_api.augroup({ translate = { "CursorMoved", "*", "TranslateClose" } })
+end
+
 return M
