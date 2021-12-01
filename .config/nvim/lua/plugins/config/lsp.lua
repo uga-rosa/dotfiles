@@ -47,18 +47,9 @@ vim_api.command({
         end
     end,
 })
-vim_api.command({
-    "FormatOn",
-    function()
-        vim.g.enable_format = true
-    end,
-})
-vim_api.command({
-    "FormatOff",
-    function()
-        vim.g.enable_format = false
-    end,
-})
+vim.cmd("command! FormatOn let g:enable_format=v:true")
+vim.cmd("command! FormatOff let g:enable_format=v:false")
+vim.g.enable_format = true
 
 -- LSP setting
 local opts = {

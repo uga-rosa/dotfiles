@@ -54,13 +54,13 @@ silent! command PackerSync lua require('plugins.list') require('packer').sync()
 ]])
 
 map("n", "<leader>ps", function()
-    local filename = vim.fn.expand("%:t")
-    if filename ~= "" then
+    local bufname = vim.api.nvim_buf_get_name(0)
+    local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+    local readonly = vim.api.nvim_buf_get_option(0, "readonly")
+    if bufname ~= "" and buftype == "" and not readonly then
         vim.cmd("w")
     end
-    if filename == "list.lua" then
-        vim.cmd("so %")
-    end
+    vim.cmd("so " .. vim.fn.stdpath("config") .. "/lua/plugins/list.lua")
     require("plugins.list")
     require("packer").sync()
 end)

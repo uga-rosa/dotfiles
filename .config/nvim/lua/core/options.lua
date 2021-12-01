@@ -60,7 +60,10 @@ augroup({
         "BufLeave",
         "*",
         function()
-            if vim.api.nvim_buf_get_name(0) ~= "" and vim.api.nvim_buf_get_option(0, "buftype") == "" then
+            local bufname = vim.api.nvim_buf_get_name(0)
+            local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+            local readonly = vim.api.nvim_buf_get_option(0, "readonly")
+            if bufname ~= "" and buftype == "" and not readonly then
                 vim.cmd("w")
             end
         end,
