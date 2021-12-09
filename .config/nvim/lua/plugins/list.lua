@@ -143,9 +143,6 @@ return packer.startup({
         use({
             "kana/vim-operator-replace",
             requires = "kana/vim-operator-user",
-            keys = {
-                { "n", "<Plug>(operator-replace)" },
-            },
             setup = 'require("plugins.config.other").operator_replace()',
         })
         -- textobj
@@ -163,10 +160,6 @@ return packer.startup({
         -- open browser
         use({
             "tyru/open-browser.vim",
-            keys = {
-                { "n", "<Plug>(openbrowser-smart-search)" },
-                { "x", "<Plug>(openbrowser-smart-search)" },
-            },
             setup = 'require("plugins.config.other").openbrowser()',
         })
         -- comment out
@@ -205,5 +198,13 @@ return packer.startup({
         })
         -- useful functions
         use({ "uga-rosa/steelarray.nvim" })
+        -- util search
+        use({
+            "VonHeikemen/searchbox.nvim",
+            requires = "MunifTanjim/nui.nvim",
+            config = 'require("plugins.config.other").search()',
+        })
+        -- quickfix
+        use({ "thinca/vim-qfreplace" })
     end,
 })

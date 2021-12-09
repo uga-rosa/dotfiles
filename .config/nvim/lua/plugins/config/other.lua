@@ -87,4 +87,10 @@ function M.translate()
     vim_api.augroup({ translate = { "CursorMoved", "*", "TranslateClose" } })
 end
 
+function M.search()
+    map("n", "<leader>/", 'lua require("searchbox").incsearch()', "cmd")
+    map("x", "<leader>/", 'lua require("searchbox").incsearch()', "cmd")
+    map("n", "<leader>s", 'lua require("searchbox").replace()', "cmd")
+end
+
 return M
