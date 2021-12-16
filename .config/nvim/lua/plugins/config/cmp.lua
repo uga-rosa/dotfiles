@@ -31,7 +31,7 @@ local lspkind = {
 cmp.setup({
     snippet = {
         expand = function(args)
-            require("snippy").expand_snippet(args.body)
+            require("luasnip").lsp_expand(args.body)
         end,
     },
     preselect = cmp.PreselectMode.None,
@@ -51,7 +51,7 @@ cmp.setup({
                 nvim_lsp = "[LSP]",
                 nvim_lsp_signature_help = "[SignatureHelp]",
                 nvim_lua = "[NvimLua]",
-                snippy = "[Snippy]",
+                luasnip = "[LuaSnip]",
                 dictionary = "[Dictionary]",
             })[entry.source.name]
             vim_item.dup = ({
@@ -99,10 +99,11 @@ cmp.setup({
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
-        { name = "snippy", group_index = 1 },
+        { name = "luasnip", group_index = 1 },
         { name = "nvim_lsp", group_index = 1 },
         { name = "nvim_lsp_signature_help", group_index = 1 },
         { name = "nvim_lua", group_index = 1 },
+        { name = "treesitter", group_index = 1 },
         {
             name = "buffer",
             option = {
@@ -137,5 +138,12 @@ cmp.setup.cmdline(":", {
     sources = {
         { name = "cmdline" },
         { name = "path" },
+    },
+})
+
+require("cmp_dictionary").setup({
+    dic = {
+        ["*"] = "/usr/share/dict/words",
+        ["markdown,txt"] = "~/dotfiles/doc/vim_dictionary",
     },
 })

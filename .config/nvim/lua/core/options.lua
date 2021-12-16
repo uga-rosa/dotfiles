@@ -19,7 +19,6 @@ vim.opt.foldenable = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.inccommand = "split"
 vim.opt.signcolumn = "yes"
-vim.opt.dictionary = "/usr/share/dict/words"
 
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
