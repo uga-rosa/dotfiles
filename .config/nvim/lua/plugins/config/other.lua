@@ -78,7 +78,7 @@ end
 
 M.mkdp = function()
     vim.g.mkdp_refresh_slow = 1
-    map("n", "<leader>pn", "MarkdownPreview", "cmd")
+    map("n", "<leader>p", "MarkdownPreview", "cmd")
 end
 
 function M.translate()

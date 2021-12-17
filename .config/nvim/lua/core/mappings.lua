@@ -50,17 +50,19 @@ silent! command PackerCompile lua require('plugins.list') require('packer').comp
 silent! command PackerInstall lua require('plugins.list') require('packer').install()
 silent! command PackerStatus lua require('plugins.list') require('packer').status()
 silent! command PackerUpdate lua require('plugins.list') require('packer').update()
-silent! command PackerSync lua require('plugins.list') require('packer').sync()
 ]])
 
-map("n", "<leader>ps", function()
-    local bufname = vim.api.nvim_buf_get_name(0)
-    local buftype = vim.api.nvim_buf_get_option(0, "buftype")
-    local readonly = vim.api.nvim_buf_get_option(0, "readonly")
-    if bufname ~= "" and buftype == "" and not readonly then
-        vim.cmd("w")
-    end
-    vim.cmd("so " .. vim.fn.stdpath("config") .. "/lua/plugins/list.lua")
-    require("plugins.list")
-    require("packer").sync()
-end)
+vim_api.command({
+    "PackerSync",
+    function()
+        local bufname = vim.api.nvim_buf_get_name(0)
+        local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+        local readonly = vim.api.nvim_buf_get_option(0, "readonly")
+        if bufname ~= "" and buftype == "" and not readonly then
+            vim.cmd("w")
+        end
+        vim.cmd("so " .. vim.fn.stdpath("config") .. "/lua/plugins/list.lua")
+        require("plugins.list")
+        require("packer").sync()
+    end,
+})

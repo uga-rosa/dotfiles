@@ -66,7 +66,7 @@ local opts = {
             map("n", "]d", "Lspsaga diagnostic_jump_prev", { "cmd", "buffer" })
             map("n", "<leader>x", "Lspsaga code_action", { "cmd", "buffer" })
             map("x", "<leader>x", "Lspsaga range_code_action", { "cmd", "buffer" })
-            map("n", "<leader>rn", "Lspsaga rename", { "cmd", "buffer" })
+            map("n", "<leader>n", "Lspsaga rename", { "cmd", "buffer" })
         end,
     },
 }

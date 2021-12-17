@@ -28,12 +28,13 @@ fzf.setup({
 local map = vim_api.map
 
 map("n", "<F1>", "FzfLua builtin", "cmd")
+map("n", "<leader>r", "FzfLua resume", "cmd")
 map("n", "<leader>f", "FzfLua files", "cmd")
 map("n", "<leader>b", "FzfLua buffers", "cmd")
 map("n", "<leader>o", "FzfLua oldfiles", "cmd")
 map("n", "<leader>h", "FzfLua help_tags", "cmd")
 map("n", "<leader>m", "FzfLua man_pages", "cmd")
-map("n", "<leader>rg", "FzfLua live_grep_resume", "cmd")
+map("n", "<leader>gr", "FzfLua live_grep", "cmd")
 map("n", "<leader>/", "FzfLua blines", "cmd")
 map("n", "<leader>gf", "FzfLua git_files", "cmd")
 map("n", "q:", "FzfLua command_history", "cmd")
