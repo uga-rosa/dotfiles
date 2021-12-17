@@ -172,19 +172,6 @@ return packer.startup({
             "simrat39/rust-tools.nvim",
             config = 'require("rust-tools").setup({})',
         })
-        -- yaml
-        use("pearofducks/ansible-vim")
-        -- SATySFi
-        use("qnighy/satysfi.vim")
-        -- nim
-        use({
-            "uga-rosa/nim.nvim",
-            config = "vim.g.nim_highlight_wait = true",
-        })
-        -- julia
-        use("uga-rosa/julia-vim")
-        -- markdown
-        use("uga-rosa/vim-markdown")
         -- markdown previewer
         use({
             "iamcco/markdown-preview.nvim",

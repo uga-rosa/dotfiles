@@ -120,7 +120,7 @@ cmp.setup({
             s = updown(1),
             c = function()
                 if cmp.visible() then
-                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
                 else
                     feedkey("<Down>")
                 end
@@ -131,7 +131,7 @@ cmp.setup({
             s = updown(-1),
             c = function()
                 if cmp.visible() then
-                    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+                    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
                 else
                     feedkey("<Up>")
                 end
