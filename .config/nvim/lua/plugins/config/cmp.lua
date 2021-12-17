@@ -1,4 +1,5 @@
 local cmp = require("cmp")
+local luasnip = require("luasnip")
 
 local lspkind = {
     Text = "",
@@ -27,6 +28,24 @@ local lspkind = {
     Operator = "",
     TypeParameter = "",
 }
+
+local function updown(dir)
+    return function(fallback)
+        if luasnip.choice_active() then
+            luasnip.change_choice(dir)
+        elseif cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+            fallback()
+        end
+    end
+end
+
+local function feedkey(key)
+    return function()
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), "n", true)
+    end
+end
 
 cmp.setup({
     snippet = {
@@ -95,6 +114,28 @@ cmp.setup({
         end, {
             "i",
             "c",
+        }),
+        ["<C-n>"] = cmp.mapping({
+            i = updown(1),
+            s = updown(1),
+            c = function()
+                if cmp.visible() then
+                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+                else
+                    feedkey("<Down>")
+                end
+            end,
+        }),
+        ["<C-p>"] = cmp.mapping({
+            i = updown(-1),
+            s = updown(-1),
+            c = function()
+                if cmp.visible() then
+                    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+                else
+                    feedkey("<Up>")
+                end
+            end,
         }),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
