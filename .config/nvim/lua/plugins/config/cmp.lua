@@ -34,7 +34,11 @@ local function updown(dir)
         if luasnip.choice_active() then
             luasnip.change_choice(dir)
         elseif cmp.visible() then
-            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+            if dir == 1 then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+            else
+                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+            end
         else
             fallback()
         end

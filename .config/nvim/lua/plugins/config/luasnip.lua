@@ -3,6 +3,11 @@ local map = vim_api.map
 map({ "i", "s" }, "<C-j>", "<Plug>luasnip-jump-next")
 map({ "i", "s" }, "<C-k>", "<Plug>luasnip-jump-prev")
 
+require("luasnip.loaders.from_vscode").load({
+    paths = {
+        "~/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    },
+})
 require("luasnip.loaders.from_snipmate").lazy_load()
 
 local current_nsid = vim.api.nvim_create_namespace("LuaSnipChoiceListSelections")
