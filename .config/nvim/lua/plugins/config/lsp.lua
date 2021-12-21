@@ -79,6 +79,8 @@ opts.sumneko_lua = require("lua-dev").setup({
     },
     lspconfig = opts.default,
 })
+-- disable completion snippet
+opts.sumneko_lua.settings.Lua.completion = nil
 
 opts.bashls = setmetatable({
     filetypes = { "sh", "zsh" },
