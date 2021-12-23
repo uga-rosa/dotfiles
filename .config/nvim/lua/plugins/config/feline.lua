@@ -1,20 +1,6 @@
 local f = vim.fn
 
-local icons = {
-    diagnostic = {
-        error = "  ",
-        warn = "  ",
-        hint = "  ",
-        info = "  ",
-    },
-    diff = {
-        added = " ",
-        changed = " ",
-        removed = " ",
-    },
-}
-
-local colors = {
+local theme = {
     bg = "#1d3b53",
     dark_blue = "#092236",
     cadet_blue = "#a1aab8",
@@ -34,90 +20,51 @@ local colors = {
     green = "#a1cd5e",
 }
 
-local mode_alias = {
-    ["n"] = "NORMAL",
-    ["no"] = "OP",
-    ["nov"] = "OP",
-    ["noV"] = "OP",
-    ["no"] = "OP",
-    ["niI"] = "NORMAL",
-    ["niR"] = "NORMAL",
-    ["niV"] = "NORMAL",
-    ["nt"] = "NORMAL",
-    ["v"] = "VISUAL",
-    ["V"] = "LINES",
-    [""] = "BLOCK",
-    ["s"] = "SELECT",
-    ["S"] = "SELECT",
-    [""] = "BLOCK",
-    ["i"] = "INSERT",
-    ["ic"] = "INSERT",
-    ["ix"] = "INSERT",
-    ["R"] = "REPLACE",
-    ["Rc"] = "REPLACE",
-    ["Rv"] = "V-REPLACE",
-    ["Rx"] = "REPLACE",
-    ["c"] = "COMMAND",
-    ["cv"] = "COMMAND",
-    ["ce"] = "COMMAND",
-    ["r"] = "ENTER",
-    ["rm"] = "MORE",
-    ["r?"] = "CONFIRM",
-    ["!"] = "SHELL",
-    ["t"] = "TERM",
-    ["null"] = "NONE",
-}
-
 local vi_mode_colors = {
-    NORMAL = colors.indigo,
-    OP = colors.indigo,
-    INSERT = colors.white_blue,
-    VISUAL = colors.purple,
-    BLOCK = colors.purple,
-    REPLACE = colors.watermelon,
-    ["V-REPLACE"] = colors.watermelon,
-    ENTER = colors.yellow,
-    MORE = colors.yellow,
-    SELECT = colors.watermelon,
-    COMMAND = colors.emerald,
-    SHELL = colors.emerald,
-    TERM = colors.emerald,
-    NONE = colors.yellow,
+    NORMAL = "indigo",
+    OP = "indigo",
+    INSERT = "white_blue",
+    VISUAL = "purple",
+    BLOCK = "purple",
+    REPLACE = "watermelon",
+    ["V-REPLACE"] = "watermelon",
+    ENTER = "yellow",
+    MORE = "yellow",
+    SELECT = "watermelon",
+    COMMAND = "emerald",
+    SHELL = "emerald",
+    TERM = "emerald",
+    NONE = "yellow",
 }
 
-local function get_vim_mode()
-    local mode = vim.api.nvim_get_mode().mode
-    if mode then
-        return mode_alias[mode]
-    end
-end
+local icons = {
+    diagnostic = {
+        error = "  ",
+        warn = "  ",
+        hint = "  ",
+        info = "  ",
+    },
+    diff = {
+        added = " ",
+        changed = " ",
+        removed = " ",
+    },
+}
 
-local function get_mode_color()
-    local mode = get_vim_mode()
-    if mode then
-        return vi_mode_colors[mode] or colors.bg
-    end
-end
-
-local scroll_bar_blocks = { "█", "▇", "▆", "▅", "▄", "▃", "▂", "▁", " " }
-
-local lsp = require("feline.providers.lsp")
+local vi_mode = require("feline.providers.vi_mode")
 local git = require("feline.providers.git")
 local devicons = require("nvim-web-devicons")
 
 local comps = {
     vi_mode = {
         provider = function()
-            local mode = get_vim_mode()
-            mode = mode or "TERM"
-            if mode then
-                return "  " .. mode .. " "
-            end
+            local mode = vi_mode.get_vim_mode()
+            return "  " .. mode .. " "
         end,
         hl = function()
             return {
-                fg = colors.dark_blue,
-                bg = get_mode_color(),
+                fg = "dark_blue",
+                bg = vi_mode.get_mode_color(),
             }
         end,
         right_sep = " ",
@@ -128,7 +75,7 @@ local comps = {
                 return f.expand("%:t")
             end,
             hl = {
-                fg = colors.purple,
+                fg = "purple",
                 style = "bold",
             },
         },
@@ -150,7 +97,7 @@ local comps = {
                 return f.expand("%:p")
             end,
             hl = {
-                fg = colors.emerald,
+                fg = "emerald",
             },
         },
     },
@@ -159,47 +106,35 @@ local comps = {
             provider = "lsp_client_names",
             icon = "  ",
             hl = {
-                fg = colors.emerald,
+                fg = "emerald",
             },
         },
         error = {
             provider = "diagnostic_errors",
             icon = icons.diagnostic.error,
-            enabled = function()
-                return lsp.diagnostics_exist("Error")
-            end,
             hl = {
-                fg = colors.red,
+                fg = "red",
             },
         },
         warn = {
             provider = "diagnostic_warnings",
             icon = icons.diagnostic.warn,
-            enabled = function()
-                return lsp.diagnostics_exist("Warning")
-            end,
             hl = {
-                fg = colors.yellow,
+                fg = "yellow",
             },
         },
         hint = {
             provider = "diagnostic_hints",
             icon = icons.diagnostic.hint,
-            enabled = function()
-                return lsp.diagnostics_exist("Hint")
-            end,
             hl = {
-                fg = colors.white_blue,
+                fg = "white_blue",
             },
         },
         info = {
             provider = "diagnostic_info",
             icon = icons.diagnostic.info,
-            enabled = function()
-                return lsp.diagnostics_exist("Information")
-            end,
             hl = {
-                fg = colors.blue,
+                fg = "blue",
             },
         },
     },
@@ -213,7 +148,7 @@ local comps = {
                 return git.git_branch(0) ~= ""
             end,
             hl = {
-                fg = colors.purple,
+                fg = "purple",
             },
         },
         diff = {
@@ -226,7 +161,7 @@ local comps = {
                     return git.git_diff_added(0) ~= ""
                 end,
                 hl = {
-                    fg = colors.green,
+                    fg = "green",
                 },
                 left_sep = " ",
             },
@@ -239,7 +174,7 @@ local comps = {
                     return git.git_diff_changed(0) ~= ""
                 end,
                 hl = {
-                    fg = colors.yellow,
+                    fg = "yellow",
                 },
                 left_sep = " ",
             },
@@ -252,7 +187,7 @@ local comps = {
                     return git.git_diff_removed(0) ~= ""
                 end,
                 hl = {
-                    fg = colors.red,
+                    fg = "red",
                 },
                 left_sep = " ",
             },
@@ -262,23 +197,18 @@ local comps = {
         pos_per = {
             provider = function()
                 local c = require("feline.providers.cursor")
-                return " " .. c.position() .. " " .. c.line_percentage() .. " "
+                return " " .. c.position(nil, {}) .. " " .. c.line_percentage() .. " "
             end,
             hl = {
-                fg = colors.bg,
-                bg = colors.emerald,
+                fg = "bg",
+                bg = "emerald",
             },
             left_sep = " ",
         },
         bar = {
-            provider = function()
-                local curr_line = vim.api.nvim_win_get_cursor(0)[1]
-                local lines = vim.api.nvim_buf_line_count(0)
-                return string.rep(scroll_bar_blocks[math.floor(curr_line / lines * 8) + 1], 2)
-            end,
+            provider = "scroll_bar",
             hl = {
-                fg = colors.bg,
-                bg = colors.emerald,
+                fg = "emerald",
             },
         },
     },
@@ -290,11 +220,11 @@ local components = {
 }
 
 function components.active_add(self, n, x)
-    self.active[n][#self.active[n] + 1] = x
+    table.insert(self.active[n], x)
 end
 
 function components.inactive_add(self, n, x)
-    self.inactive[n][#self.inactive[n] + 1] = x
+    table.insert(self.inactive[n], x)
 end
 
 components:active_add(1, comps.vi_mode)
@@ -314,7 +244,7 @@ components:active_add(3, comps.cursor.bar)
 components:inactive_add(1, comps.file.fullpath)
 
 require("feline").setup({
-    colors = { bg = colors.bg },
+    vi_mode_colors = vi_mode_colors,
     components = components,
     force_inactive = {
         filetypes = {
@@ -323,3 +253,5 @@ require("feline").setup({
         },
     },
 })
+
+require("feline").use_theme(theme)

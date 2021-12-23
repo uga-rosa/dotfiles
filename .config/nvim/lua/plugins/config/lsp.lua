@@ -75,7 +75,7 @@ opts.sumneko_lua = require("lua-dev").setup({
     library = {
         vimruntime = true,
         types = true,
-        plugins = { "plenary.nvim", "steelarray.nvim" },
+        plugins = { "plenary.nvim", "steelarray.nvim", "LuaSnip" },
     },
     lspconfig = opts.default,
 })
