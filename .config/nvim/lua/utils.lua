@@ -146,10 +146,33 @@ function vim_api.command(command)
     cmd("com! " .. command)
 end
 
+local function tbl_copy(t)
+    if type(t) ~= "table" then
+        return t
+    end
+    local ret = {}
+    for key, value in pairs(t) do
+        if type(value) == "table" then
+            ret[key] = tbl_copy(value)
+        else
+            ret[key] = value
+        end
+    end
+    return ret
+end
+
 ---Transforms ctx into a human readable representation.
 ---@vararg any
 _G.dump = function(...)
     for _, ctx in ipairs({ ... }) do
         print(vim.inspect(ctx))
+    end
+end
+
+---Ignore metatable
+---@vararg any
+function _G._dump(...)
+    for _, ctx in ipairs({ ... }) do
+        print(vim.inspect(tbl_copy(ctx)))
     end
 end

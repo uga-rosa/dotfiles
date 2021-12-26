@@ -2,6 +2,8 @@ snippet inc
 	$1 = $1 + 1
 snippet dec
 	$1 = $1 - 1
+snippet append
+	table.insert($1, $2)
 snippet req
 	require("${1:module}")
 snippet rt
@@ -12,5 +14,9 @@ snippet lreq
 	local ${1:var} = require("${2:module}")
 snippet lfun
 	local function $1($2)
-		$3
+		$0
+	end
+snippet fun
+	function $1($2)
+		$0
 	end

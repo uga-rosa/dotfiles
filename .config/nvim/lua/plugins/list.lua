@@ -61,6 +61,7 @@ return packer.startup({
         use({
             "L3MON4D3/LuaSnip",
             config = 'require("plugins.config.luasnip")',
+            -- branch = "better_argnodes",
         })
         -- templete
         use({
