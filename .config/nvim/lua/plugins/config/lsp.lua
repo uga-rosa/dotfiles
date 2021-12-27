@@ -1,4 +1,3 @@
-local lspconfig = require("lspconfig")
 local lspinstaller = require("nvim-lsp-installer")
 local array = require("steel.array")
 
@@ -42,14 +41,9 @@ require("lspsaga").setup({
 vim_api.command({
     "Format",
     function()
-        if vim.g.enable_format then
-            vim.lsp.buf.formatting_sync()
-        end
+        vim.lsp.buf.formatting_sync()
     end,
 })
-vim.cmd("command! FormatOn let g:enable_format=v:true")
-vim.cmd("command! FormatOff let g:enable_format=v:false")
-vim.g.enable_format = true
 
 -- LSP setting
 local opts = {
@@ -122,18 +116,3 @@ command({
         end
     end,
 })
-
--- Nim (manual installed)
-opts.nimls = setmetatable({
-    settings = {
-        nim = {
-            nimprettyMaxLineLen = 120,
-        },
-    },
-}, {
-    __index = opts.default,
-})
-lspconfig.nimls.setup(opts.nimls)
-
--- Julia (manual installed)
-lspconfig.julials.setup(opts.default)
