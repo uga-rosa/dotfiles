@@ -188,8 +188,7 @@ return packer.startup({
         use({ "uga-rosa/steelarray.nvim" })
         -- util search
         use({
-            "VonHeikemen/searchbox.nvim",
-            requires = "MunifTanjim/nui.nvim",
+            "hrsh7th/vim-seak",
             config = 'require("plugins.config.other").search()',
         })
         -- quickfix

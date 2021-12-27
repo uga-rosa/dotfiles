@@ -88,9 +88,11 @@ function M.translate()
 end
 
 function M.search()
-    map("n", "<leader>/", 'lua require("searchbox").incsearch()', "cmd")
-    map("x", "<leader>/", 'lua require("searchbox").incsearch()', "cmd")
-    map("n", "<leader>s", 'lua require("searchbox").replace()', "cmd")
+    vim.cmd("highlight link SeakChar Visual")
+    vim.g.seak_enabled = true
+    map("c", "<C-j>", function()
+        vim.fn["seak#select"]({ nohlsearch = true })
+    end)
 end
 
 return M

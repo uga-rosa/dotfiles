@@ -14,19 +14,3 @@ local rep = ex.rep
 local function copy(args)
     return args[1][1]
 end
-
-ls.snippets = {
-    all = {
-        s("paren_change", {
-            c(1, {
-                sn(nil, { t("("), r(1, "user"), t(")") }),
-                sn(nil, { t("{"), r(1, "user"), t("}") }),
-                sn(nil, { t("["), r(1, "user"), t("]") }),
-            }, {
-                stored = {
-                    user = i(1, "default"),
-                },
-            }),
-        }),
-    },
-}
