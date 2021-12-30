@@ -1,10 +1,10 @@
 local null = require("null-ls")
 local b = null.builtins
-local h = require("null-ls.helpers")
 
 null.setup({
     sources = {
-        h.conditional(function(utils)
+        function()
+            local utils = require("null-ls.utils").make_conditional_utils()
             if utils.root_has_file("stylua.toml") then
                 return b.formatting.stylua
             elseif utils.root_has_file(".stylua.toml") then
@@ -16,7 +16,7 @@ null.setup({
                     extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml") },
                 })
             end
-        end),
+        end,
         b.formatting.shfmt.with({
             extra_args = { "-ci", "-s", "-bn", "-i", "4" },
         }),

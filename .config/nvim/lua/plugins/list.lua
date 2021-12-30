@@ -61,7 +61,7 @@ return packer.startup({
         use({
             "L3MON4D3/LuaSnip",
             config = 'require("plugins.config.luasnip")',
-            -- branch = "better_argnodes",
+            branch = "better_argnodes",
         })
         -- templete
         use({
@@ -188,7 +188,7 @@ return packer.startup({
         use({ "uga-rosa/steelarray.nvim" })
         -- util search
         use({
-            "hrsh7th/vim-seak",
+            "hrsh7th/vim-searchx",
             config = 'require("plugins.config.other").search()',
         })
         -- quickfix

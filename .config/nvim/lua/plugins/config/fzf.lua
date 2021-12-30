@@ -1,4 +1,5 @@
 local fzf = require("fzf-lua")
+local actions = require("fzf-lua.actions")
 
 fzf.setup({
     keymap = {
@@ -23,6 +24,16 @@ fzf.setup({
         },
     },
     file_icon_padding = " ",
+    files = {
+        actions = {
+            ["ctrl-x"] = actions.file_split,
+        },
+    },
+    git = {
+        actions = {
+            ["ctrl-x"] = actions.file_split,
+        },
+    },
 })
 
 local map = vim_api.map
