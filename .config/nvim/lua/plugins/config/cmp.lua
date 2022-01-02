@@ -188,7 +188,8 @@ cmp.setup.cmdline(":", {
 
 require("cmp_dictionary").setup({
     dic = {
-        ["*"] = "/usr/share/dict/words",
+        ["*"] = { "/usr/share/dict/words", "~/dotfiles/doc/vim_dictionary" },
         ["markdown,txt"] = "~/dotfiles/doc/vim_dictionary",
     },
+    exact = 2,
 })

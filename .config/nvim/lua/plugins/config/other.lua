@@ -2,7 +2,7 @@ local M = {}
 
 local map = vim_api.map
 
-M.luatab = function()
+function M.luatab()
     require("luatab").setup({})
     map("n", "<M-1>", "1gt", "noremap")
     map("n", "<M-2>", "2gt", "noremap")
@@ -20,20 +20,20 @@ M.luatab = function()
     map("n", "<M-c>", { "w", "tabclose" }, "cmd")
 end
 
-M.lazygit = function()
+function M.lazygit()
     vim.g.lazygit_floating_window_use_plenary = true
     map("n", "<leader>l", "LazyGit", "cmd")
 end
 
-M.easyalign = function()
+function M.easyalign()
     map({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
 end
 
-M.operator_replace = function()
+function M.operator_replace()
     map("n", "q", "<Plug>(operator-replace)")
 end
 
-M.textobj = function()
+function M.textobj()
     vim.fn["textobj#user#plugin"]("formula", {
         ["dollar-a"] = {
             pattern = [[\$.\{-}\$]],
@@ -46,18 +46,18 @@ M.textobj = function()
     })
 end
 
-M.openbrowser = function()
+function M.openbrowser()
     map({ "n", "x" }, "<M-o>", "<Plug>(openbrowser-smart-search)")
     vim.g.openbrowser_browser_commands = {
         { name = "chrome.exe", args = { "{browser}", "{uri}" } },
     }
 end
 
-M.sandwich = function()
+function M.sandwich()
     vim.cmd([[runtime macros/sandwich/keymap/surround.vim]])
 end
 
-M.filittle = function()
+function M.filittle()
     require("nvim-web-devicons").set_icon({
         nim = {
             icon = "",
@@ -67,7 +67,7 @@ M.filittle = function()
     })
 end
 
-M.eft = function()
+function M.eft()
     map({ "n", "x" }, ";", "<Plug>(eft-repeat)")
     map({ "n", "x", "o" }, "f", "<Plug>(eft-f)")
     map({ "n", "x", "o" }, "F", "<Plug>(eft-F)")
@@ -76,7 +76,7 @@ M.eft = function()
     vim.cmd("let g:eft_index_function = {'all': { -> v:true}}")
 end
 
-M.mkdp = function()
+function M.mkdp()
     vim.g.mkdp_refresh_slow = 1
     map("n", "<leader>p", "MarkdownPreview", "cmd")
 end
@@ -88,11 +88,17 @@ function M.translate()
 end
 
 function M.search()
-    vim.cmd("highlight link SeakChar Visual")
-    vim.g.seak_enabled = true
-    map("c", "<C-j>", function()
-        vim.fn["seak#select"]({ nohlsearch = true })
-    end)
+    map({ "n", "x" }, "/", "call searchx#start( {'dir': 0 })", "cmd")
+    map({ "n", "x" }, "?", "call searchx#start( {'dir': 1 } )", "cmd")
+    map({ "n", "x" }, "n", "call searchx#next()", "cmd")
+    map({ "n", "x" }, "N", "call searchx#prev()", "cmd")
+    map("c", "<C-j>", "call searchx#next()", "cmd")
+    map("c", "<C-k>", "call searchx#prev()", "cmd")
+    map({ "n", "c" }, "<C-l>", "call searchx#clear()", "cmd")
+    vim.g.searchx = {
+        auto_accept = true,
+        markers = vim.split("ASDFGHJKL;QWERTYUIOP", ""),
+    }
 end
 
 return M
