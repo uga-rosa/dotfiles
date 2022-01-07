@@ -1,19 +1,23 @@
 local map = vim_api.map
-local map_conv = vim_api.map_conv
+local command = vim.api.nvim_add_user_command
 
 vim.g.mapleader = " "
 
-map("n", "O", function(fallback)
+local function feedkey(key)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), "n", true)
+end
+
+map("n", "O", function()
     vim.cmd("normal zz")
-    fallback()
+    feedkey("O")
 end)
 
-map("n", "o", function(fallback)
+map("n", "o", function()
     vim.cmd("normal zz")
-    fallback()
+    feedkey("o")
 end)
 
-map("n", "<esc><esc>", "nohlsearch", { "noremap", "cmd" })
+map("n", "<esc><esc>", "<cmd>nohlsearch<cr>", "noremap")
 map("n", "<leader><cr>", "o<esc>", "noremap")
 
 map("n", "Q", "q", "noremap")
@@ -32,8 +36,10 @@ map("n", "s", '"_s', "noremap")
 map({ "n", "x", "o" }, "H", "^", "noremap")
 map({ "n", "x", "o" }, "L", "$", "noremap")
 
-map_conv("n", "j", "gj", "noremap")
-map_conv("n", "k", "gk", "noremap")
+map("n", "j", "gj", "noremap")
+map("n", "gj", "j", "noremap")
+map("n", "k", "gk", "noremap")
+map("n", "gk", "k", "noremap")
 
 map({ "i", "c" }, "<C-f>", "<right>", "noremap")
 map({ "i", "c" }, "<C-b>", "<left>", "noremap")
@@ -52,17 +58,14 @@ silent! command PackerStatus lua require('plugins.list') require('packer').statu
 silent! command PackerUpdate lua require('plugins.list') require('packer').update()
 ]])
 
-vim_api.command({
-    "PackerSync",
-    function()
-        local bufname = vim.api.nvim_buf_get_name(0)
-        local buftype = vim.api.nvim_buf_get_option(0, "buftype")
-        local readonly = vim.api.nvim_buf_get_option(0, "readonly")
-        if bufname ~= "" and buftype == "" and not readonly then
-            vim.cmd("w")
-        end
-        vim.cmd("so " .. vim.fn.stdpath("config") .. "/lua/plugins/list.lua")
-        require("plugins.list")
-        require("packer").sync()
-    end,
-})
+command("PackerSync", function()
+    local bufname = vim.api.nvim_buf_get_name(0)
+    local buftype = vim.api.nvim_buf_get_option(0, "buftype")
+    local readonly = vim.api.nvim_buf_get_option(0, "readonly")
+    if bufname ~= "" and buftype == "" and not readonly then
+        vim.cmd("w")
+    end
+    vim.cmd("so " .. vim.fn.stdpath("config") .. "/lua/plugins/list.lua")
+    require("plugins.list")
+    require("packer").sync()
+end, {})

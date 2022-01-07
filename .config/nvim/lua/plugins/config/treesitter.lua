@@ -39,8 +39,8 @@ require("nvim-treesitter.configs").setup({
 
 map("x", "iu", ':lua require("treesitter-unit").select()<cr>', "noremap")
 map("x", "au", ':lua require("treesitter-unit").select(true)<cr>', "noremap")
-map("o", "iu", 'lua require("treesitter-unit").select()', { "noremap", "cmd" })
-map("o", "au", 'lua require("treesitter-unit").select(true)', { "noremap", "cmd" })
+map("o", "iu", '<cmd>lua require("treesitter-unit").select()<cr>', "noremap")
+map("o", "au", '<cmd>lua require("treesitter-unit").select(true)<cr>', "noremap")
 
 local tsunit = require("treesitter-unit")
 

@@ -54,14 +54,13 @@ return packer.startup({
         })
         -- auto close parentheses
         use({
-            "windwp/nvim-autopairs",
-            config = 'require("plugins.config.autopairs")',
+            "cohama/lexima.vim",
+            config = 'require("plugins.config.lexima")',
         })
         -- snippet engine
         use({
             "L3MON4D3/LuaSnip",
             config = 'require("plugins.config.luasnip")',
-            branch = "better_argnodes",
         })
         -- templete
         use({
@@ -93,7 +92,6 @@ return packer.startup({
         use({
             "ibhagwan/fzf-lua",
             requires = {
-                "vijaymarupudi/nvim-fzf",
                 "kyazdani42/nvim-web-devicons",
             },
             config = 'require("plugins.config.fzf")',
@@ -134,10 +132,6 @@ return packer.startup({
         -- easy align
         use({
             "junegunn/vim-easy-align",
-            keys = {
-                { "n", "<Plug>(EasyAlign)" },
-                { "x", "<Plug>(EasyAlign)" },
-            },
             setup = 'require("plugins.config.other").easyalign()',
         })
         -- operator replace
@@ -184,8 +178,6 @@ return packer.startup({
             "uga-rosa/translate-shell.nvim",
             config = 'require("plugins.config.other").translate()',
         })
-        -- useful functions
-        use({ "uga-rosa/steelarray.nvim" })
         -- util search
         use({
             "hrsh7th/vim-searchx",

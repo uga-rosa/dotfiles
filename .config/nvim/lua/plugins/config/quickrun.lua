@@ -9,7 +9,7 @@ vim.g.quickrun_config = {
     },
 }
 
-vim_api.map("n", "@r", "QuickRun", "cmd")
+vim_api.map("n", "@r", "<cmd>QuickRun<cr>")
 vim_api.augroup({
     quickrun_quit = { "BufEnter", "quickrun://output", "nnoremap <buffer><nowait> q <cmd>q<cr>" },
 })

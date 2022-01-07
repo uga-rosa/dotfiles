@@ -13,16 +13,16 @@ function M.luatab()
     map("n", "<M-7>", "7gt", "noremap")
     map("n", "<M-8>", "8gt", "noremap")
     map("n", "<M-9>", "9gt", "noremap")
-    map("n", "<M-p>", "tabprevious", "cmd")
-    map("n", "<M-n>", "tabnext", "cmd")
-    map("n", "<M-h>", "tabfirst", "cmd")
-    map("n", "<M-l>", "tablast", "cmd")
-    map("n", "<M-c>", { "w", "tabclose" }, "cmd")
+    map("n", "<M-p>", "<cmd>tabprevious<cr>")
+    map("n", "<M-n>", "<cmd>tabnext<cr>")
+    map("n", "<M-h>", "<cmd>tabfirst<cr>")
+    map("n", "<M-l>", "<cmd>tablast<cr>")
+    map("n", "<M-c>", "<cmd>w<cr><cmd>tabclose<cr>")
 end
 
 function M.lazygit()
     vim.g.lazygit_floating_window_use_plenary = true
-    map("n", "<leader>l", "LazyGit", "cmd")
+    map("n", "<leader>l", "<cmd>LazyGit<cr>")
 end
 
 function M.easyalign()
@@ -78,7 +78,7 @@ end
 
 function M.mkdp()
     vim.g.mkdp_refresh_slow = 1
-    map("n", "<leader>p", "MarkdownPreview", "cmd")
+    map("n", "<leader>p", "MarkdownPreview")
 end
 
 function M.translate()
@@ -88,13 +88,13 @@ function M.translate()
 end
 
 function M.search()
-    map({ "n", "x" }, "/", "call searchx#start( {'dir': 0 })", "cmd")
-    map({ "n", "x" }, "?", "call searchx#start( {'dir': 1 } )", "cmd")
-    map({ "n", "x" }, "n", "call searchx#next()", "cmd")
-    map({ "n", "x" }, "N", "call searchx#prev()", "cmd")
-    map("c", "<C-j>", "call searchx#next()", "cmd")
-    map("c", "<C-k>", "call searchx#prev()", "cmd")
-    map({ "n", "c" }, "<C-l>", "call searchx#clear()", "cmd")
+    map({ "n", "x" }, "/", "<cmd>call searchx#start( {'dir': 0 })<cr>")
+    map({ "n", "x" }, "?", "<cmd>call searchx#start( {'dir': 1 } )<cr>")
+    map({ "n", "x" }, "n", "<cmd>call searchx#next()<cr>")
+    map({ "n", "x" }, "N", "<cmd>call searchx#prev()<cr>")
+    map("c", "<C-j>", "<cmd>call searchx#next()<cr>")
+    map("c", "<C-k>", "<cmd>call searchx#prev()<cr>")
+    map({ "n", "c" }, "<C-l>", "<cmd>call searchx#clear()<cr>")
     vim.g.searchx = {
         auto_accept = true,
         markers = vim.split("ASDFGHJKL;QWERTYUIOP", ""),

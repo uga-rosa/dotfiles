@@ -1,9 +1,8 @@
 local lspinstaller = require("nvim-lsp-installer")
-local array = require("steel.array")
 
-local augroup = vim_api.augroup
-local command = vim_api.command
 local map = vim_api.map
+local augroup = vim_api.augroup
+local command = vim.api.nvim_add_user_command
 
 -- lspinfo close
 augroup({
@@ -38,12 +37,7 @@ require("lspsaga").setup({
 })
 
 -- format command
-vim_api.command({
-    "Format",
-    function()
-        vim.lsp.buf.formatting_sync()
-    end,
-})
+command("Format", vim.lsp.buf.formatting_sync, {})
 
 -- LSP setting
 local opts = {
@@ -53,14 +47,14 @@ local opts = {
             -- auto formatting
             vim_api.augroup({ format = { "BufWritePre", "<buffer>", "Format" } })
             -- lspsaga
-            map("n", "K", "Lspsaga hover_doc", { "cmd", "buffer" })
-            map("n", "<C-f>", "lua require'lspsaga.action'.smart_scroll_with_saga(1)", { "cmd", "buffer" })
-            map("n", "<C-b>", "lua require'lspsaga.action'.smart_scroll_with_saga(-1)", { "cmd", "buffer" })
-            map("n", "[d", "Lspsaga diagnostic_jump_next", { "cmd", "buffer" })
-            map("n", "]d", "Lspsaga diagnostic_jump_prev", { "cmd", "buffer" })
-            map("n", "<leader>x", "Lspsaga code_action", { "cmd", "buffer" })
-            map("x", "<leader>x", "Lspsaga range_code_action", { "cmd", "buffer" })
-            map("n", "<leader>n", "Lspsaga rename", { "cmd", "buffer" })
+            map("n", "K", "<cmd>Lspsaga hover_doc<cr>", "buffer")
+            map("n", "<C-f>", "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<cr>", "buffer")
+            map("n", "<C-b>", "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<cr>", "buffer")
+            map("n", "[d", "<cmd>Lspsaga diagnostic_jump_next<cr>", "buffer")
+            map("n", "]d", "<cmd>Lspsaga diagnostic_jump_prev<cr>", "buffer")
+            map("n", "<leader>x", "<cmd>Lspsaga code_action<cr>", "buffer")
+            map("x", "<leader>x", "<cmd>Lspsaga range_code_action<cr>", "buffer")
+            map("n", "<leader>n", "<cmd>Lspsaga rename<cr>", "buffer")
         end,
     },
 }
@@ -69,7 +63,7 @@ opts.sumneko_lua = require("lua-dev").setup({
     library = {
         vimruntime = true,
         types = true,
-        plugins = { "plenary.nvim", "steelarray.nvim", "LuaSnip" },
+        plugins = { "plenary.nvim", "LuaSnip" },
     },
     lspconfig = opts.default,
 })
@@ -81,24 +75,25 @@ opts.bashls = setmetatable({
 }, { __index = opts.default })
 
 -- automatically install
-local installed = array.map(lspinstaller.get_installed_servers(), function(server)
-    return server.name
-end)
-
-array.new({
+local servers = {
     "sumneko_lua",
     "gopls",
     "pyright",
     "bashls",
     "rust_analyzer",
     "vimls",
-})
-    :filter(function(server)
-        return not installed:contains(server)
-    end)
-    :foreach(function(server)
+}
+
+local installed = {}
+for _, server in ipairs(lspinstaller.get_installed_servers()) do
+    installed[server.name] = true
+end
+
+for _, server in ipairs(servers) do
+    if not installed[server] then
         lspinstaller.install(server)
-    end)
+    end
+end
 
 -- setup
 lspinstaller.on_server_ready(function(server)
@@ -108,11 +103,8 @@ lspinstaller.on_server_ready(function(server)
 end)
 
 -- update command
-command({
-    "LspUpdateAll",
-    function()
-        for _, server in ipairs(lspinstaller.get_installed_servers()) do
-            lspinstaller.install(server.name)
-        end
-    end,
-})
+command("LspUpdateAll", function()
+    for _, server in ipairs(lspinstaller.get_installed_servers()) do
+        lspinstaller.install(server.name)
+    end
+end, {})
