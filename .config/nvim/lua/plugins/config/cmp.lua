@@ -1,5 +1,6 @@
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+local feedkey = utils.feedkey
 
 local lspkind = {
     Text = "",
@@ -30,7 +31,7 @@ local lspkind = {
 }
 
 local function updown(dir)
-    return function(fallback)
+    return function()
         if luasnip.choice_active() then
             luasnip.change_choice(dir)
         elseif cmp.visible() then
@@ -40,21 +41,19 @@ local function updown(dir)
                 cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
             end
         else
-            fallback()
+            if dir == 1 then
+                feedkey("<C-n>")
+            else
+                feedkey("<C-p>")
+            end
         end
-    end
-end
-
-local function feedkey(key)
-    return function()
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), "n", true)
     end
 end
 
 cmp.setup({
     snippet = {
         expand = function(args)
-            require("luasnip").lsp_expand(args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     preselect = cmp.PreselectMode.None,
@@ -192,3 +191,35 @@ require("cmp_dictionary").setup({
     },
     exact = 2,
 })
+
+cmp.event:on("confirm_done", function(evt)
+    local opt = {
+        map_char = { tex = "" },
+        kinds = {
+            cmp.lsp.CompletionItemKind.Method,
+            cmp.lsp.CompletionItemKind.Function,
+        },
+    }
+
+    local entry = evt.entry
+    local line = utils.get_current_line()
+    local _, col = utils.get_cursor()
+    local prev_char = line:sub(col, col)
+    local next_char = line:sub(col + 1, col + 1)
+    local item = entry:get_completion_item()
+
+    local char = opt.map_char[vim.bo.filetype] or "("
+
+    if
+        char == ""
+        or prev_char == char
+        or next_char == char
+        or (not vim.tbl_contains(opt.kinds, item.kind))
+        or (item.textEdit and item.textEdit.newText and item.textEdit.newText:match("[%(%[]"))
+        or (item.insertText and item.insertText:match("[%(%[]"))
+    then
+        return
+    end
+
+    feedkey(char, "i")
+end)

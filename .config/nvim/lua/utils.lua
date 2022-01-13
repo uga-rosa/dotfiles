@@ -1,6 +1,8 @@
 local cmd = vim.cmd
+local api = vim.api
 
 _G.vim_api = {}
+_G.utils = {}
 
 vim_api.func = setmetatable({}, {
     __call = function(self, num)
@@ -60,14 +62,28 @@ function vim_api.augroup(augroups)
     end
 end
 
-function vim_api.feedkey(key, mode)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode or "n", true)
-end
-
 ---Transforms ctx into a human readable representation.
 ---@vararg any
 function _G.dump(...)
     for _, ctx in ipairs({ ... }) do
         print(vim.inspect(ctx))
     end
+end
+
+function utils.feedkey(key, mode)
+    api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode or "n", true)
+end
+
+function utils.get_cursor(bufnr)
+    local row, col = unpack(api.nvim_win_get_cursor(bufnr or 0))
+    return row - 1, col
+end
+
+function utils.get_line(bufnr, lnum)
+    return api.nvim_buf_get_lines(bufnr or 0, lnum, lnum + 1, false)[1] or ""
+end
+
+function utils.get_current_line(bufnr)
+    local row = unpack(api.nvim_win_get_cursor(0)) or 1
+    return utils.get_line(bufnr, row - 1)
 end

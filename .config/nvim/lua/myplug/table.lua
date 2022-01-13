@@ -4,7 +4,7 @@ local fn = vim.fn
 local api = vim.api
 
 local map = vim_api.map
-local feedkey = vim_api.feedkey
+local feedkey = utils.feedkey
 local augroup = vim_api.augroup
 local command = vim.api.nvim_add_user_command
 

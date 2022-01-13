@@ -88,8 +88,8 @@ function M.translate()
 end
 
 function M.search()
-    map({ "n", "x" }, "/", "<cmd>call searchx#start( {'dir': 0 })<cr>")
-    map({ "n", "x" }, "?", "<cmd>call searchx#start( {'dir': 1 } )<cr>")
+    map({ "n", "x" }, "/", "<cmd>call searchx#start( {'dir': 1 })<cr>")
+    map({ "n", "x" }, "?", "<cmd>call searchx#start( {'dir': 0 } )<cr>")
     map({ "n", "x" }, "n", "<cmd>call searchx#next()<cr>")
     map({ "n", "x" }, "N", "<cmd>call searchx#prev()<cr>")
     map("c", "<C-j>", "<cmd>call searchx#next()<cr>")

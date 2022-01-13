@@ -1,6 +1,6 @@
 local M = {}
 
-local feedkey = vim_api.feedkey
+local feedkey = utils.feedkey
 
 local flag = false
 
