@@ -37,16 +37,16 @@ require("nvim-treesitter.configs").setup({
     },
 })
 
-map("x", "iu", ':lua require("treesitter-unit").select()<cr>', "noremap")
-map("x", "au", ':lua require("treesitter-unit").select(true)<cr>', "noremap")
-map("o", "iu", '<cmd>lua require("treesitter-unit").select()<cr>', "noremap")
-map("o", "au", '<cmd>lua require("treesitter-unit").select(true)<cr>', "noremap")
+map("x", "iu", ':lua require("treesitter-unit").select()<cr>')
+map("x", "au", ':lua require("treesitter-unit").select(true)<cr>')
+map("o", "iu", '<cmd>lua require("treesitter-unit").select()<cr>')
+map("o", "au", '<cmd>lua require("treesitter-unit").select(true)<cr>')
 
 local tsunit = require("treesitter-unit")
 
 local operators = { "c", "d", "y", "=", "<", ">" }
 for _, o in ipairs(operators) do
-    map("n", o, '<cmd>lua require("treesitter-unit").enable_highlighting()<cr>' .. o, "noremap")
+    map("n", o, '<cmd>lua require("treesitter-unit").enable_highlighting()<cr>' .. o)
 end
 
 augroup({ tsunit = { "CursorMoved", "*", tsunit.disable_highlighting } })

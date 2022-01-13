@@ -1,4 +1,3 @@
-local api = vim.api
 local cmd = vim.cmd
 
 _G.vim_api = {}
@@ -59,6 +58,10 @@ function vim_api.augroup(augroups)
         end
         cmd("augroup END")
     end
+end
+
+function vim_api.feedkey(key, mode)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode or "n", true)
 end
 
 ---Transforms ctx into a human readable representation.

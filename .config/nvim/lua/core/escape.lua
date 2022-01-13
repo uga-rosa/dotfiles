@@ -20,14 +20,14 @@ function M.escape()
     if insert_char == "j" then
         if flag then
             vim.v.char = ""
-            feedkey("<bs><esc>", "n")
+            feedkey("<BS><Esc>", "n")
         else
             time_count()
         end
     elseif insert_char == "k" then
         if flag then
             vim.v.char = ""
-            feedkey("<bs><esc>", "n")
+            feedkey("<BS><Esc>", "n")
         end
     end
 end

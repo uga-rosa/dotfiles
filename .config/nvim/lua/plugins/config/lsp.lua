@@ -27,11 +27,11 @@ require("lspsaga").setup({
         enable = false,
     },
     code_action_keys = {
-        quit = { "<C-c>", "<esc>", "q" },
+        quit = { "<C-c>", "<Esc>", "q" },
         exec = "<cr>",
     },
     rename_action_keys = {
-        quit = { "<C-c>", "<esc>" },
+        quit = { "<C-c>", "<Esc>" },
         exec = "<cr>",
     },
 })

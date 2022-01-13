@@ -17,38 +17,39 @@ map("n", "o", function()
     feedkey("o")
 end)
 
-map("n", "<esc><esc>", "<cmd>nohlsearch<cr>", "noremap")
-map("n", "<leader><cr>", "o<esc>", "noremap")
+map("n", "<Esc><Esc>", "<cmd>nohlsearch<cr>")
+map("n", "<leader><cr>", "o<Esc>")
 
-map("n", "Q", "q", "noremap")
+map("n", "Q", "q")
 
-map("v", "<", "<gv", "noremap")
-map("v", ">", ">gv", "noremap")
+map("v", "<", "<gv")
+map("v", ">", ">gv")
 
-map("n", "+", "<C-a>", "noremap")
-map("n", "-", "<C-x>", "noremap")
+map("n", "+", "<C-a>")
+map("n", "-", "<C-x>")
 
-map("n", "Y", "y$", "noremap")
+map("n", "Y", "y$")
 
-map("n", "x", '"_x', "noremap")
-map("n", "s", '"_s', "noremap")
+map("n", "x", '"_x')
+map("n", "s", '"_s')
 
-map({ "n", "x", "o" }, "H", "^", "noremap")
-map({ "n", "x", "o" }, "L", "$", "noremap")
+map({ "n", "x", "o" }, "H", "^")
+map({ "n", "x", "o" }, "L", "$")
 
-map("n", "j", "gj", "noremap")
-map("n", "gj", "j", "noremap")
-map("n", "k", "gk", "noremap")
-map("n", "gk", "k", "noremap")
+map("n", "j", "gj")
+map("n", "gj", "j")
+map("n", "k", "gk")
+map("n", "gk", "k")
 
-map({ "i", "c" }, "<C-f>", "<right>", "noremap")
-map({ "i", "c" }, "<C-b>", "<left>", "noremap")
-map({ "i", "c" }, "<C-d>", "<delete>", "noremap")
-map("c", "<C-a>", "<home>", "noremap")
-map("c", "<C-e>", "<end>", "noremap")
-map("c", "<C-x>", [[expand('%:p')]], { "noremap", "expr" })
+map({ "i", "c" }, "<C-f>", "<C-g>U<Right>")
+map({ "i", "c" }, "<C-b>", "<C-g>U<Left>")
+map({ "i", "c" }, "<C-d>", "<Del>")
+map({ "i", "c" }, "<C-h>", "<BS>", { remap = true })
+map("c", "<C-a>", "<Home>")
+map("c", "<C-e>", "<End>")
+map("c", "<C-x>", [[expand('%:p')]], "expr")
 
-map("i", "<C-g>", "<C-d>", "noremap")
+map("i", "<C-g>", "<C-d>")
 
 -- packer.nvim
 vim.cmd([[

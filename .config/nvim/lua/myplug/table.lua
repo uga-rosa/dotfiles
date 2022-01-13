@@ -4,13 +4,14 @@ local fn = vim.fn
 local api = vim.api
 
 local map = vim_api.map
-local command = vim_api.command
+local feedkey = vim_api.feedkey
 local augroup = vim_api.augroup
+local command = vim.api.nvim_add_user_command
 
 local sep = "|"
 
-M.make = function(...)
-    local args = { ... }
+M.make = function(o)
+    local args = vim.split(o.args, " ")
 
     local line, col = (function()
         if #args == 2 then
@@ -108,8 +109,8 @@ local function ljust(str, num, is_boundary)
     end
 end
 
-M.format = function(line1, line2)
-    local first, last = line1, line2
+M.format = function(o)
+    local first, last = o.line1, o.line2
 
     local tables = api.nvim_buf_get_lines(0, first - 1, last, true)
     local tbl_list = {}
@@ -137,26 +138,26 @@ M.format = function(line1, line2)
 end
 
 M.mapping = function()
-    map("i", "<tab>", function(fallback)
+    map("i", "<tab>", function()
         if fn.getline("."):match(sep) then
             M.jump(1)
         else
-            fallback()
+            feedkey("<tab>")
         end
     end, "buffer")
 
-    map("i", "<S-tab>", function(fallback)
+    map("i", "<S-tab>", function()
         if fn.getline("."):match(sep) then
             M.jump(-1)
         else
-            fallback()
+            feedkey("<S-tab>")
         end
     end, "buffer")
 end
 
 M.setup = function()
-    command({ "-nargs=*", "TableMake", M.make })
-    command({ "-range", "TableFormat", 'lua require("myplug.table").format(<line1>, <line2>)' })
+    command("TableMake", M.make, { nargs = "*" })
+    command("TableFormat", M.format, { range = true })
     M.mapping()
     augroup({
         table = {
