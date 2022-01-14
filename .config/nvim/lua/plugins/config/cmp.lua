@@ -107,7 +107,6 @@ cmp.setup({
         },
     },
     mapping = {
-        ["<C-e>"] = cmp.config.disable,
         ["<C-space>"] = cmp.mapping(function()
             if cmp.visible() then
                 cmp.close()
