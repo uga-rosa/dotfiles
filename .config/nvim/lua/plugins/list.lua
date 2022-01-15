@@ -55,7 +55,6 @@ return packer.startup({
         -- auto close parentheses
         use({
             "cohama/lexima.vim",
-            after = "hrsh7th/nvim-cmp",
             config = 'require("plugins.config.lexima")',
         })
         -- snippet engine
