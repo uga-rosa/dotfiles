@@ -189,7 +189,24 @@ require("cmp_dictionary").setup({
         ["*"] = "/usr/share/dict/words",
     },
     exact = 2,
+    first_case_insensitive = true,
 })
+
+local api = vim.api
+
+local function get_cursor(bufnr)
+    local row, col = unpack(api.nvim_win_get_cursor(bufnr or 0))
+    return row - 1, col
+end
+
+local function get_line(bufnr, lnum)
+    return api.nvim_buf_get_lines(bufnr or 0, lnum, lnum + 1, false)[1] or ""
+end
+
+local function get_current_line(bufnr)
+    local row = unpack(api.nvim_win_get_cursor(0)) or 1
+    return get_line(bufnr, row - 1)
+end
 
 cmp.event:on("confirm_done", function(evt)
     local opt = {
@@ -201,8 +218,8 @@ cmp.event:on("confirm_done", function(evt)
     }
 
     local entry = evt.entry
-    local line = utils.get_current_line()
-    local _, col = utils.get_cursor()
+    local line = get_current_line()
+    local _, col = get_cursor()
     local prev_char = line:sub(col, col)
     local next_char = line:sub(col + 1, col + 1)
     local item = entry:get_completion_item()
