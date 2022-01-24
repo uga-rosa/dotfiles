@@ -1,25 +1,24 @@
-# zplug
-if [[ ! -d ~/.zplug ]]; then
-    curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+# zgen
+if [[ ! -e ~/.zgen ]]; then
+    git clone https://github.com/tarjoilija/zgen.git ~/.zgen
 fi
-source ~/.zplug/init.zsh
+source ~/.zgen/zgen.zsh
 
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-zplug "woefe/git-prompt.zsh"
-zplug "mafredri/zsh-async"
-zplug "sindresorhus/pure", use:pure.zsh, as:theme
-
-# automatically install
-if ! zplug check --verbose; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+if ! zgen saved; then
+    zgen load zsh-users/zsh-syntax-highlighting
+    zgen load zsh-users/zsh-autosuggestions
+    zgen load zsh-users/zsh-completions
+    zgen load woefe/git-prompt.zsh
+    zgen load mafredri/zsh-async
+    zgen load sindresorhus/pure . main
+    zgen save
 fi
 
-zplug load
+# theme
+autoload -U promptinit; promptinit
+zstyle ':prompt:pure:prompt:success' color green
+zstyle ':prompt:pure:git:branch' color '#ae81ff'
+prompt pure
 
 # completion config
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'

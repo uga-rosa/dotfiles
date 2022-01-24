@@ -11,6 +11,7 @@ require("luasnip.loaders.from_vscode").load({
     },
 })
 require("luasnip.loaders.from_snipmate").lazy_load()
+require("luasnip").filetype_extend("zsh", { "sh" })
 
 local current_nsid = vim.api.nvim_create_namespace("LuaSnipChoiceListSelections")
 local current_win = nil
