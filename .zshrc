@@ -1,17 +1,33 @@
-# zgen
-if [[ ! -e ~/.zgen ]]; then
-    git clone https://github.com/tarjoilija/zgen.git ~/.zgen
+# antibody
+if [[ ! -e ~/.local/bin/antibody ]]; then
+    curl -sfL git.io/antibody | sh -s - -b ~/.local/bin
 fi
-source ~/.zgen/zgen.zsh
 
-if ! zgen saved; then
-    zgen load zsh-users/zsh-syntax-highlighting
-    zgen load zsh-users/zsh-autosuggestions
-    zgen load zsh-users/zsh-completions
-    zgen load woefe/git-prompt.zsh
-    zgen load mafredri/zsh-async
-    zgen load sindresorhus/pure . main
-    zgen save
+_antibody_update() {
+    antibody bundle > ~/.zsh_plugin.sh << EOL
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions
+woefe/git-prompt.zsh
+mafredri/zsh-async
+sindresorhus/pure
+EOL
+    source ~/.zsh_plugin.sh
+    echo 'updated'
+}
+
+antibody() {
+    if [[ $1 == "update" ]]; then
+        _antibody_update
+    else
+        ~/.local/bin/antibody $@
+    fi
+}
+
+if [[ -e ~/.zsh_plugin.sh ]]; then
+    source ~/.zsh_plugin.sh
+else
+    antibody update
 fi
 
 # theme
