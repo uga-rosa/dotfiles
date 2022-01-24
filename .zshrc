@@ -1,16 +1,25 @@
-# zgen
-if [[ ! -d ~/.zgen ]]; then
-    git clone https://github.com/tarjoilija/zgen.git ~/.zgen
+# zplug
+if [[ ! -d ~/.zplug ]]; then
+    curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 fi
-source ~/.zgen/zgen.zsh
+source ~/.zplug/init.zsh
 
-if ! zgen saved; then
-    echo "Creating a zgen save"
-    zgen load zsh-users/zsh-syntax-highlighting
-    zgen load zsh-users/zsh-autosuggestions
-    zgen load zsh-users/zsh-completions src
-    zgen save
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "woefe/git-prompt.zsh"
+zplug "mafredri/zsh-async"
+zplug "sindresorhus/pure", use:pure.zsh, as:theme
+
+# automatically install
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
 fi
+
+zplug load
 
 # completion config
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
@@ -111,9 +120,6 @@ eval "$(lazyenv.load _pyenv_init pyenv python pip)"
 
 # zoxide
 eval "$(zoxide init zsh)"
-
-# starship
-eval "$(starship init zsh)"
 
 # windows chrome
 function chrome() {

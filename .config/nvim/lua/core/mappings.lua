@@ -17,6 +17,8 @@ map("n", "o", function()
     feedkey("o")
 end)
 
+map({ "n", "x" }, ";", ":")
+
 map("n", "<Esc><Esc>", "<cmd>nohlsearch<cr>")
 map("n", "<leader><cr>", "o<Esc>")
 
