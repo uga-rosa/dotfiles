@@ -23,8 +23,6 @@ map({ "i", "n", "x", "o", "c" }, ":", ";")
 map("n", "<Esc><Esc>", "<cmd>nohlsearch<cr>")
 map("n", "<leader><cr>", "o<Esc>")
 
-map("n", "Q", "q")
-
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 

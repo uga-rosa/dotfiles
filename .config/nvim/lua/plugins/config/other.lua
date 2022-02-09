@@ -30,7 +30,7 @@ function M.easyalign()
 end
 
 function M.operator_replace()
-    map("n", "q", "<Plug>(operator-replace)")
+    map("n", "r", "<Plug>(operator-replace)")
 end
 
 function M.textobj()

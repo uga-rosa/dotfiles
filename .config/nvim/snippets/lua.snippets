@@ -20,5 +20,7 @@ snippet fun
 	function $1($2)
 		$0
 	end
+snippet to_table
+	$1 = type($1) == "table" and $1 or { $1 }
 snippet cmd
 	<cmd>$0<cr>

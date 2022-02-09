@@ -79,6 +79,10 @@ return packer.startup({
             },
             config = 'require("plugins.config.lsp")',
         })
+        use({
+            "j-hui/fidget.nvim",
+            config = 'require("fidget").setup({})',
+        })
         -- Use neovim as a LSP
         use({
             "jose-elias-alvarez/null-ls.nvim",
@@ -150,18 +154,13 @@ return packer.startup({
             "hrsh7th/vim-eft",
             config = 'require("plugins.config.other").eft()',
         })
-        -- show registers
-        use("tversteeg/registers.nvim")
         -- open browser
         use({
             "tyru/open-browser.vim",
             setup = 'require("plugins.config.other").openbrowser()',
         })
         -- comment out
-        use({
-            "numToStr/Comment.nvim",
-            config = 'require("Comment").setup()',
-        })
+        use("tpope/vim-commentary")
         -- rust
         use({
             "simrat39/rust-tools.nvim",
@@ -185,5 +184,25 @@ return packer.startup({
         })
         -- quickfix
         use({ "thinca/vim-qfreplace" })
+        use({
+            "skanehira/jumpcursor.vim",
+            config = function()
+                vim_api.map("n", "[j", "<Plug>(jumpcursor-jump)")
+            end,
+        })
+        -- deno
+        use("vim-denops/denops.vim")
+        -- FF
+        use({
+            "Shougo/ddu.vim",
+            requires = {
+                "Shougo/ddu-commands.vim",
+                "Shougo/ddu-ui-std",
+                "Shougo/ddu-source-file",
+                "Shougo/ddu-kind-file",
+                "Shougo/ddu-filter-matcher_substring",
+            },
+            config = 'require("plugins.config.ddu")',
+        })
     end,
 })

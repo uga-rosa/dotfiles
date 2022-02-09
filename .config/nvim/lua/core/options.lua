@@ -45,6 +45,9 @@ augroup({
         "help,qf",
         "nnoremap <buffer><nowait> q <cmd>quit<cr>",
     },
+    my_filetype = {
+        { "BufNewFile,BufRead", "*.ahk", "setf autohotkey" },
+    },
     automkdir = {
         "BufWritePre",
         "*",

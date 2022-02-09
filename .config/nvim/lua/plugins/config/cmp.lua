@@ -187,10 +187,13 @@ cmp.setup.cmdline(":", {
 require("cmp_dictionary").setup({
     dic = {
         ["*"] = "/usr/share/dict/words",
+        ["autohotkey"] = "~/dotfiles/doc/ahk.dict",
     },
     exact = 2,
     first_case_insensitive = true,
 })
+
+vim.cmd([[autocmd FileType * lua require("cmp_dictionary").update()]])
 
 local api = vim.api
 
