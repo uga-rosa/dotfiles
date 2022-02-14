@@ -30,23 +30,25 @@ local lspkind = {
     TypeParameter = "",
 }
 
-local function updown(dir)
-    return function()
-        if luasnip.choice_active() then
-            luasnip.change_choice(dir)
-        elseif cmp.visible() then
-            if dir == 1 then
-                cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-            else
-                cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-            end
-        else
-            if dir == 1 then
-                feedkey("<C-n>")
-            else
-                feedkey("<C-p>")
-            end
-        end
+local function cmp_down()
+    if luasnip.choice_active() then
+        cmp.close()
+        luasnip.change_choice(1)
+    elseif cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+    else
+        feedkey("<C-n>")
+    end
+end
+
+local function cmp_up()
+    if luasnip.choice_active() then
+        cmp.close()
+        luasnip.change_choice(-1)
+    elseif cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+    else
+        feedkey("<C-p>")
     end
 end
 
@@ -71,10 +73,9 @@ cmp.setup({
                 buffer = "[Buffer]",
                 path = "[Path]",
                 nvim_lsp = "[LSP]",
-                nvim_lsp_signature_help = "[SignatureHelp]",
-                nvim_lua = "[NvimLua]",
+                nvim_lsp_signature_help = "[SignHelp]",
                 luasnip = "[LuaSnip]",
-                dictionary = "[Dictionary]",
+                dictionary = "[Dict]",
             })[entry.source.name]
             vim_item.dup = ({
                 buffer = 0,
@@ -118,24 +119,24 @@ cmp.setup({
             "c",
         }),
         ["<C-n>"] = cmp.mapping({
-            i = updown(1),
-            s = updown(1),
+            i = cmp_down,
+            s = cmp_down,
             c = function()
                 if cmp.visible() then
                     cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
                 else
-                    feedkey("<Down>")
+                    feedkey("<C-n>")
                 end
             end,
         }),
         ["<C-p>"] = cmp.mapping({
-            i = updown(-1),
-            s = updown(-1),
+            i = cmp_up,
+            s = cmp_up,
             c = function()
                 if cmp.visible() then
                     cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
                 else
-                    feedkey("<Up>")
+                    feedkey("<C-p>")
                 end
             end,
         }),

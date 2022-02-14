@@ -75,7 +75,6 @@ augroup({
         { "InsertLeave", "*", 'lua require("core.escape").leave()' },
     },
     mypacker = { "BufWrite", "*list.lua", "PackerCompile" },
-    lua_run = { "FileType", "lua", "nnoremap <buffer> @R <cmd>w<cr><cmd>luafile %<cr>" },
     read_stylua_toml = {
         "FileType",
         "lua",

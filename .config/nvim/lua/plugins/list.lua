@@ -173,10 +173,10 @@ return packer.startup({
             config = 'require("plugins.config.other").mkdp()',
         })
         -- translate
-        use({
-            "uga-rosa/translate-shell.nvim",
-            config = 'require("plugins.config.other").translate()',
-        })
+        -- use({
+        --     "uga-rosa/translate-shell.nvim",
+        --     config = 'require("plugins.config.other").translate()',
+        -- })
         -- util search
         use({
             "hrsh7th/vim-searchx",
@@ -197,7 +197,7 @@ return packer.startup({
             "Shougo/ddu.vim",
             requires = {
                 "Shougo/ddu-commands.vim",
-                "Shougo/ddu-ui-std",
+                "Shougo/ddu-ui-ff",
                 "Shougo/ddu-source-file",
                 "Shougo/ddu-kind-file",
                 "Shougo/ddu-filter-matcher_substring",

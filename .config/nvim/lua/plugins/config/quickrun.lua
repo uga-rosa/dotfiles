@@ -7,6 +7,11 @@ vim.g.quickrun_config = {
         ["outputter/buffer/opener"] = "botright 10sp",
         ["outputter/buffer/close_on_empty"] = true,
     },
+    ["lua"] = {
+        command = ":luafile",
+        exec = "%C %S",
+        runner = "vimscript",
+    },
 }
 
 vim_api.map("n", "@r", "<cmd>QuickRun<cr>")
