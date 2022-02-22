@@ -1,3 +1,113 @@
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter-textobjects'
+
+[[plugins]]
+repo = 'p00f/nvim-ts-rainbow'
+
+[[plugins]]
+repo = 'David-Kunz/treesitter-unit'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+depends = ['nvim-treesitter-textobjects', 'nvim-ts-rainbow', 'treesitter-unit']
+on_event = 'BufRead'
+hook_post_update = 'TSUpdate'
+hook_source = '''
+lua <<EOL
+local map = utils.map
+
+require("nvim-treesitter.configs").setup({
+    ensure_installed = "all",
+    highlight = {
+        enable = true,
+    },
+    textobjects = {
+        select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+                ["ib"] = "@block.inner",
+                ["ab"] = "@block.outer",
+                ["c"] = "@comment.outer",
+                ["if"] = "@function.inner",
+                ["af"] = "@function.outer",
+                ["il"] = "@loop.inner",
+                ["al"] = "@loop.outer",
+            },
+        },
+        swap = {
+            enable = true,
+            swap_next = {
+                ["<M-s>"] = "@parameter.inner",
+            },
+            swap_previous = {
+                ["<M-S-s>"] = "@parameter.inner",
+            },
+        },
+    },
+    rainbow = {
+        enable = true,
+        extend_mode = true,
+        max_file_lines = nil,
+    },
+})
+EOL
+
+xmap iu :lua require("treesitter-unit").select()<CR> 
+xmap au :lua require("treesitter-unit").select(true)<CR> 
+omap iu <cmd>lua require("treesitter-unit").select()<CR>
+omap au <cmd>lua require("treesitter-unit").select(true)<CR>
+
+" let s:operators = ['c', 'd', 'y', '=', '<', '>']
+" for operator in s:operators
+"     exec 'nnoremap ' . operator . ' <cmd>lua require("treesitter-unit").enable_highlighting()<CR>' . operator
+" endfor
+" 
+" augroup tsunit
+"     au !
+"     au CursorMoved * lua require('treesitter-unit').disable_highlighting()
+" augroup END
+'''
+
+[[plugins]]
+repo = 'nvim-treesitter/playground'
+depends = 'nvim-treesitter'
+on_cmd = ['TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor']
+
+[[plugins]]
+repo = 'lewis6991/gitsigns.nvim'
+on_event = 'BufRead'
+hook_source = '''
+lua <<EOL
+require("gitsigns").setup({
+    keymaps = {
+        noremap = true,
+
+        ["n ]g"] = {
+            expr = true,
+            "&diff ? ']c' : '<cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'",
+        },
+        ["n [g"] = {
+            expr = true,
+            "&diff ? '[c' : '<cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'",
+        },
+
+        ["n <leader>gp"] = '<cmd>lua require"gitsigns".preview_hunk()<CR>',
+
+        -- Text objects
+        ["o ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
+        ["x ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
+    },
+})
+EOL
+'''
+
+[[plugins]]
+repo = 'feline-nvim/feline.nvim'
+depends = 'nvim-web-devicons'
+on_event = 'VimEnter'
+hook_source = '''
+lua <<EOL
 local f = vim.fn
 
 local theme = {
@@ -255,3 +365,14 @@ require("feline").setup({
 })
 
 require("feline").use_theme(theme)
+EOL
+'''
+
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+build = 'cd app && yarn install'
+on_ft = 'markdown'
+hook_source = '''
+let g:mkdp_refresh_slow = 1
+nnoremap <leader>p <cmd>MarkdownPreview<CR>
+'''

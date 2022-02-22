@@ -72,6 +72,9 @@ setopt inc_append_history
 setopt share_history
 setopt AUTO_PARAM_KEYS
 
+# check if alias after sudo
+alias sudo='sudo '
+
 # nvim alias
 alias nv="nvim"
 
@@ -108,6 +111,11 @@ function fzf-upgrade() {
     cd -
 }
 
+# rm
+if [[ $(command -v trash-put) ]]; then
+    alias rm='trash-put'
+fi
+
 # exa
 if [[ $(command -v exa) ]]; then
     alias e='exa --icons'
@@ -122,16 +130,6 @@ if [[ $(command -v exa) ]]; then
     alias eta='exa -T -a -I "node_modules|.git|.cache" --color=always --icons | less -r'
     alias lta=eta
 fi
-
-# pyenv
-source "$HOME/.zsh.d/lazyenv.sh"
-_pyenv_init() {
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init --path)"
-    eval "$(pyenv init -)"
-}
-eval "$(lazyenv.load _pyenv_init pyenv python pip)"
 
 # zoxide
 eval "$(zoxide init zsh)"

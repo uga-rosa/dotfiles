@@ -1,2 +1,2 @@
-nnoremap <C-t> <cmd>call term#toggle()<cr>
-tnoremap <C-t> <cmd>call term#toggle()<cr>
+nnoremap <C-t> <cmd>call term#toggle()<CR>
+tnoremap <C-t> <cmd>call term#toggle()<CR>

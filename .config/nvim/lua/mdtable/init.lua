@@ -3,14 +3,13 @@ local M = {}
 local fn = vim.fn
 local api = vim.api
 
-local map = vim_api.map
+local map = utils.map
 local feedkey = utils.feedkey
-local augroup = vim_api.augroup
 local command = vim.api.nvim_add_user_command
 
 local sep = "|"
 
-M.make = function(o)
+function M.make(o)
     local args = vim.split(o.args, " ")
 
     local line, col = (function()
@@ -44,7 +43,7 @@ end
 ---Jump between cells.
 ---dir == 1 mean normal direction, dir == -1 mean opposite direction.
 ---@param dir integer
-M.jump = function(dir)
+function M.jump(dir)
     local line = fn.getline(".")
     local col = fn.col(".")
 
@@ -109,7 +108,7 @@ local function ljust(str, num, is_boundary)
     end
 end
 
-M.format = function(o)
+function M.format(o)
     local first, last = o.line1, o.line2
 
     local tables = api.nvim_buf_get_lines(0, first - 1, last, true)
@@ -137,7 +136,7 @@ M.format = function(o)
     api.nvim_buf_set_lines(0, first - 1, last, true, formatted)
 end
 
-M.mapping = function()
+function M.mapping()
     map("i", "<tab>", function()
         if fn.getline("."):match(sep) then
             M.jump(1)
@@ -155,19 +154,10 @@ M.mapping = function()
     end, "buffer")
 end
 
-M.setup = function()
+function M.setup()
     command("TableMake", M.make, { nargs = "*" })
     command("TableFormat", M.format, { range = true })
     M.mapping()
-    augroup({
-        table = {
-            {
-                "FileType",
-                "markdown",
-                M.mapping,
-            },
-        },
-    })
 end
 
 return M

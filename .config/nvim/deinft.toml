@@ -1,0 +1,64 @@
+hook_add = '''
+" disable unnecessary providers
+let g:loaded_python_provider = 0
+let g:loaded_python3_provider = 0
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+
+" disable unnecessary plugins
+let g:loaded_2html_plugin = 1
+let g:loaded_logiPat = 1
+let g:loaded_getscriptPlugin = 1
+let g:loaded_gzip = 1
+let g:loaded_gtags = 1
+let g:loaded_gtags_cscope = 1
+let g:loaded_man = 1
+let g:loaded_matchit = 1
+let g:loaded_matchparen = 1
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+let g:loaded_tar = 1
+let g:loaded_tarPlugin = 1
+let g:loaded_zip = 1
+let g:loaded_zipPlugin = 1
+'''
+
+[ftplugin]
+
+_ = '''
+setl formatoptions-=t
+setl formatoptions-=c
+setl formatoptions-=r
+setl formatoptions-=o
+setl formatoptions+=mMBl
+'''
+
+help_qf = '''
+nnoremap <buffer><nowait> q <cmd>quit<CR>
+'''
+
+markdown = '''
+lua <<EOL
+require("pasteimage").setup()
+require("mdtable").setup()
+EOL
+'''
+
+lua = '''
+let s:stylua_toml = getcwd() . '/stylua.toml'
+if filereadable(s:stylua_toml)
+    for line in readfile(s:stylua_toml)
+        if match(line, '^indent_width') !=# -1
+            let s:width = matchstr(line, '\d\+')
+            execute 'setl tabstop=' . s:width
+            execute 'setl shiftwidth=' . s:width
+        elseif match(line, '^indent_type') !=# -1
+            if matchstr(line, '=\s*\zs.*\ze') == 'Tabs'
+                setl noexpandtab
+            else
+                setl expandtab
+            endif 
+        endif
+    endfor
+endif
+'''

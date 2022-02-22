@@ -1,0 +1,203 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'bluz71/vim-nightfly-guicolors'
+
+[[plugins]]
+repo = 'lewis6991/impatient.nvim'
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = '~/plugin/filittle.nvim'
+
+[[plugins]]
+repo = 'ibhagwan/fzf-lua'
+depends = 'nvim-web-devicons'
+hook_add = '''
+lua <<EOL
+local fzf = require("fzf-lua")
+local actions = require("fzf-lua.actions")
+
+fzf.setup({
+    keymap = {
+        builtin = {
+            ["<F3>"] = "toggle-preview-wrap",
+            ["<F4>"] = "toggle-preview",
+            ["<C-f>"] = "preview-page-down",
+            ["<C-b>"] = "preview-page-up",
+            ["<S-left>"] = "preview-page-reset",
+        },
+        fzf = {
+            -- fzf '--bind=' options
+            ["ctrl-u"] = "unix-line-discard",
+            ["ctrl-a"] = "beginning-of-line",
+            ["ctrl-e"] = "end-of-line",
+            ["alt-a"] = "toggle-all",
+            -- Only valid with fzf previewers (bat/cat/git/etc)
+            ["f3"] = "toggle-preview-wrap",
+            ["f4"] = "toggle-preview",
+            ["ctrl-f"] = "preview-page-down",
+            ["ctrl-b"] = "preview-page-up",
+        },
+    },
+    file_icon_padding = " ",
+    files = {
+        actions = {
+            ["ctrl-x"] = actions.file_split,
+        },
+    },
+    git = {
+        actions = {
+            ["ctrl-x"] = actions.file_split,
+        },
+    },
+})
+EOL
+
+nnoremap <F1> <cmd>FzfLua builtin<CR>
+nnoremap <leader>r <cmd>FzfLua resume<CR>
+nnoremap <leader>f <cmd>FzfLua files<CR>
+nnoremap <leader>b <cmd>FzfLua buffers<CR>
+nnoremap <leader>o <cmd>FzfLua oldfiles<CR>
+nnoremap <leader>h <cmd>FzfLua help_tags<CR>
+nnoremap <leader>m <cmd>FzfLua man_pages<CR>
+nnoremap <leader>gr <cmd>FzfLua live_grep<CR>
+nnoremap <leader>/ <cmd>FzfLua blines<CR>
+nnoremap <leader>gf <cmd>FzfLua git_files<CR>
+nnoremap q: <cmd>FzfLua command_history<CR>
+nnoremap q/ <cmd>FzfLua search_history<CR>
+
+nnoremap <leader>i <cmd>FzfLua lsp_document_diagnostics<CR>
+nnoremap <leader>I <cmd>FzfLua lsp_workspace_diagnostics<CR>
+nnoremap <leader>a <cmd>FzfLua lsp_code_actions<CR>
+nnoremap gd <cmd>lua require("fzf-lua").lsp_definitions({jump_to_single_result = true})<CR>
+nnoremap gr <cmd>FzfLua lsp_references<CR>
+'''
+
+[[plugins]]
+repo = 'kdheepak/lazygit.nvim'
+hook_add = '''
+let g:lazygit_floating_window_use_plenary = v:true
+nnoremap <leader>l <cmd>LazyGit<CR>
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-quickrun-neovim-job'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+depends = 'vim-quickrun-neovim-job'
+hook_add = '''
+let g:quickrun_config = {
+\       '_': {
+\           'runner': 'neovim_job',
+\           'outputter': 'error',
+\           'outputter/error/success': 'buffer',
+\           'outputter/error/error': 'quickfix',
+\           'outputter/buffer/opener': 'botright 10sp',
+\           'outputter/buffer/close_on_empty': v:true,
+\       },
+\       'lua': {
+\           'command': ':luafile',
+\           'exec': '%C %S',
+\           'runner': 'vimscript',
+\       }
+\   }
+
+nnoremap @r <cmd>QuickRun<CR>
+augroup quickrun_quit
+    au!
+    au BufEnter quickrun://output nnoremap <buffer><nowait> q <cmd>q<CR>
+augroup END
+'''
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+hook_add = '''
+runtime macros/sandwich/keymap/surround.vim
+'''
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+hook_add = '''
+nmap r <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+hook_add = '''
+call textobj#user#plugin('formula', {
+\       'dollar-a': {
+\           'pattern': '\$.\{-}\$',
+\           'select': ['a$']
+\       },
+\       'dollar-i': {
+\           'pattern': '\$\zs.\{-}\ze\$',
+\           'select': ['i$']
+\       }
+\   })
+'''
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+hook_add = '''
+nmap <M-o> <Plug>(openbrowser-smart-search)
+xmap <M-o> <Plug>(openbrowser-smart-search)
+let g:openbrowser_browser_commands = [
+\       {'name': 'chrome.exe', 'args': ['{browser}', '{uri}']}
+\   ]
+'''
+
+[[plugins]]
+repo = 'hrsh7th/vim-eft'
+hook_add = '''
+lua <<EOL
+local map = utils.map
+map({"n", "x"}, ";", "<Plug>(eft-repeat)")
+map({"n", "x", "o"}, "f", "<Plug>(eft-f)")
+map({"n", "x", "o"}, "F", "<Plug>(eft-F)")
+map({"n", "x", "o"}, "t", "<Plug>(eft-t)")
+map({"n", "x", "o"}, "T", "<Plug>(eft-T)")
+EOL
+'''
+
+[[plugins]]
+repo = 'hrsh7th/vim-searchx'
+hook_add = '''
+lua <<EOL
+local map = utils.map
+map({"n", "x"}, "/", "<cmd>call searchx#start({'dir': 1})<CR>")
+map({"n", "x"}, "?", "<cmd>call searchx#start({'dir': 0})<CR>")
+map({"n", "x"}, "n", "<cmd>call searchx#next()<CR>")
+map({"n", "x"}, "N", "<cmd>call searchx#prev()<CR>")
+map("c", "<C-j>", "<cmd>call searchx#next()<CR>")
+map("c", "<C-k>", "<cmd>call searchx#prev()<CR>")
+map({"n", "c"}, "<C-l>", "<cmd>call searchx#clear()<CR>")
+EOL
+let g:searchx = {}
+let g:searchx.auto_accept = v:true
+let g:searchx.scrolloff = &scrolloff
+let g:searchx.scrolltime = 0
+let g:searchx.nohlsearch = {}
+let g:searchx.nohlsearch.jump = v:true
+let g:searchx.markers = split('ASDFGHJKL:QWERTYUIOP', '.\zs')
+'''

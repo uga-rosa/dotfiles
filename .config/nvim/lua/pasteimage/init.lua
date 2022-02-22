@@ -1,8 +1,9 @@
 local M = {}
 
 local uv = vim.loop
+local command = vim.api.nvim_add_user_command
 
-M.paste = function()
+function M.paste()
     local name = os.date("%Y-%m-%d-%H-%M-%S") .. ".png"
     local dir = vim.fn.expand("%:p:h") .. "/image"
     vim.fn.mkdir(dir, "p")
@@ -21,8 +22,8 @@ M.paste = function()
     vim.api.nvim_set_current_line(("![](image/%s)"):format(name))
 end
 
-M.setup = function()
-    vim.cmd([[command! PasteImage lua require('myplug.pasteimage').paste()]])
+function M.setup()
+    command("PasteImage", M.paste, {})
 end
 
 return M

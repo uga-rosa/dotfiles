@@ -1,0 +1,131 @@
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+depends = 'denops.vim'
+on_source = 'denops.vim'
+hook_add = '''
+" nnoremap <silent> <leader>f <cmd>Ddu file_rec<CR>
+" nnoremap <silent> <leader>o <cmd>Ddu file_old<CR>
+" nnoremap <silent> <leader>b <cmd>Ddu buffer<CR>
+" " help
+" nnoremap <silent> <leader>h <cmd>Ddu help -ui-param-startFilter<CR>
+" " search
+" nnoremap <silent> <leader>/ <cmd>Ddu line -ui-param-startFilter<CR>
+" nnoremap <silent> * <cmd>Ddu line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
+" " resume
+" nnoremap <silent> <leader>r <cmd>Ddu -resume -ui-param-startFilter=v:false<CR>
+'''
+hook_source = '''
+call ddu#custom#patch_global({
+\       'ui': 'ff',
+\       'uiParams': {
+\           'ff': {
+\               'split': 'floating'
+\           },
+\       },
+\       'sourceOptions': {
+\           '_': {
+\               'matchers': ['matcher_fzf'],
+\               'ignoreCase': v:true,
+\           },
+\           'dein': {
+\               'defaultAction': 'cd',
+\           },
+\       },
+\       'sourceParams': {
+\           'file_external': {
+\               'cmd': ['git', 'ls-files', '-co', '--exclude-standard'],
+\           },
+\       },
+\       'kindOptions': {
+\           'file': {
+\               'defaultAction': 'open',
+\           },
+\           'help': {
+\               'defaultAction': 'open'
+\           },
+\           'word': {
+\               'defaultAction': 'append',
+\           },
+\           'action': {
+\               'defaultAction': 'do',
+\           },
+\       },
+\   })
+'''
+
+[plugins.ftplugin]
+ddu-ff = '''
+nnoremap <buffer><silent> <CR> <cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+nnoremap <buffer><silent> <Space> <cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+nnoremap <buffer><silent> i <cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+nnoremap <buffer><silent><nowait> q <cmd>call ddu#ui#ff#do_action('quit')<CR>
+nnoremap <buffer><silent> <C-l> <cmd>call ddu#ui#ff#do_action('refreshItems')<CR>
+nnoremap <buffer><silent> p <cmd>call ddu#ui#ff#do_action('preview')<CR>
+nnoremap <buffer><silent> a <cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
+nnoremap <buffer><silent> c <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'cd'})<CR>
+nnoremap <buffer><silent> d <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'delete'})<CR>
+nnoremap <buffer><silent> e <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'edit'})<CR>
+nnoremap <buffer><silent> v <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+nnoremap <buffer><silent> N <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'new'})<CR>
+nnoremap <buffer><silent> r <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>
+nnoremap <buffer><silent> u <cmd>call ddu#ui#ff#do_action('updateOptions', {'sourceOptions': {'_': {'matchers': []}}})<CR>
+'''
+ddu-ff-filter = '''
+inoremap <buffer><silent> <CR> <Esc><cmd>close<CR>
+nnoremap <buffer><silent> <CR> <cmd>close<CR>
+" disable nvim-cmp
+lua require("cmp").setup.buffer({enabled = false})
+'''
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-commands.vim'
+depends = 'ddu.vim'
+on_cmd = 'Ddu'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_old'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-line'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-action'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-file_external'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-help'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'gamoutatsumi/ddu-source-nvim-lsp'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'yuki-yano/ddu-filter-fzf'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-word'
+on_source = 'ddu.vim'

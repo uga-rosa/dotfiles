@@ -1,0 +1,157 @@
+[[plugins]]
+repo = 'williamboman/nvim-lsp-installer'
+
+[[plugins]]
+repo = 'tami5/lspsaga.nvim'
+
+[[plugins]]
+repo = 'folke/lua-dev.nvim'
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+depends = ['nvim-lsp-installer', 'lspsaga.nvim', 'lua-dev.nvim', 'cmp-nvim-lsp']
+on_ft = ['lua', 'go', 'python', 'bash', 'zsh', 'rust', 'vim']
+hook_source = '''
+command Format lua vim.lsp.buf.formatting_sync()
+
+augroup lspinfo_close
+    au!
+    au FileType lspinfo nnoremap <buffer><nowait> q <cmd>q<CR>
+augroup END
+
+lua <<EOL
+local lspinstaller = require("nvim-lsp-installer")
+
+local map = utils.map
+local command = vim.api.nvim_add_user_command
+
+-- cmp source
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+
+-- lsp saga
+require("lspsaga").setup({
+    error_sign = " ",
+    warn_sign = " ",
+    hint_sign = " ",
+    infor_sign = " ",
+    code_action_prompt = {
+        enable = false,
+    },
+    code_action_keys = {
+        quit = { "<C-c>", "<Esc>", "q" },
+        exec = "<CR>",
+    },
+    rename_action_keys = {
+        quit = { "<C-c>", "<Esc>" },
+        exec = "<CR>",
+    },
+})
+
+-- LSP setting
+local opts = {
+    default = {
+        capabilities = capabilities,
+        on_attach = function()
+            -- lspsaga
+            map("n", "K", "<cmd>Lspsaga hover_doc<CR>", "buffer")
+            map("n", "<C-f>", "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>", "buffer")
+            map("n", "<C-b>", "<cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>", "buffer")
+            map("n", "[d", "<cmd>Lspsaga diagnostic_jump_next<CR>", "buffer")
+            map("n", "]d", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "buffer")
+            map("n", "<leader>x", "<cmd>Lspsaga code_action<CR>", "buffer")
+            map("x", "<leader>x", "<cmd>Lspsaga range_code_action<CR>", "buffer")
+            map("n", "<leader>n", "<cmd>Lspsaga rename<CR>", "buffer")
+        end,
+    },
+}
+
+opts.sumneko_lua = require("lua-dev").setup({
+    library = {
+        vimruntime = true,
+        types = true,
+        plugins = { "plenary.nvim", "LuaSnip" },
+    },
+    lspconfig = opts.default,
+})
+-- disable completion snippet
+opts.sumneko_lua.settings.Lua.completion = nil
+
+opts.bashls = setmetatable({
+    filetypes = { "sh", "zsh" },
+}, { __index = opts.default })
+
+-- automatically install
+local servers = {
+    "sumneko_lua",
+    "gopls",
+    "pyright",
+    "bashls",
+    "rust_analyzer",
+    "vimls",
+}
+
+local installed = {}
+for _, server in ipairs(lspinstaller.get_installed_servers()) do
+    installed[server.name] = true
+end
+
+for _, server in ipairs(servers) do
+    if not installed[server] then
+        lspinstaller.install(server)
+    end
+end
+
+-- setup
+lspinstaller.on_server_ready(function(server)
+    local opt = opts[server.name] or opts.default
+    server:setup(opt)
+    vim.cmd([[do User LspAttachBuffers]])
+end)
+
+-- update command
+command("LspUpdateAll", function()
+    for _, server in ipairs(lspinstaller.get_installed_servers()) do
+        lspinstaller.install(server.name)
+    end
+end, {})
+EOL
+'''
+
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+merge = 0
+depends = 'plenary.nvim'
+on_ft = ['lua', 'sh', 'json', 'python', 'teal']
+hook_source = '''
+lua <<EOL
+local null = require("null-ls")
+local b = null.builtins
+
+null.setup({
+    sources = {
+        function()
+            local utils = require("null-ls.utils").make_conditional_utils()
+            if utils.root_has_file("stylua.toml") then
+                return b.formatting.stylua
+            elseif utils.root_has_file(".stylua.toml") then
+                return b.formatting.stylua.with({
+                    extra_args = { "--config-path", "./.stylua.toml" },
+                })
+            else
+                return b.formatting.stylua.with({
+                    extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml") },
+                })
+            end
+        end,
+        b.formatting.shfmt.with({
+            extra_args = { "-ci", "-s", "-bn", "-i", "4" },
+        }),
+        b.formatting.fixjson,
+        b.formatting.black,
+        b.diagnostics.shellcheck.with({ diagnostics_format = "#{m} [#{c}]" }),
+        b.diagnostics.teal,
+    },
+})
+EOL
+'''
