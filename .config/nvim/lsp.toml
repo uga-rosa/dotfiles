@@ -119,8 +119,10 @@ EOL
 '''
 
 [[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
-merge = 0
 depends = 'plenary.nvim'
 on_ft = ['lua', 'sh', 'json', 'python', 'teal']
 hook_source = '''

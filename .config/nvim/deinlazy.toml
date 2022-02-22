@@ -1,4 +1,70 @@
 [[plugins]]
+repo = 'ibhagwan/fzf-lua'
+depends = 'nvim-web-devicons'
+on_cmd = 'FzfLua'
+hook_add = '''
+nnoremap <F1> <cmd>FzfLua builtin<CR>
+nnoremap <leader>r <cmd>FzfLua resume<CR>
+nnoremap <leader>f <cmd>FzfLua files<CR>
+nnoremap <leader>b <cmd>FzfLua buffers<CR>
+nnoremap <leader>o <cmd>FzfLua oldfiles<CR>
+nnoremap <leader>h <cmd>FzfLua help_tags<CR>
+nnoremap <leader>m <cmd>FzfLua man_pages<CR>
+nnoremap <leader>gr <cmd>FzfLua live_grep<CR>
+nnoremap <leader>/ <cmd>FzfLua blines<CR>
+nnoremap <leader>gf <cmd>FzfLua git_files<CR>
+nnoremap q: <cmd>FzfLua command_history<CR>
+nnoremap q/ <cmd>FzfLua search_history<CR>
+
+nnoremap <leader>i <cmd>FzfLua lsp_document_diagnostics<CR>
+nnoremap <leader>I <cmd>FzfLua lsp_workspace_diagnostics<CR>
+nnoremap <leader>a <cmd>FzfLua lsp_code_actions<CR>
+nnoremap gd <cmd>lua require("fzf-lua").lsp_definitions({jump_to_single_result = true})<CR>
+nnoremap gr <cmd>FzfLua lsp_references<CR>
+'''
+hook_source = '''
+lua <<EOL
+local fzf = require("fzf-lua")
+local actions = require("fzf-lua.actions")
+
+fzf.setup({
+    keymap = {
+        builtin = {
+            ["<F3>"] = "toggle-preview-wrap",
+            ["<F4>"] = "toggle-preview",
+            ["<C-f>"] = "preview-page-down",
+            ["<C-b>"] = "preview-page-up",
+            ["<S-left>"] = "preview-page-reset",
+        },
+        fzf = {
+            -- fzf '--bind=' options
+            ["ctrl-u"] = "unix-line-discard",
+            ["ctrl-a"] = "beginning-of-line",
+            ["ctrl-e"] = "end-of-line",
+            ["alt-a"] = "toggle-all",
+            -- Only valid with fzf previewers (bat/cat/git/etc)
+            ["f3"] = "toggle-preview-wrap",
+            ["f4"] = "toggle-preview",
+            ["ctrl-f"] = "preview-page-down",
+            ["ctrl-b"] = "preview-page-up",
+        },
+    },
+    file_icon_padding = " ",
+    files = {
+        actions = {
+            ["ctrl-x"] = actions.file_split,
+        },
+    },
+    git = {
+        actions = {
+            ["ctrl-x"] = actions.file_split,
+        },
+    },
+})
+EOL
+'''
+
+[[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter-textobjects'
 
 [[plugins]]
@@ -57,16 +123,6 @@ xmap iu :lua require("treesitter-unit").select()<CR>
 xmap au :lua require("treesitter-unit").select(true)<CR> 
 omap iu <cmd>lua require("treesitter-unit").select()<CR>
 omap au <cmd>lua require("treesitter-unit").select(true)<CR>
-
-" let s:operators = ['c', 'd', 'y', '=', '<', '>']
-" for operator in s:operators
-"     exec 'nnoremap ' . operator . ' <cmd>lua require("treesitter-unit").enable_highlighting()<CR>' . operator
-" endfor
-" 
-" augroup tsunit
-"     au !
-"     au CursorMoved * lua require('treesitter-unit').disable_highlighting()
-" augroup END
 '''
 
 [[plugins]]
@@ -103,269 +159,132 @@ EOL
 '''
 
 [[plugins]]
-repo = 'feline-nvim/feline.nvim'
-depends = 'nvim-web-devicons'
-on_event = 'VimEnter'
+repo = 'kdheepak/lazygit.nvim'
+on_cmd = 'LazyGit'
+hook_add = '''
+let g:lazygit_floating_window_use_plenary = v:true
+nnoremap <leader>l <cmd>LazyGit<CR>
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-quickrun-neovim-job'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+depends = 'vim-quickrun-neovim-job'
+on_cmd = 'QuickRun'
+hook_add = '''
+let g:quickrun_config = {
+\       '_': {
+\           'runner': 'neovim_job',
+\           'outputter': 'error',
+\           'outputter/error/success': 'buffer',
+\           'outputter/error/error': 'quickfix',
+\           'outputter/buffer/opener': 'botright 10sp',
+\           'outputter/buffer/close_on_empty': v:true,
+\       },
+\       'lua': {
+\           'command': ':luafile',
+\           'exec': '%C %S',
+\           'runner': 'vimscript',
+\       }
+\   }
+
+nnoremap @r <cmd>QuickRun<CR>
+augroup quickrun_quit
+    au!
+    au BufEnter quickrun://output nnoremap <buffer><nowait> q <cmd>q<CR>
+augroup END
+'''
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+on_map = { n = [ 'ys', 'yss', 'yS', 'ds', 'dss', 'cs', 'css' ], x = [ 'S' ] }
 hook_source = '''
+runtime macros/sandwich/keymap/surround.vim
+'''
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+let g:lexima_no_default_rules = 1
+call lexima#set_default_rules()
+
+call lexima#add_rule({'char': '<CR>', 'at': '\\\s.*\%#$', 'input': '<CR><Bslash> ', 'filetype': 'vim'})
+call lexima#add_rule({'char': '<CR>', 'at': '{\%#$}', 'input': '<CR><Bslash> ', 'input_after': '<CR><Bslash> ', 'filetype': 'vim'})
+call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'markdown'})
+call lexima#add_rule({'char': '$', 'at': '\%#$', 'leave': 1, 'filetype': 'markdown'})
+'''
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+on_map = { nx = '<Plug>(EasyAlign)' }
+hook_add = '''
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+'''
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+on_map = { n = '<Plug>(operator-replace)' }
+hook_add = '''
+nmap r <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'tpope/vim-commentary'
+
+[[plugins]]
+repo = 'hrsh7th/vim-eft'
+on_map = { nxo = '<Plug>(eft-' }
+hook_add = '''
 lua <<EOL
-local f = vim.fn
-
-local theme = {
-    bg = "#1d3b53",
-    dark_blue = "#092236",
-    cadet_blue = "#a1aab8",
-    white_blue = "#d6deeb",
-    yellow = "#e3d18a",
-    peach = "#ffcb8b",
-    tan = "#ecc48d",
-    orange = "#f78c6c",
-    red = "#fc514e",
-    watermelon = "#ff5874",
-    violet = "#c792ea",
-    purple = "#ae81ff",
-    indigo = "#5e97ec",
-    blue = "#82aaff",
-    turquoise = "#7fdbca",
-    emerald = "#21c7a8",
-    green = "#a1cd5e",
-}
-
-local vi_mode_colors = {
-    NORMAL = "indigo",
-    OP = "indigo",
-    INSERT = "white_blue",
-    VISUAL = "purple",
-    BLOCK = "purple",
-    REPLACE = "watermelon",
-    ["V-REPLACE"] = "watermelon",
-    ENTER = "yellow",
-    MORE = "yellow",
-    SELECT = "watermelon",
-    COMMAND = "emerald",
-    SHELL = "emerald",
-    TERM = "emerald",
-    NONE = "yellow",
-}
-
-local icons = {
-    diagnostic = {
-        error = "  ",
-        warn = "  ",
-        hint = "  ",
-        info = "  ",
-    },
-    diff = {
-        added = " ",
-        changed = " ",
-        removed = " ",
-    },
-}
-
-local vi_mode = require("feline.providers.vi_mode")
-local git = require("feline.providers.git")
-local devicons = require("nvim-web-devicons")
-
-local comps = {
-    vi_mode = {
-        provider = function()
-            local mode = vi_mode.get_vim_mode()
-            return "  " .. mode .. " "
-        end,
-        hl = function()
-            return {
-                fg = "dark_blue",
-                bg = vi_mode.get_mode_color(),
-            }
-        end,
-        right_sep = " ",
-    },
-    file = {
-        name = {
-            provider = function()
-                return f.expand("%:t")
-            end,
-            hl = {
-                fg = "purple",
-                style = "bold",
-            },
-        },
-        icon = {
-            provider = function()
-                local icon, _ = devicons.get_icon(f.expand("%:t"))
-                return icon or ""
-            end,
-            hl = function()
-                local _, cc = devicons.get_icon_color(f.expand("%:t"))
-                return {
-                    fg = cc,
-                }
-            end,
-            right_sep = " ",
-        },
-        fullpath = {
-            provider = function()
-                return f.expand("%:p")
-            end,
-            hl = {
-                fg = "emerald",
-            },
-        },
-    },
-    lsp = {
-        servers = {
-            provider = "lsp_client_names",
-            icon = "  ",
-            hl = {
-                fg = "emerald",
-            },
-        },
-        error = {
-            provider = "diagnostic_errors",
-            icon = icons.diagnostic.error,
-            hl = {
-                fg = "red",
-            },
-        },
-        warn = {
-            provider = "diagnostic_warnings",
-            icon = icons.diagnostic.warn,
-            hl = {
-                fg = "yellow",
-            },
-        },
-        hint = {
-            provider = "diagnostic_hints",
-            icon = icons.diagnostic.hint,
-            hl = {
-                fg = "white_blue",
-            },
-        },
-        info = {
-            provider = "diagnostic_info",
-            icon = icons.diagnostic.info,
-            hl = {
-                fg = "blue",
-            },
-        },
-    },
-    git = {
-        branch = {
-            provider = function()
-                local head, icon = git.git_branch(0)
-                return icon .. head
-            end,
-            enabled = function()
-                return git.git_branch(0) ~= ""
-            end,
-            hl = {
-                fg = "purple",
-            },
-        },
-        diff = {
-            add = {
-                provider = function()
-                    return git.git_diff_added(0)
-                end,
-                icon = icons.diff.added,
-                enabled = function()
-                    return git.git_diff_added(0) ~= ""
-                end,
-                hl = {
-                    fg = "green",
-                },
-                left_sep = " ",
-            },
-            change = {
-                provider = function()
-                    return git.git_diff_changed(0)
-                end,
-                icon = icons.diff.changed,
-                enabled = function()
-                    return git.git_diff_changed(0) ~= ""
-                end,
-                hl = {
-                    fg = "yellow",
-                },
-                left_sep = " ",
-            },
-            remove = {
-                provider = function()
-                    return git.git_diff_removed(0)
-                end,
-                icon = icons.diff.removed,
-                enabled = function()
-                    return git.git_diff_removed(0) ~= ""
-                end,
-                hl = {
-                    fg = "red",
-                },
-                left_sep = " ",
-            },
-        },
-    },
-    cursor = {
-        pos_per = {
-            provider = function()
-                local c = require("feline.providers.cursor")
-                return " " .. c.position(nil, {}) .. " " .. c.line_percentage() .. " "
-            end,
-            hl = {
-                fg = "bg",
-                bg = "emerald",
-            },
-            left_sep = " ",
-        },
-        bar = {
-            provider = "scroll_bar",
-            hl = {
-                fg = "emerald",
-            },
-        },
-    },
-}
-
-local components = {
-    active = { {}, {}, {} },
-    inactive = { {}, {}, {} },
-}
-
-function components.active_add(self, n, x)
-    table.insert(self.active[n], x)
-end
-
-function components.inactive_add(self, n, x)
-    table.insert(self.inactive[n], x)
-end
-
-components:active_add(1, comps.vi_mode)
-components:active_add(1, comps.file.icon)
-components:active_add(1, comps.file.name)
-components:active_add(1, comps.lsp.error)
-components:active_add(1, comps.lsp.warn)
-components:active_add(1, comps.lsp.hint)
-components:active_add(1, comps.lsp.info)
-components:active_add(2, comps.git.branch)
-components:active_add(2, comps.git.diff.add)
-components:active_add(2, comps.git.diff.change)
-components:active_add(2, comps.git.diff.remove)
-components:active_add(3, comps.lsp.servers)
-components:active_add(3, comps.cursor.pos_per)
-components:active_add(3, comps.cursor.bar)
-components:inactive_add(1, comps.file.fullpath)
-
-require("feline").setup({
-    vi_mode_colors = vi_mode_colors,
-    components = components,
-    force_inactive = {
-        filetypes = {
-            "filittle",
-            "quickrun",
-        },
-    },
-})
-
-require("feline").use_theme(theme)
+local map = utils.map
+map({"n", "x"}, ";", "<Plug>(eft-repeat)")
+map({"n", "x", "o"}, "f", "<Plug>(eft-f)")
+map({"n", "x", "o"}, "F", "<Plug>(eft-F)")
+map({"n", "x", "o"}, "t", "<Plug>(eft-t)")
+map({"n", "x", "o"}, "T", "<Plug>(eft-T)")
 EOL
+'''
+
+[[plugins]]
+repo = 'hrsh7th/vim-searchx'
+on_func = 'searchx#'
+hook_add = '''
+lua <<EOL
+local map = utils.map
+map({"n", "x"}, "/", "<cmd>call searchx#start({'dir': 1})<CR>")
+map({"n", "x"}, "?", "<cmd>call searchx#start({'dir': 0})<CR>")
+map({"n", "x"}, "n", "<cmd>call searchx#next()<CR>")
+map({"n", "x"}, "N", "<cmd>call searchx#prev()<CR>")
+map("c", "<C-j>", "<cmd>call searchx#next()<CR>")
+map("c", "<C-k>", "<cmd>call searchx#prev()<CR>")
+map({"n", "c"}, "<C-l>", "<cmd>call searchx#clear()<CR>")
+EOL
+let g:searchx = {}
+let g:searchx.auto_accept = v:true
+let g:searchx.scrolloff = &scrolloff
+let g:searchx.scrolltime = 0
+let g:searchx.nohlsearch = {}
+let g:searchx.nohlsearch.jump = v:true
+let g:searchx.markers = split('ASDFGHJKL:QWERTYUIOP', '.\zs')
+'''
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_map = '<Plug>(openbrowser-smart-search)'
+hook_add = '''
+nmap <M-o> <Plug>(openbrowser-smart-search)
+xmap <M-o> <Plug>(openbrowser-smart-search)
+let g:openbrowser_browser_commands = [
+\       {'name': 'chrome.exe', 'args': ['{browser}', '{uri}']}
+\   ]
 '''
 
 [[plugins]]

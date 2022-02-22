@@ -20,11 +20,12 @@ set signcolumn=yes
 
 augroup zenhan
     au!
-    au InsertLeave * call system('zenhan.exe 0')
+    au InsertLeave * :call system('zenhan.exe 0')
+    au CmdlineLeave * :call system('zenhan.exe 0')
 augroup END
 
 augroup my_filetype
     au!
-    au BufNewFile,BufRead *.ahk setf autohotkey
-    au BufNewFile,BufRead *.inp setf packmol
+    au BufNewFile,BufRead *.ahk set ft=autohotkey
+    au BufNewFile,BufRead *.inp set ft=packmol
 augroup END
