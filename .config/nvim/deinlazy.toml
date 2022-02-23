@@ -233,9 +233,6 @@ nmap r <Plug>(operator-replace)
 '''
 
 [[plugins]]
-repo = 'tpope/vim-commentary'
-
-[[plugins]]
 repo = 'hrsh7th/vim-eft'
 on_map = { nxo = '<Plug>(eft-' }
 hook_add = '''
