@@ -22,11 +22,19 @@ augroup lspinfo_close
     au FileType lspinfo nnoremap <buffer><nowait> q <Cmd>q<CR>
 augroup END
 
+function! Lspmapping() abort
+    nnoremap <buffer> K         <Cmd>Lspsaga hover_doc<CR>
+    nnoremap <buffer> [d        <Cmd>Lspsaga diagnostic_jump_prev<CR>
+    nnoremap <buffer> ]d        <Cmd>Lspsaga diagnostic_jump_next<CR>
+    nnoremap <buffer> <leader>n <Cmd>Lspsaga rename<CR>
+    nnoremap <buffer> <leader>x <Cmd>Lspsaga code_action<CR>
+    xnoremap <buffer> <leader>x <Cmd>Lspsaga range_code_action<CR>
+    nnoremap <buffer> <C-f>     <Cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>
+    nnoremap <buffer> <C-b>     <Cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>
+endfunction
+
 lua <<EOL
 local lspinstaller = require("nvim-lsp-installer")
-
-local map = utils.map
-local command = vim.api.nvim_add_user_command
 
 -- cmp source
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -56,15 +64,7 @@ local opts = {
     default = {
         capabilities = capabilities,
         on_attach = function()
-            -- lspsaga
-            map("n", "K", "<Cmd>Lspsaga hover_doc<CR>", "buffer")
-            map("n", "<C-f>", "<Cmd>lua require'lspsaga.action'.smart_scroll_with_saga(1)<CR>", "buffer")
-            map("n", "<C-b>", "<Cmd>lua require'lspsaga.action'.smart_scroll_with_saga(-1)<CR>", "buffer")
-            map("n", "[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>", "buffer")
-            map("n", "]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>", "buffer")
-            map("n", "<leader>x", "<Cmd>Lspsaga code_action<CR>", "buffer")
-            map("x", "<leader>x", "<Cmd>Lspsaga range_code_action<CR>", "buffer")
-            map("n", "<leader>n", "<Cmd>Lspsaga rename<CR>", "buffer")
+            vim.fn["Lspmapping"]()
         end,
     },
 }
@@ -86,6 +86,8 @@ lspinstaller.on_server_ready(function(server)
     server:setup(opt)
     vim.cmd([[do User LspAttachBuffers]])
 end)
+
+local command = vim.api.nvim_add_user_command
 
 -- setup command
 command("LspSetup", function()

@@ -38,10 +38,7 @@ nnoremap <buffer><nowait> q <cmd>quit<CR>
 '''
 
 markdown = '''
-lua <<EOL
-require("pasteimage").setup()
-require("mdtable").setup()
-EOL
+lua require("pasteimage").setup()
 '''
 
 lua = '''

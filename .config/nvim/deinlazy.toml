@@ -80,8 +80,6 @@ on_event = 'BufRead'
 hook_post_update = 'TSUpdate'
 hook_source = '''
 lua <<EOL
-local map = utils.map
-
 require("nvim-treesitter.configs").setup({
     ensure_installed = "all",
     highlight = {
@@ -278,6 +276,10 @@ let g:openbrowser_browser_commands = [
 '''
 
 [[plugins]]
+repo = '~/plugin/translate-shell.nvim'
+on_cmd = ['TransJa2En', 'TransEn2Ja']
+
+[[plugins]]
 repo = 'iamcco/markdown-preview.nvim'
 build = 'cd app && yarn install'
 on_ft = 'markdown'
@@ -285,3 +287,7 @@ hook_source = '''
 let g:mkdp_refresh_slow = 1
 nnoremap <leader>p <Cmd>MarkdownPreview<CR>
 '''
+
+[[plugins]]
+repo = 'mattn/vim-maketable'
+on_ft = 'markdown'
