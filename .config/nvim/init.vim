@@ -1,5 +1,7 @@
 let mapleader = ' '
 
+command! -nargs=+ Keymap call util#keymap(<f-args>)
+
 lua require('utils')
 
 if filereadable(expand('~/.secret.vim'))

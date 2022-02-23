@@ -1,7 +1,7 @@
 [[plugins]]
 repo = 'hrsh7th/nvim-cmp'
 depends = 'LuaSnip'
-on_event = 'InsertEnter'
+on_event = ['InsertEnter', 'CmdlineEnter']
 hook_source = '''
 lua <<EOL
 local cmp = require("cmp")
@@ -293,10 +293,8 @@ EOL
 # repo = 'L3MON4D3/LuaSnip'
 repo = '~/plugin/LuaSnip'
 hook_source = '''
-imap <C-j> <Plug>luasnip-jump-next
-smap <C-j> <Plug>luasnip-jump-next
-imap <C-k> <Plug>luasnip-jump-prev
-smap <C-k> <Plug>luasnip-jump-prev
+Keymap is <C-j> <Plug>luasnip-jump-next
+Keymap is <C-k> <Plug>luasnip-jump-prev
 lua <<EOL
 require("luasnip.loaders.from_snipmate").lazy_load({
     paths = "~/.config/nvim/snippets"

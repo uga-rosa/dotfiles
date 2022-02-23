@@ -1,9 +1,5 @@
-nnoremap H ^
-xnoremap H ^
-onoremap H ^
-nnoremap L $
-xnoremap L $
-onoremap L $
+Keymap nxo H ^
+Keymap nxo L $
 
 nnoremap o zzo
 nnoremap O zzO
@@ -21,18 +17,16 @@ nnoremap x "_x
 nnoremap s "_s
 
 nnoremap j gj
-nnoremap gj j
 nnoremap k gk
+nnoremap gj j
 nnoremap gk k
 
 inoremap <C-f> <C-g>U<Right>
 cnoremap <C-f> <Right>
 inoremap <C-b> <C-g>U<Left>
 cnoremap <C-b> <Left>
-imap <C-h> <BS>
-cmap <C-h> <BS>
-inoremap <C-d> <Del>
-cnoremap <C-d> <Del>
+Keymap ic <remap> <C-h> <BS>
+Keymap ic <C-d> <Del>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <expr> <C-x> expand('%:p')

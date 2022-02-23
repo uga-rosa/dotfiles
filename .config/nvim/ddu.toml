@@ -6,16 +6,16 @@ repo = 'Shougo/ddu.vim'
 depends = 'denops.vim'
 on_source = 'denops.vim'
 hook_add = '''
-" nnoremap <silent> <leader>f <cmd>Ddu file_rec<CR>
-" nnoremap <silent> <leader>o <cmd>Ddu file_old<CR>
-" nnoremap <silent> <leader>b <cmd>Ddu buffer<CR>
+" nnoremap <silent> <leader>f <Cmd>Ddu file_rec<CR>
+" nnoremap <silent> <leader>o <Cmd>Ddu file_old<CR>
+" nnoremap <silent> <leader>b <Cmd>Ddu buffer<CR>
 " " help
-" nnoremap <silent> <leader>h <cmd>Ddu help -ui-param-startFilter<CR>
+" nnoremap <silent> <leader>h <Cmd>Ddu help -ui-param-startFilter<CR>
 " " search
-" nnoremap <silent> <leader>/ <cmd>Ddu line -ui-param-startFilter<CR>
-" nnoremap <silent> * <cmd>Ddu line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
+" nnoremap <silent> <leader>/ <Cmd>Ddu line -ui-param-startFilter<CR>
+" nnoremap <silent> * <Cmd>Ddu line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
 " " resume
-" nnoremap <silent> <leader>r <cmd>Ddu -resume -ui-param-startFilter=v:false<CR>
+" nnoremap <silent> <leader>r <Cmd>Ddu -resume -ui-param-startFilter=v:false<CR>
 '''
 hook_source = '''
 call ddu#custom#patch_global({
@@ -58,24 +58,24 @@ call ddu#custom#patch_global({
 
 [plugins.ftplugin]
 ddu-ff = '''
-nnoremap <buffer><silent> <CR> <cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-nnoremap <buffer><silent> <Space> <cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
-nnoremap <buffer><silent> i <cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
-nnoremap <buffer><silent><nowait> q <cmd>call ddu#ui#ff#do_action('quit')<CR>
-nnoremap <buffer><silent> <C-l> <cmd>call ddu#ui#ff#do_action('refreshItems')<CR>
-nnoremap <buffer><silent> p <cmd>call ddu#ui#ff#do_action('preview')<CR>
-nnoremap <buffer><silent> a <cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
-nnoremap <buffer><silent> c <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'cd'})<CR>
-nnoremap <buffer><silent> d <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'delete'})<CR>
-nnoremap <buffer><silent> e <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'edit'})<CR>
-nnoremap <buffer><silent> v <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
-nnoremap <buffer><silent> N <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'new'})<CR>
-nnoremap <buffer><silent> r <cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>
-nnoremap <buffer><silent> u <cmd>call ddu#ui#ff#do_action('updateOptions', {'sourceOptions': {'_': {'matchers': []}}})<CR>
+nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+nnoremap <buffer><silent> <Space> <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+nnoremap <buffer><silent> i <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+nnoremap <buffer><silent><nowait> q <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+nnoremap <buffer><silent> <C-l> <Cmd>call ddu#ui#ff#do_action('refreshItems')<CR>
+nnoremap <buffer><silent> p <Cmd>call ddu#ui#ff#do_action('preview')<CR>
+nnoremap <buffer><silent> a <Cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
+nnoremap <buffer><silent> c <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'cd'})<CR>
+nnoremap <buffer><silent> d <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'delete'})<CR>
+nnoremap <buffer><silent> e <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'edit'})<CR>
+nnoremap <buffer><silent> v <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+nnoremap <buffer><silent> N <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'new'})<CR>
+nnoremap <buffer><silent> r <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>
+nnoremap <buffer><silent> u <Cmd>call ddu#ui#ff#do_action('updateOptions', {'sourceOptions': {'_': {'matchers': []}}})<CR>
 '''
 ddu-ff-filter = '''
-inoremap <buffer><silent> <CR> <Esc><cmd>close<CR>
-nnoremap <buffer><silent> <CR> <cmd>close<CR>
+inoremap <buffer><silent> <CR> <Esc><Cmd>close<CR>
+nnoremap <buffer><silent> <CR> <Cmd>close<CR>
 " disable nvim-cmp
 lua require("cmp").setup.buffer({enabled = false})
 '''
