@@ -10,7 +10,7 @@ hook_add = '''
 " nnoremap <silent> <leader>o <Cmd>Ddu file_old<CR>
 " nnoremap <silent> <leader>b <Cmd>Ddu buffer<CR>
 " " help
-" nnoremap <silent> <leader>h <Cmd>Ddu help -ui-param-startFilter<CR>
+nnoremap <silent> <leader>h :<C-u>Ddu help -ui-param-startFilter<CR>
 " " search
 " nnoremap <silent> <leader>/ <Cmd>Ddu line -ui-param-startFilter<CR>
 " nnoremap <silent> * <Cmd>Ddu line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>

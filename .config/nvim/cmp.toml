@@ -283,6 +283,8 @@ if ok then
         },
         exact = 2,
         first_case_insensitive = true,
+        document = true,
+        document_command = "trans -no-ansi -no-autocorrect en:ja %s",
     })
     dict.update()
 end

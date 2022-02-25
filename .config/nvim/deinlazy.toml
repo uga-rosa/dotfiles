@@ -8,8 +8,6 @@ nnoremap <leader>r <Cmd>FzfLua resume<CR>
 nnoremap <leader>f <Cmd>FzfLua files<CR>
 nnoremap <leader>b <Cmd>FzfLua buffers<CR>
 nnoremap <leader>o <Cmd>FzfLua oldfiles<CR>
-nnoremap <leader>h <Cmd>FzfLua help_tags<CR>
-nnoremap <leader>m <Cmd>FzfLua man_pages<CR>
 nnoremap <leader>gr <Cmd>FzfLua live_grep<CR>
 nnoremap <leader>/ <Cmd>FzfLua blines<CR>
 nnoremap <leader>gf <Cmd>FzfLua git_files<CR>
@@ -276,8 +274,25 @@ let g:openbrowser_browser_commands = [
 '''
 
 [[plugins]]
-repo = '~/plugin/translate-shell.nvim'
-on_cmd = ['TransJa2En', 'TransEn2Ja']
+repo = '~/plugin/translate.nvim'
+on_event = 'BufRead'
+hook_add = '''
+nnoremap ,ejf :<C-u>TranslateLine EN JA floating<CR>
+xnoremap ,ejf :<C-u>Translate EN JA floating<CR>
+nnoremap ,eji :<C-u>TranslateLine EN JA insert<CR>
+xnoremap ,eji :<C-u>Translate EN JA insert<CR>
+nnoremap ,jef :<C-u>TranslateLine JA EN floating<CR>
+xnoremap ,jef :<C-u>Translate JA EN floating<CR>
+nnoremap ,jei :<C-u>TranslateLine JA EN insert<CR>
+xnoremap ,jei :<C-u>Translate JA EN insert<CR>
+'''
+hook_source = '''
+lua <<EOL
+require("translate").setup({
+    command = "deepl_pro",
+})
+EOL
+'''
 
 [[plugins]]
 repo = 'iamcco/markdown-preview.nvim'
