@@ -35,6 +35,7 @@ setl formatoptions+=mMBl
 
 help_qf = '''
 nnoremap <buffer><nowait> q <cmd>quit<CR>
+setl expandtab
 '''
 
 markdown = '''

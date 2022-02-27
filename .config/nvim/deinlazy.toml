@@ -277,19 +277,38 @@ let g:openbrowser_browser_commands = [
 repo = '~/plugin/translate.nvim'
 on_event = 'BufRead'
 hook_add = '''
-nnoremap ,ejf :<C-u>TranslateLine EN JA floating<CR>
-xnoremap ,ejf :<C-u>Translate EN JA floating<CR>
-nnoremap ,eji :<C-u>TranslateLine EN JA insert<CR>
-xnoremap ,eji :<C-u>Translate EN JA insert<CR>
-nnoremap ,jef :<C-u>TranslateLine JA EN floating<CR>
-xnoremap ,jef :<C-u>Translate JA EN floating<CR>
-nnoremap ,jei :<C-u>TranslateLine JA EN insert<CR>
-xnoremap ,jei :<C-u>Translate JA EN insert<CR>
+nnoremap ,jf :<C-u>Translate JA -output=floating<CR>
+xnoremap ,jf :Translate JA -output=floating<CR>
+nnoremap ,js :<C-u>Translate JA -output=split<CR>
+xnoremap ,js :Translate JA -output=split<CR>
+nnoremap ,ji :<C-u>Translate JA -output=insert<CR>
+xnoremap ,ji :Translate JA -output=insert<CR>
+nnoremap ,jr :<C-u>Translate JA -output=replace<CR>
+xnoremap ,jr :Translate JA -output=replace<CR>
+
+nnoremap ,ef :<C-u>Translate EN -output=floating<CR>
+xnoremap ,ef :Translate EN -output=floating<CR>
+nnoremap ,es :<C-u>Translate EN -output=split<CR>
+xnoremap ,es :Translate EN -output=split<CR>
+nnoremap ,ei :<C-u>Translate EN -output=insert<CR>
+xnoremap ,ei :Translate EN -output=insert<CR>
+nnoremap ,er :<C-u>Translate EN -output=replace<CR>
+xnoremap ,er :Translate EN -output=replace<CR>
 '''
 hook_source = '''
 lua <<EOL
 require("translate").setup({
-    command = "deepl_pro",
+    default = {
+        command = "deepl_pro",
+        output = "floating",
+    },
+    preset = {
+        output = {
+            split = {
+                append = true,
+            },
+        },
+    },
 })
 EOL
 '''
