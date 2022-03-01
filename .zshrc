@@ -72,6 +72,15 @@ setopt inc_append_history
 setopt share_history
 setopt AUTO_PARAM_KEYS
 
+# gh completion
+# gh completion -s zsh > /usr/local/share/zsh/site-functions/_gh
+gh() {
+    unfunction gh
+    autoload -U compinit
+    compinit -i
+    gh "$@"
+}
+
 # check if alias after sudo
 alias sudo='sudo '
 
@@ -95,7 +104,7 @@ if [[ ! -d ~/.fzf ]]; then
     ~/.fzf/install --all
 fi
 
-## config
+## fzf config
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS='--height 50% --reverse'
@@ -103,7 +112,7 @@ export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_CTRL_T_OPTS='--preview "bat --color=always --style=header,grid --line-range :100 {}"'
 export FZF_ALT_C_COMMAND='fd --type d'
 
-## upgrade function
+## fzf upgrade function
 function fzf-upgrade() {
     cd ~/.fzf
     git pull
@@ -143,15 +152,6 @@ function chrome() {
     fi
 }
 
-# pandoc
-function md2pptx() {
-    if [[ -z $1 ]]; then
-        1
-    else
-        pandoc -s $1 -o ${1%.*}.pptx --reference-doc="/home/uga/slide/theme/reference.pptx"
-    fi
-}
-
 # tmux
 export TERM="tmux-256color"
 
@@ -183,6 +183,8 @@ function tmux_session_select() {
 }
 zle -N tmux_session_select
 bindkey '^S' tmux_session_select
+
+#
 
 # gromacs
 [[ -f /usr/local/gromacs/bin/GMXRC ]] && source /usr/local/gromacs/bin/GMXRC

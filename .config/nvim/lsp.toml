@@ -98,26 +98,10 @@ command("LspSetup", function()
         "bashls",
         "rust_analyzer",
         "vimls",
-        "tsserver",
         "denols",
     }
-
-    local installed = {}
-    for _, server in ipairs(lspinstaller.get_installed_servers()) do
-        installed[server.name] = true
-    end
-
     for _, server in ipairs(servers) do
-        if not installed[server] then
-            lspinstaller.install(server)
-        end
-    end
-end, {})
-
--- update command
-command("LspUpdateAll", function()
-    for _, server in ipairs(lspinstaller.get_installed_servers()) do
-        lspinstaller.install(server.name)
+        lspinstaller.install(server)
     end
 end, {})
 EOL
