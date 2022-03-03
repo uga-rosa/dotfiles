@@ -1,6 +1,8 @@
 local M = {}
 
-local feedkey = utils.feedkey
+local function feedkey(key, mode)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode or "n", true)
+end
 
 local flag = false
 

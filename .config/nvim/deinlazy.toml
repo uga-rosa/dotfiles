@@ -1,4 +1,7 @@
 [[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
 repo = 'ibhagwan/fzf-lua'
 depends = 'nvim-web-devicons'
 on_cmd = 'FzfLua'
@@ -28,21 +31,10 @@ local actions = require("fzf-lua.actions")
 fzf.setup({
     keymap = {
         builtin = {
-            ["<F3>"] = "toggle-preview-wrap",
-            ["<F4>"] = "toggle-preview",
             ["<C-f>"] = "preview-page-down",
             ["<C-b>"] = "preview-page-up",
-            ["<S-left>"] = "preview-page-reset",
         },
         fzf = {
-            -- fzf '--bind=' options
-            ["ctrl-u"] = "unix-line-discard",
-            ["ctrl-a"] = "beginning-of-line",
-            ["ctrl-e"] = "end-of-line",
-            ["alt-a"] = "toggle-all",
-            -- Only valid with fzf previewers (bat/cat/git/etc)
-            ["f3"] = "toggle-preview-wrap",
-            ["f4"] = "toggle-preview",
             ["ctrl-f"] = "preview-page-down",
             ["ctrl-b"] = "preview-page-up",
         },
@@ -128,28 +120,31 @@ on_cmd = ['TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor']
 
 [[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
+depends = 'nvim-lua/plenary.nvim'
 on_event = 'BufRead'
 hook_source = '''
 lua <<EOL
+local 
 require("gitsigns").setup({
-    keymaps = {
-        noremap = true,
+    on_attach = function(bufnr)
+        local gs = package.loaded.gitsigns
 
-        ["n ]g"] = {
-            expr = true,
-            "&diff ? ']c' : '<Cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'",
-        },
-        ["n [g"] = {
-            expr = true,
-            "&diff ? '[c' : '<Cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'",
-        },
+        local function map(modes, lhs, rhs, opts)
+            opts = opts or {}
+            opts.buffer = bufnr
+            vim.keymap.set(modes, lhs, rhs, opts)
+        end
 
-        ["n <leader>gp"] = '<Cmd>lua require"gitsigns".preview_hunk()<CR>',
+        -- Navigation
+        map("n", "]g", "&diff ? ']c' : '<Cmd>Gitsigns next_hunk()<CR>'", { expr = true })
+        map("n", "[g", "&diff ? '[c' : '<Cmd>Gitsigns prev_hunk()<CR>'", { expr = true })
 
-        -- Text objects
-        ["o ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-        ["x ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-    },
+        -- Actions
+        map("n", "<leader>gp", gs.preview_hunk)
+
+        -- Text object
+        map({"o", "x"}, "ih", ":<C-u>Gitsigns select_hunk()<CR>")
+    end
 })
 EOL
 '''
@@ -214,7 +209,8 @@ call lexima#add_rule({'char': '$', 'at': '\%#$', 'leave': 1, 'filetype': 'markdo
 repo = 'junegunn/vim-easy-align'
 on_map = { nx = '<Plug>(EasyAlign)' }
 hook_add = '''
-Keymap nx ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 '''
 
 [[plugins]]
@@ -232,24 +228,38 @@ nmap r <Plug>(operator-replace)
 repo = 'hrsh7th/vim-eft'
 on_map = { nxo = '<Plug>(eft-' }
 hook_add = '''
-Keymap nx ; <Plug>(eft-repeat)
-Keymap nxo f <Plug>(eft-f)
-Keymap nxo F <Plug>(eft-F)
-Keymap nxo t <Plug>(eft-t)
-Keymap nxo T <Plug>(eft-T)
+nmap ; <Plug>(eft-repeat)
+xmap ; <Plug>(eft-repeat)
+nmap f <Plug>(eft-f)
+xmap f <Plug>(eft-f)
+omap f <Plug>(eft-f)
+nmap F <Plug>(eft-F)
+xmap F <Plug>(eft-F)
+omap F <Plug>(eft-F)
+nmap t <Plug>(eft-t)
+xmap t <Plug>(eft-t)
+omap t <Plug>(eft-t)
+nmap T <Plug>(eft-T)
+xmap T <Plug>(eft-T)
+omap T <Plug>(eft-T)
 '''
 
 [[plugins]]
 repo = 'hrsh7th/vim-searchx'
 on_func = 'searchx#'
 hook_add = '''
-Keymap nx / <Cmd>call searchx#start({'dir': 1})<CR>
-Keymap nx ? <Cmd>call searchx#start({'dir': 0})<CR>
-Keymap nx n <Cmd>call searchx#next()<CR>
-Keymap nx N <Cmd>call searchx#prev()<CR>
-Keymap nc <C-l> <Cmd>call searchx#clear()<CR>
+nnoremap /     <Cmd>call searchx#start({'dir': 1})<CR>
+xnoremap /     <Cmd>call searchx#start({'dir': 1})<CR>
+nnoremap ?     <Cmd>call searchx#start({'dir': 0})<CR>
+xnoremap ?     <Cmd>call searchx#start({'dir': 0})<CR>
+nnoremap n     <Cmd>call searchx#next()<CR>
+xnoremap n     <Cmd>call searchx#next()<CR>
 cnoremap <C-j> <Cmd>call searchx#next()<CR>
+nnoremap N     <Cmd>call searchx#prev()<CR>
+xnoremap N     <Cmd>call searchx#prev()<CR>
 cnoremap <C-k> <Cmd>call searchx#prev()<CR>
+nnoremap <C-l> <Cmd>call searchx#clear()<CR>
+cnoremap <C-l> <Cmd>call searchx#clear()<CR>
 '''
 hook_source = '''
 let g:searchx = {}
@@ -265,7 +275,8 @@ let g:searchx.markers = split('ASDFGHJKL:QWERTYUIOP', '.\zs')
 repo = 'tyru/open-browser.vim'
 on_map = '<Plug>(openbrowser-smart-search)'
 hook_add = '''
-Keymap nx <M-o> <Plug>(openbrowser-smart-search)
+nmap <M-o> <Plug>(openbrowser-smart-search)
+xmap <M-o> <Plug>(openbrowser-smart-search)
 '''
 hook_source = '''
 let g:openbrowser_browser_commands = [

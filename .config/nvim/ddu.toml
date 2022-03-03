@@ -1,5 +1,6 @@
 [[plugins]]
 repo = 'vim-denops/denops.vim'
+on_event = 'CursorHold'
 
 [[plugins]]
 repo = 'Shougo/ddu.vim'

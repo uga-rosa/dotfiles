@@ -6,7 +6,9 @@ hook_source = '''
 lua <<EOL
 local cmp = require("cmp")
 local luasnip = require("luasnip")
-local feedkey = utils.feedkey
+local function feedkey(key, mode)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode or "n", true)
+end
 
 local lspkind = {
     Text = "",
@@ -295,8 +297,10 @@ EOL
 # repo = 'L3MON4D3/LuaSnip'
 repo = '~/plugin/LuaSnip'
 hook_source = '''
-Keymap is <C-j> <Plug>luasnip-jump-next
-Keymap is <C-k> <Plug>luasnip-jump-prev
+imap <C-j> <Plug>luasnip-jump-next
+smap <C-j> <Plug>luasnip-jump-next
+imap <C-k> <Plug>luasnip-jump-prev
+smap <C-k> <Plug>luasnip-jump-prev
 lua <<EOL
 require("luasnip.loaders.from_snipmate").lazy_load({
     paths = "~/.config/nvim/snippets"
