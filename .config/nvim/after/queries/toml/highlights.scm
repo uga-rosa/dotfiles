@@ -1,7 +1,7 @@
 ((pair
   (bare_key) @_key
   (string) @none)
- (#vim-match? @_key "^hook_\w*")
+ (#vim-match? @_key "^hook_(add|source|post_source)")
  (#offset! @none 0 3 0 -3))
 ((table
   (bare_key) @_key

@@ -3,8 +3,6 @@ repo = 'feline-nvim/feline.nvim'
 depends = 'nvim-web-devicons'
 on_event = ['BufRead', 'BufNewFile']
 hook_source = '''
-set termguicolors
-
 lua <<EOL
 local f = vim.fn
 

@@ -1,14 +1,14 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 hook_add = '''
-function! s:dein_sync() abort
+function! s:dein_update() abort
     if exists('g:dein#install_github_api_token')
         call dein#check_update(v:true)
     else
         call dein#update()
     endif
 endfunction
-command DeinUpdate call s:dein_sync()
+command DeinUpdate call s:dein_update()
 '''
 
 [[plugins]]

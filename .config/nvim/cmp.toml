@@ -242,54 +242,50 @@ EOL
 
 [[plugins]]
 repo = 'hrsh7th/cmp-buffer'
-depends = 'nvim-cmp'
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-path'
-depends = 'nvim-cmp'
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-nvim-lsp'
-depends = 'nvim-cmp'
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-cmdline'
-depends = 'nvim-cmp'
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-nvim-lsp-signature-help'
-depends = 'nvim-cmp'
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'saadparwaiz1/cmp_luasnip'
-depends = 'nvim-cmp'
 on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = '~/plugin/cmp-dictionary'
-depends = 'nvim-cmp'
 on_source = 'nvim-cmp'
 hook_source = '''
 lua <<EOL
-local ok, dict = pcall(require, "cmp_dictionary")
-if ok then
-    dict.setup({
-        dic = {
-            ["*"] = "/usr/share/dict/words",
-            ["autohotkey"] = "~/dotfiles/doc/ahk.dict",
-        },
-        exact = 2,
-        first_case_insensitive = true,
-        document = true,
-        document_command = "trans -no-ansi -no-autocorrect en:ja %s",
-    })
-    dict.update()
-end
+local dict = require("cmp_dictionary")
+dict.setup({
+    dic = {
+        ["*"] = "/usr/share/dict/words",
+        ["autohotkey"] = "~/dotfiles/doc/ahk.dict",
+    },
+    exact = 2,
+    first_case_insensitive = true,
+    document = true,
+    document_command = true,
+    -- document_command = {
+    --     "sh",
+    --     "-c",
+    --     deepl_cmd,
+    -- }
+})
+dict.update()
 EOL
 '''
 

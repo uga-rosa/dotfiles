@@ -18,6 +18,9 @@ set clipboard+=unnamedplus
 set inccommand=split
 set signcolumn=yes
 
+let g:do_filetype_lua = 1
+let g:did_load_filetypes = 0
+
 augroup zenhan
     au!
     au InsertLeave * :call system('zenhan.exe 0')
