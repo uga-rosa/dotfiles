@@ -1,3 +1,48 @@
+# Autoload
+autoload -U compinit; compinit
+
+# Completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:default' menu select=1
+
+# Language must be set be en_US
+export LANGUAGE="en_US.UTF-8"
+export LANG="$LANGUAGE"
+export LC_ALL="$LANGUAGE"
+export LC_CTYPE="$LANGUAGE"
+
+# Editor
+export EDITOR=nvim
+
+# tmux color
+export TERM="tmux-256color"
+
+# History file and its size
+export HISTFILE="$HOME/.zsh_history"
+export HISTSIZE=10000
+export SAVEHIST=100000
+
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt inc_append_history
+setopt share_history
+setopt AUTO_PARAM_KEYS
+
+# check if alias after sudo
+alias sudo='sudo '
+
+# nvim alias
+alias nv="nvim"
+
+# windows chrome
+function chrome() {
+    if [[ -z $1 ]]; then
+        chrome.exe
+    else
+        chrome.exe $(wslpath -w ${1})
+    fi
+}
+
 # not ssh and out of tmux
 if [[ -z $SSH_TTY && -z $TMUX ]]; then
     # cron

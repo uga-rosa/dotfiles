@@ -1,15 +1,11 @@
-# unique path
-typeset -U path PATH
-
-export LIBGL_ALWAYS_INDIRECT=1
-
-# brew
-[[ -d /home/linuxbrew ]] && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-
 # windows_commands
 export PATH=$HOME/.windows_command:$PATH
 
-# Path to mine
+# afx
+export AFX_COMMAND_PATH="$HOME/.afx/bin"
+export PATH="$AFX_COMMAND_PATH:$PATH"
+
+# Path to my local dir
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.local/bin:$PATH
 
@@ -30,3 +26,6 @@ export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 # deno
 export PATH="$PATH:$HOME/.deno/bin"
 export DENO_INSTALL="$HOME/.deno"
+
+# gromacs
+[[ -f /usr/local/gromacs/bin/GMXRC ]] && source /usr/local/gromacs/bin/GMXRC

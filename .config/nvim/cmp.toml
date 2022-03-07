@@ -278,12 +278,6 @@ dict.setup({
     exact = 2,
     first_case_insensitive = true,
     document = true,
-    document_command = true,
-    -- document_command = {
-    --     "sh",
-    --     "-c",
-    --     deepl_cmd,
-    -- }
 })
 dict.update()
 EOL
