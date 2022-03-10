@@ -27,14 +27,16 @@ nnoremap k  gk
 nnoremap gj j
 nnoremap gk k
 
+" Emacs key binding
 inoremap <C-f>  <C-g>U<Right>
-cnoremap <C-f>  <Right>
 inoremap <C-b>  <C-g>U<Left>
+inoremap <C-d>  <Del>
+
+cnoremap <C-f>  <Right>
 cnoremap <C-b>  <Left>
 cnoremap <C-a>  <Home>
 cnoremap <C-e>  <End>
 cnoremap <C-h>  <BS>
-inoremap <C-d>  <Del>
 cnoremap <C-d>  <Del>
 cnoremap <expr> <C-x> expand('%:p')
 
