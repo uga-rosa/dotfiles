@@ -118,43 +118,44 @@ repo = 'nvim-treesitter/playground'
 depends = 'nvim-treesitter'
 on_cmd = ['TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor']
 
+# [[plugins]]
+# repo = 'lewis6991/gitsigns.nvim'
+# depends = 'nvim-lua/plenary.nvim'
+# on_event = 'BufRead'
+# hook_source = '''
+# lua <<EOL
+# local 
+# require("gitsigns").setup({
+#     on_attach = function(bufnr)
+#         local gs = package.loaded.gitsigns
+
+#         local function map(modes, lhs, rhs, opts)
+#             opts = opts or {}
+#             opts.buffer = bufnr
+#             vim.keymap.set(modes, lhs, rhs, opts)
+#         end
+
+#         -- Navigation
+#         map("n", "]g", "&diff ? ']c' : '<Cmd>Gitsigns next_hunk()<CR>'", { expr = true })
+#         map("n", "[g", "&diff ? '[c' : '<Cmd>Gitsigns prev_hunk()<CR>'", { expr = true })
+
+#         -- Actions
+#         map("n", "<leader>gp", gs.preview_hunk)
+
+#         -- Text object
+#         map({"o", "x"}, "ih", ":<C-u>Gitsigns select_hunk()<CR>")
+#     end
+# })
+# EOL
+# '''
+
 [[plugins]]
-repo = 'lewis6991/gitsigns.nvim'
-depends = 'nvim-lua/plenary.nvim'
-on_event = 'BufRead'
-hook_source = '''
-lua <<EOL
-local 
-require("gitsigns").setup({
-    on_attach = function(bufnr)
-        local gs = package.loaded.gitsigns
-
-        local function map(modes, lhs, rhs, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(modes, lhs, rhs, opts)
-        end
-
-        -- Navigation
-        map("n", "]g", "&diff ? ']c' : '<Cmd>Gitsigns next_hunk()<CR>'", { expr = true })
-        map("n", "[g", "&diff ? '[c' : '<Cmd>Gitsigns prev_hunk()<CR>'", { expr = true })
-
-        -- Actions
-        map("n", "<leader>gp", gs.preview_hunk)
-
-        -- Text object
-        map({"o", "x"}, "ih", ":<C-u>Gitsigns select_hunk()<CR>")
-    end
-})
-EOL
-'''
-
-[[plugins]]
-repo = 'kdheepak/lazygit.nvim'
-on_cmd = 'LazyGit'
+repo = 'lambdalisue/gina.vim'
+on_cmd = 'Gina'
 hook_add = '''
-let g:lazygit_floating_window_use_plenary = v:true
-nnoremap <leader>l <Cmd>LazyGit<CR>
+nmap <leader>g <Plug>(Gina)
+nmap <silent> <Plug>(Gina)s <Cmd>Gina status -s<CR>
+nmap <silent> <Plug>(Gina)c <Cmd>Gina compare<CR>
 '''
 
 [[plugins]]
@@ -199,6 +200,7 @@ runtime macros/sandwich/keymap/surround.vim
 repo = 'cohama/lexima.vim'
 on_event = 'InsertEnter'
 hook_source = '''
+let g:lexima_ctrlh_as_backspace = 1
 call lexima#add_rule({'char': '<CR>', 'at': '\\\s.*\%#$', 'input': '<CR><Bslash> ', 'filetype': 'vim'})
 call lexima#add_rule({'char': '<CR>', 'at': '{\%#$}', 'input': '<CR><Bslash> ', 'input_after': '<CR><Bslash> ', 'filetype': 'vim'})
 call lexima#add_rule({'char': '$', 'input_after': '$', 'filetype': 'markdown'})
@@ -322,6 +324,11 @@ require("translate").setup({
     },
 })
 EOL
+'''
+
+[plugins.ftplugin]
+translate = '''
+nnoremap <buffer><nowait> q <Cmd>quit<CR>
 '''
 
 [[plugins]]

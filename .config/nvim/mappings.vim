@@ -33,7 +33,6 @@ inoremap <C-b>  <C-g>U<Left>
 cnoremap <C-b>  <Left>
 cnoremap <C-a>  <Home>
 cnoremap <C-e>  <End>
-imap     <C-h>  <BS>
 cnoremap <C-h>  <BS>
 inoremap <C-d>  <Del>
 cnoremap <C-d>  <Del>

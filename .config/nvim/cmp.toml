@@ -284,8 +284,8 @@ EOL
 '''
 
 [[plugins]]
-# repo = 'L3MON4D3/LuaSnip'
-repo = '~/plugin/LuaSnip'
+repo = 'L3MON4D3/LuaSnip'
+# repo = '~/plugin/LuaSnip'
 hook_source = '''
 imap <C-j> <Plug>luasnip-jump-next
 smap <C-j> <Plug>luasnip-jump-next

@@ -24,7 +24,6 @@ let g:did_load_filetypes = 0
 augroup zenhan
     au!
     au InsertLeave * :call system('zenhan.exe 0')
-    au CmdlineLeave * :call system('zenhan.exe 0')
 augroup END
 
 augroup my_filetype
