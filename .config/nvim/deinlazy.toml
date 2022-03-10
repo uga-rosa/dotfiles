@@ -118,37 +118,6 @@ repo = 'nvim-treesitter/playground'
 depends = 'nvim-treesitter'
 on_cmd = ['TSPlaygroundToggle', 'TSHighlightCapturesUnderCursor']
 
-# [[plugins]]
-# repo = 'lewis6991/gitsigns.nvim'
-# depends = 'nvim-lua/plenary.nvim'
-# on_event = 'BufRead'
-# hook_source = '''
-# lua <<EOL
-# local 
-# require("gitsigns").setup({
-#     on_attach = function(bufnr)
-#         local gs = package.loaded.gitsigns
-
-#         local function map(modes, lhs, rhs, opts)
-#             opts = opts or {}
-#             opts.buffer = bufnr
-#             vim.keymap.set(modes, lhs, rhs, opts)
-#         end
-
-#         -- Navigation
-#         map("n", "]g", "&diff ? ']c' : '<Cmd>Gitsigns next_hunk()<CR>'", { expr = true })
-#         map("n", "[g", "&diff ? '[c' : '<Cmd>Gitsigns prev_hunk()<CR>'", { expr = true })
-
-#         -- Actions
-#         map("n", "<leader>gp", gs.preview_hunk)
-
-#         -- Text object
-#         map({"o", "x"}, "ih", ":<C-u>Gitsigns select_hunk()<CR>")
-#     end
-# })
-# EOL
-# '''
-
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
