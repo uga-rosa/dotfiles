@@ -29,18 +29,23 @@ local fzf = require("fzf-lua")
 local actions = require("fzf-lua.actions")
 
 fzf.setup({
-    keymap = {
-        builtin = {
-            ["<C-f>"] = "preview-page-down",
-            ["<C-b>"] = "preview-page-up",
-        },
-        fzf = {
-            ["ctrl-f"] = "preview-page-down",
-            ["ctrl-b"] = "preview-page-up",
+    winopts = {
+        preview = {
+            default = "bat",
         },
     },
     file_icon_padding = " ",
     files = {
+        actions = {
+            ["ctrl-x"] = actions.file_split,
+        },
+    },
+    oldfiles = {
+        actions = {
+            ["ctrl-x"] = actions.file_split,
+        },
+    },
+    buffers = {
         actions = {
             ["ctrl-x"] = actions.file_split,
         },
@@ -123,8 +128,16 @@ repo = 'lambdalisue/gina.vim'
 on_cmd = 'Gina'
 hook_add = '''
 nmap <leader>g <Plug>(Gina)
+
 nmap <silent> <Plug>(Gina)s <Cmd>Gina status -s<CR>
 nmap <silent> <Plug>(Gina)c <Cmd>Gina compare<CR>
+
+nnoremap qt <Cmd>tabclose<CR>
+'''
+hook_source = '''
+call gina#custom#mapping#nmap('status', '<Space>', '<Plug>(gina-index-toggle)', {'buffer': 1, 'nowait': 1, 'silent': 1})
+call gina#custom#mapping#nmap('status', 'cc', '<Cmd>Gina commit<CR>', {'noremap': 1, 'buffer': 1, 'nowait': 1, 'silent': 1})
+call gina#custom#mapping#nmap('status', 'q', '<Cmd>bd<CR>', {'noremap': 1, 'buffer': 1, 'nowait': 1, 'silent': 1})
 '''
 
 [[plugins]]
@@ -243,6 +256,14 @@ let g:searchx.markers = split('ASDFGHJKL:QWERTYUIOP', '.\zs')
 '''
 
 [[plugins]]
+repo = 'yuki-yano/fuzzy-motion.vim'
+depends = 'denops.vim'
+on_cmd = 'FuzzyMotion'
+hook_add = '''
+nnoremap ss <Cmd>FuzzyMotion<CR>
+'''
+
+[[plugins]]
 repo = 'tyru/open-browser.vim'
 on_map = '<Plug>(openbrowser-smart-search)'
 hook_add = '''
@@ -257,32 +278,31 @@ let g:openbrowser_browser_commands = [
 
 [[plugins]]
 repo = '~/plugin/translate.nvim'
-on_event = 'BufRead'
+on_event = ['BufRead', 'BufNewFile']
 hook_add = '''
-nnoremap ,jf :<C-u>Translate JA -output=floating<CR>
-xnoremap ,jf :Translate JA -output=floating<CR>
-nnoremap ,js :<C-u>Translate JA -output=split<CR>
-xnoremap ,js :Translate JA -output=split<CR>
-nnoremap ,ji :<C-u>Translate JA -output=insert<CR>
-xnoremap ,ji :Translate JA -output=insert<CR>
-nnoremap ,jr :<C-u>Translate JA -output=replace<CR>
-xnoremap ,jr :Translate JA -output=replace<CR>
+nnoremap <silent> mjf :<C-u>Translate JA -parse_after=remove_newline,window -output=floating<CR>
+xnoremap <silent> mjf :Translate JA -parse_after=remove_newline,window -output=floating<CR>
+nnoremap <silent> mjs :<C-u>Translate JA -parse_after=remove_newline,oneline -output=split<CR>
+xnoremap <silent> mjs :Translate JA -parse_after=remove_newline,oneline -output=split<CR>
+nnoremap <silent> mji :<C-u>Translate JA -parse_after=remove_newline,head -output=insert<CR>
+xnoremap <silent> mji :Translate JA -parse_after=remove_newline,head -output=insert<CR>
+nnoremap <silent> mjr :<C-u>Translate JA -parse_after=remove_newline,head -output=replace<CR>
+xnoremap <silent> mjr :Translate JA -parse_after=remove_newline,head -output=replace<CR>
 
-nnoremap ,ef :<C-u>Translate EN -output=floating<CR>
-xnoremap ,ef :Translate EN -output=floating<CR>
-nnoremap ,es :<C-u>Translate EN -output=split<CR>
-xnoremap ,es :Translate EN -output=split<CR>
-nnoremap ,ei :<C-u>Translate EN -output=insert<CR>
-xnoremap ,ei :Translate EN -output=insert<CR>
-nnoremap ,er :<C-u>Translate EN -output=replace<CR>
-xnoremap ,er :Translate EN -output=replace<CR>
+nnoremap <silent> mef :<C-u>Translate EN -parse_after=remove_newline,window -output=floating<CR>
+xnoremap <silent> mef :Translate EN -parse_after=remove_newline,window -output=floating<CR>
+nnoremap <silent> mes :<C-u>Translate EN -parse_after=remove_newline,oneline -output=split<CR>
+xnoremap <silent> mes :Translate EN -parse_after=remove_newline,oneline -output=split<CR>
+nnoremap <silent> mei :<C-u>Translate EN -parse_after=remove_newline,head -output=insert<CR>
+xnoremap <silent> mei :Translate EN -parse_after=remove_newline,head -output=insert<CR>
+nnoremap <silent> mer :<C-u>Translate EN -parse_after=remove_newline,head -output=replace<CR>
+xnoremap <silent> mer :Translate EN -parse_after=remove_newline,head -output=replace<CR>
 '''
 hook_source = '''
 lua <<EOL
 require("translate").setup({
     default = {
         command = "deepl_pro",
-        output = "floating",
     },
     preset = {
         output = {
@@ -294,10 +314,36 @@ require("translate").setup({
 })
 EOL
 '''
-
 [plugins.ftplugin]
 translate = '''
 nnoremap <buffer><nowait> q <Cmd>quit<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = 'context_filetype.vim'
+on_ft = ['toml']
+hook_add = '''
+let g:precious_enable_switch_CursorMoved = { '*': 0 }
+let g:precious_enable_switch_CursorMoved_i = { '*': 0 }
+let g:precious_enable_switch_CursorHold = { '*': 0 }
+let g:precious_enable_switch_BufEnter = { '*': 0 }
+'''
+hook_source = '''
+augroup precious
+    au!
+    au InsertEnter *.toml :PreciousSwitch
+    au InsertLeave *.toml :PreciousReset
+    au User PreciousFileType :lua require("my_lsp").check_server()
+augroup END
+
+nmap gc  <Cmd>PreciousSwitch<CR><Plug>Commentary<Cmd>PreciousReset<CR>
+xmap gc  <Cmd>PreciousSwitch<CR><Plug>Commentary<Cmd>PreciousReset<CR>
+omap gc  <Cmd>PreciousSwitch<CR><Plug>Commentary<Cmd>PreciousReset<CR>
+nmap gcc <Cmd>PreciousSwitch<CR><Plug>CommentaryLine<Cmd>PreciousReset<CR>
 '''
 
 [[plugins]]

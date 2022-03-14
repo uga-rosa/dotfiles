@@ -1,3 +1,7 @@
+" for prefix
+nnoremap s <Nop>
+nnoremap m <Nop>
+
 nnoremap H ^
 xnoremap H ^
 onoremap H ^
@@ -20,7 +24,6 @@ nnoremap + <C-a>
 nnoremap - <C-x>
 
 nnoremap x "_x
-nnoremap s "_s
 
 nnoremap j  gj
 nnoremap k  gk

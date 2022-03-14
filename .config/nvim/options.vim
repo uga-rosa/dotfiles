@@ -1,21 +1,42 @@
+" File-content encoding for the current buffer.
 set fileencoding='utf-8'
+
+" Used for the CursorHold autocommand event.
 set updatetime=100
+
+" When off a buffer is unloaded (including loss of undo information) when it is abandoned.
 set hidden
+
 set number
+
 set showmatch
-set expandtab
+
+" Number of spaces that a <Tab> in the file counts for.
 set tabstop=4
+" Number of spaces to use for each step of (auto)indent.
 set shiftwidth=4
+" Use the appropriate number of spaces to insert a <Tab>.
+set expandtab
+
 set smartindent
+
 set noswapfile
+
 set scrolloff=3
+
 set ignorecase
 set smartcase
+
 set pumheight=25
+
 set termguicolors
+
 set nofoldenable
+
 set clipboard+=unnamedplus
+
 set inccommand=split
+
 set signcolumn=yes
 
 let g:do_filetype_lua = 1
@@ -31,3 +52,5 @@ augroup my_filetype
     au BufNewFile,BufRead *.ahk set ft=autohotkey
     au BufNewFile,BufRead *.inp set ft=packmol
 augroup END
+
+command! ShowHlGroup echo synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
