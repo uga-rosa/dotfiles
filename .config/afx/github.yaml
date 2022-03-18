@@ -1,0 +1,98 @@
+github:
+  - name: junegunn/fzf
+    description: A command-line fuzzy finder
+    owner: junegunn
+    repo: fzf
+    command:
+      build:
+        steps:
+          - ./install --all
+      link:
+        - from: 'bin/fzf'
+        - from: 'bin/fzf-tmux'
+    plugin:
+      sources:
+        - ~/.fzf.zsh
+      env:
+        FZF_DEFAULT_COMMAND: fd --type f
+        FZF_DEFAULT_OPTS: --height 50% --reverse
+        FZF_CTRL_T_COMMAND: rg --files --hedden --follow --glob "!.git/*"
+        FZF_CTRL_T_OPTS: --preview "bat --color=always --style=header,grid --line-range :100 {}"
+        FZF_ALT_C_COMMAND: fd --type d
+  - name: zdharma-continuum/fast-syntax-highlighting
+    description: Syntax-highlighting for Zshell.
+    owner: zdharma-continuum
+    repo: fast-syntax-highlighting
+    plugin:
+      sources:
+        - fast-syntax-highlighting.plugin.zsh
+  - name: zsh-users/zsh-autosuggestions
+    description: Fish-like autosuggestions for zsh.
+    owner: zsh-users
+    repo: zsh-autosuggestions
+    plugin:
+      sources:
+        - zsh-autosuggestions.zsh
+  - name: zsh-users/zsh-completions
+    description: Additional completion definitions for Zsh.
+    owner: zsh-users
+    repo: zsh-completions
+    plugin:
+      sources:
+        - zsh-completions.plugin.zsh
+  - name: woefe/git-prompt.zsh
+    description: A fast, customizable, pure-shell, asynchronous Git prompt for Zsh.
+    owner: woefe
+    repo: git-prompt.zsh
+    plugin:
+      sources:
+        - git-prompt.zsh
+  - name: sindresorhus/pure
+    description: Pretty, minimal and fast ZSH prompt.
+    owner: sindresorhus
+    repo: pure
+    plugin:
+      snippet-prepare: |
+        zstyle ':prompt:pure:prompt:success' color green
+        zstyle ':prompt:pure:git:branch' color '#ae81ff'
+      sources:
+        - pure.zsh
+    depends-on:
+      - mafredri/zsh-async
+  - name: mafredri/zsh-async
+    description: Because your terminal should be able to perform tasks asynchronously without external tools!
+    owner: mafredri
+    repo: zsh-async
+    plugin:
+      sources:
+        - async.zsh
+  - name: b4b4r07/enhancd
+    description: A next-generation cd command with your interactive filter.
+    owner: b4b4r07
+    repo: enhancd
+    plugin:
+      env:
+        ENHANCD_FILTER: fzf --height 25% --reverse
+      sources:
+        - init.sh
+  - name: jesseduffield/lazygit
+    description: simple terminal UI for git commands.
+    owner: jesseduffield
+    repo: lazygit
+    command:
+      # Release doesn't work.
+      build:
+        steps:
+          - go build -o lazygit
+      link:
+        - from: lazygit
+      alias:
+        g: lazygit
+  - name: tmux-plugins/tpm
+    description: Tmux Plugin Manager
+    owner: tmux-plugins
+    repo: tpm
+    command:
+      link:
+        - from: .
+          to: $HOME/.tmux/plugins/tpm

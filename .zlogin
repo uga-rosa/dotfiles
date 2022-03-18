@@ -34,6 +34,15 @@ alias sudo='sudo '
 # nvim alias
 alias nv="nvim"
 
+# Go to home of Windows (for WSL)
+function home() {
+    if [[ -d /mnt/e/home ]]; then
+        cd /mnt/e/home
+    else
+        cd "$HOME"
+    fi
+}
+
 # windows chrome
 function chrome() {
     if [[ -z $1 ]]; then

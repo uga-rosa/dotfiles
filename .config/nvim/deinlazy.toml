@@ -280,23 +280,23 @@ let g:openbrowser_browser_commands = [
 repo = '~/plugin/translate.nvim'
 on_event = ['BufRead', 'BufNewFile']
 hook_add = '''
-nnoremap <silent> mjf :<C-u>Translate JA -parse_after=remove_newline,window -output=floating<CR>
-xnoremap <silent> mjf :Translate JA -parse_after=remove_newline,window -output=floating<CR>
-nnoremap <silent> mjs :<C-u>Translate JA -parse_after=remove_newline,oneline -output=split<CR>
-xnoremap <silent> mjs :Translate JA -parse_after=remove_newline,oneline -output=split<CR>
-nnoremap <silent> mji :<C-u>Translate JA -parse_after=remove_newline,head -output=insert<CR>
-xnoremap <silent> mji :Translate JA -parse_after=remove_newline,head -output=insert<CR>
-nnoremap <silent> mjr :<C-u>Translate JA -parse_after=remove_newline,head -output=replace<CR>
-xnoremap <silent> mjr :Translate JA -parse_after=remove_newline,head -output=replace<CR>
+nnoremap <silent> mjf :<C-u>Translate JA -source=EN -parse_after=window -output=floating<CR>
+xnoremap <silent> mjf :Translate JA -source=EN -parse_after=window -output=floating<CR>
+nnoremap <silent> mjs :<C-u>Translate JA -source=EN -output=split<CR>
+xnoremap <silent> mjs :Translate JA -source=EN -output=split<CR>
+nnoremap <silent> mji :<C-u>Translate JA -source=EN -output=insert<CR>
+xnoremap <silent> mji :Translate JA -source=EN -output=insert<CR>
+nnoremap <silent> mjr :<C-u>Translate JA -source=EN -output=replace<CR>
+xnoremap <silent> mjr :Translate JA -source=EN -output=replace<CR>
 
-nnoremap <silent> mef :<C-u>Translate EN -parse_after=remove_newline,window -output=floating<CR>
-xnoremap <silent> mef :Translate EN -parse_after=remove_newline,window -output=floating<CR>
-nnoremap <silent> mes :<C-u>Translate EN -parse_after=remove_newline,oneline -output=split<CR>
-xnoremap <silent> mes :Translate EN -parse_after=remove_newline,oneline -output=split<CR>
-nnoremap <silent> mei :<C-u>Translate EN -parse_after=remove_newline,head -output=insert<CR>
-xnoremap <silent> mei :Translate EN -parse_after=remove_newline,head -output=insert<CR>
-nnoremap <silent> mer :<C-u>Translate EN -parse_after=remove_newline,head -output=replace<CR>
-xnoremap <silent> mer :Translate EN -parse_after=remove_newline,head -output=replace<CR>
+nnoremap <silent> mef :<C-u>Translate EN -source=JA -parse_after=window -output=floating<CR>
+xnoremap <silent> mef :Translate EN -source=JA -parse_after=window -output=floating<CR>
+nnoremap <silent> mes :<C-u>Translate EN -source=JA -output=split<CR>
+xnoremap <silent> mes :Translate EN -source=JA -output=split<CR>
+nnoremap <silent> mei :<C-u>Translate EN -source=JA -output=insert<CR>
+xnoremap <silent> mei :Translate EN -source=JA -output=insert<CR>
+nnoremap <silent> mer :<C-u>Translate EN -source=JA -output=replace<CR>
+xnoremap <silent> mer :Translate EN -source=JA -output=replace<CR>
 '''
 hook_source = '''
 lua <<EOL

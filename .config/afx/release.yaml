@@ -1,0 +1,87 @@
+github:
+  - name: b4b4r07/gomi
+    description: Replacement for UNIX rm command!
+    owner: b4b4r07
+    repo: gomi
+    release:
+      name: gomi
+      tag: v1.1.1
+    command:
+      alias:
+        rm: gomi
+      link:
+        - from: gomi
+  - name: stedolan/jq
+    description: Command-line JSON processor
+    owner: stedolan
+    repo: jq
+    release:
+      name: jq
+      tag: jq-1.6
+    command:
+      link:
+        - from: '*jq*'
+          to: jq
+  - name: ogham/exa
+    description: A modern version of 'ls'.
+    owner: ogham
+    repo: exa
+    release:
+      name: exa
+      tag: v0.9.0
+    command:
+      alias:
+        l: exa --icons
+        ls: e
+        la: exa -a --icons
+        ll: exa -aal --icons
+        lt: exa -T -L 3 -a -I "node_modules|.git|.cache" --icons
+        lta: exa -T -a -I "node_modules|.git|.cache" --color=always --icons | less -r
+      link:
+        - from: '*exa*'
+          to: exa
+  - name: sharkdp/bat
+    description: A cat(1) clone with wings.
+    owner: sharkdp
+    repo: bat
+    release:
+      name: bat
+      tag: v0.20.0
+      asset:
+        filename: '{{ .Release.Name }}-{{ .Release.Tag }}-{{ .Arch }}-{{ .OS }}.tar.gz'
+        replacements:
+          amd64: x86_64-unknown
+          linux: linux-musl
+    command:
+      link:
+        - from: '**/bat'
+  - name: sharkdp/fd
+    description: A simple, fast and user-friendly alternative to 'find'
+    owner: sharkdp
+    repo: fd
+    release:
+      name: fd
+      tag: v8.3.2
+      asset:
+        filename: '{{ .Release.Name }}-{{ .Release.Tag }}-{{ .Arch }}-{{ .OS }}.tar.gz'
+        replacements:
+          amd64: x86_64-unknown
+          linux: linux-musl
+    command:
+      link:
+        - from: '**/fd'
+  - name: BurntSushi/ripgrep
+    description: ripgrep recursively searches directories for a regex pattern while respecting your gitignore
+    owner: BurntSushi
+    repo: ripgrep
+    release:
+      name: ripgrep
+      tag: 13.0.0
+      asset:
+        filename: '{{ .Release.Name }}-{{ .Release.Tag }}-{{ .Arch }}-{{ .OS }}.tar.gz'
+        replacements:
+          amd64: x86_64-unknown
+          linux: linux-musl
+    command:
+      link:
+        - from: '**/rg'
