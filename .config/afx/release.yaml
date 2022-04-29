@@ -32,7 +32,7 @@ github:
     command:
       alias:
         l: exa --icons
-        ls: e
+        ls: l
         la: exa -a --icons
         ll: exa -aal --icons
         lt: exa -T -L 3 -a -I "node_modules|.git|.cache" --icons
@@ -85,3 +85,20 @@ github:
     command:
       link:
         - from: '**/rg'
+  - name: jesseduffield/lazygit
+    description: simple terminal UI for git commands
+    owner: jesseduffield
+    repo: lazygit
+    release:
+      name: lazygit
+      tag: v0.34
+      asset:
+        filename: '{{ .Release.Name }}_0.34_{{ .OS }}_{{ .Arch }}.tar.gz'
+        replacements:
+          amd64: x86_64
+          linux: Linux
+    command:
+      link:
+        - from: '**/lazygit'
+      alias:
+        g: lazygit

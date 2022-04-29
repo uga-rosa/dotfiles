@@ -75,19 +75,6 @@ github:
         ENHANCD_FILTER: fzf --height 25% --reverse
       sources:
         - init.sh
-  - name: jesseduffield/lazygit
-    description: simple terminal UI for git commands.
-    owner: jesseduffield
-    repo: lazygit
-    command:
-      # Release doesn't work.
-      build:
-        steps:
-          - go build -o lazygit
-      link:
-        - from: lazygit
-      alias:
-        g: lazygit
   - name: tmux-plugins/tpm
     description: Tmux Plugin Manager
     owner: tmux-plugins

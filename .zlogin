@@ -29,7 +29,7 @@ setopt share_history
 setopt AUTO_PARAM_KEYS
 
 # check if alias after sudo
-alias sudo='sudo '
+# alias sudo='sudo '
 
 # nvim alias
 alias nv="nvim"
