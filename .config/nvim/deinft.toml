@@ -46,6 +46,8 @@ lua require("pasteimage").setup()
 '''
 
 lua = '''
+setl com=:---,:--
+
 let s:stylua_toml = getcwd() . '/stylua.toml'
 if filereadable(s:stylua_toml)
     for line in readfile(s:stylua_toml)

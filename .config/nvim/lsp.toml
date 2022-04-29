@@ -87,7 +87,7 @@ lspinstaller.on_server_ready(function(server)
     vim.cmd([[do User LspAttachBuffers]])
 end)
 
-local command = vim.api.nvim_add_user_command
+local command = vim.api.nvim_create_user_command
 
 -- setup command
 command("LspSetup", function()

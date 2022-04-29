@@ -1,7 +1,7 @@
 local M = {}
 
 local uv = vim.loop
-local command = vim.api.nvim_add_user_command
+local command = vim.api.nvim_create_user_command
 
 function M.paste()
     local name = os.date("%Y-%m-%d-%H-%M-%S") .. ".png"

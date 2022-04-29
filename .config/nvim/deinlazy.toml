@@ -76,7 +76,7 @@ hook_post_update = 'TSUpdate'
 hook_source = '''
 lua <<EOL
 require("nvim-treesitter.configs").setup({
-    ensure_installed = "all",
+    ensure_installed = { "lua", "vim", "toml", "python", "go" },
     highlight = {
         enable = true,
     },
@@ -278,7 +278,7 @@ let g:openbrowser_browser_commands = [
 
 [[plugins]]
 repo = '~/plugin/translate.nvim'
-on_event = ['BufRead', 'BufNewFile']
+on_cmd = 'Translate'
 hook_add = '''
 nnoremap <silent> mjf :<C-u>Translate JA -source=EN -parse_after=window -output=floating<CR>
 xnoremap <silent> mjf :Translate JA -source=EN -parse_after=window -output=floating<CR>
@@ -288,6 +288,7 @@ nnoremap <silent> mji :<C-u>Translate JA -source=EN -output=insert<CR>
 xnoremap <silent> mji :Translate JA -source=EN -output=insert<CR>
 nnoremap <silent> mjr :<C-u>Translate JA -source=EN -output=replace<CR>
 xnoremap <silent> mjr :Translate JA -source=EN -output=replace<CR>
+nnoremap <silent> mjc :<C-u>Translate JA -source=EN -comment<CR>
 
 nnoremap <silent> mef :<C-u>Translate EN -source=JA -parse_after=window -output=floating<CR>
 xnoremap <silent> mef :Translate EN -source=JA -parse_after=window -output=floating<CR>
@@ -297,6 +298,7 @@ nnoremap <silent> mei :<C-u>Translate EN -source=JA -output=insert<CR>
 xnoremap <silent> mei :Translate EN -source=JA -output=insert<CR>
 nnoremap <silent> mer :<C-u>Translate EN -source=JA -output=replace<CR>
 xnoremap <silent> mer :Translate EN -source=JA -output=replace<CR>
+nnoremap <silent> mec :<C-u>Translate EN -source=JA -comment<CR>
 '''
 hook_source = '''
 lua <<EOL
