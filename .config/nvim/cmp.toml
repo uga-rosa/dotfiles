@@ -272,8 +272,10 @@ lua <<EOL
 local dict = require("cmp_dictionary")
 dict.setup({
     dic = {
-        ["*"] = { "/usr/share/dict/words", "~/dotfiles/doc/vim_dictionary" },
         ["autohotkey"] = "~/dotfiles/doc/ahk.dict",
+        spelllang = {
+            en = "/usr/share/dict/words",
+        },
     },
     exact = 2,
     first_case_insensitive = true,

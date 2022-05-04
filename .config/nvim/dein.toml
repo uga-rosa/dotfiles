@@ -28,3 +28,6 @@ repo = 'kyazdani42/nvim-web-devicons'
 
 [[plugins]]
 repo = '~/plugin/filittle.nvim'
+
+[[plugins]]
+repo = 'notomo/promise.nvim'

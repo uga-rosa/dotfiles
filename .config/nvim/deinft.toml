@@ -35,10 +35,12 @@ setl formatoptions+=mMBl
 
 vim = '''
 setl noexpandtab
+setl nosmarttab
 '''
 
 help_qf = '''
 setl noexpandtab
+setl nosmarttab
 '''
 
 markdown = '''
