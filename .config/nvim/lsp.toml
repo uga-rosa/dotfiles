@@ -1,7 +1,4 @@
 [[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
-
-[[plugins]]
 repo = 'tami5/lspsaga.nvim'
 hook_source = '''
 lua <<EOL
@@ -26,17 +23,24 @@ EOL
 '''
 
 [[plugins]]
-repo = 'folke/lua-dev.nvim'
+repo = 'j-hui/fidget.nvim'
+hook_source = '''
+lua require("fidget").setup({})
+'''
 
 [[plugins]]
-repo = 'j-hui/fidget.nvim'
+repo = 'williamboman/nvim-lsp-installer'
 
 [[plugins]]
 repo = 'junnplus/nvim-lsp-setup'
 
 [[plugins]]
+# repo = 'folke/lua-dev.nvim'
+repo = '~/plugin/lua-dev.nvim'
+
+[[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depends = ['nvim-lsp-installer', 'lspsaga.nvim', 'lua-dev.nvim', 'fidget.nvim', 'nvim-lsp-setup', 'cmp-nvim-lsp']
+depends = ['lspsaga.nvim', 'fidget.nvim', 'nvim-lsp-installer', 'nvim-lsp-setup', 'lua-dev.nvim', 'cmp-nvim-lsp']
 on_ft = ['lua', 'go', 'python', 'bash', 'rust', 'vim', 'typescript']
 hook_source = '''
 command Format lua vim.lsp.buf.formatting_sync()
@@ -46,31 +50,10 @@ augroup lspinfo_close
     au FileType lspinfo nnoremap <buffer><nowait> q <Cmd>q<CR>
 augroup END
 
-function! Lspmapping() abort
-    nnoremap <buffer> K         <Cmd>Lspsaga hover_doc<CR>
-    nnoremap <buffer> [d        <Cmd>Lspsaga diagnostic_jump_prev<CR>
-    nnoremap <buffer> ]d        <Cmd>Lspsaga diagnostic_jump_next<CR>
-    nnoremap <buffer> <leader>n <Cmd>Lspsaga rename<CR>
-    nnoremap <buffer> <leader>x <Cmd>Lspsaga code_action<CR>
-    xnoremap <buffer> <leader>x <Cmd>Lspsaga range_code_action<CR>
-    nnoremap <buffer> <C-f>     <Cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>
-    nnoremap <buffer> <C-b>     <Cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>
-endfunction
-
 lua <<EOL
 -- cmp source
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-
-local sumneko_lua_setting = require("lua-dev").setup({
-    library = {
-        vimruntime = true,
-        types = true,
-        plugins = { "plenary.nvim", "LuaSnip" },
-    },
-})
--- disable completion snippet
-sumneko_lua_setting.settings.Lua.completion = nil
 
 require("nvim-lsp-setup").setup({
     installer = {
@@ -85,14 +68,31 @@ require("nvim-lsp-setup").setup({
         },
         automatic_installation = true,
     },
+    default_mappings = false,
+    mappings = {
+        K = "Lspsaga hover_doc",
+        ["[d"] = "Lspsaga diagnostic_jump_prev",
+        ["]d"] = "Lspsaga diagnostic_jump_next",
+        ["<leader>n"] = "Lspsaga rename",
+        ["<leader>x"] = "Lspsaga code_action",
+        ["<leader>x"] = "Lspsaga range_code_action",
+        ["<C-f>"] = "lua require('lspsaga.action').smart_scroll_with_saga(1)",
+        ["<C-b>"] = "lua require('lspsaga.action').smart_scroll_with_saga(-1)",
+    },
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-        vim.fn["Lspmapping"]()
         require('nvim-lsp-setup.utils').format_on_save(client)
     end,
     servers = {
-        sumneko_lua = sumneko_lua_setting,
-    }
+        sumneko_lua = require("lua-dev").setup({
+            library = {
+                vimruntime = true,
+                types = true,
+                plugins = { "plenary.nvim", "LuaSnip" },
+            },
+            snippet = false,
+        }),
+    },
 })
 EOL
 '''
