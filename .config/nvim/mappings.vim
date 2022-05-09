@@ -25,10 +25,21 @@ nnoremap - <C-x>
 
 nnoremap x "_x
 
-nnoremap j  gj
-nnoremap k  gk
-nnoremap gj j
-nnoremap gk k
+nmap gj gj<SID>g
+nmap gk gk<SID>g
+nnoremap <script> <SID>gj gj<SID>g
+nnoremap <script> <SID>gk gk<SID>g
+nmap <SID>g <Nop>
+
+nmap <C-w>+ <C-w>+<SID>ws
+nmap <C-w>- <C-w>-<SID>ws
+nmap <C-w>< <C-w><<SID>ws
+nmap <C-w>> <C-w>><SID>ws
+nnoremap <script> <SID>ws+ <C-w>+<SID>ws
+nnoremap <script> <SID>ws- <C-w>-<SID>ws
+nnoremap <script> <SID>ws< <C-w><<SID>ws
+nnoremap <script> <SID>ws> <C-w>><SID>ws
+nmap <SID>ws <Nop>
 
 " Emacs key binding
 inoremap <C-f>  <C-g>U<Right>

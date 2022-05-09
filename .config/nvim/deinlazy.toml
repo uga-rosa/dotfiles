@@ -16,6 +16,8 @@ nnoremap <leader>/ <Cmd>FzfLua blines<CR>
 nnoremap <leader>gf <Cmd>FzfLua git_files<CR>
 nnoremap q: <Cmd>FzfLua command_history<CR>
 nnoremap q/ <Cmd>FzfLua search_history<CR>
+nnoremap q; q:
+nnoremap q? q/
 
 nnoremap <leader>i <Cmd>FzfLua lsp_document_diagnostics<CR>
 nnoremap <leader>I <Cmd>FzfLua lsp_workspace_diagnostics<CR>

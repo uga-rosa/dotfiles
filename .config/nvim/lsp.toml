@@ -3,6 +3,27 @@ repo = 'williamboman/nvim-lsp-installer'
 
 [[plugins]]
 repo = 'tami5/lspsaga.nvim'
+hook_source = '''
+lua <<EOL
+require("lspsaga").setup({
+    error_sign = " ",
+    warn_sign = " ",
+    hint_sign = " ",
+    infor_sign = " ",
+    code_action_prompt = {
+        enable = false,
+    },
+    code_action_keys = {
+        quit = { "<C-c>", "<Esc>", "q" },
+        exec = "<CR>",
+    },
+    rename_action_keys = {
+        quit = { "<C-c>", "<Esc>" },
+        exec = "<CR>",
+    },
+})
+EOL
+'''
 
 [[plugins]]
 repo = 'folke/lua-dev.nvim'
@@ -11,8 +32,11 @@ repo = 'folke/lua-dev.nvim'
 repo = 'j-hui/fidget.nvim'
 
 [[plugins]]
+repo = 'junnplus/nvim-lsp-setup'
+
+[[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depends = ['nvim-lsp-installer', 'lspsaga.nvim', 'lua-dev.nvim', 'fidget.nvim', 'cmp-nvim-lsp']
+depends = ['nvim-lsp-installer', 'lspsaga.nvim', 'lua-dev.nvim', 'fidget.nvim', 'nvim-lsp-setup', 'cmp-nvim-lsp']
 on_ft = ['lua', 'go', 'python', 'bash', 'rust', 'vim', 'typescript']
 hook_source = '''
 command Format lua vim.lsp.buf.formatting_sync()
@@ -34,76 +58,42 @@ function! Lspmapping() abort
 endfunction
 
 lua <<EOL
-local lspinstaller = require("nvim-lsp-installer")
-
 -- cmp source
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
--- lsp saga
-require("lspsaga").setup({
-    error_sign = " ",
-    warn_sign = " ",
-    hint_sign = " ",
-    infor_sign = " ",
-    code_action_prompt = {
-        enable = false,
-    },
-    code_action_keys = {
-        quit = { "<C-c>", "<Esc>", "q" },
-        exec = "<CR>",
-    },
-    rename_action_keys = {
-        quit = { "<C-c>", "<Esc>" },
-        exec = "<CR>",
-    },
-})
-
--- LSP setting
-local opts = {
-    default = {
-        capabilities = capabilities,
-        on_attach = function()
-            vim.fn["Lspmapping"]()
-        end,
-    },
-}
-
-opts.sumneko_lua = require("lua-dev").setup({
+local sumneko_lua_setting = require("lua-dev").setup({
     library = {
         vimruntime = true,
         types = true,
         plugins = { "plenary.nvim", "LuaSnip" },
     },
-    lspconfig = opts.default,
 })
 -- disable completion snippet
-opts.sumneko_lua.settings.Lua.completion = nil
+sumneko_lua_setting.settings.Lua.completion = nil
 
--- setup
-lspinstaller.on_server_ready(function(server)
-    local opt = opts[server.name] or opts.default
-    server:setup(opt)
-    vim.cmd([[do User LspAttachBuffers]])
-end)
-
-local command = vim.api.nvim_create_user_command
-
--- setup command
-command("LspSetup", function()
-    local servers = {
-        "sumneko_lua",
-        "gopls",
-        "pyright",
-        "bashls",
-        "rust_analyzer",
-        "vimls",
-        "denols",
+require("nvim-lsp-setup").setup({
+    installer = {
+        ensure_installed = {
+            "sumneko_lua",
+            "gopls",
+            "pyright",
+            "bashls",
+            "rust_analyzer",
+            "vimls",
+            "denols",
+        },
+        automatic_installation = true,
+    },
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        vim.fn["Lspmapping"]()
+        require('nvim-lsp-setup.utils').format_on_save(client)
+    end,
+    servers = {
+        sumneko_lua = sumneko_lua_setting,
     }
-    for _, server in ipairs(servers) do
-        lspinstaller.install(server)
-    end
-end, {})
+})
 EOL
 '''
 
