@@ -6,7 +6,7 @@ github:
     command:
       build:
         steps:
-          - ./install --all
+          - ./install --key-bindings
       link:
         - from: 'bin/fzf'
         - from: 'bin/fzf-tmux'

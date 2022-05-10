@@ -39,9 +39,13 @@ repo = 'junnplus/nvim-lsp-setup'
 repo = '~/plugin/lua-dev.nvim'
 
 [[plugins]]
+repo = 'matsui54/denops-signature_help'
+depends = 'denops.vim'
+
+[[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depends = ['lspsaga.nvim', 'fidget.nvim', 'nvim-lsp-installer', 'nvim-lsp-setup', 'lua-dev.nvim', 'cmp-nvim-lsp']
-on_ft = ['lua', 'go', 'python', 'bash', 'rust', 'vim', 'typescript']
+depends = ['lspsaga.nvim', 'fidget.nvim', 'nvim-lsp-installer', 'nvim-lsp-setup', 'lua-dev.nvim', 'denops-signature_help', 'cmp-nvim-lsp']
+on_ft = ['lua', 'go', 'python', 'sh', 'bash', 'rust', 'vim', 'typescript']
 hook_source = '''
 command Format lua vim.lsp.buf.formatting_sync()
 
@@ -51,10 +55,6 @@ augroup lspinfo_close
 augroup END
 
 lua <<EOL
--- cmp source
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-
 require("nvim-lsp-setup").setup({
     installer = {
         ensure_installed = {
@@ -82,6 +82,15 @@ require("nvim-lsp-setup").setup({
     capabilities = capabilities,
     on_attach = function(client, bufnr)
         require('nvim-lsp-setup.utils').format_on_save(client)
+        vim.keymap.set("i", "<C-g>", function()
+            if vim.fn["signature_help#is_enabled"]() == 1 then
+                print("disable")
+                vim.fn["signature_help#disable"]()
+            else
+                print("enable")
+                vim.fn["signature_help#enable"]()
+            end
+        end, { buffer = true })
     end,
     servers = {
         sumneko_lua = require("lua-dev").setup({
@@ -92,6 +101,12 @@ require("nvim-lsp-setup").setup({
             },
             snippet = false,
         }),
+		gopls = {},
+        pyright = {},
+		bashls = {},
+		rust_analyzer = {},
+		vimls = {},
+		denols = {},
     },
 })
 EOL

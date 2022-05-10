@@ -153,7 +153,6 @@ cmp.setup({
     sources = {
         { name = "luasnip", group_index = 1 },
         { name = "nvim_lsp", group_index = 1 },
-        { name = "nvim_lsp_signature_help", group_index = 1 },
         {
             name = "buffer",
             option = {
@@ -254,10 +253,6 @@ on_source = 'nvim-cmp'
 
 [[plugins]]
 repo = 'hrsh7th/cmp-cmdline'
-on_source = 'nvim-cmp'
-
-[[plugins]]
-repo = 'hrsh7th/cmp-nvim-lsp-signature-help'
 on_source = 'nvim-cmp'
 
 [[plugins]]
