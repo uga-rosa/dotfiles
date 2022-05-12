@@ -2,62 +2,43 @@
 repo = 'nvim-lua/plenary.nvim'
 
 [[plugins]]
-repo = 'ibhagwan/fzf-lua'
-depends = 'nvim-web-devicons'
-on_cmd = 'FzfLua'
-hook_add = '''
-nnoremap <F1> <Cmd>FzfLua builtin<CR>
-nnoremap <leader>r <Cmd>FzfLua resume<CR>
-nnoremap <leader>f <Cmd>FzfLua files<CR>
-nnoremap <leader>b <Cmd>FzfLua buffers<CR>
-nnoremap <leader>o <Cmd>FzfLua oldfiles<CR>
-nnoremap <leader>gr <Cmd>FzfLua live_grep<CR>
-nnoremap <leader>/ <Cmd>FzfLua blines<CR>
-nnoremap <leader>gf <Cmd>FzfLua git_files<CR>
-nnoremap q: <Cmd>FzfLua command_history<CR>
-nnoremap q/ <Cmd>FzfLua search_history<CR>
-nnoremap q; q:
-nnoremap q? q/
+repo = 'nvim-telescope/telescope-fzf-native.nvim'
+hook_post_update = 'make'
 
-nnoremap <leader>i <Cmd>FzfLua lsp_document_diagnostics<CR>
-nnoremap <leader>I <Cmd>FzfLua lsp_workspace_diagnostics<CR>
-nnoremap <leader>a <Cmd>FzfLua lsp_code_actions<CR>
-nnoremap gd <Cmd>lua require("fzf-lua").lsp_definitions({jump_to_single_result = true})<CR>
-nnoremap gr <Cmd>FzfLua lsp_references<CR>
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+depends = ['plenary.nvim', 'nvim-web-devicons', 'telescope-fzf-native.nvim']
+on_cmd = 'Telescope'
+hook_add = '''
+nnoremap <F1> <Cmd>Telescope builtin<CR>
+nnoremap <leader>r <Cmd>Telescope resume<CR>
+nnoremap <leader>f <Cmd>Telescope find_files<CR>
+nnoremap <leader>b <Cmd>Telescope buffers<CR>
+nnoremap <leader>o <Cmd>Telescope oldfiles<CR>
+nnoremap <leader>gr <Cmd>Telescope live_grep<CR>
+nnoremap <leader>/ <Cmd>Telescope blines<CR>
+nnoremap <leader>gf <Cmd>Telescope git_files<CR>
+nnoremap <leader>h <Cmd>Telescope help_tags<CR>
+nnoremap q: <Cmd>Telescope command_history<CR>
+nnoremap q/ <Cmd>Telescope search_history<CR>
+
+nnoremap <leader>i <Cmd>Telescope diagnostics<CR>
+nnoremap gd <Cmd>Telescope lsp_definitions<CR>
+nnoremap gr <Cmd>Telescope lsp_references<CR>
 '''
 hook_source = '''
 lua <<EOL
-local fzf = require("fzf-lua")
-local actions = require("fzf-lua.actions")
-
-fzf.setup({
-    winopts = {
-        preview = {
-            default = "bat",
-        },
-    },
-    file_icon_padding = " ",
-    files = {
-        actions = {
-            ["ctrl-x"] = actions.file_split,
-        },
-    },
-    oldfiles = {
-        actions = {
-            ["ctrl-x"] = actions.file_split,
-        },
-    },
-    buffers = {
-        actions = {
-            ["ctrl-x"] = actions.file_split,
-        },
-    },
-    git = {
-        actions = {
-            ["ctrl-x"] = actions.file_split,
-        },
-    },
-})
+require('telescope').setup {
+  extensions = {
+    fzf = {
+      fuzzy = true,
+      override_generic_sorter = true,
+      override_file_sorter = true,
+      case_mode = "smart_case",
+    }
+  }
+}
+require('telescope').load_extension('fzf')
 EOL
 '''
 

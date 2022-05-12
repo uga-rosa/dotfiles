@@ -45,5 +45,3 @@ function tmux_session_select() {
 }
 zle -N tmux_session_select
 bindkey '^S' tmux_session_select
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
