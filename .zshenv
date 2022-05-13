@@ -12,10 +12,6 @@ export PATH=$HOME/.local/bin:$PATH
 # pkg-config
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
 
-# python
-alias python='python3.10'
-alias pip='pip3.10'
-
 # rust
 [[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
 
@@ -26,6 +22,9 @@ export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 # deno
 export PATH="$PATH:$HOME/.deno/bin"
 export DENO_INSTALL="$HOME/.deno"
+
+# Nim
+export PATH="$HOME/.nimble/bin:$PATH"
 
 # gromacs
 [[ -f /usr/local/gromacs/bin/GMXRC ]] && source /usr/local/gromacs/bin/GMXRC

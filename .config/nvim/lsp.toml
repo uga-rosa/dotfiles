@@ -81,7 +81,6 @@ require("nvim-lsp-setup").setup({
     },
     capabilities = capabilities,
     on_attach = function(client, bufnr)
-        require('nvim-lsp-setup.utils').format_on_save(client)
         vim.keymap.set("i", "<C-g>", function()
             if vim.fn["signature_help#is_enabled"]() == 1 then
                 print("disable")
