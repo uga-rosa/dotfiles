@@ -1,7 +1,7 @@
 # windows_commands
 export PATH=$HOME/.windows_command:$PATH
 
-# afx
+# afx (package manager for zsh)
 export AFX_COMMAND_PATH="$HOME/.afx/bin"
 export PATH="$AFX_COMMAND_PATH:$PATH"
 
@@ -12,12 +12,15 @@ export PATH=$HOME/.local/bin:$PATH
 # pkg-config
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
 
-# rust
+# Rust
 [[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
 
-# go
+# Go
 export GOPATH="$HOME/.go"
 export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
+
+# Node
+export PATH=$PATH:./node_modules/.bin
 
 # deno
 export PATH="$PATH:$HOME/.deno/bin"
@@ -25,6 +28,3 @@ export DENO_INSTALL="$HOME/.deno"
 
 # Nim
 export PATH="$HOME/.nimble/bin:$PATH"
-
-# gromacs
-[[ -f /usr/local/gromacs/bin/GMXRC ]] && source /usr/local/gromacs/bin/GMXRC
