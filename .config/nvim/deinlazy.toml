@@ -291,7 +291,7 @@ hook_source = '''
 lua <<EOL
 require("translate").setup({
     default = {
-        command = "deepl_pro",
+        command = "translate_shell",
     },
     preset = {
         output = {

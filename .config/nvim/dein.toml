@@ -18,6 +18,12 @@ set helplang=ja,en
 '''
 
 [[plugins]]
+repo = 'milisims/nvim-luaref'
+
+[[plugins]]
+repo = 'nanotee/luv-vimdocs'
+
+[[plugins]]
 repo = 'bluz71/vim-nightfly-guicolors'
 
 [[plugins]]
