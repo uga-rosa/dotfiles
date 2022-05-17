@@ -6,6 +6,9 @@ on_event = 'CursorHold'
 repo = 'nvim-lua/plenary.nvim'
 
 [[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
 repo = 'nvim-telescope/telescope-fzf-native.nvim'
 build = 'make'
 
@@ -347,3 +350,8 @@ nnoremap <leader>p <Cmd>MarkdownPreview<CR>
 [[plugins]]
 repo = 'mattn/vim-maketable'
 on_ft = 'markdown'
+
+[[plugins]]
+repo = '~/plugin/filittle.nvim'
+depends = 'nvim-web-devicons'
+on_event = 'BufEnter'

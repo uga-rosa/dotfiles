@@ -45,7 +45,7 @@ depends = 'denops.vim'
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 depends = ['lspsaga.nvim', 'fidget.nvim', 'nvim-lsp-installer', 'nvim-lsp-setup', 'lua-dev.nvim', 'denops-signature_help', 'cmp-nvim-lsp']
-on_ft = ['lua', 'go', 'python', 'sh', 'bash', 'rust', 'vim', 'javascript', 'typescript']
+on_ft = ['lua', 'go', 'python', 'sh', 'bash', 'rust', 'vim', 'javascript', 'typescript', 'nim']
 hook_source = '''
 command Format lua vim.lsp.buf.formatting_sync()
 
@@ -66,6 +66,7 @@ require("nvim-lsp-setup").setup({
             "vimls",
             "tsserver",
             "denols",
+            "nimls",
         },
         automatic_installation = true,
     },
@@ -108,6 +109,7 @@ require("nvim-lsp-setup").setup({
 		vimls = {},
         tsserver = {},
 		denols = {},
+        nimls = {},
     },
 })
 EOL

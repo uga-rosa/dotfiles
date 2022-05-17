@@ -53,6 +53,7 @@ augroup my_filetype
     au!
     au BufNewFile,BufRead *.ahk set ft=autohotkey
     au BufNewFile,BufRead *.inp set ft=packmol
+    au BufNewFile,BufRead *.nim set ft=nim
 augroup END
 
 command! ShowHlGroup echo synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
