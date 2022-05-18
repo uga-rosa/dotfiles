@@ -23,9 +23,9 @@ let g:dein#auto_recache = v:true
 
 let s:path = expand('~/.cache') . '/dein'
 if dein#min#load_state(s:path)
-    let g:dein#inline_vimrcs = ['options.vim', 'mappings.vim']
+    let g:dein#inline_vimrcs = [stdpath('config') . '/options.vim', stdpath('config') . '/mappings.vim']
 
-    let s:base_dir = fnamemodify(expand('<sfile>'), ':h') . '/'
+    let s:base_dir = stdpath('config') . '/'
 
     call dein#begin(s:path)
 

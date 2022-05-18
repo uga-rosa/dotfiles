@@ -361,8 +361,3 @@ on_event = 'BufEnter'
 hook_add = '''
 nnoremap <M-f> <Cmd>Fern . -drawer -toggle<CR>
 '''
-
-# [[plugins]]
-# repo = '~/plugin/filittle.nvim'
-# depends = 'nvim-web-devicons'
-# on_event = 'BufEnter'
