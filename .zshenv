@@ -28,3 +28,6 @@ export DENO_INSTALL="$HOME/.deno"
 
 # Nim
 export PATH="$HOME/.nimble/bin:$PATH"
+
+# X server
+export DISPLAY=$(/mnt/c/Windows/System32/ipconfig.exe | grep "IPv4" | head -1 | awk '{print $NF}' | awk 'sub(/\r$/,"")'):0

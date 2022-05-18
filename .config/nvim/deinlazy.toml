@@ -332,10 +332,14 @@ augroup precious
     au User PreciousFileType :lua require("my_lsp").check_server()
 augroup END
 
-nmap gc  <Cmd>PreciousSwitch<CR><Plug>Commentary<Cmd>PreciousReset<CR>
-xmap gc  <Cmd>PreciousSwitch<CR><Plug>Commentary<Cmd>PreciousReset<CR>
-omap gc  <Cmd>PreciousSwitch<CR><Plug>Commentary<Cmd>PreciousReset<CR>
-nmap gcc <Cmd>PreciousSwitch<CR><Plug>CommentaryLine<Cmd>PreciousReset<CR>
+function! MyPreciousSwitch() abort
+	PreciousSwitch
+	au ModeChanged *:n ++once :PreciousReset
+endfunction
+
+nmap gc  <Cmd>call MyPreciousSwitch()<CR><Plug>Commentary
+xmap gc  <Cmd>call MyPreciousSwitch()<CR><Plug>Commentary
+nmap gcc <Cmd>call MyPreciousSwitch()<CR><Plug>CommentaryLine
 '''
 
 [[plugins]]
@@ -352,6 +356,13 @@ repo = 'mattn/vim-maketable'
 on_ft = 'markdown'
 
 [[plugins]]
-repo = '~/plugin/filittle.nvim'
-depends = 'nvim-web-devicons'
+repo = 'lambdalisue/fern.vim'
 on_event = 'BufEnter'
+hook_add = '''
+nnoremap <M-f> <Cmd>Fern . -drawer -toggle<CR>
+'''
+
+# [[plugins]]
+# repo = '~/plugin/filittle.nvim'
+# depends = 'nvim-web-devicons'
+# on_event = 'BufEnter'
