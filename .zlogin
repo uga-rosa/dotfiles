@@ -35,7 +35,7 @@ setopt AUTO_PARAM_KEYS
 alias nv="nvim"
 
 # Go to home of Windows (for WSL)
-function home() {
+home() {
     if [[ -d /mnt/e/home ]]; then
         cd /mnt/e/home
     else
@@ -44,13 +44,15 @@ function home() {
 }
 
 # windows chrome
-function chrome() {
+chrome() {
     if [[ -z $1 ]]; then
         chrome.exe
     else
         chrome.exe $(wslpath -w ${1})
     fi
 }
+
+alias relogin='exec $SHELL -l'
 
 # not ssh and out of tmux
 if [[ -z $SSH_TTY && -z $TMUX ]]; then

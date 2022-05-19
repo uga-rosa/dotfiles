@@ -17,6 +17,11 @@ stty start undef
 bindkey -e
 bindkey "^U" backward-kill-line
 
+# calculation
+calc() {
+    awk "BEGIN {print $*}"
+}
+
 # tmux-session-select
 function tmux_session_select() {
     ID=$(tmux list-sessions 2>&1)
