@@ -30,7 +30,7 @@ export DENO_INSTALL="$HOME/.deno"
 export PATH="$HOME/.nimble/bin:$PATH"
 
 # X server
-export DISPLAY=$(/mnt/c/Windows/System32/ipconfig.exe | grep "IPv4" | head -1 | awk '{print $NF}' | awk 'sub(/\r$/,"")'):0
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 
 # Cuda
 export PATH="/usr/local/cuda/bin:$PATH"
