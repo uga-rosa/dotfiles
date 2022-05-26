@@ -35,9 +35,14 @@ setopt AUTO_PARAM_KEYS
 alias nv="nvim"
 
 # Go to home of Windows (for WSL)
+if [[ -d /mnt/e/home ]]; then
+    export WIN_HOME="/mnt/e/home"
+elif [[ -d /mnt/c/Users/uga ]]; then
+    export WIN_HOME="/mnt/c/Users/uga"
+fi
 home() {
-    if [[ -d /mnt/e/home ]]; then
-        cd /mnt/e/home
+    if [[ -n "$WIN_HOME" ]]; then
+        cd "$WIN_HOME"
     else
         cd "$HOME"
     fi

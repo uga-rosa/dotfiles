@@ -25,6 +25,8 @@ nnoremap - <C-x>
 
 nnoremap x "_x
 
+xnoremap * "my/\V<C-r><C-r>=substitute(escape(@m, '/\'), '\_s\+', '\\_s\\+', 'g')<CR><CR>N
+
 nmap gj gj<SID>g
 nmap gk gk<SID>g
 nnoremap <script> <SID>gj gj<SID>g

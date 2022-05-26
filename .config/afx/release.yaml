@@ -93,7 +93,7 @@ github:
       name: lazygit
       tag: v0.34
       asset:
-        filename: '{{ .Release.Name }}_0.34_{{ .OS }}_{{ .Arch }}.tar.gz'
+        filename: '{{ .Release.Name }}_{{ replace .Release.Tag "v" "" }}_{{ .OS }}_{{ .Arch }}.tar.gz'
         replacements:
           amd64: x86_64
           linux: Linux
@@ -110,8 +110,7 @@ github:
       name: gh
       tag: v2.10.1
       asset:
-        # filename: '{{ .Release.Name }}_{{ replace .Release.tag "v" "" }}_{{ .OS }}_{{ .Arch }}.tar.gz'
-        filename: 'gh_2.10.1_linux_amd64.tar.gz'
+        filename: '{{ .Release.Name }}_{{ replace .Release.Tag "v" "" }}_{{ .OS }}_{{ .Arch }}.tar.gz'
     command:
       link:
         - from: '**/gh'

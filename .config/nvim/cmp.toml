@@ -182,12 +182,12 @@ cmp.setup.cmdline("/", {
     },
 })
 
-cmp.setup.cmdline(":", {
-    sources = {
-        { name = "cmdline" },
-        { name = "path" },
-    },
-})
+-- cmp.setup.cmdline(":", {
+--     sources = {
+--         { name = "cmdline" },
+--         { name = "path" },
+--     },
+-- })
 
 local api = vim.api
 

@@ -67,3 +67,8 @@ if filereadable(s:stylua_toml)
     endfor
 endif
 '''
+
+nim = '''
+setl tabstop=2
+setl shiftwidth=2
+'''

@@ -13,7 +13,7 @@ export PATH=$HOME/.local/bin:$PATH
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
 
 # Rust
-[[ -f $HOME/.cargo/env ]] && . "$HOME/.cargo/env"
+export PATH="$PATH:$HOME/.cargo/bin"
 
 # Go
 export GOPATH="$HOME/.go"
@@ -31,3 +31,6 @@ export PATH="$HOME/.nimble/bin:$PATH"
 
 # X server
 export DISPLAY=$(/mnt/c/Windows/System32/ipconfig.exe | grep "IPv4" | head -1 | awk '{print $NF}' | awk 'sub(/\r$/,"")'):0
+
+# Cuda
+export PATH="/usr/local/cuda/bin:$PATH"
