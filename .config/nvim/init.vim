@@ -34,6 +34,7 @@ if dein#min#load_state(s:path)
     let s:dein_lazy_toml = s:base_dir . 'deinlazy.toml'
     let s:dein_cmp_toml = s:base_dir . 'cmp.toml'
     let s:dein_lsp_toml = s:base_dir . 'lsp.toml'
+	let s:dein_coc_toml = s:base_dir . 'coc.toml'
     let s:dein_ft_toml = s:base_dir . 'deinft.toml'
 
     call dein#load_toml(s:dein_toml, {'lazy': 0})
@@ -41,6 +42,7 @@ if dein#min#load_state(s:path)
     call dein#load_toml(s:dein_status_toml, {'lazy': 1})
     call dein#load_toml(s:dein_cmp_toml, {'lazy': 1})
     call dein#load_toml(s:dein_lsp_toml, {'lazy': 1})
+    " call dein#load_toml(s:dein_coc_toml, {'lazy': 0})
     call dein#load_toml(s:dein_ft_toml)
 
     call dein#end()

@@ -12,6 +12,11 @@ export PATH=$HOME/.local/bin:$PATH
 # pkg-config
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
 
+# Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 # Rust
 export PATH="$PATH:$HOME/.cargo/bin"
 

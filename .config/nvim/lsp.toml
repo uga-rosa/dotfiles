@@ -77,7 +77,6 @@ require("nvim-lsp-setup").setup({
         ["]d"] = "Lspsaga diagnostic_jump_next",
         ["<leader>n"] = "Lspsaga rename",
         ["<leader>x"] = "Lspsaga code_action",
-        ["<leader>x"] = "Lspsaga range_code_action",
         ["<C-f>"] = "lua require('lspsaga.action').smart_scroll_with_saga(1)",
         ["<C-b>"] = "lua require('lspsaga.action').smart_scroll_with_saga(-1)",
     },

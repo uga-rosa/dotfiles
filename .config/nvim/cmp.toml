@@ -182,12 +182,12 @@ cmp.setup.cmdline("/", {
     },
 })
 
--- cmp.setup.cmdline(":", {
---     sources = {
---         { name = "cmdline" },
---         { name = "path" },
---     },
--- })
+cmp.setup.cmdline(":", {
+    sources = {
+        { name = "cmdline" },
+        { name = "path" },
+    },
+})
 
 local api = vim.api
 
@@ -278,28 +278,4 @@ dict.setup({
 })
 dict.update()
 EOL
-'''
-
-[[plugins]]
-repo = 'L3MON4D3/LuaSnip'
-# repo = '~/plugin/LuaSnip'
-hook_source = '''
-imap <C-j> <Plug>luasnip-jump-next
-smap <C-j> <Plug>luasnip-jump-next
-imap <C-k> <Plug>luasnip-jump-prev
-smap <C-k> <Plug>luasnip-jump-prev
-lua <<EOL
-require("luasnip.loaders.from_snipmate").lazy_load({
-    paths = "~/.config/nvim/snippets"
-})
-
-require("ls_choice")
-EOL
-
-augroup choice_popup
-    au!
-    au User LuasnipChoiceNodeEnter lua _ls_popup.open(require("luasnip").session.event_node)
-    au User LuasnipChoiceNodeLeave lua _ls_popup.close()
-    au User LuasnipChangeChoice lua _ls_popup.update(require("luasnip").session.event_node)
-augroup END
 '''

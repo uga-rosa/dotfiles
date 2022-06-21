@@ -1,6 +1,9 @@
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 on_event = 'CursorHold'
+hook_add = '''
+let g:denops_server_addr = '127.0.0.1:32123'
+'''
 
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
@@ -30,8 +33,8 @@ nnoremap q: <Cmd>Telescope command_history<CR>
 nnoremap q/ <Cmd>Telescope search_history<CR>
 
 nnoremap <leader>i <Cmd>Telescope diagnostics<CR>
-nnoremap gd <Cmd>Telescope lsp_definitions<CR>
-nnoremap gr <Cmd>Telescope lsp_references<CR>
+" nnoremap gd <Cmd>Telescope lsp_definitions<CR>
+" nnoremap gr <Cmd>Telescope lsp_references<CR>
 '''
 hook_source = '''
 lua <<EOL
@@ -360,4 +363,32 @@ repo = 'lambdalisue/fern.vim'
 on_event = 'BufEnter'
 hook_add = '''
 nnoremap <M-f> <Cmd>Fern . -drawer -toggle<CR>
+'''
+
+[[plugins]]
+repo = 'simeji/winresizer'
+on_event = 'BufEnter'
+
+[[plugins]]
+repo = 'L3MON4D3/LuaSnip'
+on_event = 'InsertEnter'
+hook_source = '''
+imap <C-j> <Plug>luasnip-jump-next
+smap <C-j> <Plug>luasnip-jump-next
+imap <C-k> <Plug>luasnip-jump-prev
+smap <C-k> <Plug>luasnip-jump-prev
+lua <<EOL
+require("luasnip.loaders.from_snipmate").lazy_load({
+    paths = "~/.config/nvim/snippets"
+})
+
+require("ls_choice")
+EOL
+
+augroup choice_popup
+    au!
+    au User LuasnipChoiceNodeEnter lua _ls_popup.open(require("luasnip").session.event_node)
+    au User LuasnipChoiceNodeLeave lua _ls_popup.close()
+    au User LuasnipChangeChoice lua _ls_popup.update(require("luasnip").session.event_node)
+augroup END
 '''

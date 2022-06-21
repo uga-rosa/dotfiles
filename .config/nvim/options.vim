@@ -57,3 +57,5 @@ augroup my_filetype
 augroup END
 
 command! ShowHlGroup echo synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+
+set rtp^=~/plugin/coc-luasnip
