@@ -3,6 +3,10 @@ repo = 'vim-denops/denops.vim'
 on_event = 'CursorHold'
 hook_add = '''
 let g:denops_server_addr = '127.0.0.1:32123'
+call jobstart(
+\	'deno run -A --no-check ' . dein#get('denops.vim').path . '/denops/@denops-private/cli.ts',
+\	{'detach': v:true}
+\)
 '''
 
 [[plugins]]
@@ -33,8 +37,8 @@ nnoremap q: <Cmd>Telescope command_history<CR>
 nnoremap q/ <Cmd>Telescope search_history<CR>
 
 nnoremap <leader>i <Cmd>Telescope diagnostics<CR>
-" nnoremap gd <Cmd>Telescope lsp_definitions<CR>
-" nnoremap gr <Cmd>Telescope lsp_references<CR>
+nnoremap gd <Cmd>Telescope lsp_definitions<CR>
+nnoremap gr <Cmd>Telescope lsp_references<CR>
 '''
 hook_source = '''
 lua <<EOL
