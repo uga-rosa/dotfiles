@@ -37,8 +37,10 @@ nnoremap q: <Cmd>Telescope command_history<CR>
 nnoremap q/ <Cmd>Telescope search_history<CR>
 
 nnoremap <leader>i <Cmd>Telescope diagnostics<CR>
-nnoremap gd <Cmd>Telescope lsp_definitions<CR>
-nnoremap gr <Cmd>Telescope lsp_references<CR>
+if mapcheck('gd', 'n') == ''
+	nnoremap gd <Cmd>Telescope lsp_definitions<CR>
+	nnoremap gr <Cmd>Telescope lsp_references<CR>
+endif
 '''
 hook_source = '''
 lua <<EOL
@@ -250,6 +252,16 @@ let g:searchx.scrolltime = 0
 let g:searchx.nohlsearch = {}
 let g:searchx.nohlsearch.jump = v:true
 let g:searchx.markers = split('ASDFGHJKL:QWERTYUIOP', '.\zs')
+'''
+
+[[plugins]]
+repo = 'hrsh7th/nvim-pasta'
+on_event = 'BufEnter'
+hook_source = '''
+lua <<EOL
+vim.keymap.set({ "n", "x" }, "p", require("pasta.mappings").p)
+vim.keymap.set({ "n", "x" }, "P", require("pasta.mappings").P)
+EOL
 '''
 
 [[plugins]]

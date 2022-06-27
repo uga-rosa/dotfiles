@@ -144,7 +144,6 @@ null.setup({
         }),
         b.formatting.fixjson,
         b.formatting.black,
-        b.diagnostics.shellcheck.with({ diagnostics_format = "#{m} [#{c}]" }),
         b.diagnostics.teal,
     },
 })
