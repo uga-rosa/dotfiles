@@ -39,3 +39,6 @@ export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 
 # Cuda
 export PATH="/usr/local/cuda/bin:$PATH"
+
+# gromacs
+[[ /usr/local/gromacs-2022.2/bin/GMXRC ]] && source /usr/local/gromacs-2022.2/bin/GMXRC

@@ -42,6 +42,7 @@ set signcolumn=yes
 set cedit=\<C-g>
 
 set mouse=a
+map <LeftMouse> <Nop>
 
 let g:do_filetype_lua = 1
 let g:did_load_filetypes = 0
@@ -59,5 +60,3 @@ augroup my_filetype
 augroup END
 
 command! ShowHlGroup echo synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
-
-set rtp^=~/plugin/coc-luasnip

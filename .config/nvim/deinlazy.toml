@@ -3,8 +3,9 @@ repo = 'vim-denops/denops.vim'
 on_event = 'CursorHold'
 hook_add = '''
 let g:denops_server_addr = '127.0.0.1:32123'
+let s:denops_path = dein#get('denops.vim').path
 call jobstart(
-\	'deno run -A --no-check ' . dein#get('denops.vim').path . '/denops/@denops-private/cli.ts',
+\	'deno run -A --no-check ' . s:denops_path . '/denops/@denops-private/cli.ts',
 \	{'detach': v:true}
 \)
 '''
@@ -255,7 +256,8 @@ let g:searchx.markers = split('ASDFGHJKL:QWERTYUIOP', '.\zs')
 '''
 
 [[plugins]]
-repo = 'hrsh7th/nvim-pasta'
+# repo = 'hrsh7th/nvim-pasta'
+repo = '~/plugin/nvim-pasta'
 on_event = 'BufEnter'
 hook_source = '''
 lua <<EOL
@@ -408,3 +410,7 @@ augroup choice_popup
     au User LuasnipChangeChoice lua _ls_popup.update(require("luasnip").session.event_node)
 augroup END
 '''
+
+[[plugins]]
+repo = '~/plugin/sticky-header.nvim'
+on_event = 'BufEnter'

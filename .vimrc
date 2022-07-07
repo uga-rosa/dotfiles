@@ -1,3 +1,9 @@
+runtime */jetpack.vim
+call jetpack#begin()
+Jetpack 'vim-denops/denops.vim'
+Jetpack 'yuki-yano/fuzzy-motion.vim'
+call jetpack#end()
+
 let mapleader = "\<Space>"
 
 set fileencoding=utf-8
@@ -64,3 +70,14 @@ noremap H ^
 noremap L $
 
 nnoremap Y y$
+
+" denops.vim
+let g:denops_server_addr = '127.0.0.1:32123'
+let s:denops_path = jetpack#get('denops.vim').path
+call job_start(
+\   'deno run -A --no-check ' . s:denops_path . '/denops/@denops-private/cli.ts',
+\   {'stoponexit': ''}
+\)
+
+" Fuzzy motion
+nmap ss <Cmd>FuzzyMotion<CR>
