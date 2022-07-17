@@ -1,21 +1,12 @@
-# Autoload
-autoload -U compinit; compinit
-
-# Completion
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*:default' menu select=1
-
-# Language must be set be en_US
-export LANGUAGE="en_US.UTF-8"
-export LANG="$LANGUAGE"
-export LC_ALL="$LANGUAGE"
-export LC_CTYPE="$LANGUAGE"
-
 # Editor
 export EDITOR=nvim
+alias nv="nvim"
 
 # tmux color
 export TERM="tmux-256color"
+
+# X server
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 
 # History file and its size
 export HISTFILE="$HOME/.zsh_history"
@@ -30,9 +21,6 @@ setopt AUTO_PARAM_KEYS
 
 # check if alias after sudo
 # alias sudo='sudo '
-
-# nvim alias
-alias nv="nvim"
 
 # Go to home of Windows (for WSL)
 if [[ -d /mnt/e/home ]]; then

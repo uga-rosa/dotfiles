@@ -1,3 +1,10 @@
+# Autoload
+autoload -U compinit; compinit
+
+# Completion
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:default' menu select=1
+
 # windows_commands
 export PATH=$HOME/.windows_command:$PATH
 
@@ -11,6 +18,12 @@ export PATH=$HOME/.local/bin:$PATH
 
 # pkg-config
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
+
+# Language must be set be en_US
+export LANGUAGE="en_US.UTF-8"
+export LANG="$LANGUAGE"
+export LC_ALL="$LANGUAGE"
+export LC_CTYPE="$LANGUAGE"
 
 # Pyenv
 export PYENV_ROOT="$HOME/.pyenv"
@@ -33,9 +46,6 @@ export DENO_INSTALL="$HOME/.deno"
 
 # Nim
 export PATH="$HOME/.nimble/bin:$PATH"
-
-# X server
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 
 # Cuda
 export PATH="/usr/local/cuda/bin:$PATH"
