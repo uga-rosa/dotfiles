@@ -16,6 +16,8 @@ snippet for
 	for ${1:var} in ${2:list}; do
 		$0
 	done
+snippet script_dir
+	SCRIPT_DIR=\$(cd $(dirname \$0); pwd)
 snippet getoptions
 	# shellcheck disable=2034
 	VERSION="0.1"

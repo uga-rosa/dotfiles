@@ -2,6 +2,9 @@
 repo = 'feline-nvim/feline.nvim'
 depends = 'nvim-web-devicons'
 on_event = ['BufRead', 'BufNewFile']
+hook_add = '''
+let g:fern_disable_startup_warnings = 1
+'''
 hook_source = '''
 lua <<EOL
 local f = vim.fn

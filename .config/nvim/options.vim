@@ -43,6 +43,9 @@ set cedit=\<C-g>
 
 set mouse=a
 map <LeftMouse> <Nop>
+imap <LeftMouse> <Nop>
+map <2-LeftMouse> <Nop>
+imap <2-LeftMouse> <Nop>
 
 let g:do_filetype_lua = 1
 let g:did_load_filetypes = 0

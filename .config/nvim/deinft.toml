@@ -43,6 +43,11 @@ setl noexpandtab
 setl nosmarttab
 '''
 
+sh = '''
+setl tabstop=2
+setl shiftwidth=2
+'''
+
 markdown = '''
 lua require("pasteimage").setup()
 '''
@@ -72,4 +77,5 @@ nim = '''
 setl tabstop=2
 setl shiftwidth=2
 setl cms=#%s
+nnoremap @t <cmd>Quickrun nimble_test<CR>
 '''

@@ -161,7 +161,15 @@ let g:quickrun_config = {
 \           'command': ':luafile',
 \           'exec': '%C %S',
 \           'runner': 'vimscript',
-\       }
+\       },
+\		'nim': {
+\			'command': 'nimble',
+\			'exec': '%c run'
+\		},
+\		'nimble_test': {
+\			'command': 'nimble',
+\			'exec': '%c test'
+\		},
 \   }
 
 nnoremap @r <Cmd>QuickRun<CR>
@@ -414,3 +422,7 @@ augroup END
 [[plugins]]
 repo = '~/plugin/sticky-header.nvim'
 on_event = 'BufEnter'
+
+[[plugins]]
+repo = "uga-rosa/nim.nvim"
+on_ft = 'nim'
