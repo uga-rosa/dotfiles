@@ -1,6 +1,14 @@
 {
     "Lua.diagnostics.globals": [
-      "vim"
+        "vim"
     ],
-    "Lua.telemetry.enable": true
+    "Lua.telemetry.enable": true,
+    "languageserver": {
+        "nim": {
+            "command": "nimlsp",
+            "filetypes": [
+                "nim"
+            ]
+        }
+    }
 }

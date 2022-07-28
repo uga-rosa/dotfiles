@@ -81,7 +81,6 @@ cmp.setup({
                 buffer = "[Buffer]",
                 path = "[Path]",
                 nvim_lsp = "[LSP]",
-                nvim_lsp_signature_help = "[SignHelp]",
                 luasnip = "[LuaSnip]",
                 dictionary = "[Dict]",
             })[entry.source.name]

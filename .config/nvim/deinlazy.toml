@@ -46,6 +46,11 @@ endif
 hook_source = '''
 lua <<EOL
 require('telescope').setup {
+  pickers = {
+    find_files = {
+      find_command = {"fd", "-E", ".git", "-t", "f"},
+    },
+  },
   extensions = {
     fzf = {
       fuzzy = true,
@@ -162,7 +167,7 @@ let g:quickrun_config = {
 \           'exec': '%C %S',
 \           'runner': 'vimscript',
 \       },
-\		'nim': {
+\		'nimble': {
 \			'command': 'nimble',
 \			'exec': '%c run'
 \		},
@@ -263,16 +268,16 @@ let g:searchx.nohlsearch.jump = v:true
 let g:searchx.markers = split('ASDFGHJKL:QWERTYUIOP', '.\zs')
 '''
 
-[[plugins]]
-# repo = 'hrsh7th/nvim-pasta'
-repo = '~/plugin/nvim-pasta'
-on_event = 'BufEnter'
-hook_source = '''
-lua <<EOL
-vim.keymap.set({ "n", "x" }, "p", require("pasta.mappings").p)
-vim.keymap.set({ "n", "x" }, "P", require("pasta.mappings").P)
-EOL
-'''
+# [[plugins]]
+# # repo = 'hrsh7th/nvim-pasta'
+# repo = '~/plugin/nvim-pasta'
+# on_event = 'BufEnter'
+# hook_source = '''
+# lua <<EOL
+# vim.keymap.set({ "n", "x" }, "p", require("pasta.mappings").p)
+# vim.keymap.set({ "n", "x" }, "P", require("pasta.mappings").P)
+# EOL
+# '''
 
 [[plugins]]
 repo = 'yuki-yano/fuzzy-motion.vim'
@@ -372,12 +377,12 @@ nmap gcc <Cmd>call MyPreciousSwitch()<CR><Plug>CommentaryLine
 '''
 
 [[plugins]]
-repo = 'iamcco/markdown-preview.nvim'
-build = 'cd app && yarn install'
+repo = 'kat0h/bufpreview.vim'
+depends = 'denops.vim'
 on_ft = 'markdown'
 hook_source = '''
-let g:mkdp_refresh_slow = 1
-nnoremap <leader>p <Cmd>MarkdownPreview<CR>
+nnoremap <buffer> <leader>p <Cmd>PreviewMarkdownToggle<CR>
+let g:bufpreview_browser = 'chrome.exe'
 '''
 
 [[plugins]]
@@ -424,5 +429,5 @@ repo = '~/plugin/sticky-header.nvim'
 on_event = 'BufEnter'
 
 [[plugins]]
-repo = "uga-rosa/nim.nvim"
+repo = "alaviss/nim.nvim"
 on_ft = 'nim'
