@@ -1,3 +1,20 @@
+local map = utils.keymap.set
+
+local luasnip = require("luasnip")
+
+map("is", "<C-j>", function()
+    luasnip.jump(1)
+end, "r")
+map("is", "<C-k>", function()
+    luasnip.jump(-1)
+end, "r")
+
+require("luasnip.loaders.from_snipmate").lazy_load({
+    paths = vim.fn.stdpath("config") .. "/snippets",
+})
+
+-- choice popup
+
 local current_nsid = vim.api.nvim_create_namespace("LuaSnipChoiceListSelections")
 local current_win = nil
 
@@ -45,9 +62,7 @@ local function window_for_choiceNode(choiceNode)
     return { win_id = win, extmark = extmark, buf = buf }
 end
 
-_G._ls_popup = {}
-
-function _ls_popup.open(choiceNode)
+local function open(choiceNode)
     -- build stack for nested choiceNodes.
     if current_win then
         vim.api.nvim_win_close(current_win.win_id, true)
@@ -63,7 +78,7 @@ function _ls_popup.open(choiceNode)
     }
 end
 
-function _ls_popup.close()
+local function close()
     vim.api.nvim_win_close(current_win.win_id, true)
     vim.api.nvim_buf_del_extmark(current_win.buf, current_nsid, current_win.extmark)
     -- now we are checking if we still have previous choice we were in after exit nested choice
@@ -77,7 +92,7 @@ function _ls_popup.close()
     end
 end
 
-function _ls_popup.update(choiceNode)
+local function update(choiceNode)
     vim.api.nvim_win_close(current_win.win_id, true)
     vim.api.nvim_buf_del_extmark(current_win.buf, current_nsid, current_win.extmark)
     local create_win = window_for_choiceNode(choiceNode)
@@ -85,3 +100,12 @@ function _ls_popup.update(choiceNode)
     current_win.extmark = create_win.extmark
     current_win.buf = create_win.buf
 end
+
+local group = "choice_popup"
+vim.api.nvim_create_augroup(group, { clear = true })
+vim.api.nvim_create_autocmd("User", {
+    pattern = "LuasnipChoiceNodeEnter",
+    callback = function()
+        open()
+    end,
+})

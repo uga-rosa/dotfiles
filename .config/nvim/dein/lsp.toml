@@ -1,23 +1,10 @@
 [[plugins]]
-repo = 'tami5/lspsaga.nvim'
+repo = 'glepnir/lspsaga.nvim'
 hook_source = '''
 lua <<EOL
-require("lspsaga").setup({
-    error_sign = " ",
-    warn_sign = " ",
-    hint_sign = " ",
-    infor_sign = " ",
-    code_action_prompt = {
-        enable = false,
-    },
-    code_action_keys = {
-        quit = { "<C-c>", "<Esc>", "q" },
-        exec = "<CR>",
-    },
-    rename_action_keys = {
-        quit = { "<C-c>", "<Esc>" },
-        exec = "<CR>",
-    },
+require("lspsaga").init_lsp_saga({
+    diagnostic_header = { " ", " ", " ", " " },
+    rename_action_quit = { "<C-c>", "<Esc>" },
 })
 EOL
 '''
@@ -35,16 +22,11 @@ repo = 'williamboman/nvim-lsp-installer'
 repo = 'junnplus/nvim-lsp-setup'
 
 [[plugins]]
-# repo = 'folke/lua-dev.nvim'
-repo = '~/plugin/lua-dev.nvim'
-
-[[plugins]]
-repo = 'matsui54/denops-signature_help'
-depends = 'denops.vim'
+repo = 'uga-rosa/lua-dev.nvim'
 
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depends = ['lspsaga.nvim', 'fidget.nvim', 'nvim-lsp-installer', 'nvim-lsp-setup', 'lua-dev.nvim', 'denops-signature_help', 'cmp-nvim-lsp']
+depends = ['lspsaga.nvim', 'fidget.nvim', 'nvim-lsp-installer', 'nvim-lsp-setup', 'lua-dev.nvim', 'cmp-nvim-lsp']
 on_ft = ['lua', 'go', 'python', 'sh', 'bash', 'rust', 'vim', 'javascript', 'typescript', 'nim']
 hook_source = '''
 command Format lua vim.lsp.buf.formatting_sync()
@@ -81,17 +63,6 @@ require("nvim-lsp-setup").setup({
         ["<C-b>"] = "lua require('lspsaga.action').smart_scroll_with_saga(-1)",
     },
     capabilities = capabilities,
-    on_attach = function(client, bufnr)
-        vim.keymap.set("i", "<C-g>", function()
-            if vim.fn["signature_help#is_enabled"]() == 1 then
-                print("disable")
-                vim.fn["signature_help#disable"]()
-            else
-                print("enable")
-                vim.fn["signature_help#enable"]()
-            end
-        end, { buffer = true })
-    end,
     servers = {
         sumneko_lua = require("lua-dev").setup({
             library = {

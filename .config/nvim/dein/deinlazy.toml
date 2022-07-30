@@ -377,12 +377,15 @@ nmap gcc <Cmd>call MyPreciousSwitch()<CR><Plug>CommentaryLine
 '''
 
 [[plugins]]
-repo = 'kat0h/bufpreview.vim'
+repo = 'tani/glance-vim'
 depends = 'denops.vim'
 on_ft = 'markdown'
 hook_source = '''
-nnoremap <buffer> <leader>p <Cmd>PreviewMarkdownToggle<CR>
-let g:bufpreview_browser = 'chrome.exe'
+function! OpenGlance() abort
+	Glance
+    call system('browser http://localhost:8765')
+endfunction
+nnoremap <buffer> <leader>p <Cmd>call OpenGlance()<CR>
 '''
 
 [[plugins]]
@@ -423,10 +426,6 @@ augroup choice_popup
     au User LuasnipChangeChoice lua _ls_popup.update(require("luasnip").session.event_node)
 augroup END
 '''
-
-[[plugins]]
-repo = '~/plugin/sticky-header.nvim'
-on_event = 'BufEnter'
 
 [[plugins]]
 repo = "alaviss/nim.nvim"

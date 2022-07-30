@@ -17,7 +17,8 @@ augroup END
 nnoremap <silent> K <Cmd>call ShowDocumentation()<CR>
 function! ShowDocumentation() abort
 	if CocAction('hasProvider', 'hover')
-		call CocActionAsync('doHover')
+		" call CocActionAsync('doHover')
+		call CocAction('doHover')
 	else
 		call feedkeys('K', 'in')
 	endif

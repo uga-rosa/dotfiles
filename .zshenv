@@ -50,5 +50,25 @@ export PATH="$HOME/.nimble/bin:$PATH"
 # Cuda
 export PATH="/usr/local/cuda/bin:$PATH"
 
-# gromacs
-[[ /usr/local/gromacs-2022.2/bin/GMXRC ]] && source /usr/local/gromacs-2022.2/bin/GMXRC
+# gmxenv
+export PATH="$HOME/.gmxenv/bin:$PATH"
+export PATH="$HOME/.gmxenv/shims:$PATH"
+
+# browser
+vivaldi="/mnt/c/Users/uga/AppData/Local/Vivaldi/Application/vivaldi.exe"
+chrome="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+if [[ -f $vivaldi ]]; then
+    export BROWSER="$vivaldi"
+elif [[ -f $chrome ]]; then
+    export BROWSER="$chrome"
+fi
+
+browser() {
+    if [[ -z $1 ]]; then
+        $BROWSER
+    elif [[ -f $1 ]]; then
+        $BROWSER $(wslpath -w ${1})
+    else
+        $BROWSER $1
+    fi
+}

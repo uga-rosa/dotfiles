@@ -1,6 +1,7 @@
 # Editor
 export EDITOR=nvim
 alias nv="nvim"
+alias v="nvim"
 
 # tmux color
 export TERM="tmux-256color"
@@ -36,12 +37,22 @@ home() {
     fi
 }
 
-# windows chrome
-chrome() {
+# browser
+vivaldi="/mnt/c/Users/uga/AppData/Local/Vivaldi/Application/vivaldi.exe"
+chrome="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
+if [[ -f $vivaldi ]]; then
+    export BROWSER="$vivaldi"
+elif [[ -f $chrome ]]; then
+    export BROWSER="$chrome"
+fi
+
+browser() {
     if [[ -z $1 ]]; then
-        chrome.exe
+        $BROWSER
+    elif [[ -f $1 ]]; then
+        $BROWSER $(wslpath -w ${1})
     else
-        chrome.exe $(wslpath -w ${1})
+        $BROWSER $1
     fi
 }
 
