@@ -8,5 +8,4 @@ end
 
 _G.utils = {
     keymap = require("utils.keymap"),
-    path = require("utils.path"),
 }
