@@ -53,7 +53,7 @@ require("mason-lspconfig").setup_handlers({
             library = {
                 vimruntime = true,
                 types = true,
-                plugins = { "nvim-treesitter", "plenary.nvim" },
+                -- plugins = { "nvim-treesitter", "plenary.nvim" },
             },
             snippet = false,
             lspconfig = {

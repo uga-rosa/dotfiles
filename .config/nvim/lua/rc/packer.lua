@@ -1,7 +1,7 @@
 local fn = vim.fn
 
-local group = "vimrc_packer"
-vim.api.nvim_create_augroup(group, { clear = true })
+local group_name = "vimrc_packer"
+vim.api.nvim_create_augroup(group_name, { clear = true })
 vim.api.nvim_create_autocmd("BufWritePost", {
     pattern = "*lua/rc/plugins/list.lua",
     callback = function()

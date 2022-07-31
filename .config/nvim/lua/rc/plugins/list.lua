@@ -97,6 +97,7 @@ return packer.startup({
         use({
             "~/plugin/cmp-dictionary",
             after = "nvim-cmp",
+            config = 'require("rc.plugins.config.cmp-dictionary")',
         })
 
         -- snippet engine
@@ -273,6 +274,12 @@ return packer.startup({
 
         -- comment out
         use("tpope/vim-commentary")
+
+        -- nim
+        use({
+            "alaviss/nim.nvim",
+            ft = "nim",
+        })
 
         -- translate
         use({
