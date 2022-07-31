@@ -22,6 +22,24 @@ github:
       link:
         - from: '*jq*'
           to: jq
+  - name: ajeetdsouza/zoxide
+    description: A smarter cd command. Supports all major shells.
+    owner: ajeetdsouza
+    repo: zoxide
+    release:
+      name: zoxide
+      tag: "v0.8.2"
+      asset:
+        filename: '{{ .Release.Name }}-{{ replace .Release.Tag "v" "" }}-{{ .Arch }}-{{ .OS }}.tar.gz'
+        replacements:
+          amd64: x86_64-unknown
+          linux: linux-musl
+    command:
+      link:
+        - from: '*zoxide*'
+          to: zoxide
+      snippet: |
+        eval "$(zoxide init zsh)"
   - name: ogham/exa
     description: A modern version of 'ls'.
     owner: ogham
@@ -32,7 +50,6 @@ github:
     command:
       alias:
         l: exa --icons
-        ls: l
         la: exa -a --icons
         ll: exa -aal --icons
         lt: exa -T -L 3 -a -I "node_modules|.git|.cache" --icons

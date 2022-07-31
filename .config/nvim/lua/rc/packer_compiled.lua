@@ -244,7 +244,7 @@ _G.packer_plugins = {
     url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-cmdline", "cmp-dictionary", "cmp-nvim-lsp", "cmp-buffer", "cmp-path", "cmp_luasnip" },
+    after = { "cmp-cmdline", "cmp-dictionary", "cmp_luasnip", "cmp-nvim-lsp", "cmp-path", "cmp-buffer" },
     config = { 'require("rc.plugins.config.nvim-cmp")' },
     load_after = {
       LuaSnip = true
@@ -348,6 +348,11 @@ _G.packer_plugins = {
     path = "/home/uga/.local/share/nvim/site/pack/packer/start/treesitter-unit",
     url = "https://github.com/David-Kunz/treesitter-unit"
   },
+  ["vim-commentary"] = {
+    loaded = true,
+    path = "/home/uga/.local/share/nvim/site/pack/packer/start/vim-commentary",
+    url = "https://github.com/tpope/vim-commentary"
+  },
   ["vim-maketable"] = {
     loaded = false,
     needs_bufread = false,
@@ -419,74 +424,74 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Setup for: feline.nvim
-time([[Setup for feline.nvim]], true)
-require("rc.plugins.setup.feline")
-time([[Setup for feline.nvim]], false)
 -- Setup for: vim-operator-replace
 time([[Setup for vim-operator-replace]], true)
 vim.cmd("nmap r <Plug>(operator-replace)")
 time([[Setup for vim-operator-replace]], false)
--- Setup for: open-browser.vim
-time([[Setup for open-browser.vim]], true)
-require("rc.plugins.setup.open-browser")
-time([[Setup for open-browser.vim]], false)
 -- Setup for: vim-sandwich
 time([[Setup for vim-sandwich]], true)
 require("rc.plugins.setup.vim-sandwich")
 time([[Setup for vim-sandwich]], false)
--- Setup for: vim-searchx
-time([[Setup for vim-searchx]], true)
-require("rc.plugins.setup.searchx")
-time([[Setup for vim-searchx]], false)
--- Setup for: fuzzy-motion.vim
-time([[Setup for fuzzy-motion.vim]], true)
-require("rc.plugins.setup.fuzzy-motion")
-time([[Setup for fuzzy-motion.vim]], false)
 -- Setup for: gina.vim
 time([[Setup for gina.vim]], true)
 require("rc.plugins.setup.gina")
 time([[Setup for gina.vim]], false)
--- Setup for: telescope.nvim
-time([[Setup for telescope.nvim]], true)
-require("rc.plugins.setup.telescope")
-time([[Setup for telescope.nvim]], false)
+-- Setup for: vim-searchx
+time([[Setup for vim-searchx]], true)
+require("rc.plugins.setup.searchx")
+time([[Setup for vim-searchx]], false)
+-- Setup for: feline.nvim
+time([[Setup for feline.nvim]], true)
+require("rc.plugins.setup.feline")
+time([[Setup for feline.nvim]], false)
+-- Setup for: open-browser.vim
+time([[Setup for open-browser.vim]], true)
+require("rc.plugins.setup.open-browser")
+time([[Setup for open-browser.vim]], false)
 -- Setup for: vim-quickrun
 time([[Setup for vim-quickrun]], true)
 require("rc.plugins.setup.vim-quickrun")
 time([[Setup for vim-quickrun]], false)
--- Config for: treesitter-unit
-time([[Config for treesitter-unit]], true)
-require("rc.plugins.config.treesitter-unit")
-time([[Config for treesitter-unit]], false)
+-- Setup for: fuzzy-motion.vim
+time([[Setup for fuzzy-motion.vim]], true)
+require("rc.plugins.setup.fuzzy-motion")
+time([[Setup for fuzzy-motion.vim]], false)
+-- Setup for: telescope.nvim
+time([[Setup for telescope.nvim]], true)
+require("rc.plugins.setup.telescope")
+time([[Setup for telescope.nvim]], false)
 -- Config for: nvim-treesitter
 time([[Config for nvim-treesitter]], true)
 require("rc.plugins.config.nvim-treesitter")
 time([[Config for nvim-treesitter]], false)
--- Config for: lua-dev.nvim
-time([[Config for lua-dev.nvim]], true)
-require("rc.plugins.config.lua-dev")
-time([[Config for lua-dev.nvim]], false)
--- Config for: null-ls.nvim
-time([[Config for null-ls.nvim]], true)
-require("rc.plugins.config.null-ls")
-time([[Config for null-ls.nvim]], false)
--- Config for: lspsaga.nvim
-time([[Config for lspsaga.nvim]], true)
-require("rc.plugins.config.lspsaga")
-time([[Config for lspsaga.nvim]], false)
 -- Config for: vimdoc-ja
 time([[Config for vimdoc-ja]], true)
 try_loadstring("\27LJ\2\n2\0\0\2\0\4\0\0056\0\0\0009\0\1\0'\1\3\0=\1\2\0K\0\1\0\nja,en\rhelplang\bopt\bvim\0", "config", "vimdoc-ja")
 time([[Config for vimdoc-ja]], false)
+-- Config for: lspsaga.nvim
+time([[Config for lspsaga.nvim]], true)
+require("rc.plugins.config.lspsaga")
+time([[Config for lspsaga.nvim]], false)
+-- Config for: lua-dev.nvim
+time([[Config for lua-dev.nvim]], true)
+require("rc.plugins.config.lua-dev")
+time([[Config for lua-dev.nvim]], false)
 -- Config for: fidget.nvim
 time([[Config for fidget.nvim]], true)
 require("fidget").setup({})
 time([[Config for fidget.nvim]], false)
+-- Config for: null-ls.nvim
+time([[Config for null-ls.nvim]], true)
+require("rc.plugins.config.null-ls")
+time([[Config for null-ls.nvim]], false)
+-- Config for: treesitter-unit
+time([[Config for treesitter-unit]], true)
+require("rc.plugins.config.treesitter-unit")
+time([[Config for treesitter-unit]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
-vim.cmd [[ packadd nvim-lspconfig ]]
 vim.cmd [[ packadd playground ]]
+vim.cmd [[ packadd nvim-lspconfig ]]
 time([[Sequenced loading]], false)
 -- Keymap lazy-loads
 time([[Defining lazy-load keymaps]], true)
@@ -497,23 +502,23 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
+vim.cmd [[au FileType python ++once lua require("packer.load")({'mason-lspconfig.nvim'}, { ft = "python" }, _G.packer_plugins)]]
 vim.cmd [[au FileType lua ++once lua require("packer.load")({'mason-lspconfig.nvim'}, { ft = "lua" }, _G.packer_plugins)]]
 vim.cmd [[au FileType vim ++once lua require("packer.load")({'mason-lspconfig.nvim'}, { ft = "vim" }, _G.packer_plugins)]]
-vim.cmd [[au FileType go ++once lua require("packer.load")({'mason-lspconfig.nvim'}, { ft = "go" }, _G.packer_plugins)]]
-vim.cmd [[au FileType python ++once lua require("packer.load")({'mason-lspconfig.nvim'}, { ft = "python" }, _G.packer_plugins)]]
 vim.cmd [[au FileType markdown ++once lua require("packer.load")({'glance-vim', 'vim-maketable'}, { ft = "markdown" }, _G.packer_plugins)]]
+vim.cmd [[au FileType go ++once lua require("packer.load")({'mason-lspconfig.nvim'}, { ft = "go" }, _G.packer_plugins)]]
 vim.cmd [[au FileType sh ++once lua require("packer.load")({'mason-lspconfig.nvim'}, { ft = "sh" }, _G.packer_plugins)]]
 vim.cmd [[au FileType nim ++once lua require("packer.load")({'mason-lspconfig.nvim'}, { ft = "nim" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufRead * ++once lua require("packer.load")({'vim-searchx', 'fuzzy-motion.vim', 'feline.nvim', 'translate.nvim', 'open-browser.vim'}, { event = "BufRead *" }, _G.packer_plugins)]]
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'vim-nightfly-guicolors', 'mason.nvim', 'telescope.nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufNewFile * ++once lua require("packer.load")({'feline.nvim'}, { event = "BufNewFile *" }, _G.packer_plugins)]]
 vim.cmd [[au CursorHold * ++once lua require("packer.load")({'denops.vim'}, { event = "CursorHold *" }, _G.packer_plugins)]]
+vim.cmd [[au BufNewFile * ++once lua require("packer.load")({'feline.nvim'}, { event = "BufNewFile *" }, _G.packer_plugins)]]
+vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'nvim-autopairs', 'nvim-cmp', 'LuaSnip'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufEnter * ++once lua require("packer.load")({'vim-quickrun', 'nvim-tree.lua', 'vim-sandwich', 'winresizer', 'gina.vim'}, { event = "BufEnter *" }, _G.packer_plugins)]]
 vim.cmd [[au CmdlineEnter * ++once lua require("packer.load")({'nvim-cmp'}, { event = "CmdlineEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au BufEnter * ++once lua require("packer.load")({'winresizer', 'nvim-tree.lua', 'vim-sandwich', 'gina.vim', 'vim-quickrun'}, { event = "BufEnter *" }, _G.packer_plugins)]]
-vim.cmd [[au InsertEnter * ++once lua require("packer.load")({'LuaSnip', 'nvim-autopairs', 'nvim-cmp'}, { event = "InsertEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufRead * ++once lua require("packer.load")({'vim-searchx', 'feline.nvim', 'fuzzy-motion.vim', 'translate.nvim', 'open-browser.vim'}, { event = "BufRead *" }, _G.packer_plugins)]]
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'telescope.nvim', 'mason.nvim', 'vim-nightfly-guicolors'}, { event = "VimEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end

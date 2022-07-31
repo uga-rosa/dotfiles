@@ -271,6 +271,9 @@ return packer.startup({
             event = "BufEnter",
         })
 
+        -- comment out
+        use("tpope/vim-commentary")
+
         -- translate
         use({
             "~/plugin/translate.nvim",
