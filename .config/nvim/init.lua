@@ -7,4 +7,7 @@ require("rc.mapping")
 require("rc.ftdetect")
 -- init.lua is sourced after ftplugin/*
 require("rc.ftplugin")
+-- plugin
 require("rc.packer")
+-- my plugin
+require("myplugin")
