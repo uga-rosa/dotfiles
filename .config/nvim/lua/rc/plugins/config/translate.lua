@@ -8,22 +8,16 @@ local target2map = {
 
 local function mapping(suffix, opt)
     local function builder(target, source)
-        return "Translate " .. target .. " -source=" .. source .. " " .. opt
+        return "<Cmd>Translate " .. target .. " -source=" .. source .. " " .. opt .. "<CR>"
     end
     -- Japanese to English
     local lhs = prefix .. target2map["EN"] .. suffix
-    local rhs = builder("EN", "JA") .. "<CR>"
-    map("n", lhs, ":<C-u>" .. rhs, "s")
-    if not opt:find("-comment") then
-        map("x", lhs, ":" .. rhs, "s")
-    end
+    local rhs = builder("EN", "JA")
+    map("nx", lhs, rhs, "s")
     -- English to Japanese
     lhs = prefix .. target2map["JA"] .. suffix
-    rhs = builder("JA", "EN") .. "<CR>"
-    map("n", lhs, ":<C-u>" .. rhs, "s")
-    if not opt:find("-comment") then
-        map("x", lhs, ":" .. rhs, "s")
-    end
+    rhs = builder("JA", "EN")
+    map("nx", lhs, rhs, "s")
 end
 
 mapping("f", "-parse_after=window -output=floating")
@@ -49,7 +43,7 @@ vim.api.nvim_create_augroup("translate-nvim-user", {})
 vim.api.nvim_create_autocmd("FileType", {
     group = "translate-nvim-user",
     pattern = "translate",
-    callback = function ()
+    callback = function()
         map("n", "q", "<Cmd>quit<CR>", "bn")
-    end
+    end,
 })

@@ -64,9 +64,6 @@ require("mason-lspconfig").setup_handlers({
                         diagnostics = {
                             globals = { "utils" },
                         },
-                        format = {
-                            enable = false,
-                        },
                     },
                 },
             },

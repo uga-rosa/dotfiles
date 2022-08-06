@@ -28,10 +28,10 @@ for k, v in pairs(opt) do
 end
 
 -- mouse
-map("", "<LeftMouse>", "")
-map("i", "<LeftMouse>", "")
-map("", "<2-LeftMouse>", "")
-map("i", "<2-LeftMouse>", "")
+map("", "<LeftMouse>", "<Nop>")
+map("i", "<LeftMouse>", "<Nop>")
+map("", "<2-LeftMouse>", "<Nop>")
+map("i", "<2-LeftMouse>", "<Nop>")
 
 -- filetype lua
 vim.g.do_filetype_lua = 1

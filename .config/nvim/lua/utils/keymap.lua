@@ -28,12 +28,9 @@ local optsShorts = {
 ---Keymap.set("in", "hoge", "huga", "bsr")
 ---is same as
 ---vim.keymap.set({ "i", "n" }, "hoge", "huga", { buffer = true, silent = true, remap = true })
----@param bufnr? int
+---@param bufnr? integer
 function Keymap.set(modes, lhs, rhs, optstring, bufnr)
-    local mode = {}
-    for m in vim.gsplit(modes, "") do
-        table.insert(mode, m)
-    end
+    local mode = modes == "" and { "" } or vim.split(modes, "")
 
     local opts = {}
     optstring = optstring or ""

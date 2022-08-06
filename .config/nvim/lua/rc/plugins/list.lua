@@ -214,10 +214,9 @@ return packer.startup({
 
         -- markdown previewer
         use({
-            "tani/glance-vim",
-            requires = "denops.vim",
+            "previm/previm",
             ft = "markdown",
-            config = 'require("rc.plugins.config.glance-vim")',
+            config = 'require("rc.plugins.config.previm")',
         })
 
         -- utilities for markdown table
@@ -301,5 +300,8 @@ return packer.startup({
 
         -- reference for luv (vim.loop)
         use("nanotee/luv-vimdocs")
+
+        -- nim inddentation
+        -- use("~/plugin/nindent.lua")
     end,
 })

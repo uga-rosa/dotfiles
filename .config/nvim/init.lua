@@ -11,3 +11,5 @@ require("rc.ftplugin")
 require("rc.packer")
 -- my plugin
 require("myplugin")
+
+vim.opt.runtimepath:append(".")
