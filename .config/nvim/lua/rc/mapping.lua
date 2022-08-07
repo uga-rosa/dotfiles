@@ -8,7 +8,18 @@ map("n", "s", "")
 map("n", "m", "")
 
 -- go to home/end
-map("nxo", "H", "^")
+map("nxo", "H", function()
+    local col = vim.fn.col(".")
+    if col == 1 then
+        return "^"
+    end
+    local line_before_cursor = vim.api.nvim_get_current_line():sub(1, col - 1)
+    if line_before_cursor:find("^%s+$") then
+        return "0"
+    else
+        return "^"
+    end
+end, "e")
 map("nxo", "L", "$")
 
 -- better o
