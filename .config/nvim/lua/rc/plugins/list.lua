@@ -156,6 +156,7 @@ return packer.startup({
         -- utilities for nvim-lsp
         use({
             "glepnir/lspsaga.nvim",
+            branch = "main",
             requires = "nvim-lspconfig",
             config = 'require("rc.plugins.config.lspsaga")',
         })
@@ -294,14 +295,5 @@ return packer.startup({
                 vim.opt.helplang = "ja,en"
             end,
         })
-
-        -- reference for Lua
-        use("milisims/nvim-luaref")
-
-        -- reference for luv (vim.loop)
-        use("nanotee/luv-vimdocs")
-
-        -- nim inddentation
-        -- use("~/plugin/nindent.lua")
     end,
 })
