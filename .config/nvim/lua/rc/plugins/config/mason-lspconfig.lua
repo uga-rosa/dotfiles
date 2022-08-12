@@ -43,31 +43,42 @@ local lspconfig = require("lspconfig")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 local opts = { capabilities = capabilities, on_attach = on_attach }
+local Seq = require("lua-utils.seq")
 
 require("mason-lspconfig").setup_handlers({
     function(server_name)
         lspconfig[server_name].setup(opts)
     end,
     ["sumneko_lua"] = function()
-        local dev = require("lua-dev").setup({
-            library = {
-                vimruntime = true,
-                types = true,
-                plugins = { "plenary.nvim" },
-            },
-            snippet = false,
-            lspconfig = {
-                capabilities = capabilities,
-                on_attach = on_attach,
-                settings = {
-                    Lua = {
-                        diagnostics = {
-                            globals = { "utils" },
-                        },
+        local rtp = vim.split(package.path, ";", { plain = true })
+        table.insert(rtp, "./lua/?.lua")
+        table.insert(rtp, "./lua/?/init.lua")
+        local lib = Seq.map(vim.api.nvim_get_runtime_file("lua", true), function(path)
+            return path:sub(1, -5)
+        end):unpack()
+
+        lspconfig.sumneko_lua.setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            settings = {
+                Lua = {
+                    runtime = {
+                        version = "LuaJIT",
+                        path = rtp,
+                        pathStrict = true,
+                    },
+                    diagnostics = {
+                        globals = { "vim" },
+                    },
+                    workspace = {
+                        library = lib,
+                        checkThirdParty = false,
+                    },
+                    telemetry = {
+                        enable = false,
                     },
                 },
             },
         })
-        lspconfig.sumneko_lua.setup(dev)
     end,
 })

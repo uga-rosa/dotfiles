@@ -167,10 +167,7 @@ return packer.startup({
             config = 'require("fidget").setup({})',
         })
 
-        use({
-            "uga-rosa/lua-dev.nvim",
-            config = 'require("rc.plugins.config.lua-dev")',
-        })
+        use("ii14/emmylua-nvim")
 
         use({
             "jose-elias-alvarez/null-ls.nvim",

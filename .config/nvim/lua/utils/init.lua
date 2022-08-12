@@ -1,9 +1,11 @@
 ---Transforms ctx into a human readable representation.
 ---@vararg any
 function _G.dump(...)
-    for _, ctx in ipairs({ ... }) do
-        print(vim.inspect(ctx))
+    local objects = { ... }
+    for i = 1, #objects do
+        objects[i] = vim.inspect(objects[i])
     end
+    print(table.concat(objects, "\n"))
 end
 
 _G.utils = {
