@@ -33,9 +33,6 @@ map("i", "<LeftMouse>", "<Nop>")
 map("", "<2-LeftMouse>", "<Nop>")
 map("i", "<2-LeftMouse>", "<Nop>")
 
--- filetype lua
-vim.g.do_filetype_lua = 1
-
 -- disable unnecessary plugin
 vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
@@ -57,3 +54,21 @@ vim.g.loaded_tar = 1
 vim.g.loaded_tarPlugin = 1
 vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
+
+local win32yank = vim.fn.resolve(vim.fn.exepath("win32yank.exe"))
+if win32yank then
+    local copy = { win32yank, "-i", "--crlf" }
+    local paste = { win32yank, "-o", "--lf" }
+    vim.g.clipboard = {
+        name = "myClipboard",
+        copy = {
+            ["+"] = copy,
+            ["*"] = copy,
+        },
+        paste = {
+            ["+"] = paste,
+            ["*"] = paste,
+        },
+        cache_enabled = true,
+    }
+end

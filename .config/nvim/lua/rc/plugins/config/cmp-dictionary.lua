@@ -2,9 +2,9 @@ local dict = require("cmp_dictionary")
 
 dict.setup({
     dic = {
-        ["autohotkey"] = "~/dotfiles/doc/ahk.dict",
+        ["autohotkey"] = "~/dotfiles/dict/ahk.dict",
         spelllang = {
-            en = "/usr/share/dict/words",
+            en = "~/.dict/en.dict",
         },
     },
     exact = 2,

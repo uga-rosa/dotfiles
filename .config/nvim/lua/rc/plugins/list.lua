@@ -295,5 +295,8 @@ return packer.startup({
                 vim.opt.helplang = "ja,en"
             end,
         })
+
+        -- utilities
+        use("~/plugin/lua-utils.nvim")
     end,
 })
