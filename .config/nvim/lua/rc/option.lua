@@ -55,7 +55,8 @@ vim.g.loaded_tarPlugin = 1
 vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
 
-local win32yank = vim.fn.expand("~/.windows_command/win32yank.exe")
+local fn = vim.fn
+local win32yank = fn.resolve(fn.exepath("win32yank.exe"))
 if win32yank then
     local copy = { win32yank, "-i", "--crlf" }
     local paste = { win32yank, "-o", "--lf" }
