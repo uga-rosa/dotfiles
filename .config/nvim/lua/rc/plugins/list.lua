@@ -32,22 +32,23 @@ return packer.startup({
         -- itself
         use({ "wbthomason/packer.nvim", opt = true })
 
-        -- improve require
+        -- improved require()
         use("lewis6991/impatient.nvim")
 
-        -- requires
+        -- library
         use("nvim-lua/plenary.nvim")
         use("kyazdani42/nvim-web-devicons")
+        use("tami5/sqlite.lua")
         use({
             "vim-denops/denops.vim",
             event = "CursorHold",
             config = 'require("rc.plugins.config.denops-vim")',
         })
+        use("~/plugin/lua-utils.nvim")
 
         -- colorscheme
         use({
             "bluz71/vim-nightfly-guicolors",
-            event = "VimEnter",
             config = 'require("rc.plugins.config.vim-nightfly-guicolors")',
         })
 
@@ -118,7 +119,6 @@ return packer.startup({
         -- surround
         use({
             "machakann/vim-sandwich",
-            event = "BufEnter",
             setup = 'require("rc.plugins.setup.vim-sandwich")',
             config = 'require("rc.plugins.config.vim-sandwich")',
         })
@@ -126,8 +126,7 @@ return packer.startup({
         -- fuzzy finder
         use({
             "nvim-telescope/telescope.nvim",
-            requires = { "plenary.nvim", "nvim-web-devicons", "telescope-fzf-native.nvim" },
-            event = "VimEnter",
+            requires = { "plenary.nvim", "nvim-web-devicons", "telescope-fzf-native.nvim", "telescope-frecency.nvim" },
             setup = 'require("rc.plugins.setup.telescope")',
             config = 'require("rc.plugins.config.telescope")',
         })
@@ -135,6 +134,10 @@ return packer.startup({
         use({
             "nvim-telescope/telescope-fzf-native.nvim",
             run = "make",
+        })
+        use({
+            "nvim-telescope/telescope-frecency.nvim",
+            requires = "tami5/sqlite.lua",
         })
 
         -- LSP configuration
@@ -167,8 +170,10 @@ return packer.startup({
             config = 'require("fidget").setup({})',
         })
 
+        -- Neovim completion library for sumneko/lua-language-server
         use("ii14/emmylua-nvim")
 
+        -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
         use({
             "jose-elias-alvarez/null-ls.nvim",
             config = 'require("rc.plugins.config.null-ls")',
@@ -198,36 +203,20 @@ return packer.startup({
         use({
             "kyazdani42/nvim-tree.lua",
             requires = "nvim-web-devicons",
-            event = "BufEnter",
             config = 'require("rc.plugins.config.nvim-tree")',
         })
 
         -- git
         use({
             "lambdalisue/gina.vim",
-            event = "BufEnter",
             setup = 'require("rc.plugins.setup.gina")',
             config = 'require("rc.plugins.config.gina")',
-        })
-
-        -- markdown previewer
-        use({
-            "previm/previm",
-            ft = "markdown",
-            config = 'require("rc.plugins.config.previm")',
-        })
-
-        -- utilities for markdown table
-        use({
-            "mattn/vim-maketable",
-            ft = "markdown",
         })
 
         -- general task runner
         use({
             "thinca/vim-quickrun",
             requires = "vim-quickrun-neovim-job",
-            event = "BufEnter",
             setup = 'require("rc.plugins.setup.vim-quickrun")',
         })
         use("lambdalisue/vim-quickrun-neovim-job")
@@ -244,7 +233,7 @@ return packer.startup({
         -- utilities for search
         use({
             "hrsh7th/vim-searchx",
-            event = "BufRead",
+            event = { "BufRead", "BufNewFile" },
             setup = 'require("rc.plugins.setup.searchx")',
         })
 
@@ -252,36 +241,27 @@ return packer.startup({
         use({
             "yuki-yano/fuzzy-motion.vim",
             requires = "denops.vim",
-            event = "BufRead",
+            event = { "BufRead", "BufNewFile" },
             setup = 'require("rc.plugins.setup.fuzzy-motion")',
         })
 
         -- open browser
         use({
             "tyru/open-browser.vim",
-            event = "BufRead",
+            event = { "BufRead", "BufNewFile" },
             setup = 'require("rc.plugins.setup.open-browser")',
         })
 
         -- change window
-        use({
-            "simeji/winresizer",
-            event = "BufEnter",
-        })
+        use("simeji/winresizer")
 
         -- comment out
         use("tpope/vim-commentary")
 
-        -- nim
-        use({
-            "alaviss/nim.nvim",
-            ft = "nim",
-        })
-
         -- translate
         use({
             "~/plugin/translate.nvim",
-            event = "BufRead",
+            event = { "BufRead", "BufNewFile" },
             config = 'require("rc.plugins.config.translate")',
         })
 
@@ -293,7 +273,20 @@ return packer.startup({
             end,
         })
 
-        -- utilities
-        use("~/plugin/lua-utils.nvim")
+        -- markdown previewer
+        use({
+            "previm/previm",
+            ft = "markdown",
+            config = 'require("rc.plugins.config.previm")',
+        })
+
+        -- utilities for markdown table
+        use({
+            "mattn/vim-maketable",
+            ft = "markdown",
+        })
+
+        -- nim
+        use("alaviss/nim.nvim")
     end,
 })
