@@ -208,9 +208,8 @@ return packer.startup({
 
         -- git
         use({
-            "lambdalisue/gina.vim",
-            setup = 'require("rc.plugins.setup.gina")',
-            config = 'require("rc.plugins.config.gina")',
+            "kdheepak/lazygit.nvim",
+            config = 'require("rc.plugins.config.lazygit")'
         })
 
         -- general task runner
