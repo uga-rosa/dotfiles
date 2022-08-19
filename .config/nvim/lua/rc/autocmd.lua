@@ -1,14 +1,16 @@
+local fn = vim.fn
+local api = vim.api
+
 local group_name = "vimrc"
-vim.api.nvim_create_augroup(group_name, { clear = true })
+api.nvim_create_augroup(group_name, { clear = true })
 
-local autocmd = vim.api.nvim_create_autocmd
-
-autocmd("InsertLeave", {
+local zenhan = fn.resolve(fn.exepath("zenhan.exe"))
+api.nvim_create_autocmd("InsertLeave", {
     group = group_name,
     pattern = "*",
     callback = function()
         if vim.bo.spelllang == "ja" then
-            vim.fn.system("zenhan.exe 0")
+            fn.system(zenhan .. " 0")
         end
     end,
 })

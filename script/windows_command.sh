@@ -17,8 +17,20 @@ win32yank_dir="$windows_home/AppData/Local/win32yank"
 mkdir -p "$win32yank_dir"
 cd "$win32yank_dir"
 wget https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x86.zip
-unzip win32yank-x86.zip
+unzip -o win32yank-x86.zip
 rm win32yank-x86.zip
 
 cd "$windows_dir"
-ln -s "$win32yank_dir/win32yank.exe" .
+ln -sf "$win32yank_dir/win32yank.exe" .
+
+# zenhan.exe
+zenhan_dir="$windows_home/AppData/Local/zenhan"
+mkdir -p "$zenhan_dir"
+cd "$zenhan_dir"
+wget https://github.com/iuchim/zenhan/releases/download/v0.0.1/zenhan.zip
+unzip zenhan.zip
+mv zenhan/bin64/zenhan.exe .
+rm -rf zenhan.zip zenhan
+
+cd "$windows_dir"
+ln -sf "$zenhan_dir/zenhan.exe" .
