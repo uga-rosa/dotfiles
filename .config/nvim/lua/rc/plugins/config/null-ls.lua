@@ -17,11 +17,7 @@ null.setup({
                 })
             end
         end,
-        b.formatting.shfmt.with({
-            extra_args = { "-ci", "-s", "-bn", "-i", "4" },
-        }),
         b.formatting.fixjson,
         b.formatting.black,
-        b.diagnostics.teal,
     },
 })
