@@ -86,6 +86,11 @@ return packer.startup({
         })
 
         use({
+            "hrsh7th/cmp-nvim-lsp-signature-help",
+            after = "nvim-cmp",
+        })
+
+        use({
             "hrsh7th/cmp-cmdline",
             after = "nvim-cmp",
         })
@@ -209,7 +214,7 @@ return packer.startup({
         -- git
         use({
             "kdheepak/lazygit.nvim",
-            config = 'require("rc.plugins.config.lazygit")'
+            config = 'require("rc.plugins.config.lazygit")',
         })
 
         -- general task runner
