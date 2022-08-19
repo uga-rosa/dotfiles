@@ -1,7 +1,11 @@
 local M = {
     {
-        pattern = "*.nim",
-        filetype = "nim",
+        pattern = "*.ahk",
+        filetype = "autohotkey",
+    },
+    {
+        pattern = "*.inp",
+        filetype = "packmol",
     },
 }
 
