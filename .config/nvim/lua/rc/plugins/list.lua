@@ -151,7 +151,6 @@ return packer.startup({
         -- easily install and manage LSP servers, DAP servers, linters, and formatters.
         use({
             "williamboman/mason.nvim",
-            event = "VimEnter",
             config = 'require("rc.plugins.config.mason")',
         })
         use({
@@ -245,7 +244,7 @@ return packer.startup({
         use({
             "yuki-yano/fuzzy-motion.vim",
             requires = "denops.vim",
-            event = { "BufRead", "BufNewFile" },
+            event = "BufEnter",
             setup = 'require("rc.plugins.setup.fuzzy-motion")',
         })
 

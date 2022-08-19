@@ -1,3 +1,4 @@
+local fn = vim.fn
 local map = utils.keymap.set
 
 local opt = {
@@ -17,7 +18,6 @@ local opt = {
     pumheight = 25,
     termguicolors = true,
     foldenable = false,
-    clipboard = "unnamedplus",
     inccommand = "split",
     signcolumn = "yes",
     mouse = "a",
@@ -54,21 +54,24 @@ vim.g.loaded_tarPlugin = 1
 vim.g.loaded_zip = 1
 vim.g.loaded_zipPlugin = 1
 
-local fn = vim.fn
-local win32yank = fn.resolve(fn.exepath("win32yank.exe"))
-if win32yank then
-    local copy = { win32yank, "-i", "--crlf" }
-    local paste = { win32yank, "-o", "--lf" }
-    vim.g.clipboard = {
-        name = "myClipboard",
-        copy = {
-            ["+"] = copy,
-            ["*"] = copy,
-        },
-        paste = {
-            ["+"] = paste,
-            ["*"] = paste,
-        },
-        cache_enabled = true,
-    }
-end
+-- The path resolution is slow (takes about 10ms), so delay it to speed up the startup.
+vim.defer_fn(function()
+    local win32yank = fn.resolve(fn.exepath("win32yank.exe"))
+    if win32yank then
+        local copy = { win32yank, "-i", "--crlf" }
+        local paste = { win32yank, "-o", "--lf" }
+        vim.g.clipboard = {
+            name = "myClipboard",
+            copy = {
+                ["+"] = copy,
+                ["*"] = copy,
+            },
+            paste = {
+                ["+"] = paste,
+                ["*"] = paste,
+            },
+            cache_enabled = true,
+        }
+    end
+    vim.opt.clipboard = "unnamedplus"
+end, 100)

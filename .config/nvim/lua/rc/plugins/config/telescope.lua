@@ -1,4 +1,6 @@
-require("telescope").setup({
+local telescope = require("telescope")
+
+telescope.setup({
     pickers = {
         find_files = {
             find_command = { "fd", "-E", ".git", "-t", "f" },
@@ -13,5 +15,8 @@ require("telescope").setup({
         },
     },
 })
-require("telescope").load_extension("fzf")
-require("telescope").load_extension("frecency")
+telescope.load_extension("fzf")
+
+vim.defer_fn(function()
+    telescope.load_extension("frecency")
+end, 200)
