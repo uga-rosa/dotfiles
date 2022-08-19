@@ -1,3 +1,7 @@
+_G.utils = {
+    keymap = require("utils.keymap"),
+}
+
 ---Transforms ctx into a human readable representation.
 ---@vararg any
 function _G.dump(...)
@@ -7,7 +11,3 @@ function _G.dump(...)
     end
     print(table.concat(objects, "\n"))
 end
-
-_G.utils = {
-    keymap = require("utils.keymap"),
-}

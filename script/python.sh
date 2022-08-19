@@ -18,6 +18,6 @@ pyenv global $VERSION
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 pip install --upgrade pip
-pip install numpy scipy matplotlib
+pip install numpy scipy matplotlib neovim
 
 echo 'Run `relogin`!'
