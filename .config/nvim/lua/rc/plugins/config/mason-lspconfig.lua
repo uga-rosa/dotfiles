@@ -1,3 +1,5 @@
+local fn = vim.fn
+
 require("mason-lspconfig").setup()
 
 local function formatting(bufnr)
@@ -43,42 +45,25 @@ local lspconfig = require("lspconfig")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 local opts = { capabilities = capabilities, on_attach = on_attach }
-local Seq = require("lua-utils.seq")
 
 require("mason-lspconfig").setup_handlers({
     function(server_name)
         lspconfig[server_name].setup(opts)
     end,
     ["sumneko_lua"] = function()
-        local rtp = vim.split(package.path, ";", { plain = true })
-        table.insert(rtp, "./lua/?.lua")
-        table.insert(rtp, "./lua/?/init.lua")
-        local lib = Seq.map(vim.api.nvim_get_runtime_file("lua", true), function(path)
-            return path:sub(1, -5)
-        end):unpack()
-
-        lspconfig.sumneko_lua.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-                Lua = {
-                    runtime = {
-                        version = "LuaJIT",
-                        path = rtp,
-                        pathStrict = true,
-                    },
-                    diagnostics = {
-                        globals = { "vim" },
-                    },
-                    workspace = {
-                        library = lib,
-                        checkThirdParty = false,
-                    },
-                    telemetry = {
-                        enable = false,
-                    },
-                },
+        local opt = require("lua-dev").setup({
+            library = {
+                vimruntime = true,
+                types = true,
+                plugins = true,
             },
+            runtime_path = false,
         })
+        opt.capabilities = capabilities
+        opt.on_attach = on_attach
+        ---@diagnostic disable
+        opt.settings.Lua.completion = nil
+        table.insert(opt.settings.Lua.workspace.library, fn.stdpath("config") .. "/lua/utils.lua")
+        lspconfig.sumneko_lua.setup(opt)
     end,
 })

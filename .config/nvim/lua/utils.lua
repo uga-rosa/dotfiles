@@ -1,4 +1,16 @@
+---Transforms ctx into a human readable representation.
+---@vararg any
+function _G.dump(...)
+    for _, obj in ipairs({ ... }) do
+        print(vim.inspect(obj))
+    end
+end
+
 local Keymap = {}
+
+_G.utils = {
+    keymap = Keymap,
+}
 
 local optsShorts = {
     b = "buffer",
@@ -44,5 +56,3 @@ function Keymap.set(modes, lhs, rhs, optstring, bufnr)
 
     vim.keymap.set(mode, lhs, rhs, opts)
 end
-
-return Keymap
