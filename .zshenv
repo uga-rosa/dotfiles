@@ -72,3 +72,9 @@ browser() {
         $BROWSER $1
     fi
 }
+
+# Mason's tool
+mason_bin="$HOME/.local/share/nvim/mason/bin"
+if [[ -d $mason_bin ]]; then
+    export PATH="$mason_bin:$PATH"
+fi
