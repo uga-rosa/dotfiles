@@ -26,7 +26,7 @@ local optsShorts = {
 ---@param modes string #It is splited character by character into a list.
 ---@param lhs string #Same as vim.keymap.set
 ---@param rhs string | function #Same as vim.keymap.set
----@param optstring string #Difference from vim.keymap.set.
+---@param optstring? string #Difference from vim.keymap.set.
 ---You can specify options in string form using the shorthand.
 ---b: buffer
 ---n: nowait
