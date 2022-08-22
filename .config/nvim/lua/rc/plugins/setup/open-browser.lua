@@ -4,6 +4,18 @@ vim.g.openbrowser_browser_commands = {
         args = { "{browser}", "{uri}" },
     },
 }
+vim.g.openbrowser_search_engines = {
+    google = "https://google.com/search?q={query}",
+    nim = "https://www.google.com/search?q={query}+site%3Anim-lang.org",
+}
 
 local map = utils.keymap.set
-map("nx", "<M-o>", "<Plug>(openbrowser-smart-search)")
+map("nx", "<M-o>", function()
+    local engines = vim.g.openbrowser_search_engines
+    local engine = vim.bo.filetype
+    if not engines[engine] then
+        engine = "google"
+    end
+    vim.g.openbrowser_default_search = engine
+    return "<Plug>(openbrowser-smart-search)"
+end, "e")
