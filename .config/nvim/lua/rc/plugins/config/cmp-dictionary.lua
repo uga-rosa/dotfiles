@@ -5,6 +5,7 @@ dict.setup({
         ["autohotkey"] = "~/dotfiles/dict/ahk.dict",
         spelllang = {
             en = "~/.dict/en.dict",
+            -- ja = "~/dotfiles/dic/ja.dict",
         },
     },
     exact = 2,

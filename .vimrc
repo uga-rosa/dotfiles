@@ -1,5 +1,6 @@
-runtime */jetpack.vim
+packadd vim-jetpack
 call jetpack#begin()
+Jetpack 'tani/vim-jetpack', {'opt': 1}
 Jetpack 'vim-denops/denops.vim'
 Jetpack 'yuki-yano/fuzzy-motion.vim'
 call jetpack#end()

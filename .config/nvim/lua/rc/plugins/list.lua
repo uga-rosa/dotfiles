@@ -174,11 +174,6 @@ return packer.startup({
             config = 'require("fidget").setup({})',
         })
 
-        use({
-            "Maan2003/lsp_lines.nvim",
-            config = 'require("lsp_lines").setup()',
-        })
-
         -- Neovim completion library for sumneko/lua-language-server
         -- use("ii14/emmylua-nvim")
         use("folke/lua-dev.nvim")
@@ -299,5 +294,6 @@ return packer.startup({
         use("alaviss/nim.nvim")
 
         use("~/plugin/todo.nvim")
+        use("~/plugin/join.nvim")
     end,
 })
