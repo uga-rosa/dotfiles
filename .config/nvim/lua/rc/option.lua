@@ -21,6 +21,7 @@ local opt = {
     inccommand = "split",
     signcolumn = "yes",
     mouse = "a",
+    laststatus = 3,
 }
 
 for k, v in pairs(opt) do

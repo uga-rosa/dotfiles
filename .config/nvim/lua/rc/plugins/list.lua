@@ -269,14 +269,6 @@ return packer.startup({
             config = 'require("rc.plugins.config.translate")',
         })
 
-        -- japanese help
-        use({
-            "vim-jp/vimdoc-ja",
-            config = function()
-                vim.opt.helplang = "ja,en"
-            end,
-        })
-
         -- markdown previewer
         use({
             "previm/previm",

@@ -1,3 +1,5 @@
+local luv = vim.loop
+
 ---Transforms ctx into a human readable representation.
 ---@vararg any
 function _G.dump(...)
@@ -7,9 +9,11 @@ function _G.dump(...)
 end
 
 local Keymap = {}
+local Path = {}
 
 _G.utils = {
     keymap = Keymap,
+    path = Path,
 }
 
 local optsShorts = {
@@ -55,4 +59,14 @@ function Keymap.set(modes, lhs, rhs, optstring, bufnr)
     end
 
     vim.keymap.set(mode, lhs, rhs, opts)
+end
+
+---Check the file exists.
+---@param filepath string
+---@return boolean
+function Path.exists(filepath)
+    ---@diagnostic disable-next-line
+    filepath = vim.fn.expand(filepath)
+    local ok = luv.fs_open(filepath, "r", 438)
+    return ok and true or false
 end
