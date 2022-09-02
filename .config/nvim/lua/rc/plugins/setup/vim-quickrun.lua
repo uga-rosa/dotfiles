@@ -12,6 +12,10 @@ vim.g.quickrun_config = {
         exec = "%C %S",
         runner = "vimscript",
     },
+    lua_vusted = {
+        command = "vusted",
+        exec = "%C %s",
+    },
     nimble = {
         command = "nimble",
         exec = "%C run",

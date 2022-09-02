@@ -8,7 +8,7 @@ local target2map = {
 
 local function mapping(suffix, opt)
     local function builder(target, source)
-        return "<Cmd>Translate " .. target .. " -source=" .. source .. " " .. opt .. "<CR>"
+        return "<Cmd>Translate " .. target .. " -source=" .. source .. " " .. opt .. "<CR><ESC>"
     end
     -- Japanese to English
     local lhs = prefix .. target2map["EN"] .. suffix
