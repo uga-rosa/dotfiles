@@ -1,5 +1,3 @@
-local fn = vim.fn
-
 require("mason-lspconfig").setup()
 
 local function formatting(bufnr)
@@ -57,13 +55,11 @@ require("mason-lspconfig").setup_handlers({
                 types = true,
                 plugins = true,
             },
+            snippet = false,
             runtime_path = false,
         })
-        opt.capabilities = capabilities
-        opt.on_attach = on_attach
-        ---@diagnostic disable
-        opt.settings.Lua.completion = nil
-        table.insert(opt.settings.Lua.workspace.library, fn.stdpath("config") .. "/lua/utils.lua")
+        opt = vim.tbl_deep_extend("force", opt, opts)
+        table.insert(opt.settings.Lua.workspace.library, vim.fn.stdpath("config") .. "/lua/utils.lua")
         lspconfig.sumneko_lua.setup(opt)
     end,
 })
