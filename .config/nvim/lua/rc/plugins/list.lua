@@ -131,7 +131,12 @@ return packer.startup({
         -- fuzzy finder
         use({
             "nvim-telescope/telescope.nvim",
-            requires = { "plenary.nvim", "nvim-web-devicons", "telescope-fzf-native.nvim", "telescope-frecency.nvim" },
+            requires = {
+                "plenary.nvim",
+                "nvim-web-devicons",
+                "telescope-fzf-native.nvim",
+                "telescope-frecency.nvim",
+            },
             setup = 'require("rc.plugins.setup.telescope")',
             config = 'require("rc.plugins.config.telescope")',
         })
@@ -155,7 +160,13 @@ return packer.startup({
         })
         use({
             "williamboman/mason-lspconfig.nvim",
-            after = { "nvim-lspconfig", "mason.nvim", "cmp-nvim-lsp", "lspsaga.nvim", "lua-dev.nvim" },
+            after = {
+                "nvim-lspconfig",
+                "mason.nvim",
+                "cmp-nvim-lsp",
+                "lspsaga.nvim",
+                "lua-dev.nvim",
+            },
             ft = { "lua", "vim", "go", "nim", "sh", "python" },
             config = 'require("rc.plugins.config.mason-lspconfig")',
         })
@@ -175,7 +186,6 @@ return packer.startup({
         })
 
         -- Neovim completion library for sumneko/lua-language-server
-        -- use("ii14/emmylua-nvim")
         use("folke/lua-dev.nvim")
 
         -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
@@ -287,5 +297,7 @@ return packer.startup({
 
         use("~/plugin/todo.nvim")
         use("~/plugin/join.nvim")
+
+        use("~/plugin/japanese-ime.nvim")
     end,
 })

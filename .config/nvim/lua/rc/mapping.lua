@@ -56,3 +56,6 @@ map("c", "<C-d>", "<Del>")
 
 -- tab close
 map("n", "qt", "<Cmd>tabclose<CR>")
+
+-- macro
+map("n", "Q", "@q")
