@@ -8,13 +8,8 @@ function _G.dump(...)
     end
 end
 
-local Keymap = {}
-local Path = {}
-
-_G.utils = {
-    keymap = Keymap,
-    path = Path,
-}
+_G.Keymap = {}
+_G.Path = {}
 
 local optsShorts = {
     b = "buffer",

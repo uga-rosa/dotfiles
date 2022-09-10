@@ -1,4 +1,4 @@
-local map = utils.keymap.set
+local map = Keymap.set
 
 map("n", "<leader>p", "<Cmd>PrevimOpen<CR>")
 

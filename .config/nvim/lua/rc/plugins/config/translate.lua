@@ -1,4 +1,4 @@
-local map = utils.keymap.set
+local map = Keymap.set
 
 local prefix = "m"
 local target2map = {

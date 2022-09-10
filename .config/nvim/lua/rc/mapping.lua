@@ -1,4 +1,4 @@
-local map = utils.keymap.set
+local map = Keymap.set
 
 -- leader key is <Space>
 vim.g.mapleader = " "

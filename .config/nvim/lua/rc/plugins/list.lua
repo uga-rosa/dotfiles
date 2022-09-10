@@ -45,6 +45,7 @@ return packer.startup({
             config = 'require("rc.plugins.config.denops-vim")',
         })
         use("~/plugin/lua-utils.nvim")
+        use("Shougo/pum.vim")
 
         -- colorscheme
         use({

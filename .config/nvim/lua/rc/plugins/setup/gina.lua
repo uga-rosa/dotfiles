@@ -1,4 +1,4 @@
-local map = utils.keymap.set
+local map = Keymap.set
 
 map("n", "<leader>g", "<Plug>(Gina)", "r")
 map("n", "<Plug>(Gina)s", "<Cmd>Gina status -s<CR>", "r")

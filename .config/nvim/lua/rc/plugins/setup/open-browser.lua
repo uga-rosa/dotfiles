@@ -9,7 +9,7 @@ vim.g.openbrowser_search_engines = {
     nim = "https://www.google.com/search?q={query}+site%3Anim-lang.org",
 }
 
-local map = utils.keymap.set
+local map = Keymap.set
 map("nx", "<M-o>", function()
     local engines = vim.g.openbrowser_search_engines
     local engine = vim.bo.filetype

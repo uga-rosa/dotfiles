@@ -1,4 +1,4 @@
-local map = utils.keymap.set
+local map = Keymap.set
 
 local unit = require("treesitter-unit")
 map("ox", "iu", function()

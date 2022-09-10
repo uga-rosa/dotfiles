@@ -64,7 +64,7 @@ M.lua = function()
         set_indent(tab_size, is_hard_tab)
     end
 
-    utils.keymap.set("n", "@t", "<Cmd>QuickRun lua_vusted<CR>")
+    Keymap.set("n", "@t", "<Cmd>QuickRun lua_vusted<CR>")
 end
 
 local group_name = "ftplugin_lua"

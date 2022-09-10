@@ -33,7 +33,7 @@ function M.toggle()
     end
 end
 
-local map = utils.keymap.set
+local map = Keymap.set
 
 map("nt", "<C-t>", M.toggle)
 map("t", "<Esc>", "<C-\\><C-n>")

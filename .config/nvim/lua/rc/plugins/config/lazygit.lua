@@ -1,3 +1,1 @@
-local map = utils.keymap.set
-
-map("n", "<leader>gg", "<Cmd>LazyGit<CR>")
+Keymap.set("n", "<leader>gg", "<Cmd>LazyGit<CR>")

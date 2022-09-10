@@ -1,5 +1,5 @@
 -- mapping
-local map = utils.keymap.set
+local map = Keymap.set
 
 map("n", "<F1>", "<Cmd>Telescope builtin<CR>")
 map("n", "<leader>r", "<Cmd>Telescope resume<CR>")

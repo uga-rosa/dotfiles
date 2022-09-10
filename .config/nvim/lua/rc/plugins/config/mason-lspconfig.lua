@@ -11,7 +11,7 @@ end
 
 local on_attach = function(client, bufnr)
     local buf_map = function(lhs, rhs)
-        utils.keymap.set("n", lhs, rhs, "s", bufnr)
+        Keymap.set("n", lhs, rhs, "s", bufnr)
     end
 
     buf_map("K", "<Cmd>Lspsaga hover_doc<CR>")
@@ -51,15 +51,18 @@ require("mason-lspconfig").setup_handlers({
     ["sumneko_lua"] = function()
         local opt = require("lua-dev").setup({
             library = {
-                vimruntime = true,
+                enabled = true,
+                runtime = true,
                 types = true,
-                plugins = true,
+                plugins = { "plenary.nvim" },
             },
             snippet = false,
-            runtime_path = false,
         })
         opt = vim.tbl_deep_extend("force", opt, opts)
-        table.insert(opt.settings.Lua.workspace.library, vim.fn.stdpath("config") .. "/lua/utils.lua")
+        table.insert(
+            opt.settings.Lua.workspace.library,
+            vim.fn.stdpath("config") .. "/lua/utils.lua"
+        )
         lspconfig.sumneko_lua.setup(opt)
     end,
 })

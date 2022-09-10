@@ -5,10 +5,10 @@ vim.g.searchx = {
     nohlsearch = {
         jump = true,
     },
-    markers = vim.split("ASDFGHJKL:QWERTYUIOP", "")
+    markers = vim.split("ASDFGHJKL:QWERTYUIOP", ""),
 }
 
-local map = utils.keymap.set
+local map = Keymap.set
 
 map("nx", "/", "<Cmd>call searchx#start({'dir': 1})<CR>")
 map("nx", "?", "<Cmd>call searchx#start({'dir': 0})<CR>")

@@ -1,5 +1,5 @@
 local fn = vim.fn
-local map = utils.keymap.set
+local map = Keymap.set
 
 local opt = {
     fileencoding = "utf-8",
