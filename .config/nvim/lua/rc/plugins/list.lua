@@ -87,6 +87,11 @@ return packer.startup({
         })
 
         use({
+            "hrsh7th/cmp-nvim-lua",
+            after = "nvim-cmp",
+        })
+
+        use({
             "hrsh7th/cmp-nvim-lsp-signature-help",
             after = "nvim-cmp",
         })
@@ -166,7 +171,6 @@ return packer.startup({
                 "mason.nvim",
                 "cmp-nvim-lsp",
                 "lspsaga.nvim",
-                "lua-dev.nvim",
             },
             ft = { "lua", "vim", "go", "nim", "sh", "python" },
             config = 'require("rc.plugins.config.mason-lspconfig")',
@@ -185,9 +189,6 @@ return packer.startup({
             "j-hui/fidget.nvim",
             config = 'require("fidget").setup({})',
         })
-
-        -- Neovim completion library for sumneko/lua-language-server
-        use("folke/lua-dev.nvim")
 
         -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua.
         use({

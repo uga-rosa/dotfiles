@@ -85,13 +85,14 @@ cmp.setup({
                 buffer = "[Buffer]",
                 path = "[Path]",
                 nvim_lsp = "[LSP]",
+                nvim_lua = "[NvimLua]",
                 luasnip = "[LuaSnip]",
                 dictionary = "[Dict]",
             })[entry.source.name]
             vim_item.dup = ({
                 buffer = 0,
-                dictionary = 0,
                 nvim_lua = 0,
+                dictionary = 0,
             })[entry.source.name] or 1
             return vim_item
         end,
@@ -156,6 +157,7 @@ cmp.setup({
     sources = {
         { name = "luasnip", group_index = 1 },
         { name = "nvim_lsp", group_index = 1 },
+        { name = "nvim_lua", group_index = 1 },
         { name = "nvim_lsp_signature_help", group_index = 1 },
         {
             name = "buffer",
