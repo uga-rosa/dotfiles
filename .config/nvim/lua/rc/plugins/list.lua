@@ -300,6 +300,6 @@ return packer.startup({
         use("~/plugin/todo.nvim")
         use("~/plugin/join.nvim")
 
-        use("~/plugin/japanese-ime.nvim")
+        use("~/plugin/jam.nvim")
     end,
 })
