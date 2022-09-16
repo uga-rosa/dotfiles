@@ -58,7 +58,10 @@ local devicons = require("nvim-web-devicons")
 local comps = {
     vi_mode = {
         provider = function()
-            local mode = vi_mode.get_vim_mode()
+            local mode = vim.b.ime_mode
+            if mode == nil or mode == "" then
+                mode = vi_mode.get_vim_mode()
+            end
             return "  " .. mode .. " "
         end,
         hl = function()

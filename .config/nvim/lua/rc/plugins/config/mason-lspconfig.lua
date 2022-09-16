@@ -54,16 +54,11 @@ local function on_attach(client, bufnr)
     buf_map("<leader>n", "<Cmd>Lspsaga rename<CR>")
     buf_map("<leader>a", "<Cmd>Lspsaga code_action<CR>")
 
-    local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
     if client.supports_method("textDocument/formatting") then
-        api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-        api.nvim_create_autocmd("BufWritePre", {
-            group = augroup,
-            buffer = bufnr,
-            callback = function()
-                vim.lsp.buf.format()
-            end,
-        })
+        api.nvim_create_user_command("Format", function()
+            vim.lsp.buf.format()
+        end, {})
+        buf_map("<leader>F", "<Cmd>Format<CR>")
     end
 end
 

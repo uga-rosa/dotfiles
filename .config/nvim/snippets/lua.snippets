@@ -20,7 +20,20 @@ snippet fun
 	function $1($2)
 		$0
 	end
-snippet to_table
-	$1 = type($1) == "table" and $1 or { $1 }
 snippet cmd
 	<cmd>$0<CR>
+snippet @class
+	---@class $1
+	local ${1:name} = {}
+
+	function $1.new($2)
+		return setmetatable({
+			$3
+		}, { __index = $1 })
+	end
+snippet @field
+	---@field ${1:name} ${2:type}
+snippet codes
+	for ${1:_}, ${2:c} in utf8.codes(${3:t}) do
+		$0
+	end

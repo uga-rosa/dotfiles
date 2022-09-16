@@ -294,6 +294,18 @@ return packer.startup({
             ft = "markdown",
         })
 
+        -- color picker
+        use({
+            "~/plugin/ccc.nvim",
+            config = 'require("rc.plugins.config.ccc")',
+        })
+
+        -- add sub cursor
+        use({
+            "gen740/SmoothCursor.nvim",
+            config = 'require("rc.plugins.config.SmoothCursor")',
+        })
+
         -- nim
         use("alaviss/nim.nvim")
 

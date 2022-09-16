@@ -4,7 +4,7 @@ local luv = vim.loop
 ---@vararg any
 function _G.dump(...)
     for _, obj in ipairs({ ... }) do
-        print(vim.inspect(obj))
+        print(vim.inspect(obj, { depth = 3 }))
     end
 end
 
