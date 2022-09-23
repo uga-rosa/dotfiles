@@ -1,4 +1,5 @@
 local map = Keymap.set
+local abbr = Keymap.abbr
 
 -- leader key is <Space>
 vim.g.mapleader = " "
@@ -59,3 +60,6 @@ map("n", "qt", "<Cmd>tabclose<CR>")
 
 -- macro
 map("n", "Q", "@q")
+
+-- return
+abbr("i", "rt", "return")

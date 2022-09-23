@@ -6,8 +6,6 @@ snippet append
 	table.insert($1, $2)
 snippet req
 	require("${1:module}")
-snippet rt
-	return $0
 snippet l
 	local $0
 snippet lreq
@@ -37,3 +35,5 @@ snippet codes
 	for ${1:_}, ${2:c} in utf8.codes(${3:t}) do
 		$0
 	end
+snippet nil_check
+	${1:a} = vim.F.if_nil($1, ${2:b})

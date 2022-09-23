@@ -56,6 +56,12 @@ browser() {
     fi
 }
 
+# zenn start
+zs() {
+    npx zenn preview&
+    "$BROWSER" 'http://localhost:8000'
+}
+
 alias relogin='exec $SHELL -l'
 
 # not ssh and out of tmux

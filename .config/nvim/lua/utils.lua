@@ -56,6 +56,16 @@ function Keymap.set(modes, lhs, rhs, optstring, bufnr)
     vim.keymap.set(mode, lhs, rhs, opts)
 end
 
+---@param mode string | string[]
+---@param lhs string
+---@param rhs string
+function Keymap.abbr(mode, lhs, rhs)
+    mode = type(mode) == "string" and { mode } or mode
+    for _, m in ipairs(mode) do
+        vim.cmd(m .. "ab " .. lhs .. " " .. rhs)
+    end
+end
+
 ---Check the file exists.
 ---@param filepath string
 ---@return boolean

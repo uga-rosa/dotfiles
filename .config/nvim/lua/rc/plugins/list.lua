@@ -121,10 +121,9 @@ return packer.startup({
 
         -- autopairs
         use({
-            "windwp/nvim-autopairs",
-            requires = "nvim-cmp",
+            "cohama/lexima.vim",
             event = "InsertEnter",
-            config = 'require("rc.plugins.config.nvim-autopairs")',
+            config = 'require("rc.plugins.config.lexima")',
         })
 
         -- surround
@@ -302,6 +301,7 @@ return packer.startup({
 
         -- add sub cursor
         use({
+            -- "~/plugin/SmoothCursor.nvim",
             "gen740/SmoothCursor.nvim",
             config = 'require("rc.plugins.config.SmoothCursor")',
         })
@@ -312,6 +312,10 @@ return packer.startup({
         use("~/plugin/todo.nvim")
         use("~/plugin/join.nvim")
 
-        use("~/plugin/jam.nvim")
+        -- IME
+        use({
+            "~/plugin/jam.nvim",
+            config = 'require("rc.plugins.config.jam")',
+        })
     end,
 })

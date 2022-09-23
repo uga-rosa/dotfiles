@@ -1,7 +1,9 @@
+local api = vim.api
+
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 local function feedkey(key, mode)
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode or "n", true)
+    api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode or "n", true)
 end
 
 local lspkind = {
@@ -54,13 +56,17 @@ local function cmp_up()
     end
 end
 
+local function is_falsy(v)
+    return v == nil or v == false or v == 0
+end
+
 cmp.setup({
     enabled = function()
-        if vim.g.cmp_disabled then
+        if not is_falsy(vim.g.cmp_disabled) then
             return false
         end
         local disabled = false
-        disabled = disabled or (vim.api.nvim_buf_get_option(0, "buftype") == "prompt")
+        disabled = disabled or (api.nvim_buf_get_option(0, "buftype") == "prompt")
         disabled = disabled or (vim.fn.reg_recording() ~= "")
         disabled = disabled or (vim.fn.reg_executing() ~= "")
         return not disabled
@@ -164,8 +170,8 @@ cmp.setup({
             option = {
                 get_bufnrs = function()
                     local bufs = {}
-                    for _, win in ipairs(vim.api.nvim_list_wins()) do
-                        bufs[vim.api.nvim_win_get_buf(win)] = true
+                    for _, win in ipairs(api.nvim_list_wins()) do
+                        bufs[api.nvim_win_get_buf(win)] = true
                     end
                     return vim.tbl_keys(bufs)
                 end,
@@ -194,3 +200,21 @@ cmp.setup.cmdline(":", {
         { name = "path" },
     },
 })
+
+local Kind = cmp.lsp.CompletionItemKind
+
+local kind_filter = {
+    [Kind.Function] = true,
+    [Kind.Method] = true,
+}
+
+cmp.event:on("confirm_done", function(evt)
+    local entry = evt.entry
+    local item = entry:get_completion_item()
+
+    if not kind_filter[item.kind] then
+        return
+    end
+
+    api.nvim_feedkeys("(", "i", true)
+end)

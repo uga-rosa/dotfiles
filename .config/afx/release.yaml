@@ -125,7 +125,7 @@ github:
     repo: cli
     release:
       name: gh
-      tag: v2.14.6
+      tag: v2.16.0
       asset:
         filename: '{{ .Release.Name }}_{{ replace .Release.Tag "v" "" }}_{{ .OS }}_{{ .Arch }}.tar.gz'
     command:
