@@ -87,9 +87,8 @@ ccc.setup({
     default_color = "#40bfbf",
     inputs = {
         RgbHslCmykInput,
-        ccc.input.rgb,
-        ccc.input.hsl,
-        ccc.input.cmyk,
-        ccc.input.hsv,
+    },
+    highlighter = {
+        auto_enable = true,
     },
 })

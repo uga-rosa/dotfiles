@@ -36,7 +36,10 @@ return packer.startup({
         use("lewis6991/impatient.nvim")
 
         -- library
-        use("nvim-lua/plenary.nvim")
+        use({
+            "nvim-lua/plenary.nvim",
+            config = 'require("rc.plugins.config.plenary")',
+        })
         use("kyazdani42/nvim-web-devicons")
         use("tami5/sqlite.lua")
         use({
@@ -228,6 +231,11 @@ return packer.startup({
             config = 'require("rc.plugins.config.lazygit")',
         })
 
+        use({
+            "lewis6991/gitsigns.nvim",
+            config = 'require("rc.plugins.config.gitsigns")',
+        })
+
         -- general task runner
         use({
             "thinca/vim-quickrun",
@@ -296,14 +304,22 @@ return packer.startup({
         -- color picker
         use({
             "~/plugin/ccc.nvim",
+            -- event = "BufRead",
             config = 'require("rc.plugins.config.ccc")',
         })
 
         -- add sub cursor
         use({
-            -- "~/plugin/SmoothCursor.nvim",
             "gen740/SmoothCursor.nvim",
             config = 'require("rc.plugins.config.SmoothCursor")',
+        })
+
+        use({
+            "junegunn/vim-easy-align",
+            map = "<Plug>(EasyAlign)",
+            setup = function()
+                vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)", {})
+            end,
         })
 
         -- nim

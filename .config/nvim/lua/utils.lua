@@ -1,12 +1,6 @@
 local luv = vim.loop
 
----Transforms ctx into a human readable representation.
----@vararg any
-function _G.dump(...)
-    for _, obj in ipairs({ ... }) do
-        print(vim.inspect(obj, { depth = 3 }))
-    end
-end
+_G.dump = vim.pretty_print
 
 _G.Keymap = {}
 _G.Path = {}
