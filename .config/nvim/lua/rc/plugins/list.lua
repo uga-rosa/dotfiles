@@ -304,7 +304,6 @@ return packer.startup({
         -- color picker
         use({
             "~/plugin/ccc.nvim",
-            -- event = "BufRead",
             config = 'require("rc.plugins.config.ccc")',
         })
 
@@ -332,6 +331,11 @@ return packer.startup({
         use({
             "~/plugin/jam.nvim",
             config = 'require("rc.plugins.config.jam")',
+        })
+        use({
+            "vim-skk/skkeleton",
+            requires = "denops.vim",
+            config = 'require("rc.plugins.config.skkeleton")',
         })
     end,
 })
