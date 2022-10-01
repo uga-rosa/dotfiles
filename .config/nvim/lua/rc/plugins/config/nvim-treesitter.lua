@@ -2,6 +2,7 @@ require("nvim-treesitter.configs").setup({
     ensure_installed = { "lua", "toml", "python", "go", "vim" },
     highlight = {
         enable = true,
+        disable = { "help" },
     },
     textobjects = {
         select = {

@@ -11,7 +11,7 @@ if [[ -d $neovim_dir ]]; then
   cd "$neovim_dir"
   git pull
 else
-  git clone https://github.com/neovim/neovim "$neovim_dir"
+  git clone --depth 1 https://github.com/neovim/neovim "$neovim_dir"
   cd "$neovim_dir"
 fi
 make CMAKE_BUILD_TYPE=Release
