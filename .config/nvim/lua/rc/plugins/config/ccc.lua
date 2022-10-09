@@ -85,10 +85,11 @@ end
 local ccc = require("ccc")
 ccc.setup({
     default_color = "#40bfbf",
-    inputs = {
-        RgbHslCmykInput,
-    },
+    -- inputs = {
+    --     RgbHslCmykInput,
+    -- },
     highlighter = {
         auto_enable = true,
+        lsp = false,
     },
 })

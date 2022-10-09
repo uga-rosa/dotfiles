@@ -24,6 +24,11 @@ local function lua_help()
         vim.cmd("h " .. m)
         return true
     end
+    -- vim.bool_fn
+    s, e, m = current_line:find("bool_fn%.([%l_]+)%(?")
+    if s and s <= cursor_col and cursor_col <= e then
+        return false
+    end
     -- vim.api
     s, e, m = current_line:find("api%.([%l_]+)%(?")
     if s and s <= cursor_col and cursor_col <= e then
@@ -126,7 +131,7 @@ require("mason-lspconfig").setup_handlers({
                     },
                     workspace = {
                         library = library(
-                            { "plenary.nvim" },
+                            { "plenary.nvim", "nvim-cmp" },
                             { fn.stdpath("config") .. "/lua/utils.lua" }
                         ),
                     },

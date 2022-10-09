@@ -161,6 +161,7 @@ cmp.setup({
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
+        { name = "latex_symbol", group_index = 1 },
         { name = "luasnip", group_index = 1 },
         { name = "nvim_lsp", group_index = 1 },
         { name = "nvim_lua", group_index = 1 },
@@ -171,9 +172,9 @@ cmp.setup({
                 get_bufnrs = function()
                     local bufs = {}
                     for _, win in ipairs(api.nvim_list_wins()) do
-                        bufs[api.nvim_win_get_buf(win)] = true
+                        table.insert(bufs, api.nvim_win_get_buf(win))
                     end
-                    return vim.tbl_keys(bufs)
+                    return bufs
                 end,
             },
             group_index = 2,

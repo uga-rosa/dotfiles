@@ -1,9 +1,6 @@
-local luv = vim.loop
-
 _G.dump = vim.pretty_print
 
 _G.Keymap = {}
-_G.Path = {}
 
 local optsShorts = {
     b = "buffer",
@@ -60,12 +57,17 @@ function Keymap.abbr(mode, lhs, rhs)
     end
 end
 
----Check the file exists.
----@param filepath string
----@return boolean
-function Path.exists(filepath)
-    ---@diagnostic disable-next-line
-    filepath = vim.fn.expand(filepath)
-    local ok = luv.fs_open(filepath, "r", 438)
-    return ok and true or false
-end
+---@type table<string, fun(...: unknown): boolean>
+vim.bool_fn = setmetatable({}, {
+    __index = function(_, key)
+        return function(...)
+            local v = vim.fn[key](...)
+            if not v or v == 0 or v == "" then
+                return false
+            elseif type(v) == "table" and next(v) == nil then
+                return false
+            end
+            return true
+        end
+    end,
+})

@@ -29,6 +29,7 @@ mapping("c", "-comment")
 require("translate").setup({
     default = {
         command = "translate_shell",
+        parse_before = "trim"
     },
     preset = {
         output = {

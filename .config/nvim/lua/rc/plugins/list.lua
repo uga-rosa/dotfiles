@@ -115,6 +115,11 @@ return packer.startup({
             config = 'require("rc.plugins.config.cmp-dictionary")',
         })
 
+        use({
+            "~/plugin/cmp-latex-symbol",
+            after = "nvim-cmp",
+        })
+
         -- snippet engine
         use({
             "L3MON4D3/LuaSnip",
@@ -337,5 +342,8 @@ return packer.startup({
             requires = "denops.vim",
             config = 'require("rc.plugins.config.skkeleton")',
         })
+
+        use("~/plugin/nvim-kit")
+        use("~/plugin/linkformat.vim")
     end,
 })
