@@ -149,6 +149,7 @@ return packer.startup({
                 "nvim-web-devicons",
                 "telescope-fzf-native.nvim",
                 "telescope-frecency.nvim",
+                "nvim-telescope/telescope-ui-select.nvim",
             },
             setup = 'require("rc.plugins.setup.telescope")',
             config = 'require("rc.plugins.config.telescope")',
@@ -161,6 +162,10 @@ return packer.startup({
         use({
             "nvim-telescope/telescope-frecency.nvim",
             requires = "tami5/sqlite.lua",
+        })
+
+        use({
+            "nvim-telescope/telescope-ui-select.nvim",
         })
 
         -- LSP configuration
@@ -344,6 +349,12 @@ return packer.startup({
         })
 
         use("~/plugin/nvim-kit")
-        use("~/plugin/linkformat.vim")
+
+        use({
+            "~/plugin/linkformat.vim",
+            config = 'require("rc.plugins.config.linkformat")',
+        })
+
+        use("thinca/vim-partedit")
     end,
 })

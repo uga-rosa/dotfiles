@@ -16,7 +16,5 @@ telescope.setup({
     },
 })
 telescope.load_extension("fzf")
-
-vim.defer_fn(function()
-    telescope.load_extension("frecency")
-end, 200)
+telescope.load_extension("frecency")
+telescope.load_extension("ui-select")

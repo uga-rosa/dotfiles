@@ -94,6 +94,7 @@ cmp.setup({
                 nvim_lua = "[NvimLua]",
                 luasnip = "[LuaSnip]",
                 dictionary = "[Dict]",
+                latex_symbol = "[Latex]",
             })[entry.source.name]
             vim_item.dup = ({
                 buffer = 0,
