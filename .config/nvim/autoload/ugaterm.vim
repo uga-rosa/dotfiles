@@ -1,28 +1,26 @@
 let s:termname = 'nvim_terminal'
 
-function! s:open(buf) abort
+function! s:open() abort
   botright 15sp
-  if a:buf > 0
+  if bufexists(s:termname)
     exec 'buffer ' . s:termname
-    startinsert
   else
     terminal
-    startinsert
     exe 'file ' . s:termname
     setl nobuflisted
   endif
+  startinsert
 endfunction
 
-function! s:close(pane) abort
-  exe a:pane . 'wincmd c'
+function! s:close(winid) abort
+  call win_execute(a:winid, 'hide')
 endfunction
 
 function! ugaterm#toggle() abort
-  let pane = bufwinnr(s:termname)
-  let buf = bufexists(s:termname)
-  if pane > 0
-    call s:close(pane)
+  let winid = bufwinid(s:termname)
+  if winid == -1
+    call s:open()
   else
-    call s:open(buf)
+    call s:close(winid)
   endif
 endfunction
