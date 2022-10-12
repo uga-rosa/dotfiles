@@ -9,5 +9,3 @@ require("rc.ftdetect")
 require("rc.ftplugin")
 -- plugin
 require("rc.packer")
--- my plugin
-require("myplugin")
