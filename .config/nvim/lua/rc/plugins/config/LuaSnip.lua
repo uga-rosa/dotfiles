@@ -3,7 +3,7 @@ local ls = require("luasnip")
 local map = Keymap.set
 
 map("is", "<C-j>", function()
-    ls.jump(1)
+    ls.expand_or_jump(1)
 end, "r")
 map("is", "<C-k>", function()
     ls.jump(-1)
