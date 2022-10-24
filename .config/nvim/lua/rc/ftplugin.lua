@@ -8,15 +8,10 @@ local M = setmetatable({}, {
 })
 
 local function set_indent(tab_size, is_hard_tab)
-    if is_hard_tab then
-        vim.bo.expandtab = false
-    else
-        vim.bo.expandtab = true
-    end
-
-    vim.bo.shiftwidth = tab_size
-    vim.bo.softtabstop = tab_size
-    vim.bo.tabstop = tab_size
+    vim.opt_local.expandtab = not is_hard_tab
+    vim.opt_local.tabstop = tab_size
+    vim.opt_local.softtabstop = tab_size
+    vim.opt_local.shiftwidth = tab_size
 end
 
 M["*"] = function()
@@ -42,6 +37,10 @@ end
 
 M.nim = function()
     set_indent(2, false)
+end
+
+M.python = function()
+    set_indent(4, false)
 end
 
 M.lua = function()
