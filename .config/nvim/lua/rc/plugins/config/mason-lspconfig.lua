@@ -2,7 +2,18 @@ local fn = vim.fn
 local api = vim.api
 local uv = vim.loop
 
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = {
+        "sumneko_lua",
+        "pyright",
+        "bashls",
+        "gopls",
+        "nimls",
+        "vimls",
+        "cssls",
+        "clangd",
+    },
+})
 
 ---@return boolean
 local function lua_help()
@@ -108,7 +119,7 @@ end
 
 local lspconfig = require("lspconfig")
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 local opts = { capabilities = capabilities, on_attach = on_attach }
 
 require("mason-lspconfig").setup_handlers({
@@ -131,7 +142,7 @@ require("mason-lspconfig").setup_handlers({
                     },
                     workspace = {
                         library = library(
-                            { "plenary.nvim", "nvim-cmp" },
+                            { "plenary.nvim", "nvim-cmp", "sqlite.lua" },
                             { fn.stdpath("config") .. "/lua/utils.lua" }
                         ),
                     },

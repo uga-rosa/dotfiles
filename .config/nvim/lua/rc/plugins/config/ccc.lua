@@ -83,13 +83,15 @@ function RgbHslCmykInput:callback(index, new_value)
 end
 
 local ccc = require("ccc")
-ccc.setup({
-    default_color = "#40bfbf",
-    -- inputs = {
-    --     RgbHslCmykInput,
-    -- },
-    highlighter = {
-        auto_enable = true,
-        lsp = false,
-    },
-})
+ccc.setup({})
+-- ccc.setup({
+--     default_color = "#40bfbf",
+--     point_color = "#40bfbf",
+--     inputs = {
+--         RgbHslCmykInput,
+--     },
+--     highlighter = {
+--         auto_enable = true,
+--         lsp = true,
+--     },
+-- })

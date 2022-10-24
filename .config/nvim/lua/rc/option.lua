@@ -2,7 +2,7 @@ local fn = vim.fn
 local map = Keymap.set
 
 local opt = {
-    fileencoding = "utf-8",
+    fileencodings = "utf-8,sjis",
     updatetime = 100,
     hidden = true,
     number = true,

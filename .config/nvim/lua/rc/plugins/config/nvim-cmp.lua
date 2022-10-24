@@ -95,6 +95,7 @@ cmp.setup({
                 luasnip = "[LuaSnip]",
                 dictionary = "[Dict]",
                 latex_symbol = "[Latex]",
+                dynamic = "[Dynamic]",
             })[entry.source.name]
             vim_item.dup = ({
                 buffer = 0,
@@ -162,11 +163,12 @@ cmp.setup({
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
-        { name = "latex_symbol", group_index = 1 },
         { name = "luasnip", group_index = 1 },
         { name = "nvim_lsp", group_index = 1 },
         { name = "nvim_lua", group_index = 1 },
         { name = "nvim_lsp_signature_help", group_index = 1 },
+        { name = "path", group_index = 1 },
+        { name = "dynamic", group_index = 1 },
         {
             name = "buffer",
             option = {
@@ -178,15 +180,15 @@ cmp.setup({
                     return bufs
                 end,
             },
-            group_index = 2,
+            group_index = 1,
         },
         {
             name = "dictionary",
             keyword_length = 2,
             priority = 1,
-            group_index = 2,
+            group_index = 1,
         },
-        { name = "path", group_index = 2 },
+        { name = "latex_symbol", group_index = 2 },
     },
 })
 
@@ -200,6 +202,7 @@ cmp.setup.cmdline(":", {
     sources = {
         { name = "cmdline" },
         { name = "path" },
+        { name = "dynamic" },
     },
 })
 

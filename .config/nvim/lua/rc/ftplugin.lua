@@ -67,6 +67,10 @@ M.lua = function()
     Keymap.set("n", "@t", "<Cmd>QuickRun lua_vusted<CR>")
 end
 
+M.uwsc = function()
+    vim.opt_local.commentstring = "// %s"
+end
+
 local group_name = "ftplugin_lua"
 vim.api.nvim_create_augroup(group_name, {})
 vim.api.nvim_create_autocmd("FileType", {

@@ -3,7 +3,7 @@ local map = Keymap.set
 
 map("n", "<F1>", "<Cmd>Telescope builtin<CR>")
 map("n", "<leader>r", "<Cmd>Telescope resume<CR>")
-map("n", "<leader>f", "<Cmd>Telescope find_files<CR>")
+map("n", "<leader>f", "<Cmd>Telescope find_files hidden=true<CR>")
 map("n", "<leader>b", "<Cmd>Telescope buffers<CR>")
 map("n", "<leader>o", "<Cmd>Telescope frecency<CR>")
 map("n", "<leader>lg", "<Cmd>Telescope live_grep<CR>")

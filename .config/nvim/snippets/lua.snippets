@@ -1,20 +1,28 @@
-snippet inc
-	$1 = $1 + 1
-snippet dec
-	$1 = $1 - 1
-snippet append
+snippet +=
+	$1 = $1 + ${2:1}
+snippet -=
+	$1 = $1 - ${2:1}
+snippet *=
+	$1 = $1 * $2
+snippet /=
+	$1 = $1 / $2
+snippet %=
+	$1 = $1 % $2
+snippet ^=
+	$1 = $1 ^ $2
+snippet ins
 	table.insert($1, $2)
-snippet req
+snippet rq
 	require("${1:module}")
 snippet l
 	local $0
-snippet lreq
+snippet lrq
 	local ${1:var} = require("${2:module}")
-snippet lfun
+snippet lf
 	local function $1($2)
 		$0
 	end
-snippet fun
+snippet f
 	function $1($2)
 		$0
 	end
@@ -37,5 +45,5 @@ snippet codes
 	for ${1:_}, ${2:c} in utf8.codes(${3:t}) do
 		$0
 	end
-snippet nil_check
+snippet fnil
 	${1:a} = vim.F.if_nil($1, ${2:b})

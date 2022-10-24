@@ -30,6 +30,7 @@ gs.setup({
 
         -- Actions
         map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>")
+        map({ "n", "v" }, "<leader>gu", ":Gitsigns undo_stage_hunk<CR>")
         map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>")
 
         -- Text object

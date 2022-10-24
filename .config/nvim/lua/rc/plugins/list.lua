@@ -120,6 +120,12 @@ return packer.startup({
             after = "nvim-cmp",
         })
 
+        use({
+            "~/plugin/cmp-dynamic",
+            after = "nvim-cmp",
+            config = 'require("rc.plugins.config.cmp-dynamic")',
+        })
+
         -- snippet engine
         use({
             "L3MON4D3/LuaSnip",
@@ -184,7 +190,7 @@ return packer.startup({
                 "cmp-nvim-lsp",
                 "lspsaga.nvim",
             },
-            ft = { "lua", "vim", "go", "nim", "sh", "python" },
+            event = "BufEnter",
             config = 'require("rc.plugins.config.mason-lspconfig")',
         })
 
