@@ -100,6 +100,11 @@ return packer.startup({
         })
 
         use({
+            "hrsh7th/cmp-emoji",
+            after = "nvim-cmp",
+        })
+
+        use({
             "hrsh7th/cmp-cmdline",
             after = "nvim-cmp",
         })

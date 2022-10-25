@@ -34,50 +34,46 @@ local lspkind = {
     TypeParameter = "",
 }
 
-local function cmp_down()
-    if luasnip.choice_active() then
-        cmp.close()
-        luasnip.change_choice(1)
-    elseif cmp.visible() then
-        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-    else
-        feedkey("<C-n>")
-    end
-end
-
-local function cmp_up()
-    if luasnip.choice_active() then
-        cmp.close()
-        luasnip.change_choice(-1)
-    elseif cmp.visible() then
-        cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-    else
-        feedkey("<C-p>")
-    end
-end
-
-local cmp_down_mapping = cmp.mapping({
-    i = cmp_down,
-    s = cmp_down,
-    c = function()
-        if cmp.visible() then
+---@param mode string
+---@return function
+local function cmp_down(mode)
+    return function()
+        if mode ~= "c" and luasnip.choice_active() then
+            cmp.close()
+            luasnip.change_choice(1)
+        elseif cmp.visible() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
         else
             feedkey("<C-n>")
         end
-    end,
-})
+    end
+end
 
-local cmp_up_mapping = cmp.mapping({
-    i = cmp_up,
-    s = cmp_up,
-    c = function()
-        if cmp.visible() then
+---@param mode string
+---@return function
+local function cmp_up(mode)
+    return function()
+        if mode ~= "c" and luasnip.choice_active() then
+            cmp.close()
+            luasnip.change_choice(-1)
+        elseif cmp.visible() then
             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
         else
             feedkey("<C-p>")
         end
-    end,
+    end
+end
+
+local cmp_mapping_down = cmp.mapping({
+    i = cmp_down("i"),
+    s = cmp_down("s"),
+    c = cmp_down("c"),
+})
+
+local cmp_mapping_up = cmp.mapping({
+    i = cmp_up("i"),
+    s = cmp_up("s"),
+    c = cmp_up("c"),
 })
 
 local function is_falsy(v)
@@ -162,10 +158,14 @@ cmp.setup({
             "i",
             "c",
         }),
-        ["<Down>"] = cmp_down_mapping,
-        ["<C-n>"] = cmp_down_mapping,
-        ["<Up>"] = cmp_up_mapping,
-        ["<C-p>"] = cmp_up_mapping,
+        ["<C-n>"] = cmp_mapping_down,
+        ["<C-p>"] = cmp_mapping_up,
+        ["<Tab>"] = cmp.mapping({
+            c = cmp_down("c"),
+        }),
+        ["<S-Tab>"] = cmp.mapping({
+            c = cmp_up("c"),
+        }),
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
@@ -194,6 +194,7 @@ cmp.setup({
             priority = 1,
             group_index = 1,
         },
+        { name = "emoji", group_index = 1 },
         { name = "latex_symbol", group_index = 2 },
     },
 })

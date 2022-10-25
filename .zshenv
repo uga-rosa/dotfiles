@@ -33,7 +33,7 @@ if [[ -d "$HOME/.pyenv" ]]; then
 fi
 
 # Rust
-export PATH="$PATH:$HOME/.cargo/bin"
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 
 # Go
 export GOPATH="$HOME/.go"

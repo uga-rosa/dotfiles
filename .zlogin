@@ -2,6 +2,7 @@
 export EDITOR=nvim
 alias nv="nvim"
 alias v="nvim"
+alias nvr="$HOME/neovim_release/bin/nvim"
 
 # tmux color
 export TERM="tmux-256color"

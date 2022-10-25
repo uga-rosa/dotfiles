@@ -32,7 +32,8 @@ local optsShorts = {
 ---vim.keymap.set({ "i", "n" }, "hoge", "huga", { buffer = true, silent = true, remap = true })
 ---@param bufnr? integer
 function Keymap.set(modes, lhs, rhs, optstring, bufnr)
-    local mode = modes == "" and { "" } or vim.split(modes, "")
+    modes = modes == "" and "nicxo" or modes
+    local mode = vim.split(modes, "")
 
     local opts = {}
     optstring = optstring or ""
