@@ -4,17 +4,16 @@ require("cmp_dynamic").setup({
     {
         label = "today",
         insertText = 1,
-        detail = 1,
         cb = {
             function()
                 return os.date("%Y/%m/%d")
             end,
         },
+        resolve = true, -- default: false
     },
     {
         label = "next Monday",
         insertText = 1,
-        detail = 1,
         cb = {
             function()
                 return Date.new():add_date(7):day(1):format("%Y/%m/%d")

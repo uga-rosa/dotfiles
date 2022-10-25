@@ -40,6 +40,16 @@ map("x", ">", ">gv")
 -- erase x history
 map("n", "x", '"_x')
 
+-- keychron q4
+map("", "<HOME>", "<C-a>", "r")
+map("", "<END>", "<C-e>", "r")
+map("", "<Right>", "<C-f>", "r")
+map("", "<Left>", "<C-b>", "r")
+map("", "<Up>", "<C-p>", "r")
+map("", "<Down>", "<C-n>", "r")
+map("", "<BS>", "<C-h>", "r")
+map("", "<Del>", "<C-d>", "r")
+
 -- emacs key binding
 -- for insert mode
 map("i", "<C-f>", "<C-g>U<Right>")

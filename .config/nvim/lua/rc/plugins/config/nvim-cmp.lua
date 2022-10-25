@@ -56,6 +56,30 @@ local function cmp_up()
     end
 end
 
+local cmp_down_mapping = cmp.mapping({
+    i = cmp_down,
+    s = cmp_down,
+    c = function()
+        if cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+            feedkey("<C-n>")
+        end
+    end,
+})
+
+local cmp_up_mapping = cmp.mapping({
+    i = cmp_up,
+    s = cmp_up,
+    c = function()
+        if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+        else
+            feedkey("<C-p>")
+        end
+    end,
+})
+
 local function is_falsy(v)
     return v == nil or v == false or v == 0
 end
@@ -138,28 +162,10 @@ cmp.setup({
             "i",
             "c",
         }),
-        ["<C-n>"] = cmp.mapping({
-            i = cmp_down,
-            s = cmp_down,
-            c = function()
-                if cmp.visible() then
-                    cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-                else
-                    feedkey("<C-n>")
-                end
-            end,
-        }),
-        ["<C-p>"] = cmp.mapping({
-            i = cmp_up,
-            s = cmp_up,
-            c = function()
-                if cmp.visible() then
-                    cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-                else
-                    feedkey("<C-p>")
-                end
-            end,
-        }),
+        ["<Down>"] = cmp_down_mapping,
+        ["<C-n>"] = cmp_down_mapping,
+        ["<Up>"] = cmp_up_mapping,
+        ["<C-p>"] = cmp_up_mapping,
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {

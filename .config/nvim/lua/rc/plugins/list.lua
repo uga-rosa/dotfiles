@@ -337,6 +337,12 @@ return packer.startup({
             end,
         })
 
+        -- python
+        use({
+            "~/plugin/vim-gindent",
+            config = 'require("rc.plugins.config.gindent")',
+        })
+
         -- nim
         use("alaviss/nim.nvim")
 
