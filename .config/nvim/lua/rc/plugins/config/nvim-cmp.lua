@@ -169,33 +169,35 @@ cmp.setup({
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
     sources = {
-        { name = "luasnip", group_index = 1 },
-        { name = "nvim_lsp", group_index = 1 },
-        { name = "nvim_lua", group_index = 1 },
-        { name = "nvim_lsp_signature_help", group_index = 1 },
-        { name = "path", group_index = 1 },
-        { name = "dynamic", group_index = 1 },
+        { name = "luasnip" },
+        { name = "nvim_lsp" },
+        { name = "nvim_lua" },
+        { name = "nvim_lsp_signature_help" },
+        { name = "path" },
+        { name = "dynamic" },
         {
             name = "buffer",
             option = {
                 get_bufnrs = function()
                     local bufs = {}
                     for _, win in ipairs(api.nvim_list_wins()) do
-                        table.insert(bufs, api.nvim_win_get_buf(win))
+                        local buf = api.nvim_win_get_buf(win)
+                        local byte_size = api.nvim_buf_get_offset(buf, api.nvim_buf_line_count(buf))
+                        if byte_size < 1024 * 1024 then
+                            table.insert(bufs, buf)
+                        end
                     end
                     return bufs
                 end,
             },
-            group_index = 1,
         },
         {
             name = "dictionary",
             keyword_length = 2,
             priority = 1,
-            group_index = 1,
         },
-        { name = "emoji", group_index = 1 },
-        { name = "latex_symbol", group_index = 2 },
+        { name = "emoji" },
+        { name = "latex_symbol" },
     },
 })
 
