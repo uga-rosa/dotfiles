@@ -42,11 +42,6 @@ return packer.startup({
         })
         use("kyazdani42/nvim-web-devicons")
         use("tami5/sqlite.lua")
-        use({
-            "vim-denops/denops.vim",
-            event = "CursorHold",
-            config = 'require("rc.plugins.config.denops-vim")',
-        })
         use("~/plugin/lua-utils.nvim")
         use("Shougo/pum.vim")
 
@@ -283,10 +278,9 @@ return packer.startup({
 
         -- jump to anywhere!
         use({
-            "yuki-yano/fuzzy-motion.vim",
-            requires = "denops.vim",
+            "rlane/pounce.nvim",
             event = "BufEnter",
-            setup = 'require("rc.plugins.setup.fuzzy-motion")',
+            config = 'require("rc.plugins.config.pounce")',
         })
 
         -- open browser
@@ -358,11 +352,6 @@ return packer.startup({
         use({
             "~/plugin/jam.nvim",
             config = 'require("rc.plugins.config.jam")',
-        })
-        use({
-            "vim-skk/skkeleton",
-            requires = "denops.vim",
-            config = 'require("rc.plugins.config.skkeleton")',
         })
 
         use("~/plugin/nvim-kit")
