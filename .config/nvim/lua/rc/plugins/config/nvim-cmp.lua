@@ -215,20 +215,4 @@ cmp.setup.cmdline(":", {
     },
 })
 
-local Kind = cmp.lsp.CompletionItemKind
-
-local kind_filter = {
-    [Kind.Function] = true,
-    [Kind.Method] = true,
-}
-
-cmp.event:on("confirm_done", function(evt)
-    local entry = evt.entry
-    local item = entry:get_completion_item()
-
-    if not kind_filter[item.kind] then
-        return
-    end
-
-    api.nvim_feedkeys("(", "i", true)
-end)
+cmp.event:on("confirm_done", require("autopairs.cmp").on_confirm_done())
