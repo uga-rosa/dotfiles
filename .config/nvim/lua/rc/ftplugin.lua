@@ -19,8 +19,12 @@ M["*"] = function()
     vim.opt_local.formatoptions:append("mMBl")
 end
 
+M.typescript = function()
+    set_indent(2)
+end
+
 M.vim = function()
-    set_indent(2, false)
+    set_indent(2)
 end
 
 M.help = function()
@@ -32,15 +36,15 @@ M.qf = function()
 end
 
 M.sh = function()
-    set_indent(2, false)
+    set_indent(2)
 end
 
 M.nim = function()
-    set_indent(2, false)
+    set_indent(2)
 end
 
 M.python = function()
-    set_indent(4, false)
+    set_indent(4)
 end
 
 M.lua = function()

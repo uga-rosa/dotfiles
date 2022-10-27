@@ -9,3 +9,8 @@ require("rc.ftdetect")
 require("rc.ftplugin")
 -- plugin
 require("rc.packer")
+
+vim.cmd([[
+set runtimepath^=~/plugin/dps-vsctm.vim
+let g:denops#debug = 1
+]])

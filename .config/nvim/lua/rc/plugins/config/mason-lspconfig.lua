@@ -154,3 +154,6 @@ require("mason-lspconfig").setup_handlers({
         lspconfig.sumneko_lua.setup(lua_opts)
     end,
 })
+
+-- Deno
+lspconfig.denols.setup(opts)

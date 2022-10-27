@@ -44,6 +44,7 @@ return packer.startup({
         use("tami5/sqlite.lua")
         use("~/plugin/lua-utils.nvim")
         use("Shougo/pum.vim")
+        use("vim-denops/denops.vim")
 
         -- colorscheme
         use({
