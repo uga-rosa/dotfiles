@@ -23,6 +23,7 @@ setopt AUTO_PARAM_KEYS
 
 # check if alias after sudo
 # alias sudo='sudo '
+alias rm="rm -i"
 
 # Go to home of Windows (for WSL)
 if [[ -d /mnt/e/home ]]; then
