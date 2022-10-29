@@ -279,9 +279,10 @@ return packer.startup({
 
         -- jump to anywhere!
         use({
-            "rlane/pounce.nvim",
+            "yuki-yano/fuzzy-motion.vim",
+            requires = "denops.vim",
             event = "BufEnter",
-            config = 'require("rc.plugins.config.pounce")',
+            setup = 'vim.keymap.set("n", "ss", "<Cmd>FuzzyMotion<CR>")',
         })
 
         -- open browser
@@ -323,12 +324,6 @@ return packer.startup({
             config = 'require("rc.plugins.config.ccc")',
         })
 
-        -- add sub cursor
-        use({
-            "gen740/SmoothCursor.nvim",
-            config = 'require("rc.plugins.config.SmoothCursor")',
-        })
-
         use({
             "junegunn/vim-easy-align",
             map = "<Plug>(EasyAlign)",
@@ -363,5 +358,11 @@ return packer.startup({
         })
 
         use("thinca/vim-partedit")
+
+        -- gitter client
+        use({
+            "4513ECHO/denops-gitter.vim",
+            requires = "denops.vim",
+        })
     end,
 })
