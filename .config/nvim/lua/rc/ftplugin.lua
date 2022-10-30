@@ -67,7 +67,7 @@ M.lua = function()
         set_indent(tab_size, is_hard_tab)
     end
 
-    Keymap.set("n", "@t", "<Cmd>QuickRun lua_vusted<CR>")
+    vim.keymap.set("n", "@t", "<Cmd>QuickRun lua_vusted<CR>")
 end
 
 M.uwsc = function()

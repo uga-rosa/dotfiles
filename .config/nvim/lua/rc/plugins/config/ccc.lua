@@ -1,5 +1,5 @@
-Keymap.set("n", "<C-c>", "<Cmd>CccPick<CR>")
-Keymap.set("i", "<C-c>", "<Plug>(ccc-insert)")
+vim.keymap.set("n", "<C-c>", "<Cmd>CccPick<CR>")
+vim.keymap.set("i", "<C-c>", "<Plug>(ccc-insert)")
 
 local ColorInput = require("ccc.input")
 local convert = require("ccc.utils.convert")

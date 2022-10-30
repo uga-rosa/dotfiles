@@ -1,5 +1,4 @@
 local fn = vim.fn
-local map = Keymap.set
 
 local opt = {
     fileencodings = "utf-8,sjis",
@@ -27,12 +26,6 @@ local opt = {
 for k, v in pairs(opt) do
     vim.opt[k] = v
 end
-
--- mouse
-map("", "<LeftMouse>", "<Nop>")
-map("i", "<LeftMouse>", "<Nop>")
-map("", "<2-LeftMouse>", "<Nop>")
-map("i", "<2-LeftMouse>", "<Nop>")
 
 -- disable unnecessary plugin
 vim.g.loaded_python_provider = 0

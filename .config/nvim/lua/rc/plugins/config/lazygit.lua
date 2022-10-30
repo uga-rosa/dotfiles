@@ -1,1 +1,1 @@
-Keymap.set("n", "<leader>gg", "<Cmd>LazyGit<CR>")
+vim.keymap.set("n", "<leader>gg", "<Cmd>LazyGit<CR>")

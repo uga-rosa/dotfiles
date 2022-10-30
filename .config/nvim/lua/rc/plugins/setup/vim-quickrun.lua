@@ -26,6 +26,4 @@ vim.g.quickrun_config = {
     },
 }
 
-local map = Keymap.set
-
-map("n", "@r", "<Cmd>QuickRun<CR>")
+vim.keymap.set("n", "@r", "<Cmd>QuickRun<CR>")

@@ -9,8 +9,7 @@ vim.g.openbrowser_search_engines = {
     nim = "https://www.google.com/search?q={query}+site%3Anim-lang.org",
 }
 
-local map = Keymap.set
-map("nx", "<M-o>", function()
+vim.keymap.set({ "n", "x" }, "<M-o>", function()
     local engines = vim.g.openbrowser_search_engines
     local engine = vim.bo.filetype
     if not engines[engine] then
@@ -18,4 +17,4 @@ map("nx", "<M-o>", function()
     end
     vim.g.openbrowser_default_search = engine
     return "<Plug>(openbrowser-smart-search)"
-end, "e")
+end, { expr = true })

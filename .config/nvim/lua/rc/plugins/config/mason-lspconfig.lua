@@ -57,7 +57,7 @@ end
 
 local function on_attach(client, bufnr)
     local buf_map = function(lhs, rhs)
-        Keymap.set("n", lhs, rhs, "s", bufnr)
+        vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
     end
 
     buf_map("K", function()

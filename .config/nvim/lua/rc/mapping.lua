@@ -1,14 +1,16 @@
-local map = Keymap.set
-
 -- leader key is <Space>
 vim.g.mapleader = " "
 
+-- Disable mouse click
+vim.keymap.set({ "", "!", "t" }, "<LeftMouse>", "<Nop>")
+vim.keymap.set({ "", "!", "t" }, "<2-LeftMouse>", "<Nop>")
+
 -- Release for prefix
-map("n", "s", "")
-map("n", "m", "")
+vim.keymap.set("n", "s", "")
+vim.keymap.set("n", "m", "")
 
 -- go to home/end
-map("nxo", "H", function()
+vim.keymap.set({ "n", "x", "o" }, "H", function()
     local col = vim.fn.col(".")
     if col == 1 then
         return "^"
@@ -19,43 +21,43 @@ map("nxo", "H", function()
     else
         return "^"
     end
-end, "e")
-map("nxo", "L", "$")
+end, {expr = true})
+vim.keymap.set({ "n", "x", "o" }, "L", "$")
 
 -- better o
-map("n", "o", "zzo")
-map("n", "O", "zzO")
+vim.keymap.set("n", "o", "zzo")
+vim.keymap.set("n", "O", "zzO")
 
 -- insert blank line
-map("n", "<leader><CR>", "o<ESC>")
-map("n", "<leader><leader><CR>", "o<ESC>")
+vim.keymap.set("n", "<leader><CR>", "o<ESC>")
+vim.keymap.set("n", "<leader><leader><CR>", "o<ESC>")
 
 -- no highlight
-map("n", "<ESC><ESC>", "<Cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<ESC><ESC>", "<Cmd>nohlsearch<CR>")
 
 -- visual indent/dedent
-map("x", "<", "<gv")
-map("x", ">", ">gv")
+vim.keymap.set("x", "<", "<gv")
+vim.keymap.set("x", ">", ">gv")
 
 -- erase x history
-map("n", "x", '"_x')
+vim.keymap.set("n", "x", '"_x')
 
 -- emacs key binding
 -- for insert mode
-map("i", "<C-f>", "<C-g>U<Right>")
-map("i", "<C-b>", "<C-g>U<Left>")
-map("i", "<C-d>", "<Del>")
+vim.keymap.set("i", "<C-f>", "<C-g>U<Right>")
+vim.keymap.set("i", "<C-b>", "<C-g>U<Left>")
+vim.keymap.set("i", "<C-d>", "<Del>")
 
 -- for command mode
-map("c", "<C-f>", "<Right>")
-map("c", "<C-b>", "<Left>")
-map("c", "<C-a>", "<Home>")
-map("c", "<C-e>", "<End>")
-map("c", "<C-h>", "<BS>")
-map("c", "<C-d>", "<Del>")
+vim.keymap.set("c", "<C-f>", "<Right>")
+vim.keymap.set("c", "<C-b>", "<Left>")
+vim.keymap.set("c", "<C-a>", "<Home>")
+vim.keymap.set("c", "<C-e>", "<End>")
+vim.keymap.set("c", "<C-h>", "<BS>")
+vim.keymap.set("c", "<C-d>", "<Del>")
 
 -- tab close
-map("n", "qt", "<Cmd>tabclose<CR>")
+vim.keymap.set("n", "qt", "<Cmd>tabclose<CR>")
 
 -- macro
-map("n", "Q", "@q")
+vim.keymap.set("n", "Q", "@q")

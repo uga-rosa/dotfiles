@@ -8,12 +8,10 @@ vim.g.searchx = {
     markers = vim.split("ASDFGHJKL:QWERTYUIOP", ""),
 }
 
-local map = Keymap.set
-
-map("nx", "/", "<Cmd>call searchx#start({'dir': 1})<CR>")
-map("nx", "?", "<Cmd>call searchx#start({'dir': 0})<CR>")
-map("nx", "n", "<Cmd>call searchx#next()<CR>")
-map("c", "<C-j>", "<Cmd>call searchx#next()<CR>")
-map("nx", "N", "<Cmd>call searchx#prev()<CR>")
-map("c", "<C-k>", "<Cmd>call searchx#prev()<CR>")
-map("nc", "<C-l>", "<Cmd>call searchx#clear()<CR>")
+vim.keymap.set({ "n", "x" }, "/", "<Cmd>call searchx#start({'dir': 1})<CR>")
+vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({'dir': 0})<CR>")
+vim.keymap.set({ "n", "x" }, "n", "<Cmd>call searchx#next()<CR>")
+vim.keymap.set({ "c" }, "<C-j>", "<Cmd>call searchx#next()<CR>")
+vim.keymap.set({ "n", "x" }, "N", "<Cmd>call searchx#prev()<CR>")
+vim.keymap.set({ "c" }, "<C-k>", "<Cmd>call searchx#prev()<CR>")
+vim.keymap.set({ "n", "c" }, "<C-l>", "<Cmd>call searchx#clear()<CR>")

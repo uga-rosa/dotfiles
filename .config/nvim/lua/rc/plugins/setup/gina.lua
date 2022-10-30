@@ -1,5 +1,3 @@
-local map = Keymap.set
-
-map("n", "<leader>g", "<Plug>(Gina)", "r")
-map("n", "<Plug>(Gina)s", "<Cmd>Gina status -s<CR>", "r")
-map("n", "<Plug>(Gina)c", "<Cmd>Gina compare<CR>", "r")
+vim.keymap.set("n", "<leader>g", "<Plug>(Gina)")
+vim.keymap.set("n", "<Plug>(Gina)s", "<Cmd>Gina status -s<CR>")
+vim.keymap.set("n", "<Plug>(Gina)c", "<Cmd>Gina compare<CR>")

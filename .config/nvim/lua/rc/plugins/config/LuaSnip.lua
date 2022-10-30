@@ -1,13 +1,11 @@
 local ls = require("luasnip")
 
-local map = Keymap.set
-
-map("is", "<C-j>", function()
+vim.keymap.set({ "i", "s" }, "<C-j>", function()
     ls.expand_or_jump(1)
-end, "r")
-map("is", "<C-k>", function()
+end)
+vim.keymap.set({ "i", "s" }, "<C-k>", function()
     ls.jump(-1)
-end, "r")
+end)
 
 require("luasnip.loaders.from_snipmate").lazy_load({
     paths = vim.fn.stdpath("config") .. "/snippets",

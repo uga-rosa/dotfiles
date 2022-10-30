@@ -1,9 +1,7 @@
-local map = Keymap.set
-
 local unit = require("treesitter-unit")
-map("ox", "iu", function()
+vim.keymap.set({ "x", "o" }, "iu", function()
     unit.select()
 end)
-map("ox", "au", function()
+vim.keymap.set({ "x", "o" }, "au", function()
     unit.select(true)
 end)

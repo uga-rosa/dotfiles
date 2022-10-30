@@ -1,18 +1,17 @@
 -- mapping
-local map = Keymap.set
+vim.keymap.set("n", "<F1>", "<Cmd>Telescope builtin<CR>")
+vim.keymap.set("n", "<leader>r", "<Cmd>Telescope resume<CR>")
+vim.keymap.set("n", "<leader>f", "<Cmd>Telescope find_files hidden=true<CR>")
+vim.keymap.set("n", "<leader>b", "<Cmd>Telescope buffers<CR>")
+vim.keymap.set("n", "<leader>o", "<Cmd>Telescope frecency<CR>")
+vim.keymap.set("n", "<leader>lg", "<Cmd>Telescope live_grep<CR>")
+vim.keymap.set("n", "<leader>/", "<Cmd>Telescope blines<CR>")
+vim.keymap.set("n", "<leader>gf", "<Cmd>Telescope git_files<CR>")
+vim.keymap.set("n", "<leader>h", "<Cmd>Telescope help_tags<CR>")
+vim.keymap.set("n", "q:", "<Cmd>Telescope command_history<CR>")
+vim.keymap.set("n", "q/", "<Cmd>Telescope search_history<CR>")
 
-map("n", "<F1>", "<Cmd>Telescope builtin<CR>")
-map("n", "<leader>r", "<Cmd>Telescope resume<CR>")
-map("n", "<leader>f", "<Cmd>Telescope find_files hidden=true<CR>")
-map("n", "<leader>b", "<Cmd>Telescope buffers<CR>")
-map("n", "<leader>o", "<Cmd>Telescope frecency<CR>")
-map("n", "<leader>lg", "<Cmd>Telescope live_grep<CR>")
-map("n", "<leader>/", "<Cmd>Telescope blines<CR>")
-map("n", "<leader>gf", "<Cmd>Telescope git_files<CR>")
-map("n", "<leader>h", "<Cmd>Telescope help_tags<CR>")
-map("n", "q:", "<Cmd>Telescope command_history<CR>")
-map("n", "q/", "<Cmd>Telescope search_history<CR>")
-
-map("n", "<leader>i", "<Cmd>Telescope diagnostics<CR>")
-map("n", "gd", "<Cmd>Telescope lsp_definitions<CR>")
-map("n", "gr", "<Cmd>Telescope lsp_references<CR>")
+-- LSP
+vim.keymap.set("n", "<leader>i", "<Cmd>Telescope diagnostics<CR>")
+vim.keymap.set("n", "gd", "<Cmd>Telescope lsp_definitions<CR>")
+vim.keymap.set("n", "gr", "<Cmd>Telescope lsp_references<CR>")

@@ -1,5 +1,3 @@
-local map = Keymap.set
-
 local prefix = "m"
 local target2map = {
     JA = "j",
@@ -13,11 +11,11 @@ local function mapping(suffix, opt)
     -- Japanese to English
     local lhs = prefix .. target2map["EN"] .. suffix
     local rhs = builder("EN", "JA")
-    map("nx", lhs, rhs, "s")
+    vim.keymap.set({ "n", "x" }, lhs, rhs, { silent = true })
     -- English to Japanese
     lhs = prefix .. target2map["JA"] .. suffix
     rhs = builder("JA", "EN")
-    map("nx", lhs, rhs, "s")
+    vim.keymap.set({ "n", "x" }, lhs, rhs, { silent = true })
 end
 
 mapping("f", "-parse_after=window -output=floating")
@@ -44,6 +42,6 @@ vim.api.nvim_create_autocmd("FileType", {
     group = "translate-nvim-user",
     pattern = "translate",
     callback = function()
-        map("n", "q", "<Cmd>quit<CR>", "bn")
+        vim.keymap.set("n", "q", "<Cmd>quit<CR>", { buffer = true, nowait = true })
     end,
 })
