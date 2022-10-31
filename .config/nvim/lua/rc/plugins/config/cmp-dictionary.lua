@@ -9,9 +9,9 @@ dict.setup({
         },
     },
     exact = 2,
+    async = true,
     first_case_insensitive = true,
     document = true,
 })
 
--- For lazy loading
 dict.update()
