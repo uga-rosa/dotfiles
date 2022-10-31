@@ -177,14 +177,6 @@ require("jetpack.packer").startup(function(use)
     })
     use("lambdalisue/vim-quickrun-neovim-job")
 
-    -- operator
-    use("kana/vim-operator-user")
-    use({
-        "kana/vim-operator-replace",
-        keys = "<Plug>(operator-replace)",
-        setup = [[vim.cmd("nmap r <Plug>(operator-replace)")]],
-    })
-
     -- utilities for search
     use({
         "hrsh7th/vim-searchx",
