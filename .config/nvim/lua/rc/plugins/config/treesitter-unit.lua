@@ -1,7 +1,0 @@
-local unit = require("treesitter-unit")
-vim.keymap.set({ "x", "o" }, "iu", function()
-    unit.select()
-end)
-vim.keymap.set({ "x", "o" }, "au", function()
-    unit.select(true)
-end)

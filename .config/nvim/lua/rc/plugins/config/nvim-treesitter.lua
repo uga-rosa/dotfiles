@@ -1,5 +1,9 @@
+local parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
+vim.opt.runtimepath:append(parser_install_dir)
+
 require("nvim-treesitter.configs").setup({
     ensure_installed = { "lua", "toml", "python", "go", "vim" },
+    parser_install_dir = parser_install_dir,
     highlight = {
         enable = true,
         disable = { "help" },
