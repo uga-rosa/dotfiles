@@ -80,3 +80,9 @@ mason_bin="$HOME/.local/share/nvim/mason/bin"
 if [[ -d $mason_bin ]]; then
     export PATH="$mason_bin:$PATH"
 fi
+
+# themis
+if [[ -d "$HOME/.local/vim-themis" ]]; then
+    export PATH="$PATH:$HOME/.local/vim-themis/bin"
+    export THEMIS_VIM="nvim"
+fi
