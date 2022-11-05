@@ -23,6 +23,10 @@ M.typescript = function()
     set_indent(2)
 end
 
+M.toml = function()
+    set_indent(4)
+end
+
 M.vim = function()
     set_indent(2)
 end
@@ -66,12 +70,6 @@ M.lua = function()
         end
         set_indent(tab_size, is_hard_tab)
     end
-
-    vim.keymap.set("n", "@t", "<Cmd>QuickRun lua_vusted<CR>")
-end
-
-M.uwsc = function()
-    vim.opt_local.commentstring = "// %s"
 end
 
 local group_name = "ftplugin_lua"

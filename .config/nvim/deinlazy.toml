@@ -1,0 +1,451 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo = 'kkharji/sqlite.lua'
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+on_event = 'VimEnter'
+
+[[plugins]]
+repo = 'hrsh7th/nvim-kit'
+on_cmd = 'KitInstall'
+
+[[plugins]]
+repo = 'L3MON4D3/LuaSnip'
+on_event = 'InsertEnter'
+hook_add = '''
+    inoremap <C-j> <Plug>luasnip-expand-or-jump
+    snoremap <C-j> <Plug>luasnip-jump-next
+    inoremap <C-k> <Plug>luasnip-jump-prev
+    snoremap <C-k> <Plug>luasnip-jump-prev
+'''
+lua_source = '''
+    require("luasnip.loaders.from_snipmate").lazy_load({
+        paths = vim.fn.stdpath("config") .. "/snippets",
+    })
+    require("rc.plugins.LuaSnip.help")
+    require("rc.plugins.LuaSnip.text")
+
+    -- require("rc.plugins.LuaSnip")
+'''
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+    let g:lexima_ctrlh_as_backspace = 1
+'''
+
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+depends = [
+    'plenary.nvim',
+    'nvim-web-devicons',
+    'telescope-fzf',
+    'telescope-frecency.nvim',
+    'telescope-ui'
+]
+on_cmd = 'Telescope'
+hook_add = '''
+    nnoremap <leader>r  <Cmd>Telescope resume<CR>
+    nnoremap <leader>f  <Cmd>Telescope find_files hidden=true<CR>
+    nnoremap <leader>b  <Cmd>Telescope buffers<CR>
+    nnoremap <leader>o  <Cmd>Telescope frecency<CR>
+    nnoremap <leader>lg <Cmd>Telescope live_grep<CR>
+    nnoremap <leader>/  <Cmd>Telescope blines<CR>
+    nnoremap <leader>gf <Cmd>Telescope git_files<CR>
+    nnoremap <leader>h  <Cmd>Telescope help_tags<CR>
+    nnoremap q:         <Cmd>Telescope command_history<CR>
+    nnoremap q/         <Cmd>Telescope search_history<CR>
+
+    nnoremap <leader>i  <Cmd>Telescope diagnostics<CR>
+    nnoremap gd         <Cmd>Telescope lsp_definitions<CR>
+    nnoremap gr         <Cmd>Telescope lsp_references<CR>
+'''
+lua_source = '''
+    local telescope = require("telescope")
+
+    telescope.setup({
+        pickers = {
+            find_files = {
+                find_command = { "fd", "-E", ".git", "-t", "f" },
+            },
+        },
+        extensions = {
+            fzf = {
+                fuzzy = true,
+                override_generic_sorter = true,
+                override_file_sorter = true,
+                case_mode = "smart_case",
+            },
+        },
+    })
+    telescope.load_extension("fzf")
+    telescope.load_extension("frecency")
+    telescope.load_extension("ui-select")
+
+    -- As command pallet
+    for k, v in pairs(require("telescope.builtin")) do
+        if type(v) == "function" then
+            vim.keymap.set("n", ("<Plug>(telescope.%s)"):format(k), v)
+        end
+    end
+    vim.keymap.set("n", "<Space>m", function ()
+        require("telescope.builtin").keymaps()
+        vim.cmd("normal! i☆")
+    end)
+'''
+
+[[plugins]]
+repo = 'nvim-telescope/telescope-fzf-native.nvim'
+name = 'telescope-fzf'
+build = 'make'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope-frecency.nvim'
+depends = 'sqlite.lua'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope-ui-select.nvim'
+name = 'telescope-ui'
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+depends = ['nvim-treesitter-textobjects', 'nvim-ts-rainbow']
+on_event = 'BufRead'
+hook_post_update = '''
+    TSUpdate
+'''
+lua_source = '''
+    local parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
+    vim.opt.runtimepath:append(parser_install_dir)
+
+    require("nvim-treesitter.configs").setup({
+        ensure_installed = "all",
+        parser_install_dir = parser_install_dir,
+        highlight = {
+            enable = true,
+            disable = { "help" },
+        },
+        textobjects = {
+            select = {
+                enable = true,
+                lookahead = true,
+                keymaps = {
+                    ["ib"] = "@block.inner",
+                    ["ab"] = "@block.outer",
+                    ["c"] = "@comment.outer",
+                    ["if"] = "@function.inner",
+                    ["af"] = "@function.outer",
+                    ["il"] = "@loop.inner",
+                    ["al"] = "@loop.outer",
+                },
+            },
+            swap = {
+                enable = true,
+                swap_next = {
+                    ["<M-s>"] = "@parameter.inner",
+                },
+                swap_previous = {
+                    ["<M-S-s>"] = "@parameter.inner",
+                },
+            },
+        },
+        rainbow = {
+            enable = true,
+            extended_mode = true,
+            max_file_lines = nil,
+        },
+    })
+'''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter-textobjects'
+
+[[plugins]]
+repo = 'p00f/nvim-ts-rainbow'
+
+[[plugins]]
+repo = 'nvim-treesitter/playground'
+on_cmd = 'TSPlaygroundToggle'
+
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+on_cmd = 'Fern'
+hook_add = '''
+    nnoremap <M-f> <Cmd>Fern . -drawer -toggle<CR>
+'''
+hook_source = '''
+    augroup my-fern
+      au!
+      au FileType fern call s:fern_mapping()
+    augroup END
+
+    function! s:fern_mapping()
+      nnoremap <buffer> <C-x> <Plug>(fern-action-open:split)
+      nnoremap <buffer> <C-v> <Plug>(fern-action-open:vsplit)
+    endfunction
+'''
+
+[[plugins]]
+repo = 'lewis6991/gitsigns.nvim'
+on_event = 'BufRead'
+lua_source = '''
+    local gs = require("gitsigns")
+    gs.setup({
+        on_attach = function(bufnr)
+            local function map(mode, l, r, opts)
+                opts = vim.F.if_nil(opts, {})
+                opts.buffer = bufnr
+                vim.keymap.set(mode, l, r, opts)
+            end
+            -- Navigates
+            map("n", "]g", function()
+                if vim.wo.diff then
+                    return "]g"
+                end
+                vim.schedule(function()
+                    gs.next_hunk()
+                end)
+                return "<Ignore>"
+            end, { expr = true })
+            map("n", "[g", function()
+                if vim.wo.diff then
+                    return "[g"
+                end
+                vim.schedule(function()
+                    gs.prev_hunk()
+                end)
+                return "<Ignore>"
+            end, { expr = true })
+            -- Actions
+            map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>")
+            map({ "n", "v" }, "<leader>gu", ":Gitsigns undo_stage_hunk<CR>")
+            map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>")
+            -- Text object
+            map({ "o", "x" }, "ig", ":<C-U>Gitsigns select_hunk<CR>")
+        end,
+    })
+'''
+
+[[plugins]]
+repo = 'hrsh7th/vim-searchx'
+on_func = 'searchx#start'
+hook_add = '''
+    nnoremap / <Cmd>call searchx#start({'dir': 1})<CR>
+    xnoremap / <Cmd>call searchx#start({'dir': 1})<CR>
+    nnoremap ? <Cmd>call searchx#start({'dir': 0})<CR>
+    xnoremap ? <Cmd>call searchx#start({'dir': 0})<CR>
+
+    nnoremap n     <Cmd>call searchx#next()<CR>
+    xnoremap n     <Cmd>call searchx#next()<CR>
+    cnoremap <C-j> <Cmd>call searchx#next()<CR>
+    nnoremap N     <Cmd>call searchx#prev()<CR>
+    xnoremap N     <Cmd>call searchx#prev()<CR>
+    cnoremap <C-k> <Cmd>call searchx#prev()<CR>
+    cnoremap <C-l> <Cmd>call searchx#clear()<CR>
+'''
+lua_source = '''
+    vim.g.searchx = {
+        auto_accept = true,
+        scrolloff = vim.opt.scrolloff:get(),
+        scrolltime = 0,
+        nohlsearch = {
+            jump = true,
+        },
+        markers = vim.split("ASDFGHJKL:QWERTYUIOP", ""),
+    }
+'''
+
+[[plugins]]
+repo = 'yuki-yano/fuzzy-motion.vim'
+depends = 'denops.vim'
+on_cmd = 'FuzzyMotion'
+hook_add = '''
+    nnoremap ss <Cmd>FuzzyMotion<CR>
+'''
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_map = '<Plug>(openbrowser-smart-search)'
+hook_add = '''
+    let g:openbrowser_browser_commands = [
+    \   {
+    \     'name': 'vivaldi.exe',
+    \     'args': ['{browser}', '{uri}']
+    \   }
+    \]
+    nnoremap <M-o> <Plug>(openbrowser-smart-search)
+    xnoremap <M-o> <Plug>(openbrowser-smart-search)
+'''
+
+[[plugins]]
+repo = 'simeji/winresizer'
+on_cmd = 'WinResizerStartResize'
+hook_add = '''
+    nnoremap <C-e> <Cmd>WinResizerStartResize<CR>
+'''
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+on_map = '<Plug>(EasyAlign)'
+hook_add = '''
+    nnoremap ga <Plug>(EasyAlign)
+    xnoremap ga <Plug>(EasyAlign)
+'''
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+depends = 'vim-quickrun-neovim-job'
+on_cmd = 'QuickRun'
+hook_add = '''
+    nnoremap @r <Cmd>QuickRun<CR>
+'''
+lua_source = '''
+    vim.g.quickrun_config = {
+        _ = {
+            runner = "neovim_job",
+            outputter = "error",
+            ["outputter/error/success"] = "buffer",
+            ["outputter/error/error"] = "quickfix",
+            ["outputter/buffer/opener"] = "botright 10sp",
+            ["outputter/buffer/close_on_empty"] = true,
+        },
+        lua = {
+            command = ":luafile",
+            exec = "%C %S",
+            runner = "vimscript",
+        },
+        lua_vusted = {
+            command = "vusted",
+            exec = "%C %s",
+        },
+        nimble = {
+            command = "nimble",
+            exec = "%C run",
+        },
+        nimble_test = {
+            command = "nimble",
+            exec = "%C test",
+        },
+    }
+'''
+
+[[plugins]]
+repo = 'lambdalisue/vim-quickrun-neovim-job'
+
+[[plugins]]
+repo = 'hrsh7th/vim-gindent'
+hook_add = '''
+    let g:indent = {}
+    let g:indent.enabled = { -> index(['vim', 'lua'], &ft) != -1 }
+'''
+
+[[plugins]]
+repo = 'thinca/vim-partedit'
+on_cmd = 'Partedit'
+on_func = 'partedit#start'
+hook_add = '''
+    let g:partedit#prefix_pattern = '\v\s*'
+    " for markdown code block and toml (dein.vim)
+    function! s:operator_partedit() abort
+      let context = context_filetype#get()
+      if context.range == [[0, 0], [0, 0]]
+        echohl WarningMsg
+        echomsg 'Context is not found'
+        echohl NONE
+        return
+      endif
+      call partedit#start(context.range[0][0], context.range[1][0],
+            \ {'filetype': context.filetype})
+      nnoremap <buffer><nowait> Q <Cmd>ParteditEnd<CR>
+    endfunction
+    nnoremap <C-x><C-x> <Cmd>call <SID>operator_partedit()<CR>
+'''
+
+[[plugins]]
+repo = 'uga-rosa/linkformat.vim'
+on_cmd = 'LinkFormatPaste'
+hook_add = '''
+    let g:linkformat_template = join(['[[plugins]]', "repo = '<>'"], "\n")
+'''
+
+[[plugins]]
+repo = '4513ECHO/denops-gitter.vim'
+depends = 'denops.vim'
+on_path = 'gitter://'
+
+[[plugins]]
+repo = '~/plugin/dps-vsctm.vim'
+depends = 'denops.vim'
+on_cmd = 'VsctmHighlightEnable'
+hook_add = '''
+    let g:vsctm_extensions_path = expand('~/.cache/vsctm/extensions')
+'''
+
+[[plugins]]
+repo = 'uga-rosa/translate.nvim'
+on_cmd = "Translate"
+hook_add = '''
+    lua <<EOL
+    local mappings = {
+        f = "-parse_after=window -output=floating",
+        s = "-output=split",
+        i = "-output=insert",
+        r = "-output=replace",
+        c = "-comment",
+    }
+
+    for k, v in pairs(mappings) do
+        vim.keymap.set({"n", "x"}, "mj" .. k, ("<Cmd>Translate JA -source=EN %s<CR>"):format(v))
+        vim.keymap.set({"n", "x"}, "me" .. k, ("<Cmd>Translate EN -source=JA %s<CR>"):format(v))
+    end
+EOL
+'''
+lua_source = '''
+    require("translate").setup({
+        default = {
+            command = "translate_shell",
+        },
+        preset = {
+            output = {
+                split = {
+                    append = true,
+                },
+            },
+        },
+    })
+'''
+
+[plugins.ftplugin]
+translate-nvim-user = '''
+    nnoremap <buffer><nowait> q <Cmd>quit<CR>
+'''
+
+[[plugins]]
+repo = 'uga-rosa/ccc.nvim'
+on_event = 'BufRead'
+hook_add = '''
+    nnoremap <C-c> <Cmd>CccPick<CR>
+'''
+lua_source = '''
+    require("ccc").setup({
+        default_color = "#40bfbf",
+        point_color = "#40bfbf",
+        highlighter = {
+            auto_enable = true,
+            lsp = true,
+        },
+    })
+'''

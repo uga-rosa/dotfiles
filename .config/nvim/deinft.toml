@@ -1,0 +1,18 @@
+[[plugins]]
+repo = 'mattn/vim-maketable'
+on_ft = 'markdown'
+
+# [[plugins]]
+# repo = 'tani/glance-vim'
+# on_ft = 'markdown'
+# hook_add = '''
+#     let g:glance#server_open = v:false
+# '''
+
+[[plugins]]
+repo = 'uga-rosa/todo.nvim'
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'alaviss/nim.nvim'
+on_ft = 'nim'

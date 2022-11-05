@@ -1,0 +1,56 @@
+[[plugins]]
+repo = 'hrsh7th/nvim-cmp'
+on_event = ['InsertEnter', 'CmdlineEnter']
+lua_source = '''
+require("rc.plugins.nvim-cmp")
+'''
+
+[[plugins]]
+repo = 'hrsh7th/cmp-buffer'
+on_source = 'nvim-cmp'
+
+[[plugins]]
+repo = 'hrsh7th/cmp-path'
+on_source = 'nvim-cmp'
+
+[[plugins]]
+repo = 'hrsh7th/cmp-nvim-lsp'
+on_source = 'nvim-cmp'
+
+[[plugins]]
+repo = 'hrsh7th/cmp-nvim-lua'
+on_source = 'nvim-cmp'
+
+[[plugins]]
+repo = 'hrsh7th/cmp-nvim-lsp-signature-help'
+on_source = 'nvim-cmp'
+
+[[plugins]]
+repo = 'hrsh7th/cmp-cmdline'
+on_source = 'nvim-cmp'
+
+[[plugins]]
+repo = 'saadparwaiz1/cmp_luasnip'
+depends = 'LuaSnip'
+on_source = 'nvim-cmp'
+
+[[plugins]]
+repo = '~/plugin/cmp-dictionary'
+on_source = 'nvim-cmp'
+lua_source = '''
+local dict = require("cmp_dictionary")
+dict.setup({
+    dic = {
+        ["autohotkey"] = "~/dotfiles/dict/ahk.dict",
+        spelllang = {
+            en = "~/.dict/en.dict",
+            ja = "~/dotfiles/dic/ja.dict",
+        },
+    },
+    exact = 2,
+    async = true,
+    first_case_insensitive = true,
+    document = true,
+})
+dict.update()
+'''

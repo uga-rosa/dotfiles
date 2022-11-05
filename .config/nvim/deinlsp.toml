@@ -1,0 +1,65 @@
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+lua_source = '''
+    require("mason").setup()
+'''
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+depends = ['mason.nvim', 'nvim-lspconfig', 'nvim-cmp']
+on_ft = ['lua', 'python', 'sh', 'bash', 'go', 'nim', 'vim', 'css', 'c', 'cpp', 'typescript']
+lua_source = '''
+    require("rc.plugins.mason-lspconfig")
+'''
+
+[[plugins]]
+repo = 'glepnir/lspsaga.nvim'
+rev = 'main'
+lua_source = '''
+    require("lspsaga").init_lsp_saga({
+        diagnostic_header = { " ", " ", " ", " " },
+        code_action_lightbulb = {
+            enable = true,
+            enable_in_insert = false,
+            sign = false,
+            virtual_text = true,
+        },
+    })
+'''
+
+[[plugins]]
+repo = 'j-hui/fidget.nvim'
+lua_source = '''
+    require("fidget").setup({})
+'''
+
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+lua_source = '''
+    local null = require("null-ls")
+    local b = null.builtins
+
+    null.setup({
+        sources = {
+            function()
+                local utils = require("null-ls.utils").make_conditional_utils()
+                if utils.root_has_file("stylua.toml") then
+                    return b.formatting.stylua
+                elseif utils.root_has_file(".stylua.toml") then
+                    return b.formatting.stylua.with({
+                        extra_args = { "--config-path", "./.stylua.toml" },
+                    })
+                else
+                    return b.formatting.stylua.with({
+                        extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml") },
+                    })
+                end
+            end,
+            b.formatting.fixjson,
+            b.formatting.black,
+        },
+    })
+'''

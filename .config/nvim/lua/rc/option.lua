@@ -1,7 +1,7 @@
 local fn = vim.fn
 
 local opt = {
-    fileencodings = "utf-8,sjis",
+    fileencodings = "utf-8",
     updatetime = 100,
     hidden = true,
     number = true,
