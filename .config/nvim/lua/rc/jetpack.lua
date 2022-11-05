@@ -1,14 +1,15 @@
--- local plugin_root = vim.fn.stdpath("data") .. "/site/pack/jetpack"
--- local jetpack_path = plugin_root .. "/opt/vim-jetpack"
--- if not vim.bool_fn.isdirectory(jetpack_path) then
---     vim.fn.system({
---         "git",
---         "clone",
---         "https://github.com/tani/vim-jetpack.git",
---         jetpack_path,
---     })
--- end
+local plugin_root = vim.fn.stdpath("data") .. "/site/pack/jetpack"
+local jetpack_path = plugin_root .. "/opt/vim-jetpack"
+if not vim.bool_fn.isdirectory(jetpack_path) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "https://github.com/tani/vim-jetpack.git",
+        jetpack_path,
+    })
+end
 
+vim.g.jetpack_copy_method = "symlink"
 -- vim.cmd([[packadd vim-jetpack]])
 vim.cmd([[exec 'source' expand('~/plugin/vim-jetpack/plugin/jetpack.vim')]])
 
@@ -26,7 +27,6 @@ require("jetpack.packer").startup(function(use)
     })
     use("kyazdani42/nvim-web-devicons")
     use("tami5/sqlite.lua")
-    use("uga-rosa/lua-utils.nvim")
     use("Shougo/pum.vim")
     use("vim-denops/denops.vim")
     use("antoinemadec/FixCursorHold.nvim")
@@ -40,7 +40,6 @@ require("jetpack.packer").startup(function(use)
     -- status line
     use({
         "feline-nvim/feline.nvim",
-        event = { "BufRead", "BufNewFile" },
         setup = 'require("rc.plugins.setup.feline")',
         config = 'require("rc.plugins.config.feline")',
     })
@@ -68,7 +67,7 @@ require("jetpack.packer").startup(function(use)
     use("saadparwaiz1/cmp_luasnip")
     use("uga-rosa/cmp-latex-symbol")
     use({
-        "uga-rosa/cmp-dictionary",
+        "~/plugin/cmp-dictionary",
         config = 'require("rc.plugins.config.cmp-dictionary")',
     })
     -- use({
@@ -148,10 +147,7 @@ require("jetpack.packer").startup(function(use)
 
     use("nvim-treesitter/nvim-treesitter-textobjects")
     use("p00f/nvim-ts-rainbow")
-    use({
-        "nvim-treesitter/playground",
-        after = "nvim-treesitter",
-    })
+    use("nvim-treesitter/playground")
 
     -- filer
     use({
@@ -209,9 +205,9 @@ require("jetpack.packer").startup(function(use)
 
     -- markdown previewer
     use({
-        "previm/previm",
+        "~/plugin/glance-vim",
         ft = "markdown",
-        config = 'require("rc.plugins.config.previm")',
+        -- setup = 'vim.g["glance#server_open"] = false'
     })
 
     -- utilities for markdown table
@@ -223,20 +219,19 @@ require("jetpack.packer").startup(function(use)
     -- color picker
     use({
         "uga-rosa/ccc.nvim",
+        setup = 'require("rc.plugins.setup.ccc")',
         config = 'require("rc.plugins.config.ccc")',
     })
 
+    -- easy align
     use({
         "junegunn/vim-easy-align",
-        map = "<Plug>(EasyAlign)",
-        setup = function()
-            vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)", {})
-        end,
+        setup = 'vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)", {})',
     })
 
     -- python
     use({
-        "uga-rosa/vim-gindent",
+        "hrsh7th/vim-gindent",
         config = 'require("rc.plugins.config.gindent")',
     })
 
@@ -244,7 +239,7 @@ require("jetpack.packer").startup(function(use)
     use("alaviss/nim.nvim")
 
     use("uga-rosa/todo.nvim")
-    use("uga-rosa/join.nvim")
+    use("~/plugin/join.nvim")
 
     use("uga-rosa/nvim-kit")
 

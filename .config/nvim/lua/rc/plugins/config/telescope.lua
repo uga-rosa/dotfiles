@@ -18,3 +18,14 @@ telescope.setup({
 telescope.load_extension("fzf")
 telescope.load_extension("frecency")
 telescope.load_extension("ui-select")
+
+-- As command pallet
+for k, v in pairs(require("telescope.builtin")) do
+    if type(v) == "function" then
+        vim.keymap.set("n", ("<Plug>(telescope.%s)"):format(k), v)
+    end
+end
+vim.keymap.set("n", "<Space>m", function ()
+    require("telescope.builtin").keymaps()
+    vim.cmd("normal! i☆")
+end)

@@ -21,7 +21,7 @@ vim.keymap.set({ "n", "x", "o" }, "H", function()
     else
         return "^"
     end
-end, {expr = true})
+end, { expr = true })
 vim.keymap.set({ "n", "x", "o" }, "L", "$")
 
 -- better o
@@ -58,6 +58,11 @@ vim.keymap.set("c", "<C-d>", "<Del>")
 
 -- tab close
 vim.keymap.set("n", "qt", "<Cmd>tabclose<CR>")
+
+-- not include extra white space
+-- vim.keymap.set({ "o", "x" }, "a'", "2i'")
+-- vim.keymap.set({ "o", "x" }, 'a"', '2i"')
+-- vim.keymap.set({ "o", "x" }, "a`", "2i`")
 
 -- macro
 vim.keymap.set("n", "Q", "@q")

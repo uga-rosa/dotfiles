@@ -1,6 +1,3 @@
-vim.keymap.set("n", "<C-c>", "<Cmd>CccPick<CR>")
-vim.keymap.set("i", "<C-c>", "<Plug>(ccc-insert)")
-
 local ColorInput = require("ccc.input")
 local convert = require("ccc.utils.convert")
 
@@ -83,15 +80,14 @@ function RgbHslCmykInput:callback(index, new_value)
 end
 
 local ccc = require("ccc")
-ccc.setup({})
--- ccc.setup({
---     default_color = "#40bfbf",
---     point_color = "#40bfbf",
---     inputs = {
---         RgbHslCmykInput,
---     },
---     highlighter = {
---         auto_enable = true,
---         lsp = true,
---     },
--- })
+ccc.setup({
+    default_color = "#40bfbf",
+    point_color = "#40bfbf",
+    -- inputs = {
+    --     RgbHslCmykInput,
+    -- },
+    highlighter = {
+        auto_enable = true,
+        lsp = true,
+    },
+})

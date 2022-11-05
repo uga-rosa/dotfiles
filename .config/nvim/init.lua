@@ -1,13 +1,11 @@
 pcall(require, "impatient")
 
-
 vim.cmd([[
 if filereadable(expand('~/.secret.vim'))
     source ~/.secret.vim
 endif
+let g:vsctm_extensions_path = expand('~/extensions')
 set runtimepath^=~/plugin/dps-vsctm.vim
-set runtimepath^=~/plugin/vim-jetpack
-set runtimepath^=~/plugin/cmp-dictionary
 ]])
 
 require("utils")
