@@ -1,12 +1,12 @@
 " This configuration does not take into account anything other than
 " neovim in unix.
 
+let mapleader = "\<Space>"
+
 lua <<EOL
 pcall(require, "impatient")
 
 require("utils")
-require("rc.option")
-require("rc.mapping")
 require("rc.autocmd")
 require("rc.ftdetect")
 require("rc.ftplugin")
@@ -42,17 +42,22 @@ let g:dein#install_copy_vim = v:true
 
 let s:path = $CACHE . '/dein'
 if dein#min#load_state(s:path)
-  let s:base_dir = fnamemodify(expand('<sfile>'), ':h') . '/'
+  let s:base_dir = fnamemodify(expand('<sfile>'), ':h') . '/rc/'
+
+  let g:dein#inline_vimrcs = ['options.vim', 'mappings.vim']
+  let g:dein#inline_vimrcs = map(g:dein#inline_vimrcs, { _, v -> s:base_dir . v })
 
   let s:dein_toml = s:base_dir . 'dein.toml'
   let s:dein_lazy_toml = s:base_dir . 'deinlazy.toml'
+  let s:dein_ft_toml = s:base_dir . 'deinft.toml'
   let s:dein_lsp_toml = s:base_dir . 'deinlsp.toml'
   let s:cmp_toml = s:base_dir . 'cmp.toml'
 
-  call dein#begin(s:path, [expand('<sfile>'), s:dein_toml, s:dein_lazy_toml, s:dein_lsp_toml])
+  call dein#begin(s:path)
 
   call dein#load_toml(s:dein_toml, {'lazy': 0})
   call dein#load_toml(s:dein_lazy_toml, {'lazy' : 1})
+  call dein#load_toml(s:dein_ft_toml, {'lazy' : 1})
   call dein#load_toml(s:dein_lsp_toml, {'lazy' : 1})
   call dein#load_toml(s:cmp_toml, {'lazy' : 1})
 
@@ -64,11 +69,13 @@ if dein#check_install()
   call dein#install()
 endif
 
-call dein#call_hook('source')
+autocmd VimEnter * call dein#call_hook('source')
 autocmd VimEnter * call dein#call_hook('post_source')
 
-command! -nargs=0 DeinUpdate call s:dein#update()
+command! -nargs=0 DeinInstall call dein#install()
+command! -nargs=0 DeinUpdate call dein#update()
 
-if getcwd() =~# '^' . expand('~/plugin')
-  set rtp^=.
-endif
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun

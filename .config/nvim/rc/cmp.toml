@@ -44,7 +44,6 @@ dict.setup({
         ["autohotkey"] = "~/dotfiles/dict/ahk.dict",
         spelllang = {
             en = "~/.dict/en.dict",
-            ja = "~/dotfiles/dic/ja.dict",
         },
     },
     exact = 2,
@@ -54,3 +53,7 @@ dict.setup({
 })
 dict.update()
 '''
+
+[[plugins]]
+repo = '~/plugin/cmp-skkeleton'
+on_source = 'nvim-cmp'

@@ -15,7 +15,6 @@ repo = 'Shougo/pum.vim'
 
 [[plugins]]
 repo = 'vim-denops/denops.vim'
-on_event = 'VimEnter'
 
 [[plugins]]
 repo = 'hrsh7th/nvim-kit'
@@ -24,20 +23,12 @@ on_cmd = 'KitInstall'
 [[plugins]]
 repo = 'L3MON4D3/LuaSnip'
 on_event = 'InsertEnter'
-hook_add = '''
-    inoremap <C-j> <Plug>luasnip-expand-or-jump
-    snoremap <C-j> <Plug>luasnip-jump-next
-    inoremap <C-k> <Plug>luasnip-jump-prev
-    snoremap <C-k> <Plug>luasnip-jump-prev
-'''
 lua_source = '''
     require("luasnip.loaders.from_snipmate").lazy_load({
         paths = vim.fn.stdpath("config") .. "/snippets",
     })
     require("rc.plugins.LuaSnip.help")
     require("rc.plugins.LuaSnip.text")
-
-    -- require("rc.plugins.LuaSnip")
 '''
 
 [[plugins]]
@@ -48,77 +39,59 @@ hook_source = '''
 '''
 
 [[plugins]]
-repo = 'nvim-telescope/telescope.nvim'
-depends = [
-    'plenary.nvim',
-    'nvim-web-devicons',
-    'telescope-fzf',
-    'telescope-frecency.nvim',
-    'telescope-ui'
-]
-on_cmd = 'Telescope'
-hook_add = '''
-    nnoremap <leader>r  <Cmd>Telescope resume<CR>
-    nnoremap <leader>f  <Cmd>Telescope find_files hidden=true<CR>
-    nnoremap <leader>b  <Cmd>Telescope buffers<CR>
-    nnoremap <leader>o  <Cmd>Telescope frecency<CR>
-    nnoremap <leader>lg <Cmd>Telescope live_grep<CR>
-    nnoremap <leader>/  <Cmd>Telescope blines<CR>
-    nnoremap <leader>gf <Cmd>Telescope git_files<CR>
-    nnoremap <leader>h  <Cmd>Telescope help_tags<CR>
-    nnoremap q:         <Cmd>Telescope command_history<CR>
-    nnoremap q/         <Cmd>Telescope search_history<CR>
+repo = 'kana/vim-operator-user'
 
-    nnoremap <leader>i  <Cmd>Telescope diagnostics<CR>
-    nnoremap gd         <Cmd>Telescope lsp_definitions<CR>
-    nnoremap gr         <Cmd>Telescope lsp_references<CR>
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = 'vim-operator-user'
+on_map = '<Plug>(operator-replace)'
+hook_add = '''
+    nnoremap r <Plug>(operator-replace)
+    onoremap r <Plug>(operator-replace)
+    xnoremap r <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'ibhagwan/fzf-lua'
+depends = 'nvim-web-devicons'
+on_cmd = 'FzfLua'
+hook_add = '''
+    nnoremap <leader>r  <Cmd>FzfLua resume<CR>
+    nnoremap <leader>f  <Cmd>FzfLua files<CR>
+    nnoremap <leader>b  <Cmd>FzfLua buffers<CR>
+    nnoremap <leader>o  <Cmd>FzfLua oldfiles<CR>
+    nnoremap <leader>lg <Cmd>FzfLua live_grep<CR>
+    nnoremap <leader>/  <Cmd>FzfLua blines<CR>
+    nnoremap <leader>gf <Cmd>FzfLua git_files<CR>
+    nnoremap <leader>h  <Cmd>FzfLua help_tags<CR>
+    nnoremap q:         <Cmd>FzfLua command_history<CR>
+    nnoremap q/         <Cmd>FzfLua search_history<CR>
+
+    nnoremap <leader>i  <Cmd>FzfLua diagnostics_document<CR>
+    nnoremap gd         <Cmd>FzfLua lsp_definitions<CR>
+    nnoremap gr         <Cmd>FzfLua lsp_references<CR>
 '''
 lua_source = '''
-    local telescope = require("telescope")
-
-    telescope.setup({
-        pickers = {
-            find_files = {
-                find_command = { "fd", "-E", ".git", "-t", "f" },
+    local actions = require("fzf-lua.actions")
+    require("fzf-lua").setup({
+        actions = {
+            files = {
+                ["default"] = actions.file_edit_or_qf,
+                ["ctrl-x"]  = actions.file_split,
+                ["ctrl-v"]  = actions.file_vsplit,
+                ["ctrl-t"]  = actions.file_tabedit,
+                ["alt-q"]   = actions.file_sel_to_qf,
+                ["alt-l"]   = actions.file_sel_to_ll,
             },
-        },
-        extensions = {
-            fzf = {
-                fuzzy = true,
-                override_generic_sorter = true,
-                override_file_sorter = true,
-                case_mode = "smart_case",
+            buffers = {
+                ["default"] = actions.buf_edit,
+                ["ctrl-x"]  = actions.buf_split,
+                ["ctrl-v"]  = actions.buf_vsplit,
+                ["ctrl-t"]  = actions.buf_tabedit,
             },
         },
     })
-    telescope.load_extension("fzf")
-    telescope.load_extension("frecency")
-    telescope.load_extension("ui-select")
-
-    -- As command pallet
-    for k, v in pairs(require("telescope.builtin")) do
-        if type(v) == "function" then
-            vim.keymap.set("n", ("<Plug>(telescope.%s)"):format(k), v)
-        end
-    end
-    vim.keymap.set("n", "<Space>m", function ()
-        require("telescope.builtin").keymaps()
-        vim.cmd("normal! i☆")
-    end)
 '''
-
-[[plugins]]
-repo = 'nvim-telescope/telescope-fzf-native.nvim'
-name = 'telescope-fzf'
-build = 'make'
-
-[[plugins]]
-repo = 'nvim-telescope/telescope-frecency.nvim'
-depends = 'sqlite.lua'
-
-[[plugins]]
-repo = 'nvim-telescope/telescope-ui-select.nvim'
-name = 'telescope-ui'
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
@@ -136,7 +109,7 @@ lua_source = '''
         parser_install_dir = parser_install_dir,
         highlight = {
             enable = true,
-            disable = { "help" },
+            disable = { "help", "typescript" },
         },
         textobjects = {
             select = {
@@ -145,7 +118,6 @@ lua_source = '''
                 keymaps = {
                     ["ib"] = "@block.inner",
                     ["ab"] = "@block.outer",
-                    ["c"] = "@comment.outer",
                     ["if"] = "@function.inner",
                     ["af"] = "@function.outer",
                     ["il"] = "@loop.inner",
@@ -294,7 +266,7 @@ hook_add = '''
 repo = 'simeji/winresizer'
 on_cmd = 'WinResizerStartResize'
 hook_add = '''
-    nnoremap <C-e> <Cmd>WinResizerStartResize<CR>
+    " nnoremap <C-e> <Cmd>WinResizerStartResize<CR>
 '''
 
 [[plugins]]
@@ -353,11 +325,14 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'thinca/vim-partedit'
+repo = 'monaqa/vim-partedit'
+rev = 'feat-prefix_pattern'
 on_cmd = 'Partedit'
 on_func = 'partedit#start'
 hook_add = '''
-    let g:partedit#prefix_pattern = '\v\s*'
+    let g:partedit#prefix_pattern = '\V\s\*'
+    let g:partedit#auto_prefix = 0
+
     " for markdown code block and toml (dein.vim)
     function! s:operator_partedit() abort
       let context = context_filetype#get()
@@ -371,7 +346,11 @@ hook_add = '''
             \ {'filetype': context.filetype})
       nnoremap <buffer><nowait> Q <Cmd>ParteditEnd<CR>
     endfunction
-    nnoremap <C-x><C-x> <Cmd>call <SID>operator_partedit()<CR>
+
+    augroup MyPartedit
+      autocmd!
+      autocmd FileType toml,markdown nnoremap <buffer> <C-x><C-x> <Cmd>call <SID>operator_partedit()<CR>
+    augroup END
 '''
 
 [[plugins]]
@@ -387,14 +366,6 @@ depends = 'denops.vim'
 on_path = 'gitter://'
 
 [[plugins]]
-repo = '~/plugin/dps-vsctm.vim'
-depends = 'denops.vim'
-on_cmd = 'VsctmHighlightEnable'
-hook_add = '''
-    let g:vsctm_extensions_path = expand('~/.cache/vsctm/extensions')
-'''
-
-[[plugins]]
 repo = 'uga-rosa/translate.nvim'
 on_cmd = "Translate"
 hook_add = '''
@@ -408,8 +379,8 @@ hook_add = '''
     }
 
     for k, v in pairs(mappings) do
-        vim.keymap.set({"n", "x"}, "mj" .. k, ("<Cmd>Translate JA -source=EN %s<CR>"):format(v))
-        vim.keymap.set({"n", "x"}, "me" .. k, ("<Cmd>Translate EN -source=JA %s<CR>"):format(v))
+        vim.keymap.set({"n", "x"}, "mj" .. k, ("<Cmd>Translate JA -source=EN %s<CR><Esc>"):format(v))
+        vim.keymap.set({"n", "x"}, "me" .. k, ("<Cmd>Translate EN -source=JA %s<CR><Esc>"):format(v))
     end
 EOL
 '''
@@ -434,7 +405,7 @@ translate-nvim-user = '''
 '''
 
 [[plugins]]
-repo = 'uga-rosa/ccc.nvim'
+repo = '~/plugin/ccc.nvim'
 on_event = 'BufRead'
 hook_add = '''
     nnoremap <C-c> <Cmd>CccPick<CR>
@@ -448,4 +419,47 @@ lua_source = '''
             lsp = true,
         },
     })
+'''
+
+[[plugins]]
+repo = '~/plugin/dps-vsctm.vim'
+depends = 'denops.vim'
+on_event = 'BufRead'
+hook_add = '''
+    let g:vsctm_extensions_path = expand('~/.cache/vsctm/extensions')
+'''
+lua_source = '''
+    vim.g.vsctm_highlight = {
+        enable = {
+            "typescript",
+            "nim",
+        },
+    }
+'''
+
+[[plugins]]
+repo = 'vim-skk/skkeleton'
+depends = 'denops.vim'
+rev = 'cmp'
+on_event = ['InsertEnter', 'CmdlineEnter']
+hook_add = '''
+    inoremap <C-j> <Plug>(skkeleton-toggle)
+    cnoremap <C-j> <Plug>(skkeleton-toggle)
+'''
+lua_source = '''
+    vim.fn["skkeleton#config"]({
+        eggLikeNewline = true,
+        globalDictionaries = {
+            "~/.skk/SKK-JISYO.L",
+            "~/.skk/SKK-JISYO.edict2",
+        },
+        registerConvertResult = true,
+    })
+    require("rc.plugins.skkeleton")
+'''
+hook_source = '''
+    au User skkeleton-enable-post call s:skkeleton_post()
+    function! s:skkeleton_post() abort
+      lunmap <buffer> <CR>
+    endfunction
 '''

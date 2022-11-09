@@ -53,7 +53,7 @@ local function lua_help()
     end
 end
 
-local function on_attach(client, bufnr)
+local function on_attach(_, bufnr)
     local buf_map = function(lhs, rhs)
         vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
     end
@@ -65,12 +65,10 @@ local function on_attach(client, bufnr)
     buf_map("<leader>n", "<Cmd>Lspsaga rename<CR>")
     buf_map("<leader>a", "<Cmd>Lspsaga code_action<CR>")
 
-    if client.supports_method("textDocument/formatting") then
-        api.nvim_create_user_command("Format", function()
-            vim.lsp.buf.format()
-        end, {})
-        buf_map("<leader>F", "<Cmd>Format<CR>")
-    end
+    api.nvim_create_user_command("Format", function()
+        vim.lsp.buf.format()
+    end, {})
+    buf_map("<leader>F", "<Cmd>Format<CR>")
 end
 
 ---@param plugins string[]

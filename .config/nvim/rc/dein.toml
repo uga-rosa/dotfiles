@@ -9,7 +9,7 @@ repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'bluz71/vim-nightfly-guicolors'
-hook_add = '''
+hook_source = '''
     let g:nightflyItalics = v:false
     colorscheme nightfly
 '''
@@ -27,6 +27,5 @@ repo = 'tpope/vim-commentary'
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 hook_source = '''
-    runtime macros/sandwich/keymap/surround.vim
     call operator#sandwich#set('add', 'char', 'skip_space', 1)
 '''

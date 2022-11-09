@@ -2,6 +2,9 @@ local api = vim.api
 
 local cmp = require("cmp")
 local luasnip = require("luasnip")
+
+---@param key string
+---@param mode? string
 local function feedkey(key, mode)
     api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode or "n", true)
 end
@@ -166,15 +169,26 @@ cmp.setup({
         ["<S-Tab>"] = cmp.mapping({
             c = cmp_up("c"),
         }),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        -- ["<CR>"] = cmp.mapping.confirm({ select = true })
+        ["<CR>"] = cmp.mapping(function(callback)
+            if cmp.visible() then
+                cmp.confirm({ select = true })
+            elseif vim.fn["skkeleton#mode"]() ~= "" then
+                vim.fn["skkeleton#handle"]("handleKey", { key = "", ["function"] = "newline" })
+            else
+                callback()
+            end
+        end, { "i" }),
     },
-    sources = {
+    sources = cmp.config.sources({
+        { name = "skkeleton" },
+        -- }),
+        -- cmp.config.sources({
         { name = "luasnip" },
         { name = "nvim_lsp" },
         { name = "nvim_lua" },
         { name = "nvim_lsp_signature_help" },
         { name = "path" },
-        { name = "dynamic" },
         {
             name = "buffer",
             option = {
@@ -196,9 +210,7 @@ cmp.setup({
             keyword_length = 2,
             priority = 1,
         },
-        { name = "emoji" },
-        { name = "latex_symbol" },
-    },
+    }),
 })
 
 cmp.setup.cmdline("/", {
