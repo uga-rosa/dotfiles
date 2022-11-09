@@ -180,38 +180,55 @@ cmp.setup({
             end
         end, { "i" }),
     },
-    sources = cmp.config.sources({
-        { name = "skkeleton" },
-        -- }),
-        -- cmp.config.sources({
-        { name = "luasnip" },
-        { name = "nvim_lsp" },
-        { name = "nvim_lua" },
-        { name = "nvim_lsp_signature_help" },
-        { name = "path" },
-        {
-            name = "buffer",
-            option = {
-                get_bufnrs = function()
-                    local bufs = {}
-                    for _, win in ipairs(api.nvim_list_wins()) do
-                        local buf = api.nvim_win_get_buf(win)
-                        local byte_size = api.nvim_buf_get_offset(buf, api.nvim_buf_line_count(buf))
-                        if byte_size < 1024 * 1024 then
-                            table.insert(bufs, buf)
-                        end
-                    end
-                    return bufs
-                end,
-            },
-        },
-        {
-            name = "dictionary",
-            keyword_length = 2,
-            priority = 1,
-        },
-    }),
 })
+
+local function get_visible_buffers()
+    local bufs = {}
+    for _, win in ipairs(api.nvim_list_wins()) do
+        local buf = api.nvim_win_get_buf(win)
+        local byte_size = api.nvim_buf_get_offset(buf, api.nvim_buf_line_count(buf))
+        if byte_size < 1024 * 1024 then
+            table.insert(bufs, buf)
+        end
+    end
+    return bufs
+end
+
+local function get_sources(name)
+    if name == "skkeleton" then
+        return {
+            { name = "skkeleton" },
+        }
+    elseif name == "default" then
+        return {
+            { name = "luasnip" },
+            { name = "nvim_lsp" },
+            { name = "nvim_lua" },
+            { name = "nvim_lsp_signature_help" },
+            { name = "path" },
+            {
+                name = "buffer",
+                option = {
+                    get_bufnrs = get_visible_buffers,
+                },
+            },
+            {
+                name = "dictionary",
+                keyword_length = 2,
+                priority = 1,
+            },
+        }
+    end
+end
+
+CmpSourceSelect = function(name)
+    local sources = get_sources(name)
+    if sources then
+        cmp.setup({
+            sources = sources,
+        })
+    end
+end
 
 cmp.setup.cmdline("/", {
     sources = {

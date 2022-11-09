@@ -461,5 +461,7 @@ hook_source = '''
     au User skkeleton-enable-post call s:skkeleton_post()
     function! s:skkeleton_post() abort
       lunmap <buffer> <CR>
+      lua CmpSourceSelect("skkeleton")
     endfunction
+    au User skkeleton-disable-post lua CmpSourceSelect("default")
 '''

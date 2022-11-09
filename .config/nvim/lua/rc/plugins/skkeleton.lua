@@ -1,5 +1,6 @@
 vim.fn["skkeleton#register_kanatable"]("rom", {
-    ["@"] = "katakana",
+    ["<s-q>"] = "katakana",
+    ["<s-l>"] = "zenkaku",
 })
 
 local rule = {}
