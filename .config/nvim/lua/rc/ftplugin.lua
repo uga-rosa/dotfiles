@@ -51,6 +51,14 @@ M.python = function()
     set_indent(4)
 end
 
+M.html = function()
+    set_indent(2)
+end
+
+M.xhtml = function()
+    set_indent(2)
+end
+
 M.lua = function()
     local ok, Path = pcall(require, "plenary.path")
     if not ok then
