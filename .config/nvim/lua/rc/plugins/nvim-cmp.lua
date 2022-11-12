@@ -79,6 +79,26 @@ local cmp_mapping_up = cmp.mapping({
     c = cmp_up("c"),
 })
 
+local function super_tab(fallback)
+    if cmp.visible() then
+        cmp.select_next_item({ SelectBehavior = cmp.SelectBehavior.Insert })
+    elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+    else
+        fallback()
+    end
+end
+
+local function super_tab_shift(fallback)
+    if cmp.visible() then
+        cmp.select_prev_item({ SelectBehavior = cmp.SelectBehavior.Insert })
+    elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+    else
+        fallback()
+    end
+end
+
 local function is_falsy(v)
     return v == nil or v == false or v == 0
 end
@@ -164,21 +184,28 @@ cmp.setup({
         ["<C-n>"] = cmp_mapping_down,
         ["<C-p>"] = cmp_mapping_up,
         ["<Tab>"] = cmp.mapping({
-            c = cmp_down("c"),
+            i = super_tab,
+            s = super_tab,
+            c = function()
+                if cmp.visible() then
+                    cmp.select_next_item({ SelectBehavior = cmp.SelectBehavior.Insert })
+                else
+                    cmp.complete()
+                end
+            end,
         }),
         ["<S-Tab>"] = cmp.mapping({
-            c = cmp_up("c"),
+            i = super_tab_shift,
+            s = super_tab_shift,
+            c = function()
+                if cmp.visible() then
+                    cmp.select_prev_item({ SelectBehavior = cmp.SelectBehavior.Insert })
+                else
+                    cmp.complete()
+                end
+            end,
         }),
-        -- ["<CR>"] = cmp.mapping.confirm({ select = true })
-        ["<CR>"] = cmp.mapping(function(callback)
-            if cmp.visible() then
-                cmp.confirm({ select = true })
-            elseif vim.fn["skkeleton#mode"]() ~= "" then
-                vim.fn["skkeleton#handle"]("handleKey", { key = "", ["function"] = "newline" })
-            else
-                callback()
-            end
-        end, { "i" }),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
     },
 })
 
@@ -229,6 +256,8 @@ CmpSourceSelect = function(name)
         })
     end
 end
+
+CmpSourceSelect("default")
 
 cmp.setup.cmdline("/", {
     sources = {
