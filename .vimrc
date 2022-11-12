@@ -1,7 +1,7 @@
 set rtp+=~/.cache/dein/repos/github.com/vim-denops/denops.vim
-set rtp+=~/plugin/dps-vsctm.vim
-let g:vsctm_extensions_path = expand('~/.cache/vsctm/extensions')
-let g:vsctm_highlight = { 'enable': v:true }
+set rtp+=~/plugin/scorpeon.vim
+let g:scorpeon_extensions_path = expand('~/.cache/scorpeon/extensions')
+let g:scorpeon_highlight = { 'enable': v:true }
 " packadd vim-jetpack
 " call jetpack#begin()
 " Jetpack 'tani/vim-jetpack', {'opt': 1}
