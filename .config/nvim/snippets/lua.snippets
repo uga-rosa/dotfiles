@@ -15,21 +15,19 @@ snippet ins
 snippet rq
 	require("${1:module}")
 snippet l
-	local $0
-snippet lrq
+	local $1 = $2
+snippet lr
 	local ${1:var} = require("${2:module}")
 snippet lf
 	local function $1($2)
 		$0
 	end
-snippet f
+snippet fn
 	function $1($2)
 		$0
 	end
 snippet rt
 	return
-snippet cmd
-	<cmd>$0<CR>
 snippet @class
 	---@class $1
 	local ${1:name} = {}
@@ -39,11 +37,7 @@ snippet @class
 			$3
 		}, { __index = $1 })
 	end
-snippet @field
-	---@field ${1:name} ${2:type}
-snippet codes
-	for ${1:_}, ${2:c} in utf8.codes(${3:t}) do
-		$0
-	end
 snippet fnil
 	${1:a} = vim.F.if_nil($1, ${2:b})
+snippet p
+	vim.pretty_print($0)
