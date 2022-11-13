@@ -138,6 +138,7 @@ require("mason-lspconfig").setup_handlers({
                             { "plenary.nvim", "nvim-cmp", "sqlite.lua" },
                             { fn.stdpath("config") .. "/lua/utils.lua" }
                         ),
+                        checkThirdParty = false,
                     },
                 },
             },
