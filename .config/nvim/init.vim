@@ -5,7 +5,6 @@ let mapleader = "\<Space>"
 
 lua <<EOL
 pcall(require, "impatient")
-
 require("utils")
 require("rc.autocmd")
 require("rc.ftdetect")
@@ -67,17 +66,18 @@ if dein#min#load_state(s:path)
   call dein#save_state()
 endif
 
+call dein#call_hook('source')
+autocmd VimEnter * call dein#call_hook('post_source')
+
 if dein#check_install()
   call dein#install()
 endif
 
-autocmd VimEnter * call dein#call_hook('source')
-autocmd VimEnter * call dein#call_hook('post_source')
-
-command! -nargs=0 DeinInstall call dein#install()
-command! -nargs=0 DeinUpdate call dein#update()
-
-function! SynGroup()
-    let l:s = synID(line('.'), col('.'), 1)
-    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
-endfun
+command! -nargs=0 DeinUpdate call s:update()
+function! s:update() abort
+  if exists('g:dein#install_github_api_token')
+    call dein#check_update(v:true)
+  else
+    call dein#update()
+  endif
+endfunction
