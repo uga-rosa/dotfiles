@@ -102,14 +102,17 @@ hook_post_update = '''
 '''
 lua_source = '''
     local parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
-    vim.opt.runtimepath:append(parser_install_dir)
+    vim.opt.runtimepath:prepend(parser_install_dir)
 
     require("nvim-treesitter.configs").setup({
         ensure_installed = "all",
         parser_install_dir = parser_install_dir,
         highlight = {
             enable = true,
-            disable = { "help", "typescript" },
+            disable = {
+                "help",
+                "typescript",
+            },
         },
         textobjects = {
             select = {
@@ -422,22 +425,6 @@ lua_source = '''
 '''
 
 [[plugins]]
-repo = '~/plugin/dps-vsctm.vim'
-depends = 'denops.vim'
-on_event = 'BufRead'
-hook_add = '''
-    let g:vsctm_extensions_path = expand('~/.cache/vsctm/extensions')
-'''
-lua_source = '''
-    vim.g.vsctm_highlight = {
-        enable = {
-            "typescript",
-            "nim",
-        },
-    }
-'''
-
-[[plugins]]
 repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
 rev = 'cmp'
@@ -460,7 +447,6 @@ lua_source = '''
 hook_source = '''
     au User skkeleton-enable-post call s:skkeleton_post()
     function! s:skkeleton_post() abort
-      lunmap <buffer> <CR>
       lua CmpSourceSelect("skkeleton")
     endfunction
     au User skkeleton-disable-post lua CmpSourceSelect("default")

@@ -3,14 +3,14 @@ repo = '~/plugin/scorpeon.vim'
 depends = 'denops.vim'
 on_event = 'BufRead'
 hook_add = '''
-        let g:scorpeon_extensions_path = [
-          \ expand('$CACHE/vscode/extensions'),
-          \ expand('$CACHE/scorpeon'),
-          \ ]
-        let g:scorpeon_highlight = {
-          \ 'enable': ['typescript', 'nim', 'c', 'cpp'],
-          \ 'disable': { -> getfsize(expand('%')) > 1 * 1024 * 1024 }
-          \ }
+    let g:scorpeon_extensions_path = [
+      \ expand('$CACHE/vscode/extensions'),
+      \ expand('$CACHE/scorpeon'),
+      \ ]
+    let g:scorpeon_highlight = {
+      \ 'enable': ['typescript', 'nim', 'c', 'cpp'],
+      \ 'disable': { -> getfsize(expand('%')) > 1 * 1024 * 1024 }
+      \ }
 '''
 
 [[plugins]]
@@ -24,16 +24,19 @@ path = '$CACHE/vscode'
 repo = 'saem/vscode-nim'
 if = 0
 merged = 0
+type__depth = 1
 path = '$CACHE/scorpeon/nim'
 
 [[plugins]]
 repo = 'oovm/vscode-toml'
 if = 0
 merged = 0
+type__depth = 1
 path = '$CACHE/scorpeon/toml'
 
 [[plugins]]
 repo = 'emilast/vscode-logfile-highlighter'
 if = 0
 merged = 0
+type__depth = 1
 path = '$CACHE/scorpeon/log'
