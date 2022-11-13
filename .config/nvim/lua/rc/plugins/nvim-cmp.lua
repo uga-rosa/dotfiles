@@ -45,7 +45,7 @@ local function cmp_down(mode)
             cmp.close()
             luasnip.change_choice(1)
         elseif cmp.visible() then
-            cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+            cmp.select_next_item()
         else
             feedkey("<C-n>")
         end
@@ -60,7 +60,7 @@ local function cmp_up(mode)
             cmp.close()
             luasnip.change_choice(-1)
         elseif cmp.visible() then
-            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
+            cmp.select_prev_item()
         else
             feedkey("<C-p>")
         end
@@ -79,20 +79,16 @@ local cmp_mapping_up = cmp.mapping({
     c = cmp_up("c"),
 })
 
-local function super_tab(fallback)
-    if cmp.visible() then
-        cmp.select_next_item({ SelectBehavior = cmp.SelectBehavior.Insert })
-    elseif luasnip.expand_or_jumpable() then
+local function expand_or_jump(fallback)
+    if luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
     else
         fallback()
     end
 end
 
-local function super_tab_shift(fallback)
-    if cmp.visible() then
-        cmp.select_prev_item({ SelectBehavior = cmp.SelectBehavior.Insert })
-    elseif luasnip.jumpable(-1) then
+local function jump_prev(fallback)
+    if luasnip.jumpable(-1) then
         luasnip.jump(-1)
     else
         fallback()
@@ -184,22 +180,22 @@ cmp.setup({
         ["<C-n>"] = cmp_mapping_down,
         ["<C-p>"] = cmp_mapping_up,
         ["<Tab>"] = cmp.mapping({
-            i = super_tab,
-            s = super_tab,
+            i = expand_or_jump,
+            s = expand_or_jump,
             c = function()
                 if cmp.visible() then
-                    cmp.select_next_item({ SelectBehavior = cmp.SelectBehavior.Insert })
+                    cmp.select_next_item()
                 else
                     cmp.complete()
                 end
             end,
         }),
         ["<S-Tab>"] = cmp.mapping({
-            i = super_tab_shift,
-            s = super_tab_shift,
+            i = jump_prev,
+            s = jump_prev,
             c = function()
                 if cmp.visible() then
-                    cmp.select_prev_item({ SelectBehavior = cmp.SelectBehavior.Insert })
+                    cmp.select_prev_item()
                 else
                     cmp.complete()
                 end
