@@ -42,13 +42,12 @@ hook_source = '''
 repo = 'kana/vim-operator-user'
 
 [[plugins]]
-repo = 'kana/vim-operator-replace'
+repo = 'yuki-yano/vim-operator-replace'
 depends = 'vim-operator-user'
 on_map = '<Plug>(operator-replace)'
 hook_add = '''
-    nnoremap r <Plug>(operator-replace)
-    onoremap r <Plug>(operator-replace)
-    xnoremap r <Plug>(operator-replace)
+    noremap r <Plug>(operator-replace)
+    sunmap r
 '''
 
 [[plugins]]
@@ -97,9 +96,7 @@ lua_source = '''
 repo = 'nvim-treesitter/nvim-treesitter'
 depends = ['nvim-treesitter-textobjects', 'nvim-ts-rainbow']
 on_event = 'BufRead'
-hook_post_update = '''
-    TSUpdate
-'''
+hook_post_update = 'TSUpdate'
 lua_source = '''
     local parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
     vim.opt.runtimepath:prepend(parser_install_dir)
@@ -370,7 +367,7 @@ on_path = 'gitter://'
 
 [[plugins]]
 repo = 'uga-rosa/translate.nvim'
-on_cmd = "Translate"
+on_cmd = 'Translate'
 hook_add = '''
     lua <<EOL
     local mappings = {
@@ -451,3 +448,7 @@ hook_source = '''
     endfunction
     au User skkeleton-disable-post lua CmpSourceSelect("default")
 '''
+
+[[plugins]]
+repo = 'tyru/capture.vim'
+on_cmd = 'Capture'
