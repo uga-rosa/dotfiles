@@ -1,6 +1,9 @@
 set rtp+=~/.cache/dein/repos/github.com/vim-denops/denops.vim
 set rtp+=~/plugin/scorpeon.vim
-let g:scorpeon_extensions_path = expand('~/.cache/scorpeon/extensions')
+let g:scorpeon_extensions_path = [
+      \ expand('~/.cache/scorpeon'),
+      \ expand('~/.cache/vscode/extensions')
+      \ ]
 let g:scorpeon_highlight = { 'enable': v:true }
 " packadd vim-jetpack
 " call jetpack#begin()

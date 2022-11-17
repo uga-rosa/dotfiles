@@ -16,7 +16,7 @@ end
 
 M["*"] = function()
     vim.opt_local.formatoptions:remove({ "t", "c", "r", "o" })
-    vim.opt_local.formatoptions:append("mMBl")
+    vim.opt_local.formatoptions:append("mMl")
 end
 
 M.typescript = function()

@@ -2,12 +2,6 @@
 repo = 'lewis6991/impatient.nvim'
 
 [[plugins]]
-repo = 'antoinemadec/FixCursorHold.nvim'
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
-[[plugins]]
 repo = 'bluz71/vim-nightfly-guicolors'
 hook_source = '''
     let g:nightflyItalics = v:false

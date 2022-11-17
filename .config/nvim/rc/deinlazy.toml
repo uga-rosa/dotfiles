@@ -14,6 +14,10 @@ repo = 'kkharji/sqlite.lua'
 repo = 'Shougo/pum.vim'
 
 [[plugins]]
+repo = 'Shougo/context_filetype.vim'
+on_func = 'context_filetype#get'
+
+[[plugins]]
 repo = 'vim-denops/denops.vim'
 
 [[plugins]]
@@ -366,12 +370,12 @@ depends = 'denops.vim'
 on_path = 'gitter://'
 
 [[plugins]]
-repo = 'uga-rosa/translate.nvim'
+repo = '~/plugin/translate.nvim'
 on_cmd = 'Translate'
 hook_add = '''
     lua <<EOL
     local mappings = {
-        f = "-parse_after=window -output=floating",
+        f = "-output=floating",
         s = "-output=split",
         i = "-output=insert",
         r = "-output=replace",
@@ -424,7 +428,6 @@ lua_source = '''
 [[plugins]]
 repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
-rev = 'cmp'
 on_event = ['InsertEnter', 'CmdlineEnter']
 hook_add = '''
     inoremap <C-j> <Plug>(skkeleton-toggle)
@@ -442,8 +445,9 @@ lua_source = '''
     require("rc.plugins.skkeleton")
 '''
 hook_source = '''
-    au User skkeleton-enable-post call s:skkeleton_post()
-    function! s:skkeleton_post() abort
+    call add(g:skkeleton#mapped_keys, '<c-l>')
+    au User skkeleton-enable-post call s:skkeleton_enable()
+    function! s:skkeleton_enable() abort
       lua CmpSourceSelect("skkeleton")
     endfunction
     au User skkeleton-disable-post lua CmpSourceSelect("default")

@@ -72,7 +72,7 @@ ls.add_snippets("help", {
         f(separator),
         t({ "", "" }),
         f(function()
-            return section("Contents", true)
+            return section("CONTENTS", true)
         end),
         t({ "", "", "", "", "vim:tw=78:ts=8:noet:ft=help:norl:" }),
     }),
