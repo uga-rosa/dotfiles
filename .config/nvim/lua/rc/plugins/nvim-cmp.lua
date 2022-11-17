@@ -3,12 +3,6 @@ local api = vim.api
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
----@param key string
----@param mode? string
-local function feedkey(key, mode)
-    api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode or "n", true)
-end
-
 local lspkind = {
     Text = "",
     Method = "",
@@ -40,14 +34,14 @@ local lspkind = {
 ---@param mode string
 ---@return function
 local function cmp_down(mode)
-    return function()
+    return function(fallback)
         if mode ~= "c" and luasnip.choice_active() then
             cmp.close()
             luasnip.change_choice(1)
         elseif cmp.visible() then
             cmp.select_next_item()
         else
-            feedkey("<C-n>")
+            fallback()
         end
     end
 end
@@ -55,32 +49,20 @@ end
 ---@param mode string
 ---@return function
 local function cmp_up(mode)
-    return function()
+    return function(fallback)
         if mode ~= "c" and luasnip.choice_active() then
             cmp.close()
             luasnip.change_choice(-1)
         elseif cmp.visible() then
             cmp.select_prev_item()
         else
-            feedkey("<C-p>")
+            fallback()
         end
     end
 end
 
-local cmp_mapping_down = cmp.mapping({
-    i = cmp_down("i"),
-    s = cmp_down("s"),
-    c = cmp_down("c"),
-})
-
-local cmp_mapping_up = cmp.mapping({
-    i = cmp_up("i"),
-    s = cmp_up("s"),
-    c = cmp_up("c"),
-})
-
 local function expand_or_jump(fallback)
-    if luasnip.expand_or_jumpable() then
+    if luasnip.expand_or_locally_jumpable() then
         luasnip.expand_or_jump()
     else
         fallback()
@@ -133,8 +115,7 @@ cmp.setup({
                 nvim_lua = "[NvimLua]",
                 luasnip = "[LuaSnip]",
                 dictionary = "[Dict]",
-                latex_symbol = "[Latex]",
-                dynamic = "[Dynamic]",
+                skkeleton = "[Skkeleton]"
             })[entry.source.name]
             vim_item.dup = ({
                 buffer = 0,
@@ -177,8 +158,16 @@ cmp.setup({
             "i",
             "c",
         }),
-        ["<C-n>"] = cmp_mapping_down,
-        ["<C-p>"] = cmp_mapping_up,
+        ["<C-n>"] = cmp.mapping({
+            i = cmp_down("i"),
+            s = cmp_down("s"),
+            c = cmp_down("c"),
+        }),
+        ["<C-p>"] = cmp.mapping({
+            i = cmp_up("i"),
+            s = cmp_up("s"),
+            c = cmp_up("c"),
+        }),
         ["<Tab>"] = cmp.mapping({
             i = expand_or_jump,
             s = expand_or_jump,
@@ -265,7 +254,6 @@ cmp.setup.cmdline(":", {
     sources = {
         { name = "cmdline" },
         { name = "path" },
-        { name = "dynamic" },
     },
 })
 
