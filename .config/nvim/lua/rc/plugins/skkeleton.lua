@@ -1,7 +1,9 @@
-vim.fn["skkeleton#register_kanatable"]("rom", {
-    ["<s-q>"] = "katakana",
-    ["<s-l>"] = "zenkaku",
-})
+vim.fn["skkeleton#register_keymap"]("input", "q", "")
+vim.fn["skkeleton#register_keymap"]("input", "<c-q>", "katakana")
+vim.fn["skkeleton#register_keymap"]("input", "<s-l>", "")
+vim.fn["skkeleton#register_keymap"]("input", "<c-l>", "zenkaku")
+vim.fn["skkeleton#register_keymap"]("input", ";", "")
+vim.fn["skkeleton#register_keymap"]("input", "'", "henkanPoint")
 
 local rule = {}
 
@@ -100,10 +102,11 @@ set_rule("ly", { "ゃ", "", "ゅ", "", "ょ" })
 
 -- 促音、撥音、長音符
 -- US配列 + コロン、セミコロン入替
+-- 'はsticky shiftに
 set_rule("", nil, {
     [":"] = "っ",
     q = "ん",
-    ["'"] = "ー",
+    [";"] = "ー",
     ["-"] = "ー",
 })
 

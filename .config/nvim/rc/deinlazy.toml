@@ -433,19 +433,18 @@ hook_add = '''
     inoremap <C-j> <Plug>(skkeleton-toggle)
     cnoremap <C-j> <Plug>(skkeleton-toggle)
 '''
-lua_source = '''
-    vim.fn["skkeleton#config"]({
-        eggLikeNewline = true,
-        globalDictionaries = {
-            "~/.skk/SKK-JISYO.L",
-            "~/.skk/SKK-JISYO.edict2",
-        },
-        registerConvertResult = true,
-    })
-    require("rc.plugins.skkeleton")
-'''
 hook_source = '''
     call add(g:skkeleton#mapped_keys, '<c-l>')
+    call skkeleton#config(#{
+          \ eggLikeNewline: v:true,
+          \ globalDictionaries: [
+          \   '~/.skk/SKK-JISYO.L',
+          \   '~/.skk/SKK-JISYO.edict2',
+          \ ],
+          \ registerConvertResult: v:true,
+          \ })
+    lua require("rc.plugins.skkeleton")
+
     au User skkeleton-enable-post call s:skkeleton_enable()
     function! s:skkeleton_enable() abort
       lua CmpSourceSelect("skkeleton")
