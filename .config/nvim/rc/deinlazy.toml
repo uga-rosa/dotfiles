@@ -404,7 +404,7 @@ lua_source = '''
 '''
 
 [plugins.ftplugin]
-translate-nvim-user = '''
+translate = '''
     nnoremap <buffer><nowait> q <Cmd>quit<CR>
 '''
 
