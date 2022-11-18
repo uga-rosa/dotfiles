@@ -2,6 +2,9 @@
 repo = 'lewis6991/impatient.nvim'
 
 [[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
 repo = 'bluz71/vim-nightfly-guicolors'
 hook_source = '''
     let g:nightflyItalics = v:false
@@ -14,9 +17,6 @@ depends = 'nvim-web-devicons'
 lua_source = '''
     require("rc.plugins.feline")
 '''
-
-[[plugins]]
-repo = 'tpope/vim-commentary'
 
 [[plugins]]
 repo = 'machakann/vim-sandwich'

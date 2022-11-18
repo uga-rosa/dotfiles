@@ -14,10 +14,6 @@ repo = 'kkharji/sqlite.lua'
 repo = 'Shougo/pum.vim'
 
 [[plugins]]
-repo = 'Shougo/context_filetype.vim'
-on_func = 'context_filetype#get'
-
-[[plugins]]
 repo = 'vim-denops/denops.vim'
 
 [[plugins]]
@@ -336,8 +332,11 @@ on_func = 'partedit#start'
 hook_add = '''
     let g:partedit#prefix_pattern = '\V\s\*'
     let g:partedit#auto_prefix = 0
+'''
 
-    " for markdown code block and toml (dein.vim)
+[plugins.ftplugin]
+toml_markdown = '''
+    nnoremap <buffer> <C-x><C-x> <Cmd>call <SID>operator_partedit()<CR>
     function! s:operator_partedit() abort
       let context = context_filetype#get()
       if context.range == [[0, 0], [0, 0]]
@@ -350,11 +349,6 @@ hook_add = '''
             \ {'filetype': context.filetype})
       nnoremap <buffer><nowait> Q <Cmd>ParteditEnd<CR>
     endfunction
-
-    augroup MyPartedit
-      autocmd!
-      autocmd FileType toml,markdown nnoremap <buffer> <C-x><C-x> <Cmd>call <SID>operator_partedit()<CR>
-    augroup END
 '''
 
 [[plugins]]
@@ -455,3 +449,12 @@ hook_source = '''
 [[plugins]]
 repo = 'tyru/capture.vim'
 on_cmd = 'Capture'
+
+[[plugins]]
+repo = '~/plugin/contextment.vim'
+on_map = '<Plug>(contextment'
+hook_add = '''
+    nnoremap gc  <Plug>(contextment)
+    xnoremap gc  <Plug>(contextment)
+    nnoremap gcc <Plug>(contextment-line)
+'''
