@@ -10,9 +10,9 @@ endfor
 nnoremap s <Nop>
 
 " Go to first/end line
-map <expr> H getline('.')[0: col('.')-2] =~# '\v^\s+$' ? '0' : '^'
+noremap <expr> H getline('.')[:col('.')-2] =~# '\v^\s+$' ? '0' : '^'
 sunmap H
-map L $
+noremap L $
 sunmap L
 
 " Easy to see o/O
