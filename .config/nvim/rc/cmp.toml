@@ -2,7 +2,7 @@
 repo = 'hrsh7th/nvim-cmp'
 on_event = ['InsertEnter', 'CmdlineEnter']
 lua_source = '''
-require("rc.plugins.nvim-cmp")
+    require("rc.plugins.nvim-cmp")
 '''
 
 [[plugins]]
@@ -38,20 +38,20 @@ on_source = 'nvim-cmp'
 repo = '~/plugin/cmp-dictionary'
 on_source = 'nvim-cmp'
 lua_source = '''
-local dict = require("cmp_dictionary")
-dict.setup({
-    dic = {
-        ["autohotkey"] = "~/dotfiles/dict/ahk.dict",
-        spelllang = {
-            en = "~/.dict/en.dict",
+    local dict = require("cmp_dictionary")
+    dict.setup({
+        dic = {
+            ["autohotkey"] = "~/dotfiles/dict/ahk.dict",
+            spelllang = {
+                en = "~/.dict/en.dict",
+            },
         },
-    },
-    exact = 2,
-    async = true,
-    first_case_insensitive = true,
-    document = true,
-})
-dict.update()
+        exact = 2,
+        async = true,
+        first_case_insensitive = true,
+        document = true,
+    })
+    dict.update()
 '''
 
 [[plugins]]
