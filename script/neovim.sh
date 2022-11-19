@@ -16,3 +16,18 @@ else
 fi
 make CMAKE_BUILD_TYPE=Release
 sudo make install
+
+prefix="/usr/local/share/nvim/runtime/plugin"
+if [[ -d $prefix ]]; then
+  sudo rm "$prefix/gzip.vim"
+  sudo rm "$prefix/health.vim"
+  sudo rm "$prefix/matchit.vim"
+  sudo rm "$prefix/matchparen.vim"
+  sudo rm "$prefix/netrwPlugin.vim"
+  sudo rm "$prefix/shada.vim"
+  sudo rm "$prefix/spellfile.vim"
+  sudo rm "$prefix/tarPlugin.vim"
+  sudo rm "$prefix/tohtml.vim"
+  sudo rm "$prefix/tutor.vim"
+  sudo rm "$prefix/zipPlugin.vim"
+fi
