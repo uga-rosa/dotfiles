@@ -266,7 +266,7 @@ hook_add = '''
 repo = 'simeji/winresizer'
 on_cmd = 'WinResizerStartResize'
 hook_add = '''
-    " nnoremap <C-e> <Cmd>WinResizerStartResize<CR>
+    nnoremap <C-e> <Cmd>WinResizerStartResize<CR>
 '''
 
 [[plugins]]
