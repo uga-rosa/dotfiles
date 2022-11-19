@@ -26,10 +26,6 @@ nnoremap <leader><leader><CR> O<Esc>
 " no highlight
 nnoremap <Esc><Esc> <Cmd>nohl<CR>
 
-" Visual indent/dedent
-xnoremap < <gv
-xnoremap > >gv
-
 " Erase x history
 nnoremap x "_x
 
