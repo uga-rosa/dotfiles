@@ -64,6 +64,7 @@ hook_add = '''
     nnoremap <leader>gf <Cmd>FzfLua git_files<CR>
     nnoremap <leader>h  <Cmd>FzfLua help_tags<CR>
     nnoremap q:         <Cmd>FzfLua command_history<CR>
+    nnoremap q;         q:
     nnoremap q/         <Cmd>FzfLua search_history<CR>
 
     nnoremap <leader>i  <Cmd>FzfLua diagnostics_document<CR>
@@ -456,5 +457,6 @@ on_map = '<Plug>(contextment'
 hook_add = '''
     nnoremap gc  <Plug>(contextment)
     xnoremap gc  <Plug>(contextment)
+    onoremap gc  <Plug>(contextment)
     nnoremap gcc <Plug>(contextment-line)
 '''
