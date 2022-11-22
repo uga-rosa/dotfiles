@@ -19,6 +19,7 @@ repo = 'vim-denops/denops.vim'
 [[plugins]]
 repo = 'hrsh7th/nvim-kit'
 on_cmd = 'KitInstall'
+hook_post_update = 'KitInstall'
 
 [[plugins]]
 repo = 'L3MON4D3/LuaSnip'

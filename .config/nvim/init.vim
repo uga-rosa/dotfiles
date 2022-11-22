@@ -8,7 +8,6 @@ pcall(require, "impatient")
 require("utils")
 require("rc.autocmd")
 require("rc.ftdetect")
-require("rc.ftplugin")
 EOL
 
 if filereadable(expand('~/.secret.vim'))

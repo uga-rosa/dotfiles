@@ -1,0 +1,40 @@
+hook_add = '''
+
+'''
+
+[ftplugin]
+
+_ = '''
+    setl formatoptions-=tcro
+    setl formatoptions+=mMl
+'''
+
+lua = '''
+    let stylua_toml = filereadable('stylua.toml') ? 'stylua.toml' 
+            \ : filereadable('.stylua.toml') ? '.stylua.toml' : '~/.config/stylua.toml'
+    let [tab_size, is_hard_tab] = [2, 0]
+    for line in readfile(stylua_toml)
+      if line =~# 'indent_width'
+        let tab_size = str2nr(matchstr(line, '\d\+'))
+      elseif line =~# 'indent_type'
+        let is_hard_tab = line =~# 'Tabs'
+      endif
+    endfor
+    call utils#set_indent(tab_size, is_hard_tab)
+'''
+
+typescript_vim_sh_html_xhtml_nim = '''
+    call utils#set_indent(2)
+'''
+
+python_toml = '''
+    call utils#set_indent(4)
+'''
+
+qf = '''
+    call utils#set_indent(4, 1)
+'''
+
+help = '''
+    call utils#set_indent(8, 1)
+'''
