@@ -1,6 +1,4 @@
-local fn = vim.fn
 local api = vim.api
-local uv = vim.loop
 
 require("mason-lspconfig").setup({
     ensure_installed = {
@@ -72,40 +70,18 @@ local function on_attach(_, bufnr)
 end
 
 ---@param plugins string[]
----@param paths string[]
 ---@return string[]
-local function library(plugins, paths)
+local function library(plugins)
     local ret = {}
 
-    ---@param lib string
-    ---@param filter? table<string, boolean>
-    local function add(lib, filter)
-        for _, p in pairs(fn.expand(lib .. "/lua", false, true)) do
-            p = uv.fs_realpath(p)
-            if p and (not filter or filter[fn.fnamemodify(p, ":h:t")]) then
-                table.insert(ret, fn.fnamemodify(p, ":h"))
-            end
+    for _, plugin in ipairs(plugins) do
+        local path = vim.fn["dein#get"](plugin).path
+        if vim.bool_fn.isdirectory(path .. "/lua") then
+            table.insert(ret, path)
         end
     end
 
-    add("$VIMRUNTIME")
-
-    local filter = {}
-    for _, p in pairs(plugins) do
-        filter[p] = true
-    end
-    for _, site in pairs(vim.split(vim.o.packpath, ",")) do
-        add(site .. "/pack/*/start/*", filter)
-        add(site .. "/pack/*/opt/*", filter)
-    end
-
-    for _, p in pairs(paths) do
-        p = fn.expand(p)
-        p = uv.fs_realpath(p)
-        if fn.filereadable(p) == 1 then
-            table.insert(ret, p)
-        end
-    end
+    table.insert(ret, vim.fn.stdpath("config"))
 
     return ret
 end
@@ -134,10 +110,7 @@ require("mason-lspconfig").setup_handlers({
                         path = { "lua/?.lua", "lua/?/init.lua" },
                     },
                     workspace = {
-                        library = library(
-                            { "plenary.nvim", "nvim-cmp", "sqlite.lua" },
-                            { fn.stdpath("config") .. "/lua/utils.lua" }
-                        ),
+                        library = library({ "plenary.nvim", "nvim-cmp", "sqlite.lua" }),
                         checkThirdParty = false,
                     },
                 },
