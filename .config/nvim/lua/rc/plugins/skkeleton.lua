@@ -8,42 +8,42 @@ vim.fn["skkeleton#register_keymap"]("input", "'", "henkanPoint")
 local rule = {}
 
 local function set_key(key, val)
-    if type(val) == "string" and val ~= "" then
-        rule[key] = { val, "" }
-    elseif type(val) == "table" and val[1] ~= "" then
-        rule[key] = { table.concat(val), "" }
-    end
+  if type(val) == "string" and val ~= "" then
+    rule[key] = { val, "" }
+  elseif type(val) == "table" and val[1] ~= "" then
+    rule[key] = { table.concat(val), "" }
+  end
 end
 
 ---@param s string
 ---@param row? string[]
 ---@param spc_rule? table
 local function set_rule(s, row, spc_rule)
-    if row then
-        local a, i, u, e, o = unpack(row)
-        set_key(s .. "a", a)
-        set_key(s .. "i", i)
-        set_key(s .. "u", u)
-        set_key(s .. "e", e)
-        set_key(s .. "o", o)
-        -- 撥音拡張
-        set_key(s .. "z", { a, "ん" })
-        set_key(s .. "k", { i, "ん" })
-        set_key(s .. "j", { u, "ん" })
-        set_key(s .. "d", { e, "ん" })
-        set_key(s .. "l", { o, "ん" })
-        -- 撥音拡張互換
-        set_key(s .. "n", { a, "ん" })
-        -- 二重母音拡張
-        set_key(s .. "q", { a, "い" })
-        set_key(s .. "h", { u, "う" })
-        set_key(s .. "w", { e, "い" })
-        set_key(s .. "p", { o, "う" })
-    end
-    -- 例外
-    for k, v in pairs(spc_rule or {}) do
-        set_key(k, v)
-    end
+  if row then
+    local a, i, u, e, o = unpack(row)
+    set_key(s .. "a", a)
+    set_key(s .. "i", i)
+    set_key(s .. "u", u)
+    set_key(s .. "e", e)
+    set_key(s .. "o", o)
+    -- 撥音拡張
+    set_key(s .. "z", { a, "ん" })
+    set_key(s .. "k", { i, "ん" })
+    set_key(s .. "j", { u, "ん" })
+    set_key(s .. "d", { e, "ん" })
+    set_key(s .. "l", { o, "ん" })
+    -- 撥音拡張互換
+    set_key(s .. "n", { a, "ん" })
+    -- 二重母音拡張
+    set_key(s .. "q", { a, "い" })
+    set_key(s .. "h", { u, "う" })
+    set_key(s .. "w", { e, "い" })
+    set_key(s .. "p", { o, "う" })
+  end
+  -- 例外
+  for k, v in pairs(spc_rule or {}) do
+    set_key(k, v)
+  end
 end
 
 -- 仕様
@@ -104,50 +104,50 @@ set_rule("ly", { "ゃ", "", "ゅ", "", "ょ" })
 -- US配列 + コロン、セミコロン入替
 -- 'はsticky shiftに
 set_rule("", nil, {
-    [":"] = "っ",
-    q = "ん",
-    [";"] = "ー",
-    ["-"] = "ー",
+  [":"] = "っ",
+  q = "ん",
+  [";"] = "ー",
+  ["-"] = "ー",
 })
 
 -- 特殊拡張
 set_rule("", nil, {
-    kt = "こと",
-    st = "した",
-    tt = "たち",
-    ht = "ひと",
-    wt = "わた",
-    mn = "もの",
-    ms = "ます",
-    ds = "です",
-    km = "かも",
-    tm = "ため",
-    dm = "でも",
-    kr = "から",
-    sr = "する",
-    tr = "たら",
-    nr = "なる",
-    yr = "よる",
-    rr = "られ",
-    zr = "ざる",
-    mt = "また",
-    tb = "たび",
-    nb = "ねば",
-    bt = "びと",
-    gr = "がら",
-    gt = "ごと",
-    nt = "にち",
-    dt = "だち",
-    wr = "われ",
+  kt = "こと",
+  st = "した",
+  tt = "たち",
+  ht = "ひと",
+  wt = "わた",
+  mn = "もの",
+  ms = "ます",
+  ds = "です",
+  km = "かも",
+  tm = "ため",
+  dm = "でも",
+  kr = "から",
+  sr = "する",
+  tr = "たら",
+  nr = "なる",
+  yr = "よる",
+  rr = "られ",
+  zr = "ざる",
+  mt = "また",
+  tb = "たび",
+  nb = "ねば",
+  bt = "びと",
+  gr = "がら",
+  gt = "ごと",
+  nt = "にち",
+  dt = "だち",
+  wr = "われ",
 })
 
 -- 独自
 set_rule("", nil, {
-    -- 矢印
-    ["vh"] = "←",
-    ["vj"] = "↓",
-    ["vk"] = "↑",
-    ["vl"] = "→",
+  -- 矢印
+  ["vh"] = "←",
+  ["vj"] = "↓",
+  ["vk"] = "↑",
+  ["vl"] = "→",
 })
 
 vim.fn["skkeleton#register_kanatable"]("rom", rule)

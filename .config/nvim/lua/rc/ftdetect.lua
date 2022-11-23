@@ -1,7 +1,7 @@
 vim.filetype.add({
-    extension = {
-        ahk = "autohotkey",
-        inp = "packmol",
-        uws = "uwsc",
-    },
+  extension = {
+    ahk = "autohotkey",
+    inp = "packmol",
+    uws = "uwsc",
+  },
 })

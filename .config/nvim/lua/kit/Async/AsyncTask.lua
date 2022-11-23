@@ -1,4 +1,4 @@
-local Lua = require('vimrc.kit.Lua')
+local Lua = require("vimrc.kit.Lua")
 
 ---@class vimrc.kit.Async.AsyncTask
 ---@field private value any
@@ -19,7 +19,7 @@ AsyncTask.Status = {
 ---Handle unhandled rejection.
 ---@param err any
 function AsyncTask.on_unhandled_rejection(err)
-  error('AsyncTask.on_unhandled_rejection: ' .. vim.inspect(err))
+  error("AsyncTask.on_unhandled_rejection: " .. vim.inspect(err))
 end
 
 ---Return the value is AsyncTask or not.
@@ -137,7 +137,7 @@ function AsyncTask:sync(timeout)
     error(self.value)
   end
   if self.status ~= AsyncTask.Status.Fulfilled then
-    error('AsyncTask:sync is timeout.')
+    error("AsyncTask:sync is timeout.")
   end
   return self.value
 end
@@ -145,7 +145,7 @@ end
 ---Await async task.
 ---@return any
 function AsyncTask:await()
-  return require('vimrc.kit.Async').await(self)
+  return require("vimrc.kit.Async").await(self)
 end
 
 ---Register next step.
