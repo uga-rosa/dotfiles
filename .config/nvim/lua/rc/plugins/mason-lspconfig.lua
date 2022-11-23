@@ -13,50 +13,11 @@ require("mason-lspconfig").setup({
     },
 })
 
-local function lua_help()
-    if vim.bo.filetype ~= "lua" then
-        return
-    end
-    ---@type string
-    local current_line = api.nvim_get_current_line()
-    local cursor_col = api.nvim_win_get_cursor(0)[2] + 1
-    -- vim.fn
-    local s, e, m = current_line:find("fn%.([%l_]+)%(?")
-    if s and s <= cursor_col and cursor_col <= e then
-        vim.cmd("h " .. m)
-        return
-    end
-    -- vim.fn["foo"]
-    s, e, m = current_line:find("fn%[['\"]([%w_#]+)['\"]%]%(?")
-    if s and s <= cursor_col and cursor_col <= e then
-        vim.cmd("h " .. m)
-        return
-    end
-    -- vim.bool_fn
-    s, e, m = current_line:find("bool_fn%.([%l_]+)%(?")
-    if s and s <= cursor_col and cursor_col <= e then
-        return
-    end
-    -- vim.api
-    s, e, m = current_line:find("api%.([%l_]+)%(?")
-    if s and s <= cursor_col and cursor_col <= e then
-        vim.cmd("h " .. m)
-        return
-    end
-    -- other vim.foo (e.g. vim.validate, vim.lsp.foo, ...)
-    s, e, m = current_line:find("(vim%.[%l_%.]+)%(?")
-    if s and s <= cursor_col and cursor_col <= e then
-        vim.cmd("h " .. m)
-        return
-    end
-end
-
 local function on_attach(_, bufnr)
     local buf_map = function(lhs, rhs)
         vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
     end
 
-    buf_map("<C-k>", lua_help)
     buf_map("K", "<Cmd>Lspsaga hover_doc<CR>")
     buf_map("[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>")
     buf_map("]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>")
