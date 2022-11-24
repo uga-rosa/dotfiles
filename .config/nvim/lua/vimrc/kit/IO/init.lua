@@ -1,5 +1,5 @@
-local uv = require("luv")
-local Async = require("vimrc.kit.Async")
+local uv = require('luv')
+local Async = require('vimrc.kit.Async')
 
 local IO = {}
 
@@ -24,24 +24,24 @@ local IO = {}
 
 ---@enum vimrc.kit.IO.UV.AccessMode
 IO.AccessMode = {
-  r = "r",
-  rs = "rs",
-  sr = "sr",
-  ["r+"] = "r+",
-  ["rs+"] = "rs+",
-  ["sr+"] = "sr+",
-  w = "w",
-  wx = "wx",
-  xw = "xw",
-  ["w+"] = "w+",
-  ["wx+"] = "wx+",
-  ["xw+"] = "xw+",
-  a = "a",
-  ax = "ax",
-  xa = "xa",
-  ["a+"] = "a+",
-  ["ax+"] = "ax+",
-  ["xa+"] = "xa+",
+  r = 'r',
+  rs = 'rs',
+  sr = 'sr',
+  ['r+'] = 'r+',
+  ['rs+'] = 'rs+',
+  ['sr+'] = 'sr+',
+  w = 'w',
+  wx = 'wx',
+  xw = 'xw',
+  ['w+'] = 'w+',
+  ['wx+'] = 'wx+',
+  ['xw+'] = 'xw+',
+  a = 'a',
+  ax = 'ax',
+  xa = 'xa',
+  ['a+'] = 'a+',
+  ['ax+'] = 'ax+',
+  ['xa+'] = 'xa+',
 }
 
 ---@enum vimrc.kit.IO.WalkStatus
@@ -96,7 +96,7 @@ function IO.read_file(path, chunk_size)
   chunk_size = chunk_size or 1024
   return Async.run(function()
     local stat = IO.fs_stat(path):await()
-    local fd = IO.fs_open(path, IO.AccessMode.r, tonumber("755", 8)):await()
+    local fd = IO.fs_open(path, IO.AccessMode.r, tonumber('755', 8)):await()
     local ok, res = pcall(function()
       local chunks = {}
       local offset = 0
@@ -108,7 +108,7 @@ function IO.read_file(path, chunk_size)
         table.insert(chunks, chunk)
         offset = offset + #chunk
       end
-      return table.concat(chunks, ""):sub(1, stat.size - 1) -- remove EOF.
+      return table.concat(chunks, ''):sub(1, stat.size - 1) -- remove EOF.
     end)
     IO.fs_close(fd):await()
     if not ok then
@@ -124,9 +124,9 @@ end
 ---@param chunk_size? integer
 function IO.write_file(path, content, chunk_size)
   chunk_size = chunk_size or 1024
-  content = content .. "\n" -- add EOF.
+  content = content .. '\n' -- add EOF.
   return Async.run(function()
-    local fd = IO.fs_open(path, IO.AccessMode.w, tonumber("755", 8)):await()
+    local fd = IO.fs_open(path, IO.AccessMode.w, tonumber('755', 8)):await()
     local ok, err = pcall(function()
       local offset = 0
       while offset < #content do
@@ -156,7 +156,7 @@ function IO.mkdir(path, mode, option)
     else
       local not_exists = {}
       local current = path
-      while current ~= "/" do
+      while current ~= '/' do
         local stat = IO.fs_stat(current):catch(function() end):await()
         if stat then
           break
@@ -180,13 +180,13 @@ function IO.rm(start_path, option)
   option.recursive = option.recursive or false
   return Async.run(function()
     local stat = IO.fs_stat(start_path):await()
-    if stat.type == "directory" then
+    if stat.type == 'directory' then
       local children = IO.scandir(start_path):await()
       if not option.recursive and #children > 0 then
-        error(("IO.rm: `%s` is a directory and not empty."):format(start_path))
+        error(('IO.rm: `%s` is a directory and not empty.'):format(start_path))
       end
       IO.walk(start_path, function(entry)
-        if entry.type == "directory" then
+        if entry.type == 'directory' then
           IO.fs_rmdir(entry.path):await()
         else
           IO.fs_unlink(entry.path):await()
@@ -210,13 +210,13 @@ function IO.cp(from, to, option)
   option.recursive = option.recursive or false
   return Async.run(function()
     local stat = IO.fs_stat(from):await()
-    if stat.type == "directory" then
+    if stat.type == 'directory' then
       if not option.recursive then
-        error(("IO.cp: `%s` is a directory."):format(from))
+        error(('IO.cp: `%s` is a directory.'):format(from))
       end
       IO.walk(from, function(entry)
         local new_path = entry.path:gsub(vim.pesc(from), to)
-        if entry.type == "directory" then
+        if entry.type == 'directory' then
           IO.mkdir(new_path, tonumber(stat.mode, 10), { recursive = true }):await()
         else
           IO.cp(entry.path, new_path):await()
@@ -239,7 +239,7 @@ function IO.walk(start_path, callback, option)
   return Async.run(function()
     local function walk(path)
       for _, entry in ipairs(IO.scandir(path):await()) do
-        if entry.type == "directory" then
+        if entry.type == 'directory' then
           if not option.postorder then
             if callback(entry) ~= IO.WalkStatus.SkipDir then
               walk(entry.path)
@@ -255,16 +255,16 @@ function IO.walk(start_path, callback, option)
     end
 
     local stat = IO.fs_stat(start_path):await()
-    if stat.type ~= "directory" then
-      error(("IO.walk: `%s` is not a directory."):format(start_path))
+    if stat.type ~= 'directory' then
+      error(('IO.walk: `%s` is not a directory.'):format(start_path))
     end
     if not option.postorder then
-      if callback({ path = start_path, type = "directory" }) ~= IO.WalkStatus.SkipDir then
+      if callback({ path = start_path, type = 'directory' }) ~= IO.WalkStatus.SkipDir then
         walk(start_path)
       end
     else
       walk(start_path)
-      callback({ path = start_path, type = "directory" })
+      callback({ path = start_path, type = 'directory' })
     end
   end)
 end
@@ -277,8 +277,8 @@ function IO.scandir(path)
   return Async.run(function()
     -- Check the path is directory. If not, throw error.
     local stat = IO.fs_stat(path):await()
-    if stat.type ~= "directory" then
-      error(("IO.scandir: `%s` is not a directory."):format(path))
+    if stat.type ~= 'directory' then
+      error(('IO.scandir: `%s` is not a directory.'):format(path))
     end
 
     local fd = IO.fs_opendir(path):await()
@@ -292,7 +292,7 @@ function IO.scandir(path)
         for _, entry in ipairs(chunk) do
           table.insert(entries, {
             type = entry.type,
-            path = path .. "/" .. entry.name,
+            path = path .. '/' .. entry.name,
           })
         end
       end
@@ -309,7 +309,7 @@ end
 ---@param path string
 ---@return string
 function IO.normalize(path)
-  return vim.fs.normalize(vim.fn.fnamemodify(path, ":p"):gsub("/$", ""))
+  return vim.fs.normalize(vim.fn.fnamemodify(path, ':p'):gsub('/$', ''))
 end
 
 return IO

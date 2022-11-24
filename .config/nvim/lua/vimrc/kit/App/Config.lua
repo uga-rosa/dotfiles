@@ -1,5 +1,5 @@
-local kit = require("vimrc.kit")
-local Cache = require("vimrc.kit.App.Cache")
+local kit = require('vimrc.kit')
+local Cache = require('vimrc.kit.App.Cache')
 
 ---@alias vimrc.kit.App.Config.SchemaInternal vimrc.kit.App.Config.Schema|{ revision: integer }
 
@@ -62,7 +62,7 @@ end
 ---Get current configuration.
 ---@return vimrc.kit.App.Config.Schema
 function Config:get()
-  local filetype = vim.api.nvim_buf_get_option(0, "filetype")
+  local filetype = vim.api.nvim_buf_get_option(0, 'filetype')
   local bufnr = vim.api.nvim_get_current_buf()
   return self._cache:ensure({
     self._global.revision or 0,

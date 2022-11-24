@@ -8,11 +8,11 @@ Window.__index = Window
 
 ---@enum vimrc.kit.Vim.Window.SplitDirection
 Window.SplitDirection = {
-  Top = "top",
-  Bottom = "bottom",
-  Left = "left",
-  Right = "right",
-  Current = "current",
+  Top = 'top',
+  Bottom = 'bottom',
+  Left = 'left',
+  Right = 'right',
+  Current = 'current',
 }
 
 ---@alias vimrc.kit.Vim.Window.Specifier vimrc.kit.Vim.Window.FloatSpecifier | vimrc.kit.Vim.Window.SplitSpecifier

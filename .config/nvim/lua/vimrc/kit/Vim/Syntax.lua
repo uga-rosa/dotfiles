@@ -1,4 +1,4 @@
-local kit = require("vimrc.kit")
+local kit = require('vimrc.kit')
 
 local Syntax = {}
 
@@ -18,14 +18,14 @@ function Syntax.get_vim_syntax_groups(cursor)
   local unique = {}
   local groups = {}
   for _, syntax_id in ipairs(vim.fn.synstack(cursor[1] + 1, cursor[2] + 1)) do
-    local name = vim.fn.synIDattr(vim.fn.synIDtrans(syntax_id), "name")
+    local name = vim.fn.synIDattr(vim.fn.synIDtrans(syntax_id), 'name')
     if not unique[name] then
       unique[name] = true
       table.insert(groups, name)
     end
   end
   for _, syntax_id in ipairs(vim.fn.synstack(cursor[1] + 1, cursor[2] + 1)) do
-    local name = vim.fn.synIDattr(syntax_id, "name")
+    local name = vim.fn.synIDattr(syntax_id, 'name')
     if not unique[name] then
       unique[name] = true
       table.insert(groups, name)
@@ -41,7 +41,7 @@ end
 function Syntax.get_treesitter_syntax_groups(cursor)
   local groups = {}
   for _, capture in ipairs(vim.treesitter.get_captures_at_pos(0, cursor[1], cursor[2])) do
-    table.insert(groups, ("@%s"):format(capture.capture))
+    table.insert(groups, ('@%s'):format(capture.capture))
   end
   return groups
 end

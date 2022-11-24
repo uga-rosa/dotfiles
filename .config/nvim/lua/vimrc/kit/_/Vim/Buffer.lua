@@ -1,4 +1,4 @@
-local Highlight = require("vimrc.kit._.Vim.Highlight")
+local Highlight = require('vimrc.kit._.Vim.Highlight')
 
 local Buffer = {}
 
@@ -8,17 +8,17 @@ local Buffer = {}
 ---@param expr string|number
 ---@return number
 function Buffer.ensure(expr)
-  if type(expr) == "number" then
+  if type(expr) == 'number' then
     if not vim.api.nvim_buf_is_valid(expr) then
       error(string.format([=[[kit.Vim.Buffer] expr=`%s` is not a valid]=], expr))
     end
   else
-    if expr == "%" then
+    if expr == '%' then
       expr = vim.api.nvim_get_current_buf()
     end
     if vim.fn.bufexists(expr) == 0 then
       expr = vim.fn.bufadd(expr)
-      vim.api.nvim_buf_set_option(expr, "buflisted", true)
+      vim.api.nvim_buf_set_option(expr, 'buflisted', true)
     else
       expr = vim.fn.bufnr(expr)
     end
@@ -34,7 +34,7 @@ end
 ---@param line number
 ---@return string
 function Buffer.at(expr, line)
-  return vim.api.nvim_buf_get_lines(Buffer.ensure(expr), line, line + 1, false)[1] or ""
+  return vim.api.nvim_buf_get_lines(Buffer.ensure(expr), line, line + 1, false)[1] or ''
 end
 
 ---Open buffer.
@@ -43,7 +43,7 @@ end
 function Buffer.open(cmd, range)
   vim.cmd.new(cmd)
 
-  local Range = require("vimrc.kit.LSP.Range")
+  local Range = require('vimrc.kit.LSP.Range')
   if range and Range.is(range) and not Range.empty(range) then
     vim.api.nvim_win_set_cursor(0, { range.start.line + 1, range.start.character })
     Highlight.blink(range)

@@ -1,5 +1,5 @@
-local kit = require("vimrc.kit")
-local AsyncTask = require("vimrc.kit.Async.AsyncTask")
+local kit = require('vimrc.kit')
+local AsyncTask = require('vimrc.kit.Async.AsyncTask')
 
 local Keymap = {}
 
@@ -16,7 +16,7 @@ end
 ---@param callback fun()
 ---@return vimrc.kit.Async.AsyncTask
 function Keymap.next(callback)
-  return Keymap.send("", "in"):next(callback)
+  return Keymap.send('', 'in'):next(callback)
 end
 
 ---Send keys.
@@ -24,7 +24,7 @@ end
 ---@param mode string
 ---@return vimrc.kit.Async.AsyncTask
 function Keymap.send(keys, mode)
-  if mode:find("t", 1, true) ~= nil then
+  if mode:find('t', 1, true) ~= nil then
     error('Keymap.send: mode must not contain "t"')
   end
 
@@ -33,12 +33,12 @@ function Keymap.send(keys, mode)
     Keymap._callbacks[unique_id] = resolve
 
     local callback = Keymap.termcodes(('<Cmd>lua require("vimrc.kit.Vim.Keymap")._resolve(%s)<CR>'):format(unique_id))
-    if string.match(mode, "i") then
-      vim.api.nvim_feedkeys(callback, "in", true)
+    if string.match(mode, 'i') then
+      vim.api.nvim_feedkeys(callback, 'in', true)
       vim.api.nvim_feedkeys(keys, mode, true)
     else
       vim.api.nvim_feedkeys(keys, mode, true)
-      vim.api.nvim_feedkeys(callback, "n", true)
+      vim.api.nvim_feedkeys(callback, 'n', true)
     end
   end):catch(function()
     Keymap._callbacks[unique_id] = nil
@@ -49,9 +49,9 @@ end
 ---@param spec fun(): any
 function Keymap.spec(spec)
   local task = AsyncTask.resolve():next(spec)
-  vim.api.nvim_feedkeys("", "x", true)
+  vim.api.nvim_feedkeys('', 'x', true)
   task:sync()
-  collectgarbage("collect")
+  collectgarbage('collect')
 end
 
 ---Resolve running keys.

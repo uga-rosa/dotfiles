@@ -2,8 +2,8 @@ local TreeSitter = {}
 
 ---@alias vimrc.kit._.Vim.TreeSitter.VisitStatus 'stop'|'skip'
 TreeSitter.VisitStatus = {}
-TreeSitter.VisitStatus.Stop = "stop"
-TreeSitter.VisitStatus.Skip = "skip"
+TreeSitter.VisitStatus.Stop = 'stop'
+TreeSitter.VisitStatus.Skip = 'skip'
 
 ---Get the leaf node at the specified position.
 ---@param row integer # 0-based
@@ -117,7 +117,7 @@ function TreeSitter.extract(scope, mapping)
   local nodes = {}
   for node_type, next_mapping in pairs(mapping) do
     if node_type == scope:type() then
-      if type(next_mapping) == "table" then
+      if type(next_mapping) == 'table' then
         for c in scope:iter_children() do
           for _, node in ipairs(TreeSitter.extract(c, next_mapping)) do
             table.insert(nodes, node)
@@ -258,7 +258,7 @@ function TreeSitter.get_node_text(node)
     return vim.api.nvim_buf_get_text(unpack(args))
   end)
   if not ok then
-    return { "" }
+    return { '' }
   end
   return text
 end
@@ -266,7 +266,7 @@ end
 ---Get parser.
 ---@return table
 function TreeSitter.get_parser()
-  return vim.treesitter.get_parser(0, vim.api.nvim_buf_get_option(0, "filetype"))
+  return vim.treesitter.get_parser(0, vim.api.nvim_buf_get_option(0, 'filetype'))
 end
 
 ---Dump node or node-table.
@@ -276,9 +276,9 @@ function TreeSitter.dump(node)
     return print(node)
   end
 
-  if type(node) == "table" then
+  if type(node) == 'table' then
     if #node == 0 then
-      return print("empty table")
+      return print('empty table')
     end
     for _, v in ipairs(node) do
       TreeSitter.dump(v)
@@ -289,7 +289,7 @@ function TreeSitter.dump(node)
   local message = node:type()
   local current = node:parent()
   while current do
-    message = current:type() .. " ~ " .. message
+    message = current:type() .. ' ~ ' .. message
     current = current:parent()
     if not current then
       break

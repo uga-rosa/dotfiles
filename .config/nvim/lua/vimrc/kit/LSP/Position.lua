@@ -1,4 +1,4 @@
-local LSP = require("vimrc.kit.LSP")
+local LSP = require('vimrc.kit.LSP')
 
 local Position = {}
 
@@ -7,7 +7,7 @@ local Position = {}
 ---@return boolean
 function Position.is(v)
   local is = true
-  is = is and (type(v) == "table" and type(v.line) == "number" and type(v.character) == "number")
+  is = is and (type(v) == 'table' and type(v.line) == 'number' and type(v.character) == 'number')
   return is
 end
 
