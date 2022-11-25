@@ -51,16 +51,16 @@ local function jump_prev(fallback)
   end
 end
 
-local function is_falsy(v)
-  return v == nil or v == false or v == 0
+-- stylua: ignore
+local function is_truthy(v)
+  return (type(v) == "boolean" and v == true)
+    or (type(v) == "number" and v ~= 0)
 end
 
 cmp.setup({
   enabled = function()
-    if not is_falsy(vim.g.cmp_disabled) then
-      return false
-    end
     local disabled = false
+    disabled = disabled or is_truthy(vim.g.cmp_disabled)
     disabled = disabled or (api.nvim_buf_get_option(0, "buftype") == "prompt")
     disabled = disabled or (vim.fn.reg_recording() ~= "")
     disabled = disabled or (vim.fn.reg_executing() ~= "")
@@ -86,10 +86,10 @@ cmp.setup({
         buffer = "[Buffer]",
         path = "[Path]",
         nvim_lsp = "[LSP]",
-        nvim_lua = "[NvimLua]",
-        vsnip = "[Vsnip]",
+        nvim_lua = "[Lua]",
+        vsnip = "[VSnip]",
         dictionary = "[Dict]",
-        skkeleton = "[Skkeleton]",
+        skkeleton = "[Skk]",
       })[entry.source.name]
       vim_item.dup = ({
         buffer = 0,
@@ -128,12 +128,9 @@ cmp.setup({
       else
         cmp.complete()
       end
-    end, {
-      "i",
-      "c",
-    }),
-    ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-    ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+    end, { "i", "c" }),
+    ["<C-n>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "c" }),
+    ["<C-p>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "c" }),
     ["<Tab>"] = cmp.mapping({
       i = jump_next,
       s = jump_next,
