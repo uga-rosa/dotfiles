@@ -2,7 +2,22 @@
 repo = 'lewis6991/impatient.nvim'
 
 [[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo = 'kkharji/sqlite.lua'
+
+[[plugins]]
 repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'thinca/vim-themis'
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
 
 [[plugins]]
 repo = 'bluz71/vim-nightfly-guicolors'
@@ -23,6 +38,3 @@ repo = 'machakann/vim-sandwich'
 hook_source = '''
     call operator#sandwich#set('add', 'char', 'skip_space', 1)
 '''
-
-[[plugins]]
-repo = 'thinca/vim-themis'

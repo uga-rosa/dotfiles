@@ -2,21 +2,6 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'nvim-lua/plenary.nvim'
-
-[[plugins]]
-repo = 'kyazdani42/nvim-web-devicons'
-
-[[plugins]]
-repo = 'kkharji/sqlite.lua'
-
-[[plugins]]
-repo = 'Shougo/pum.vim'
-
-[[plugins]]
-repo = 'vim-denops/denops.vim'
-
-[[plugins]]
 repo = 'hrsh7th/nvim-kit'
 on_cmd = 'KitInstall'
 
@@ -29,7 +14,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
-on_event = 'InsertEnter'
+on_event = ['InsertEnter', 'CmdlineEnter']
 hook_source = '''
     let g:lexima_ctrlh_as_backspace = 1
 '''
