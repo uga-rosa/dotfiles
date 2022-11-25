@@ -1,7 +1,11 @@
 local api = vim.api
+local t = api.nvim_replace_termcodes
+
+local feedkey = function(key, mode)
+  api.nvim_feedkeys(t(key, true, true, true), mode or "", true)
+end
 
 local cmp = require("cmp")
-local luasnip = require("luasnip")
 
 local lspkind = {
   Text = "",
@@ -31,47 +35,17 @@ local lspkind = {
   TypeParameter = "",
 }
 
----@param mode string
----@return function
-local function cmp_down(mode)
-  return function(fallback)
-    if mode ~= "c" and luasnip.choice_active() then
-      cmp.close()
-      luasnip.change_choice(1)
-    elseif cmp.visible() then
-      cmp.select_next_item()
-    else
-      fallback()
-    end
-  end
-end
-
----@param mode string
----@return function
-local function cmp_up(mode)
-  return function(fallback)
-    if mode ~= "c" and luasnip.choice_active() then
-      cmp.close()
-      luasnip.change_choice(-1)
-    elseif cmp.visible() then
-      cmp.select_prev_item()
-    else
-      fallback()
-    end
-  end
-end
-
-local function expand_or_jump(fallback)
-  if luasnip.expand_or_locally_jumpable() then
-    luasnip.expand_or_jump()
+local function jump_next(fallback)
+  if vim.fn["vsnip#jumpable"](1) == 1 then
+    feedkey("<Plug>(vsnip-jump-next)")
   else
     fallback()
   end
 end
 
 local function jump_prev(fallback)
-  if luasnip.jumpable(-1) then
-    luasnip.jump(-1)
+  if vim.fn["vsnip#jumpable"](-1) == 1 then
+    feedkey("<Plug>(vsnip-jump-prev)")
   else
     fallback()
   end
@@ -94,7 +68,7 @@ cmp.setup({
   end,
   snippet = {
     expand = function(args)
-      luasnip.lsp_expand(args.body)
+      vim.fn["vsnip#anonymous"](args.body)
     end,
   },
   preselect = cmp.PreselectMode.None,
@@ -113,7 +87,7 @@ cmp.setup({
         path = "[Path]",
         nvim_lsp = "[LSP]",
         nvim_lua = "[NvimLua]",
-        luasnip = "[LuaSnip]",
+        vsnip = "[Vsnip]",
         dictionary = "[Dict]",
         skkeleton = "[Skkeleton]",
       })[entry.source.name]
@@ -158,19 +132,11 @@ cmp.setup({
       "i",
       "c",
     }),
-    ["<C-n>"] = cmp.mapping({
-      i = cmp_down("i"),
-      s = cmp_down("s"),
-      c = cmp_down("c"),
-    }),
-    ["<C-p>"] = cmp.mapping({
-      i = cmp_up("i"),
-      s = cmp_up("s"),
-      c = cmp_up("c"),
-    }),
+    ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+    ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
     ["<Tab>"] = cmp.mapping({
-      i = expand_or_jump,
-      s = expand_or_jump,
+      i = jump_next,
+      s = jump_next,
       c = function()
         if cmp.visible() then
           cmp.select_next_item()
@@ -213,7 +179,7 @@ local function get_sources(name)
     }
   elseif name == "default" then
     return {
-      { name = "luasnip" },
+      { name = "vsnip" },
       { name = "nvim_lsp" },
       { name = "nvim_lua" },
       { name = "nvim_lsp_signature_help" },

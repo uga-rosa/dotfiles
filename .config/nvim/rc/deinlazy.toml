@@ -21,14 +21,10 @@ repo = 'hrsh7th/nvim-kit'
 on_cmd = 'KitInstall'
 
 [[plugins]]
-repo = 'L3MON4D3/LuaSnip'
-on_event = 'InsertEnter'
-lua_source = '''
-    require("luasnip.loaders.from_snipmate").lazy_load({
-        paths = vim.fn.stdpath("config") .. "/snippets",
-    })
-    require("rc.plugins.LuaSnip.help")
-    require("rc.plugins.LuaSnip.text")
+repo = '~/plugin/vim-vsnip'
+on_event = ['InsertEnter', 'CmdlineEnter']
+hook_source = '''
+    let g:vsnip_snippet_dir = stdpath('config') . '/snippets'
 '''
 
 [[plugins]]

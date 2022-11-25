@@ -30,8 +30,7 @@ repo = 'hrsh7th/cmp-cmdline'
 on_source = 'nvim-cmp'
 
 [[plugins]]
-repo = 'saadparwaiz1/cmp_luasnip'
-depends = 'LuaSnip'
+repo = 'hrsh7th/cmp-vsnip'
 on_source = 'nvim-cmp'
 
 [[plugins]]
