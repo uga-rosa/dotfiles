@@ -1,7 +1,7 @@
 set fileencoding=utf-8
 set updatetime=100
 set hidden
-set number
+set nonumber
 set showmatch
 set tabstop=4
 set shiftwidth=4
@@ -12,6 +12,7 @@ set scrolloff=3
 set ignorecase
 set smartcase
 set pumheight=25
+set nowrap
 set termguicolors
 set nofoldenable
 set inccommand=split
