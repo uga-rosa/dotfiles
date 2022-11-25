@@ -78,11 +78,12 @@ browser() {
 # Mason's tool
 mason_bin="$HOME/.local/share/nvim/mason/bin"
 if [[ -d $mason_bin ]]; then
-    export PATH="$mason_bin:$PATH"
+    export PATH="$PATH:$mason_bin"
 fi
 
 # themis
-if [[ -d "$HOME/.local/vim-themis" ]]; then
-    export PATH="$PATH:$HOME/.local/vim-themis/bin"
+themis_bin="$HOME/.cache/dein/repos/github.com/thinca/vim-themis/bin"
+if [[ -d $themis_bin ]]; then
+    export PATH="$PATH:$themis_bin"
     export THEMIS_VIM="nvim"
 fi

@@ -23,3 +23,6 @@ repo = 'machakann/vim-sandwich'
 hook_source = '''
     call operator#sandwich#set('add', 'char', 'skip_space', 1)
 '''
+
+[[plugins]]
+repo = 'thinca/vim-themis'
