@@ -1,6 +1,7 @@
 local uv = require('luv')
 local Async = require('vimrc.kit.Async')
 
+---@see https://github.com/luvit/luvit/blob/master/deps/fs.lua
 local IO = {}
 
 ---@class vimrc.kit.IO.UV.Stat
@@ -79,14 +80,20 @@ IO.fs_write = Async.promisify(uv.fs_write)
 ---@type fun(fd: userdata, offset: integer): vimrc.kit.Async.AsyncTask
 IO.fs_ftruncate = Async.promisify(uv.fs_ftruncate)
 
----@type fun(path: string): vimrc.kit.Async.AsyncTask
-IO.fs_opendir = Async.promisify(uv.fs_opendir)
+---@type fun(path: string, chunk_size?: integer): vimrc.kit.Async.AsyncTask
+IO.fs_opendir = Async.promisify(uv.fs_opendir, { callback = 2 })
 
 ---@type fun(fd: userdata): vimrc.kit.Async.AsyncTask
 IO.fs_closedir = Async.promisify(uv.fs_closedir)
 
 ---@type fun(fd: userdata): vimrc.kit.Async.AsyncTask
 IO.fs_readdir = Async.promisify(uv.fs_readdir)
+
+---@type fun(path: string): vimrc.kit.Async.AsyncTask
+IO.fs_scandir = Async.promisify(uv.fs_scandir)
+
+---@type fun(path: string): vimrc.kit.Async.AsyncTask
+IO.fs_realpath = Async.promisify(uv.fs_realpath)
 
 ---Read file.
 ---@param path string
@@ -185,7 +192,10 @@ function IO.rm(start_path, option)
       if not option.recursive and #children > 0 then
         error(('IO.rm: `%s` is a directory and not empty.'):format(start_path))
       end
-      IO.walk(start_path, function(entry)
+      IO.walk(start_path, function(err, entry)
+        if err then
+          error(err)
+        end
         if entry.type == 'directory' then
           IO.fs_rmdir(entry.path):await()
         else
@@ -214,7 +224,10 @@ function IO.cp(from, to, option)
       if not option.recursive then
         error(('IO.cp: `%s` is a directory.'):format(from))
       end
-      IO.walk(from, function(entry)
+      IO.walk(from, function(err, entry)
+        if err then
+          error(err)
+        end
         local new_path = entry.path:gsub(vim.pesc(from), to)
         if entry.type == 'directory' then
           IO.mkdir(new_path, tonumber(stat.mode, 10), { recursive = true }):await()
@@ -230,7 +243,7 @@ end
 
 ---Walk directory entries recursively.
 ---@param start_path string
----@param callback fun(entry: { path: string, type: string }): vimrc.kit.IO.WalkStatus?
+---@param callback fun(err: string|nil, entry: { path: string, type: string }): vimrc.kit.IO.WalkStatus?
 ---@param option? { postorder?: boolean }
 function IO.walk(start_path, callback, option)
   start_path = IO.normalize(start_path)
@@ -238,69 +251,68 @@ function IO.walk(start_path, callback, option)
   option.postorder = option.postorder or false
   return Async.run(function()
     local function walk(path)
-      for _, entry in ipairs(IO.scandir(path):await()) do
-        if entry.type == 'directory' then
-          if not option.postorder then
-            if callback(entry) ~= IO.WalkStatus.SkipDir then
+      local ok, err = pcall(function()
+        for _, entry in ipairs(IO.scandir(path):await()) do
+          if entry.type == 'directory' then
+            if not option.postorder then
+              if callback(nil, entry) ~= IO.WalkStatus.SkipDir then
+                walk(entry.path)
+              end
+            else
               walk(entry.path)
+              callback(nil, entry)
             end
           else
-            walk(entry.path)
-            callback(entry)
+            callback(nil, entry)
           end
-        else
-          callback(entry)
         end
+      end)
+      if not ok then
+        callback(err, { path = path, type = 'directory' })
       end
     end
 
-    local stat = IO.fs_stat(start_path):await()
-    if stat.type ~= 'directory' then
-      error(('IO.walk: `%s` is not a directory.'):format(start_path))
-    end
-    if not option.postorder then
-      if callback({ path = start_path, type = 'directory' }) ~= IO.WalkStatus.SkipDir then
-        walk(start_path)
+    local ok, err = pcall(function()
+      local stat = IO.fs_stat(start_path):await()
+      if stat.type ~= 'directory' then
+        error(('IO.walk: `%s` is not a directory.'):format(start_path))
       end
-    else
-      walk(start_path)
-      callback({ path = start_path, type = 'directory' })
+      if not option.postorder then
+        if callback(nil, { path = start_path, type = 'directory' }) ~= IO.WalkStatus.SkipDir then
+          walk(start_path)
+        end
+      else
+        walk(start_path)
+        callback(nil, { path = start_path, type = 'directory' })
+      end
+    end)
+    if not ok then
+      callback(err, { path = start_path, type = 'directory' })
     end
   end)
 end
 
 ---Scan directory entries.
 ---@param path string
+---@param chunk_size? integer
 ---@return vimrc.kit.Async.AsyncTask
-function IO.scandir(path)
+function IO.scandir(path, chunk_size)
   path = IO.normalize(path)
+  chunk_size = chunk_size or 256
   return Async.run(function()
-    -- Check the path is directory. If not, throw error.
-    local stat = IO.fs_stat(path):await()
-    if stat.type ~= 'directory' then
-      error(('IO.scandir: `%s` is not a directory.'):format(path))
-    end
-
-    local fd = IO.fs_opendir(path):await()
+    local fd = IO.fs_scandir(path):await()
     local entries = {}
-    local ok, err = pcall(function()
-      while true do
-        local chunk = IO.fs_readdir(fd):await()
-        if not chunk then
-          break
-        end
-        for _, entry in ipairs(chunk) do
-          table.insert(entries, {
-            type = entry.type,
-            path = path .. '/' .. entry.name,
-          })
-        end
+    while true do
+      local name, type = uv.fs_scandir_next(fd)
+      if not name then
+        break
       end
-    end)
-    IO.fs_closedir(fd):await()
-    if not ok then
-      error(err)
+      table.insert(entries, {
+        type = type,
+        path = path .. '/' .. name,
+      })
     end
+    IO.fs_closedir(fd):await()
     return entries
   end)
 end
@@ -309,7 +321,26 @@ end
 ---@param path string
 ---@return string
 function IO.normalize(path)
-  return vim.fs.normalize(vim.fn.fnamemodify(path, ':p'):gsub('/$', ''))
+  if path:match('^/') then
+    return path
+  end
+  if path:match('^~') then
+    return (path:gsub('^~', uv.os_homedir()))
+  end
+
+  local up = vim.is_thread() and uv.cwd() or vim.fn.getcwd()
+  up = up:gsub('/$', '')
+  while true do
+    if path:match('^%.%./') then
+      path = path:gsub('^%.%./', '')
+      up = up:gsub('/[^/]+/?$', '')
+    elseif path:match('^%.?/') then
+      path = path:gsub('^%.?/', '')
+    else
+      break
+    end
+  end
+  return up .. '/' .. path
 end
 
 return IO
