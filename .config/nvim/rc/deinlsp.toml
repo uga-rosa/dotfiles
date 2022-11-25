@@ -45,6 +45,7 @@ lua_source = '''
     local b = null.builtins
 
     null.setup({
+        diagnostics_format = "#{m} (#{s}: #{c})",
         sources = {
             function()
                 local utils = require("null-ls.utils").make_conditional_utils()
