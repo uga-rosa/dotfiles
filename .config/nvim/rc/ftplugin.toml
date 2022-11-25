@@ -13,7 +13,7 @@ lua = '''
     let stylua_toml = filereadable('stylua.toml') ? 'stylua.toml' 
             \ : filereadable('.stylua.toml') ? '.stylua.toml' : '~/.config/stylua.toml'
     let [tab_size, is_hard_tab] = [2, 0]
-    for line in readfile(stylua_toml)
+    for line in readfile(expand(stylua_toml))
       if line =~# 'indent_width'
         let tab_size = str2nr(matchstr(line, '\d\+'))
       elseif line =~# 'indent_type'
