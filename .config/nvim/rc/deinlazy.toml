@@ -55,22 +55,22 @@ hook_add = '''
 lua_source = '''
     local actions = require("fzf-lua.actions")
     require("fzf-lua").setup({
-        actions = {
-            files = {
-                ["default"] = actions.file_edit_or_qf,
-                ["ctrl-x"]  = actions.file_split,
-                ["ctrl-v"]  = actions.file_vsplit,
-                ["ctrl-t"]  = actions.file_tabedit,
-                ["alt-q"]   = actions.file_sel_to_qf,
-                ["alt-l"]   = actions.file_sel_to_ll,
-            },
-            buffers = {
-                ["default"] = actions.buf_edit,
-                ["ctrl-x"]  = actions.buf_split,
-                ["ctrl-v"]  = actions.buf_vsplit,
-                ["ctrl-t"]  = actions.buf_tabedit,
-            },
+      actions = {
+        files = {
+          ["default"] = actions.file_edit_or_qf,
+          ["ctrl-x"]  = actions.file_split,
+          ["ctrl-v"]  = actions.file_vsplit,
+          ["ctrl-t"]  = actions.file_tabedit,
+          ["alt-q"]   = actions.file_sel_to_qf,
+          ["alt-l"]   = actions.file_sel_to_ll,
         },
+        buffers = {
+          ["default"] = actions.buf_edit,
+          ["ctrl-x"]  = actions.buf_split,
+          ["ctrl-v"]  = actions.buf_vsplit,
+          ["ctrl-t"]  = actions.buf_tabedit,
+        },
+      },
     })
 '''
 
@@ -84,43 +84,43 @@ lua_source = '''
     vim.opt.runtimepath:prepend(parser_install_dir)
 
     require("nvim-treesitter.configs").setup({
-        ensure_installed = "all",
-        parser_install_dir = parser_install_dir,
-        highlight = {
-            enable = true,
-            disable = {
-                "help",
-                "typescript",
-            },
+      ensure_installed = "all",
+      parser_install_dir = parser_install_dir,
+      highlight = {
+        enable = true,
+        disable = {
+          "help",
+          "typescript",
         },
-        textobjects = {
-            select = {
-                enable = true,
-                lookahead = true,
-                keymaps = {
-                    ["ib"] = "@block.inner",
-                    ["ab"] = "@block.outer",
-                    ["if"] = "@function.inner",
-                    ["af"] = "@function.outer",
-                    ["il"] = "@loop.inner",
-                    ["al"] = "@loop.outer",
-                },
-            },
-            swap = {
-                enable = true,
-                swap_next = {
-                    ["<M-s>"] = "@parameter.inner",
-                },
-                swap_previous = {
-                    ["<M-S-s>"] = "@parameter.inner",
-                },
-            },
+      },
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            ["ib"] = "@block.inner",
+            ["ab"] = "@block.outer",
+            ["if"] = "@function.inner",
+            ["af"] = "@function.outer",
+            ["il"] = "@loop.inner",
+            ["al"] = "@loop.outer",
+          },
         },
-        rainbow = {
-            enable = true,
-            extended_mode = true,
-            max_file_lines = nil,
+        swap = {
+          enable = true,
+          swap_next = {
+            ["<M-s>"] = "@parameter.inner",
+          },
+          swap_previous = {
+            ["<M-S-s>"] = "@parameter.inner",
+          },
         },
+      },
+      rainbow = {
+        enable = true,
+        extended_mode = true,
+        max_file_lines = nil,
+      },
     })
 '''
 
@@ -158,38 +158,38 @@ on_event = 'BufRead'
 lua_source = '''
     local gs = require("gitsigns")
     gs.setup({
-        on_attach = function(bufnr)
-            local function map(mode, l, r, opts)
-                opts = vim.F.if_nil(opts, {})
-                opts.buffer = bufnr
-                vim.keymap.set(mode, l, r, opts)
-            end
-            -- Navigates
-            map("n", "]g", function()
-                if vim.wo.diff then
-                    return "]g"
-                end
-                vim.schedule(function()
-                    gs.next_hunk()
-                end)
-                return "<Ignore>"
-            end, { expr = true })
-            map("n", "[g", function()
-                if vim.wo.diff then
-                    return "[g"
-                end
-                vim.schedule(function()
-                    gs.prev_hunk()
-                end)
-                return "<Ignore>"
-            end, { expr = true })
-            -- Actions
-            map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>")
-            map({ "n", "v" }, "<leader>gu", ":Gitsigns undo_stage_hunk<CR>")
-            map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>")
-            -- Text object
-            map({ "o", "x" }, "ig", ":<C-U>Gitsigns select_hunk<CR>")
-        end,
+      on_attach = function(bufnr)
+        local function map(mode, l, r, opts)
+          opts = vim.F.if_nil(opts, {})
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+        -- Navigates
+        map("n", "]g", function()
+          if vim.wo.diff then
+            return "]g"
+          end
+          vim.schedule(function()
+            gs.next_hunk()
+          end)
+          return "<Ignore>"
+        end, { expr = true })
+        map("n", "[g", function()
+          if vim.wo.diff then
+            return "[g"
+          end
+          vim.schedule(function()
+            gs.prev_hunk()
+          end)
+          return "<Ignore>"
+        end, { expr = true })
+        -- Actions
+        map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>")
+        map({ "n", "v" }, "<leader>gu", ":Gitsigns undo_stage_hunk<CR>")
+        map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>")
+        -- Text object
+        map({ "o", "x" }, "ig", ":<C-U>Gitsigns select_hunk<CR>")
+      end,
     })
 '''
 
@@ -212,13 +212,13 @@ hook_add = '''
 '''
 lua_source = '''
     vim.g.searchx = {
-        auto_accept = true,
-        scrolloff = vim.opt.scrolloff:get(),
-        scrolltime = 0,
-        nohlsearch = {
-            jump = true,
-        },
-        markers = vim.split("ASDFGHJKL:QWERTYUIOP", ""),
+      auto_accept = true,
+      scrolloff = vim.opt.scrolloff:get(),
+      scrolltime = 0,
+      nohlsearch = {
+        jump = true,
+      },
+      markers = vim.split("ASDFGHJKL:QWERTYUIOP", ""),
     }
 '''
 
@@ -268,31 +268,31 @@ hook_add = '''
 '''
 lua_source = '''
     vim.g.quickrun_config = {
-        _ = {
-            runner = "neovim_job",
-            outputter = "error",
-            ["outputter/error/success"] = "buffer",
-            ["outputter/error/error"] = "quickfix",
-            ["outputter/buffer/opener"] = "botright 10sp",
-            ["outputter/buffer/close_on_empty"] = true,
-        },
-        lua = {
-            command = ":luafile",
-            exec = "%C %S",
-            runner = "vimscript",
-        },
-        lua_vusted = {
-            command = "vusted",
-            exec = "%C %s",
-        },
-        nimble = {
-            command = "nimble",
-            exec = "%C run",
-        },
-        nimble_test = {
-            command = "nimble",
-            exec = "%C test",
-        },
+      _ = {
+        runner = "neovim_job",
+        outputter = "error",
+        ["outputter/error/success"] = "buffer",
+        ["outputter/error/error"] = "quickfix",
+        ["outputter/buffer/opener"] = "botright 10sp",
+        ["outputter/buffer/close_on_empty"] = true,
+      },
+      lua = {
+        command = ":luafile",
+        exec = "%C %S",
+        runner = "vimscript",
+      },
+      lua_vusted = {
+        command = "vusted",
+        exec = "%C %s",
+      },
+      nimble = {
+        command = "nimble",
+        exec = "%C run",
+      },
+      nimble_test = {
+        command = "nimble",
+        exec = "%C test",
+      },
     }
 '''
 
@@ -351,31 +351,31 @@ on_cmd = 'Translate'
 hook_add = '''
     lua <<EOL
     local mappings = {
-        f = "-output=floating",
-        s = "-output=split",
-        i = "-output=insert",
-        r = "-output=replace",
-        c = "-comment",
+      f = "-output=floating",
+      s = "-output=split",
+      i = "-output=insert",
+      r = "-output=replace",
+      c = "-comment",
     }
 
     for k, v in pairs(mappings) do
-        vim.keymap.set({"n", "x"}, "mj" .. k, ("<Cmd>Translate JA -source=EN %s<CR><Esc>"):format(v))
-        vim.keymap.set({"n", "x"}, "me" .. k, ("<Cmd>Translate EN -source=JA %s<CR><Esc>"):format(v))
+      vim.keymap.set({"n", "x"}, "mj" .. k, ("<Cmd>Translate JA -source=EN %s<CR><Esc>"):format(v))
+      vim.keymap.set({"n", "x"}, "me" .. k, ("<Cmd>Translate EN -source=JA %s<CR><Esc>"):format(v))
     end
 EOL
 '''
 lua_source = '''
     require("translate").setup({
-        default = {
-            command = "translate_shell",
+      default = {
+        command = "translate_shell",
+      },
+      preset = {
+        output = {
+          split = {
+            append = true,
+          },
         },
-        preset = {
-            output = {
-                split = {
-                    append = true,
-                },
-            },
-        },
+      },
     })
 '''
 
@@ -392,12 +392,12 @@ hook_add = '''
 '''
 lua_source = '''
     require("ccc").setup({
-        default_color = "#40bfbf",
-        point_color = "#40bfbf",
-        highlighter = {
-            auto_enable = true,
-            lsp = true,
-        },
+      default_color = "#40bfbf",
+      point_color = "#40bfbf",
+      highlighter = {
+        auto_enable = true,
+        lsp = true,
+      },
     })
 '''
 
