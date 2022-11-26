@@ -1,5 +1,6 @@
 [[plugins]]
 repo = 'hrsh7th/nvim-cmp'
+depends = 'vim-vsnip'
 on_event = ['InsertEnter', 'CmdlineEnter']
 lua_source = '''
     require("rc.plugins.nvim-cmp")
