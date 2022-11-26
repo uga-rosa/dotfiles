@@ -27,13 +27,6 @@ hook_source = '''
 '''
 
 [[plugins]]
-repo = 'feline-nvim/feline.nvim'
-depends = 'nvim-web-devicons'
-lua_source = '''
-    require("rc.plugins.feline")
-'''
-
-[[plugins]]
 repo = 'machakann/vim-sandwich'
 hook_source = '''
     call operator#sandwich#set('add', 'char', 'skip_space', 1)

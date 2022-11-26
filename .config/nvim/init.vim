@@ -68,7 +68,6 @@ if dein#min#load_state(s:path)
 endif
 
 call dein#call_hook('source')
-autocmd VimEnter * call dein#call_hook('post_source')
 
 if dein#check_install()
   call dein#install()

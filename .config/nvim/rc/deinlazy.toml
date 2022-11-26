@@ -2,6 +2,14 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'feline-nvim/feline.nvim'
+depends = 'nvim-web-devicons'
+on_event = ['BufRead']
+lua_source = '''
+    require("rc.plugins.feline")
+'''
+
+[[plugins]]
 repo = 'hrsh7th/nvim-kit'
 on_cmd = 'KitInstall'
 

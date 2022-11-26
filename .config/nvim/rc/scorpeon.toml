@@ -8,7 +8,7 @@ hook_add = '''
       \ expand('$CACHE/scorpeon'),
       \ ]
     let g:scorpeon_highlight = #{
-      \ enable: ['typescript', 'nim', 'c', 'cpp'],
+      \ enable: ['typescript', 'nim'],
       \ disable: { -> getfsize(expand('%')) > 10 * 1024 * 1024 }
       \ }
 '''
