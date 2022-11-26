@@ -1,5 +1,5 @@
 function! utils#set_indent(...) abort
-	let tab_size = a:1
+	let tab_size = a:0 > 0 ? a:1 : 4
 	let is_hard_tab = a:0 > 1 ? a:2 : 0
 	let &l:expandtab = !is_hard_tab
 	let &l:tabstop = tab_size
