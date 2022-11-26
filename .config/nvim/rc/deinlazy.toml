@@ -90,7 +90,7 @@ on_event = 'BufRead'
 hook_post_update = 'TSUpdate'
 lua_source = '''
     local parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
-    vim.opt.runtimepath:prepend(parser_install_dir)
+    vim.opt.runtimepath:append(parser_install_dir)
 
     require("nvim-treesitter.configs").setup({
       ensure_installed = "all",
