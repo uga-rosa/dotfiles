@@ -1,3 +1,8 @@
+hook_add = '''
+    " Set help filetype
+    autocmd BufRead,BufNewFile *.jax setf help
+'''
+
 [ftplugin]
 
 _ = '''

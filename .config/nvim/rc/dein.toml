@@ -17,9 +17,6 @@ repo = 'Shougo/context_filetype.vim'
 repo = 'thinca/vim-themis'
 
 [[plugins]]
-repo = 'vim-denops/denops.vim'
-
-[[plugins]]
 repo = 'bluz71/vim-nightfly-guicolors'
 hook_source = '''
     let g:nightflyItalics = v:false

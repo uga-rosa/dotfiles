@@ -2,6 +2,9 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
 repo = 'feline-nvim/feline.nvim'
 depends = 'nvim-web-devicons'
 on_event = ['BufRead']
