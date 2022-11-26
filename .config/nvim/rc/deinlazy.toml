@@ -453,3 +453,28 @@ hook_add = '''
     onoremap gc  <Plug>(contextment)
     nnoremap gcc <Plug>(contextment-line)
 '''
+
+# Plugins for specific filetype
+
+[[plugins]]
+repo = 'mattn/vim-maketable'
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'tani/glance-vim'
+depends = 'denops.vim'
+on_cmd = 'Glance'
+hook_add = '''
+    let g:glance#server_open = v:false
+    let g:glance#markdown_plugins = ['https://esm.sh/markdown-it-emoji']
+
+    command! GlanceOpen call s:glance_open()
+    function! s:glance_open() abort
+      Glance
+      call system('vivaldi.exe http://localhost:8765')
+    endfunction
+'''
+
+[[plugins]]
+repo = 'uga-rosa/todo.nvim'
+on_ft = 'markdown'
