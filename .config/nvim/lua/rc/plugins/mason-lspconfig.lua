@@ -9,7 +9,6 @@ require("mason-lspconfig").setup({
     "nimls",
     "vimls",
     "cssls",
-    "clangd",
   },
 })
 

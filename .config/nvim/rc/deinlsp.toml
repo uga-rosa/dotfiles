@@ -10,7 +10,7 @@ lua_source = '''
 [[plugins]]
 repo = 'williamboman/mason-lspconfig.nvim'
 depends = ['mason.nvim', 'nvim-lspconfig', 'fidget.nvim', 'nvim-cmp']
-on_event = 'FileType'
+on_event = 'BufRead'
 lua_source = '''
     require("rc.plugins.mason-lspconfig")
 '''
@@ -39,7 +39,7 @@ lua_source = '''
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
 depends = 'plenary.nvim'
-on_event = 'FileType'
+on_event = ['lua', 'python', 'json']
 lua_source = '''
     local null = require("null-ls")
     local b = null.builtins
