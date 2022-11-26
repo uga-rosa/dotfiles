@@ -6,7 +6,6 @@ let mapleader = "\<Space>"
 lua <<EOL
 pcall(require, "impatient")
 require("utils")
-require("rc.autocmd")
 require("rc.ftdetect")
 EOL
 
@@ -54,7 +53,7 @@ if dein#min#load_state(s:path)
 
   call dein#begin(s:path)
 
-  call dein#load_toml(s:dein_toml, {'lazy': 0})
+  call dein#load_toml(s:dein_toml)
   call dein#load_toml(s:dein_lazy_toml, {'lazy' : 1})
   call dein#load_toml(s:dein_lsp_toml, {'lazy' : 1})
   call dein#load_toml(s:cmp_toml, {'lazy' : 1})

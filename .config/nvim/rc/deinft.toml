@@ -1,6 +1,8 @@
 hook_add = '''
-    " Set help filetype
-    autocmd BufRead,BufNewFile *.jax setf help
+    augroup vimrc
+      autocmd!
+      autocmd BufRead,BufNewFile *.jax setf help
+    augroup END
 '''
 
 [ftplugin]
