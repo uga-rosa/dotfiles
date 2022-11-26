@@ -1,7 +1,3 @@
-hook_add = '''
-
-'''
-
 [ftplugin]
 
 _ = '''

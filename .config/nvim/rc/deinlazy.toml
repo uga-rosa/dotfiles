@@ -10,6 +10,7 @@ repo = '~/plugin/vim-vsnip'
 on_event = ['InsertEnter', 'CmdlineEnter']
 hook_source = '''
     let g:vsnip_snippet_dir = stdpath('config') . '/snippets'
+    let g:vsnip_choice_delay = 200
 '''
 
 [[plugins]]

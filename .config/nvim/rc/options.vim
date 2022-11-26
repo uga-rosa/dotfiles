@@ -19,7 +19,7 @@ set inccommand=split
 set signcolumn=yes
 set mouse=a
 set laststatus=3
-set helplang=ja,en
+set helplang=en,ja
 set clipboard=unnamedplus
 
 " Disable unused provider
