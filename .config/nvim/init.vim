@@ -61,7 +61,7 @@ if dein#min#load_state(s:path)
   call dein#load_toml(s:dein_lsp_toml, {'lazy' : 1})
   call dein#load_toml(s:cmp_toml, {'lazy' : 1})
   call dein#load_toml(s:scorpeon_toml, {'lazy' : 1})
-  call dein#load_toml(s:ftplugin_toml, {'lazy' : 0})
+  call dein#load_toml(s:ftplugin_toml)
 
   call dein#end()
   call dein#save_state()

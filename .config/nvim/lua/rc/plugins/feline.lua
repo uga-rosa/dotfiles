@@ -251,7 +251,6 @@ require("feline").setup({
   components = components,
   force_inactive = {
     filetypes = {
-      "filittle",
       "quickrun",
     },
   },

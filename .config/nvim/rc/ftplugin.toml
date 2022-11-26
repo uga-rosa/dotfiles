@@ -1,7 +1,10 @@
 [ftplugin]
 
 _ = '''
-    setl formatoptions-=tcro
+    setl formatoptions-=t
+    setl formatoptions-=c
+    setl formatoptions-=r
+    setl formatoptions-=o
     setl formatoptions+=mMl
 '''
 
