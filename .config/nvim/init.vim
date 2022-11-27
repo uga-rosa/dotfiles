@@ -64,6 +64,8 @@ if dein#min#load_state(s:path)
   call dein#save_state()
 endif
 
+filetype plugin indent on
+
 call dein#call_hook('source')
 
 if dein#check_install()
