@@ -29,6 +29,24 @@ repo = 'cohama/lexima.vim'
 on_event = ['InsertEnter', 'CmdlineEnter']
 hook_source = '''
     let g:lexima_ctrlh_as_backspace = 1
+    let s:lexima_my_rules = [
+          \ #{
+          \   char: '<CR>',
+          \   at: '{\%#}',
+          \   input: '<CR>\ ',
+          \   input_after: '<CR>\ ',
+          \   filetype: 'vim'
+          \ },
+          \ #{
+          \   char: '<CR>',
+          \   at: '\[\%#]',
+          \   input: '<CR>\ ',
+          \   input_after: '<CR>\ ',
+          \   filetype: 'vim'
+          \ }]
+    for rule in s:lexima_my_rules
+      call lexima#add_rule(rule)
+    endfor
 '''
 
 [[plugins]]
@@ -319,18 +337,18 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'monaqa/vim-partedit'
-rev = 'feat-prefix_pattern'
+repo = '~/plugin/vim-partedit'
+# rev = 'feat-prefix_pattern'
 on_cmd = 'Partedit'
 on_func = 'partedit#start'
 hook_add = '''
-    let g:partedit#prefix_pattern = '\V\s\*'
+    let g:partedit#prefix_pattern = '\s*'
     let g:partedit#auto_prefix = 0
 '''
 
 [plugins.ftplugin]
 toml_markdown = '''
-    nnoremap <buffer> <C-x><C-x> <Cmd>call <SID>operator_partedit()<CR>
+    nnoremap <buffer> <C-p> <Cmd>call <SID>operator_partedit()<CR>
     function! s:operator_partedit() abort
       let context = context_filetype#get()
       if context.range == [[0, 0], [0, 0]]
