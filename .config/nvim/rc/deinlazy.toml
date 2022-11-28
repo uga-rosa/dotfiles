@@ -84,8 +84,9 @@ hook_add = '''
     nnoremap gr         <Cmd>FzfLua lsp_references<CR>
     lua <<EOL
     vim.keymap.set("n", "<leader>m", function()
-      require("fzf-lua").fzf_exec(vim.fn["mr#mrw#list"](), {
+      require("fzf-lua").fzf_exec(vim.fn["mr#mru#list"](), {
         previewer = "builtin",
+        prompt = "MRU> ",
         fzf_opts = {
           ["--no-sort"] = "",
         },
