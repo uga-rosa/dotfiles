@@ -39,7 +39,7 @@ lua_source = '''
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
 depends = 'plenary.nvim'
-on_event = ['lua', 'python', 'json']
+on_ft = ['lua', 'python', 'json']
 lua_source = '''
     local null = require("null-ls")
     local b = null.builtins
