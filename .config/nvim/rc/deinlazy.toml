@@ -63,8 +63,9 @@ hook_add = '''
 
 [[plugins]]
 repo = 'ibhagwan/fzf-lua'
-depends = 'nvim-web-devicons'
+depends = ['nvim-web-devicons', 'mr.vim']
 on_cmd = 'FzfLua'
+on_lua = 'fzf-lua'
 hook_add = '''
     nnoremap <leader>r  <Cmd>FzfLua resume<CR>
     nnoremap <leader>f  <Cmd>FzfLua files<CR>
@@ -81,6 +82,13 @@ hook_add = '''
     nnoremap <leader>i  <Cmd>FzfLua diagnostics_document<CR>
     nnoremap gd         <Cmd>FzfLua lsp_definitions<CR>
     nnoremap gr         <Cmd>FzfLua lsp_references<CR>
+    lua <<EOL
+    vim.keymap.set("n", "<leader>m", function()
+      require('fzf-lua').fzf_exec(vim.fn["mr#mrw#list"](), {
+        previewer = "builtin",
+      })
+    end, {})
+EOL
 '''
 lua_source = '''
     local actions = require("fzf-lua.actions")
@@ -103,6 +111,9 @@ lua_source = '''
       },
     })
 '''
+
+[[plugins]]
+repo = 'lambdalisue/mr.vim'
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
@@ -364,7 +375,7 @@ toml_markdown = '''
 '''
 
 [[plugins]]
-repo = 'uga-rosa/linkformat.vim'
+repo = '~/plugin/linkformat.vim'
 on_cmd = 'LinkFormatPaste'
 hook_add = '''
     let g:linkformat_template = join(['[[plugins]]', "repo = '<>'"], "\n")
