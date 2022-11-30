@@ -1,11 +1,28 @@
-vim.fn["skkeleton#register_keymap"]("input", "q", "")
 vim.fn["skkeleton#register_keymap"]("input", "<c-q>", "katakana")
-vim.fn["skkeleton#register_keymap"]("input", "<s-l>", "")
 vim.fn["skkeleton#register_keymap"]("input", "<c-l>", "zenkaku")
-vim.fn["skkeleton#register_keymap"]("input", ";", "")
 vim.fn["skkeleton#register_keymap"]("input", "'", "henkanPoint")
 
-local rule = {}
+local rule = {
+  -- 関数
+  [" "] = "henkanFirst",
+  ["/"] = "abbrev",
+  -- 通常
+  ["!"] = { "！", "" },
+  [","] = { "、", "" },
+  ["."] = { "。", "" },
+  ["a"] = { "あ", "" },
+  ["i"] = { "い", "" },
+  ["u"] = { "う", "" },
+  ["e"] = { "え", "" },
+  ["o"] = { "お", "" },
+  -- 促音、撥音、長音符
+  -- US配列 + コロン、セミコロン入替
+  -- 'はsticky shiftに
+  q = { "ん", "" },
+  [":"] = { "っ", "" },
+  [";"] = { "ー", "" },
+  ["-"] = { "ー", "" },
+}
 
 local function set_key(key, val)
   if type(val) == "string" and val ~= "" then
@@ -50,7 +67,7 @@ end
 -- http://hp.vector.co.jp/authors/VA002116/azik/azikinfo.htm#itiran
 
 -- 清音
--- 通常のテーブルに追加しているのであ行は定義不要
+-- あ行は特殊なルールもないので上
 set_rule("k", { "か", "き", "く", "け", "こ" })
 set_rule("s", { "さ", "し", "す", "せ", "そ" })
 set_rule("t", { "た", "ち", "つ", "て", "と" }, { tsa = "つぁ" })
@@ -100,16 +117,6 @@ set_rule("ws", { "", "", "", "", "うぉ" })
 set_rule("l", { "ぁ", "ぃ", "ぅ", "ぇ", "ぉ" })
 set_rule("ly", { "ゃ", "", "ゅ", "", "ょ" })
 
--- 促音、撥音、長音符
--- US配列 + コロン、セミコロン入替
--- 'はsticky shiftに
-set_rule("", nil, {
-  [":"] = "っ",
-  q = "ん",
-  [";"] = "ー",
-  ["-"] = "ー",
-})
-
 -- 特殊拡張
 set_rule("", nil, {
   kt = "こと",
@@ -150,4 +157,4 @@ set_rule("", nil, {
   ["vl"] = "→",
 })
 
-vim.fn["skkeleton#register_kanatable"]("rom", rule)
+vim.fn["skkeleton#register_kanatable"]("azik", rule, true)

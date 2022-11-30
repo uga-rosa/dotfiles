@@ -456,7 +456,9 @@ hook_add = '''
 '''
 hook_source = '''
     call add(g:skkeleton#mapped_keys, '<c-l>')
+    lua require("rc.plugins.skkeleton")
     call skkeleton#config(#{
+          \ kanaTable: 'azik',
           \ eggLikeNewline: v:true,
           \ globalDictionaries: [
           \   '~/.skk/SKK-JISYO.L',
@@ -464,7 +466,6 @@ hook_source = '''
           \ ],
           \ registerConvertResult: v:true,
           \ })
-    lua require("rc.plugins.skkeleton")
 
     au User skkeleton-enable-post call s:skkeleton_enable()
     function! s:skkeleton_enable() abort
