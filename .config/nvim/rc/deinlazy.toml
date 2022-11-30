@@ -17,7 +17,7 @@ repo = 'hrsh7th/nvim-kit'
 on_cmd = 'KitInstall'
 
 [[plugins]]
-repo = '~/plugin/vim-vsnip'
+repo = 'hrsh7th/vim-vsnip'
 on_event = 'InsertEnter'
 hook_source = '''
     let g:vsnip_snippet_dir = stdpath('config') . '/snippets'
@@ -376,8 +376,8 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = '~/plugin/vim-partedit'
-# rev = 'feat-prefix_pattern'
+repo = 'monaqa/vim-partedit'
+rev = 'feat-prefix_pattern'
 on_cmd = 'Partedit'
 on_func = 'partedit#start'
 hook_add = '''
