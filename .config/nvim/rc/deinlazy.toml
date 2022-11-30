@@ -7,7 +7,7 @@ repo = 'vim-denops/denops.vim'
 [[plugins]]
 repo = 'feline-nvim/feline.nvim'
 depends = 'nvim-web-devicons'
-on_event = ['BufRead']
+on_event = 'VimEnter'
 lua_source = '''
     require("rc.plugins.feline")
 '''
@@ -50,6 +50,30 @@ hook_source = '''
 '''
 
 [[plugins]]
+repo = 'machakann/vim-sandwich'
+on_map = ['<Plug>(sandwich-', '<Plug>(textobj-sandwich-']
+lua_add = '''
+    -- operator
+    vim.keymap.set({ "n", "x", "o" }, "sa", "<Plug>(sandwich-add)")
+    vim.keymap.set({ "n", "x" },      "sd", "<Plug>(sandwich-delete)")
+    vim.keymap.set(  "o",             "sd", "<Plug>(sandwich-delete-auto)")
+    vim.keymap.set({ "n", "x" },      "sr", "<Plug>(sandwich-replace)")
+    vim.keymap.set(  "o",             "sr", "<Plug>(sandwich-replace-auto)")
+    -- textobject
+    vim.keymap.set({ "x", "o" },      "ib", "<Plug>(textobj-sandwich-auto-i)")
+    vim.keymap.set({ "x", "o" },      "ab", "<Plug>(textobj-sandwich-auto-a)")
+    vim.keymap.set({ "x", "o" },      "is", "<Plug>(textobj-query-auto-i)")
+    vim.keymap.set({ "x", "o" },      "as", "<Plug>(textobj-query-auto-a)")
+'''
+hook_add = '''
+    let g:operator_sandwich_no_default_key_mappings = 1
+    let g:textobj_sandwich_no_default_key_mappings = 1
+'''
+hook_source = '''
+    call operator#sandwich#set('add', 'char', 'skip_space', 1)
+'''
+
+[[plugins]]
 repo = 'kana/vim-operator-user'
 
 [[plugins]]
@@ -82,7 +106,8 @@ hook_add = '''
     nnoremap <leader>i  <Cmd>FzfLua diagnostics_document<CR>
     nnoremap gd         <Cmd>FzfLua lsp_definitions<CR>
     nnoremap gr         <Cmd>FzfLua lsp_references<CR>
-    lua <<EOL
+'''
+lua_add = '''
     vim.keymap.set("n", "<leader>m", function()
       require("fzf-lua").fzf_exec(vim.fn["mr#mru#list"](), {
         previewer = "builtin",
@@ -92,7 +117,6 @@ hook_add = '''
         },
       })
     end, {})
-EOL
 '''
 lua_source = '''
     local actions = require("fzf-lua.actions")
@@ -393,8 +417,7 @@ on_path = 'gitter://'
 [[plugins]]
 repo = '~/plugin/translate.nvim'
 on_cmd = 'Translate'
-hook_add = '''
-    lua <<EOL
+lua_add = '''
     local mappings = {
       f = "-output=floating",
       s = "-output=split",
@@ -407,7 +430,6 @@ hook_add = '''
       vim.keymap.set({"n", "x"}, "mj" .. k, ("<Cmd>Translate JA -source=EN %s<CR><Esc>"):format(v))
       vim.keymap.set({"n", "x"}, "me" .. k, ("<Cmd>Translate EN -source=JA %s<CR><Esc>"):format(v))
     end
-EOL
 '''
 lua_source = '''
     require("translate").setup({
