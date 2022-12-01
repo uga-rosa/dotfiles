@@ -17,7 +17,7 @@ set termguicolors
 set nofoldenable
 set inccommand=split
 set signcolumn=yes
-set mouse=a
+set mouse=ni
 set laststatus=3
 set helplang=en,ja
 set clipboard=unnamedplus

@@ -1,9 +1,11 @@
 " Disable mouse click for all mode
 for mode in ['', 'i', 'c', 't']
-  exec mode . 'noremap <LeftMouse> <Nop>'
-  exec mode . 'noremap <2-LeftMouse> <Nop>'
-  exec mode . 'noremap <RightMouse> <Nop>'
-  exec mode . 'noremap <2-RightMouse> <Nop>'
+  for pos in ['Left', 'Right', 'Middle']
+    exec printf("%snoremap <%sMouse> <Nop>", mode, pos)
+    for pre in [2, 3, 4, 'S', 'C', 'A']
+      exec printf("%snoremap <%s-%sMouse> <Nop>", mode, pre, pos)
+    endfor
+  endfor
 endfor
 
 " Release for prefix
