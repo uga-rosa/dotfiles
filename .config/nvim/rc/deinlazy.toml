@@ -52,22 +52,20 @@ hook_source = '''
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 on_map = ['<Plug>(sandwich-', '<Plug>(textobj-sandwich-']
-lua_add = '''
-    -- operator
-    vim.keymap.set({ "n", "x", "o" }, "sa", "<Plug>(sandwich-add)")
-    vim.keymap.set({ "n", "x" },      "sd", "<Plug>(sandwich-delete)")
-    vim.keymap.set(  "o",             "sd", "<Plug>(sandwich-delete-auto)")
-    vim.keymap.set({ "n", "x" },      "sr", "<Plug>(sandwich-replace)")
-    vim.keymap.set(  "o",             "sr", "<Plug>(sandwich-replace-auto)")
-    -- textobject
-    vim.keymap.set({ "x", "o" },      "ib", "<Plug>(textobj-sandwich-auto-i)")
-    vim.keymap.set({ "x", "o" },      "ab", "<Plug>(textobj-sandwich-auto-a)")
-    vim.keymap.set({ "x", "o" },      "is", "<Plug>(textobj-query-auto-i)")
-    vim.keymap.set({ "x", "o" },      "as", "<Plug>(textobj-query-auto-a)")
-'''
 hook_add = '''
     let g:operator_sandwich_no_default_key_mappings = 1
     let g:textobj_sandwich_no_default_key_mappings = 1
+    " operator
+    Keymap nxo sa <Plug>(sandwich-add)
+    Keymap nx  sd <Plug>(sandwich-delete)
+    Keymap o   sd <Plug>(sandwich-delete-auto)
+    Keymap nx  sr <Plug>(sandwich-replace)
+    Keymap o   sr <Plug>(sandwich-replace-auto)
+    " textobject
+    Keymap xo  ib <Plug>(textobj-sandwich-auto-i)
+    Keymap xo  ab <Plug>(textobj-sandwich-auto-a)
+    Keymap xo  is <Plug>(textobj-query-auto-i)
+    Keymap xo  as <Plug>(textobj-query-auto-a)
 '''
 hook_source = '''
     call operator#sandwich#set('add', 'char', 'skip_space', 1)
@@ -81,8 +79,15 @@ repo = 'yuki-yano/vim-operator-replace'
 depends = 'vim-operator-user'
 on_map = '<Plug>(operator-replace)'
 hook_add = '''
-    noremap r <Plug>(operator-replace)
-    sunmap r
+    Keymap nxo r <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'haya14busa/vim-edgemotion'
+on_map = "<Plug>(edgemotion-"
+hook_add = '''
+    Keymap nxo <C-j> <Plug>(edgemotion-j)
+    Keymap nxo <C-k> <Plug>(edgemotion-k)
 '''
 
 [[plugins]]
@@ -266,18 +271,14 @@ lua_source = '''
 repo = 'hrsh7th/vim-searchx'
 on_func = 'searchx#start'
 hook_add = '''
-    nnoremap / <Cmd>call searchx#start({'dir': 1})<CR>
-    xnoremap / <Cmd>call searchx#start({'dir': 1})<CR>
-    nnoremap ? <Cmd>call searchx#start({'dir': 0})<CR>
-    xnoremap ? <Cmd>call searchx#start({'dir': 0})<CR>
+    Keymap nx / <Cmd>call searchx#start({'dir': 1})<CR>
+    Keymap nx ? <Cmd>call searchx#start({'dir': 0})<CR>
 
-    nnoremap n     <Cmd>call searchx#next()<CR>
-    xnoremap n     <Cmd>call searchx#next()<CR>
-    cnoremap <C-j> <Cmd>call searchx#next()<CR>
-    nnoremap N     <Cmd>call searchx#prev()<CR>
-    xnoremap N     <Cmd>call searchx#prev()<CR>
-    cnoremap <C-k> <Cmd>call searchx#prev()<CR>
-    cnoremap <C-l> <Cmd>call searchx#clear()<CR>
+    Keymap nx n     <Cmd>call searchx#next()<CR>
+    Keymap c  <C-j> <Cmd>call searchx#next()<CR>
+    Keymap nx N     <Cmd>call searchx#prev()<CR>
+    Keymap c  <C-k> <Cmd>call searchx#prev()<CR>
+    Keymap c  <C-l> <Cmd>call searchx#clear()<CR>
 '''
 lua_source = '''
     vim.g.searchx = {
@@ -309,8 +310,7 @@ hook_add = '''
     \     'args': ['{browser}', '{uri}']
     \   }
     \]
-    nnoremap <M-o> <Plug>(openbrowser-smart-search)
-    xnoremap <M-o> <Plug>(openbrowser-smart-search)
+    Keymap nx <M-o> <Plug>(openbrowser-smart-search)
 '''
 
 [[plugins]]
@@ -324,8 +324,7 @@ hook_add = '''
 repo = 'junegunn/vim-easy-align'
 on_map = '<Plug>(EasyAlign)'
 hook_add = '''
-    nnoremap ga <Plug>(EasyAlign)
-    xnoremap ga <Plug>(EasyAlign)
+    Keymap nx ga <Plug>(EasyAlign)
 '''
 
 [[plugins]]
@@ -473,8 +472,7 @@ repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
 on_event = ['InsertEnter', 'CmdlineEnter']
 hook_add = '''
-    inoremap <C-j> <Plug>(skkeleton-toggle)
-    cnoremap <C-j> <Plug>(skkeleton-toggle)
+    Keymap ic <C-j> <Plug>(skkeleton-toggle)
 '''
 hook_source = '''
     call add(g:skkeleton#mapped_keys, '<c-l>')
@@ -504,10 +502,8 @@ on_cmd = 'Capture'
 repo = '~/plugin/contextment.vim'
 on_map = '<Plug>(contextment'
 hook_add = '''
-    nnoremap gc  <Plug>(contextment)
-    xnoremap gc  <Plug>(contextment)
-    onoremap gc  <Plug>(contextment)
-    nnoremap gcc <Plug>(contextment-line)
+    Keymap nxo gc  <Plug>(contextment)
+    Keymap n   gcc <Plug>(contextment-line)
 '''
 
 # Plugins for specific filetype

@@ -12,10 +12,8 @@ endfor
 nnoremap s <Nop>
 
 " Go to first/end line
-noremap <expr> H getline('.')[:col('.')-2] =~# '\v^\s+$' ? '0' : '^'
-sunmap H
-noremap L $
-sunmap L
+Keymap nxo <expr> H getline('.')[:col('.')-2] =~# '\v^\s+$' ? '0' : '^'
+Keymap nxo        L $
 
 " Easy to see o/O
 nnoremap o zzo

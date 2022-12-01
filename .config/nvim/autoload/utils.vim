@@ -6,3 +6,24 @@ function! utils#set_indent(...) abort
 	let &l:softtabstop = tab_size
 	let &l:shiftwidth = tab_size
 endfunction
+
+function! utils#keymap(remap, modes, ...) abort
+  let arg = join(a:000, ' ')
+  " Recently, even if arg contains '<Plug>', noremap works fine.
+  let cmd = a:remap ? 'map' : 'noremap'
+  for mode in split(a:modes, '.\zs')
+    if mode =~# '[nvsxoilct]'
+      execute mode . cmd arg
+    else
+      echohl Error
+      echomsg 'Invalid mode is detected: ' . mode
+      echohl None
+    endif
+  endfor
+endfunction
+
+" Show highlight group
+function! utils#syn_group() abort
+  let id = synID(line('.'), col('.'), 1)
+  echo synIDattr(id, 'name') '->' synIDattr(synIDtrans(id), 'name')
+endfunction
