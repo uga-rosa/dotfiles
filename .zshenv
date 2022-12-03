@@ -1,10 +1,3 @@
-# Autoload
-autoload -U compinit; compinit
-
-# Completion
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*:default' menu select=1
-
 # windows_commands
 export PATH=$HOME/.windows_command:$PATH
 
