@@ -37,6 +37,53 @@ lua_source = '''
 '''
 
 [[plugins]]
+repo = 'hrsh7th/nvim-gtd'
+on_event = ['BufRead']
+lua_add = '''
+    vim.keymap.set("n", "gd", function()
+      require("gtd").exec({ command = "edit" })
+    end)
+    -- vim.keymap.set("n", "gfs", function()
+    --   require("gtd").exec({ command = "split" })
+    -- end)
+    -- vim.keymap.set("n", "gfv", function()
+    --   require("gtd").exec({ command = "vsplit" })
+    -- end)
+'''
+lua_source = '''
+    require("gtd").setup({
+      sources = {
+        { name = "lsp" },
+        { name = "findup" },
+        { name = "walk" },
+      },
+      on_locations = function(params, locations)
+        local paths, path2loc = {}, {}
+        for _, v in ipairs(locations) do
+          local path = vim.uri_to_fname(v.targetUri)
+          table.insert(paths, path)
+          path2loc[path] = v
+        end
+        require("fzf-lua").fzf_exec(paths, {
+          previewer = "builtin",
+          prompt = "Select file> ",
+          fn_selected = function(path, o)
+            path = path[1]
+            if path then
+              vim.pretty_print(path, path2loc)
+              local location = path2loc[path]
+              vim.pretty_print(location)
+              require("gtd")._open(params, location)
+            else
+              print("Canceled")
+            end
+          end
+        })
+      end
+    })
+'''
+
+[[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
 depends = 'plenary.nvim'
 on_ft = ['lua', 'python', 'json']

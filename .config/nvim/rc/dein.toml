@@ -2,6 +2,9 @@
 repo = 'lewis6991/impatient.nvim'
 
 [[plugins]]
+repo = 'vim-denops/denops.vim'
+
+[[plugins]]
 repo = 'nvim-lua/plenary.nvim'
 
 [[plugins]]
@@ -15,6 +18,9 @@ repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'thinca/vim-themis'
+
+[[plugins]]
+repo = 'hrsh7th/nvim-kit'
 
 [[plugins]]
 repo = 'bluz71/vim-nightfly-guicolors'

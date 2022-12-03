@@ -2,19 +2,12 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'vim-denops/denops.vim'
-
-[[plugins]]
 repo = 'feline-nvim/feline.nvim'
 depends = 'nvim-web-devicons'
 on_event = 'VimEnter'
 lua_source = '''
     require("rc.plugins.feline")
 '''
-
-[[plugins]]
-repo = 'hrsh7th/nvim-kit'
-on_cmd = 'KitInstall'
 
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
@@ -26,7 +19,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'cohama/lexima.vim'
-on_event = ['InsertEnter', 'CmdlineEnter']
+on_event = 'InsertEnter'
 hook_source = '''
     let g:lexima_ctrlh_as_backspace = 1
     let s:lexima_my_rules = [
@@ -109,7 +102,7 @@ hook_add = '''
     nnoremap q/         <Cmd>FzfLua search_history<CR>
 
     nnoremap <leader>i  <Cmd>FzfLua diagnostics_document<CR>
-    nnoremap gd         <Cmd>FzfLua lsp_definitions<CR>
+    " nnoremap gd         <Cmd>FzfLua lsp_definitions<CR>
     nnoremap gr         <Cmd>FzfLua lsp_references<CR>
 '''
 lua_add = '''
@@ -470,7 +463,7 @@ lua_source = '''
 [[plugins]]
 repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
-on_event = ['InsertEnter', 'CmdlineEnter']
+on_event = 'InsertEnter'
 hook_add = '''
     Keymap ic <C-j> <Plug>(skkeleton-toggle)
 '''
