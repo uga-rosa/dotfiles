@@ -2,7 +2,7 @@
 " neovim in unix.
 
 let mapleader = "\<Space>"
-command! -nargs=+ -bang Keymap call utils#keymap(<bang>0, <f-args>)
+command! -nargs=+ -bang Keymap call vimrc#keymap(<bang>0, <f-args>)
 
 lua <<EOL
 pcall(require, "impatient")

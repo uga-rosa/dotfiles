@@ -1,3 +1,2 @@
-nnoremap <C-t> <Cmd>call ugaterm#toggle()<CR>
-tnoremap <C-t> <Cmd>call ugaterm#toggle()<CR>
+Keymap nt <C-t> <Cmd>call vimrc#term#toggle()<CR>
 tnoremap <Esc> <C-\><C-n>
