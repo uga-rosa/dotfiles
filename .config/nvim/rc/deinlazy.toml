@@ -2,14 +2,6 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'feline-nvim/feline.nvim'
-depends = 'nvim-web-devicons'
-on_event = 'VimEnter'
-lua_source = '''
-    require("rc.plugins.feline")
-'''
-
-[[plugins]]
 repo = 'hrsh7th/vim-vsnip'
 on_event = 'InsertEnter'
 on_ft = 'snippets'
