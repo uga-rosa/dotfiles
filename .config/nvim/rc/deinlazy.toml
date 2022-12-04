@@ -95,7 +95,6 @@ hook_add = '''
     nnoremap q/         <Cmd>FzfLua search_history<CR>
 
     nnoremap <leader>i  <Cmd>FzfLua diagnostics_document<CR>
-    " nnoremap gd         <Cmd>FzfLua lsp_definitions<CR>
     nnoremap gr         <Cmd>FzfLua lsp_references<CR>
 '''
 lua_add = '''

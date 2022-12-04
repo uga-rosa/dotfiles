@@ -128,17 +128,11 @@ lua_source = '''
 
 [[plugins]]
 repo = 'hrsh7th/nvim-gtd'
-on_event = ['BufRead']
+on_event = ['BufRead', 'BufNewFile']
 lua_add = '''
     vim.keymap.set("n", "gd", function()
       require("gtd").exec({ command = "edit" })
     end)
-    -- vim.keymap.set("n", "gfs", function()
-    --   require("gtd").exec({ command = "split" })
-    -- end)
-    -- vim.keymap.set("n", "gfv", function()
-    --   require("gtd").exec({ command = "vsplit" })
-    -- end)
 '''
 lua_source = '''
     local gtd = require("gtd")
@@ -149,6 +143,7 @@ lua_source = '''
 
     function custom_previewer:new(o, opts, fzf_win)
       custom_previewer.super.new(self, o, opts, fzf_win)
+      setmetatable(self, custom_previewer)
       return self
     end
 
@@ -157,7 +152,7 @@ lua_source = '''
       return {
         path  = filepath,
         line  = tonumber(row) or 1,
-        col   = tonumber(col) + 1 or 1,
+        col   = tonumber(col) or 1,
       }
     end
 
@@ -167,30 +162,32 @@ lua_source = '''
         { name = "findup" },
         { name = "walk" },
       },
-      on_locations = function(params, locations)
-        local paths, path2loc = {}, {}
+      on_locations = function(_, locations)
+        local paths, path2location = {}, {}
         for i, location in ipairs(locations) do
           local row = location.targetSelectionRange.start.line + 1
           local col = location.targetSelectionRange.start.character + 1
           local path = ("%s. %s:%s:%s:"):format(i, vim.uri_to_fname(location.targetUri), row, col)
-          paths[i] = path
-          path2loc[path] = location
+          table.insert(paths, path)
+          path2location[path] = location
         end
-        fzf.fzf_exec(paths, {
-          previewer = {
-            _ctor = custom_previewer,
-          },
-          prompt = "Select file> ",
-          fn_selected = function(path, o)
-            path = path[1]
-            if path then
-              local location = path2loc[path]
-              vim.pretty_print(params, o)
-              gtd._open(params, location)
-            else
-              print("Canceled")
-            end
+
+        local function open_with_cmd(cmd)
+          return function (selected, _)
+            local location = path2location[selected[1]]
+            gtd._open({ command = cmd }, location)
           end
+        end
+
+        fzf.fzf_exec(paths, {
+          previewer = custom_previewer,
+          prompt = "Go to definition> ",
+          actions = {
+            ["default"] = open_with_cmd("edit"),
+            ["ctrl-x"] = open_with_cmd("split"),
+            ["ctrl-v"] = open_with_cmd("vsplit"),
+            ["ctrl-t"] = open_with_cmd("tabedit"),
+          }
         })
       end
     })
