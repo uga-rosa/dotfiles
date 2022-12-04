@@ -1,9 +1,6 @@
 " This configuration does not take into account anything other than
 " neovim in unix.
 
-let mapleader = "\<Space>"
-command! -nargs=+ -bang Keymap call vimrc#keymap(<bang>0, <f-args>)
-
 lua <<EOL
 require("utils")
 require("rc.ftdetect")
