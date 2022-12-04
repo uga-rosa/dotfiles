@@ -141,6 +141,11 @@ lua_source = '''
 
 [[plugins]]
 repo = 'lambdalisue/mr.vim'
+rev = 'main'
+hook_source = '''
+    let g:mr_mru_disabled = 1
+    let g:mr_mrr_disabled = 1
+'''
 
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
