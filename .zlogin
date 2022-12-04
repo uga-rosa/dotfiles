@@ -1,20 +1,7 @@
-# Unbind C-S/Q
-stty stop undef
-stty start undef
-
-# Emacs key binding
-bindkey -e
-bindkey "^U" backward-kill-line
-
 # edit command line
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^O" edit-command-line
-
-# Completion
-autoload -U compinit; compinit
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*:default' menu select=1
 
 # Editor
 export EDITOR=nvim

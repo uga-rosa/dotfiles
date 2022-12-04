@@ -68,10 +68,10 @@ browser() {
     fi
 }
 
-# Mason's tool
-mason_bin="$HOME/.local/share/nvim/mason/bin"
-if [[ -d $mason_bin ]]; then
-    export PATH="$PATH:$mason_bin"
+# LSP
+ls_dir="$HOME/.cache/language-server"
+if [[ -d $ls_dir/bin ]]; then
+    export PATH="$PATH:$ls_dir/bin"
 fi
 
 # themis

@@ -3,10 +3,10 @@ let s:termname = 'nvim_terminal'
 function! s:open() abort
   botright 15sp
   if bufexists(s:termname)
-    exec 'buffer ' . s:termname
+    exec 'buffer' s:termname
   else
     terminal
-    exe 'file ' . s:termname
+    exec 'file' s:termname
     setl nobuflisted
   endif
   startinsert
@@ -16,7 +16,7 @@ function! s:close(winid) abort
   call win_execute(a:winid, 'hide')
 endfunction
 
-function! ugaterm#toggle() abort
+function! vimrc#term#toggle() abort
   let winid = bufwinid(s:termname)
   if winid == -1
     call s:open()

@@ -1,23 +1,121 @@
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-
-[[plugins]]
-repo = 'williamboman/mason.nvim'
+depends = ['fidget.nvim', 'cmp-nvim-lsp']
+on_event = ['BufRead', 'BufNewFile']
 lua_source = '''
-    require("mason").setup()
+    local api = vim.api
+    local lspconfig = require("lspconfig")
+
+    local servers = {
+      "sumneko_lua",
+      "denols",
+      "vimls",
+      "gopls",
+      "pyright",
+      "bashls",
+      "nimls",
+      "cssls",
+    }
+
+    local function on_attach(_, bufnr)
+      local buf_map = function(lhs, rhs)
+        vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
+      end
+
+      buf_map("K", "<Cmd>Lspsaga hover_doc<CR>")
+      buf_map("[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>")
+      buf_map("]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>")
+      buf_map("<leader>n", "<Cmd>Lspsaga rename<CR>")
+      buf_map("<leader>a", "<Cmd>Lspsaga code_action<CR>")
+
+      api.nvim_create_user_command("Format", function()
+        vim.lsp.buf.format()
+      end, {})
+      buf_map("<leader>F", "<Cmd>Format<CR>")
+    end
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
+    local opts = setmetatable({}, {
+      __index = function(self, _)
+        return self["*"]
+      end
+    })
+
+    opts["*"] = {
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+
+    ---@param plugins string[]
+    ---@return string[]
+    local function library(plugins)
+      local paths = {}
+      for _, plugin in ipairs(plugins) do
+        local path = vim.fn["dein#get"](plugin).path
+        if vim.bool_fn.isdirectory(path .. "/lua") then
+          table.insert(paths, path)
+        end
+      end
+      table.insert(paths, vim.fn.stdpath("config"))
+      return paths
+    end
+
+    opts.sumneko_lua = {
+      settings = {
+        Lua = {
+          format = {
+            enable = false,
+          },
+          diagnostics = {
+            globals = { "vim", "describe", "it" },
+          },
+          runtime = {
+            version = "LuaJIT",
+            path = { "lua/?.lua", "lua/?/init.lua" },
+          },
+          workspace = {
+            library = library({ "plenary.nvim", "nvim-cmp", "sqlite.lua" }),
+            checkThirdParty = false,
+          },
+        },
+      },
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+
+    opts.bashls = {
+      filetypes = { "sh", "bash", "zsh" },
+      on_attach = on_attach,
+      capabilities = capabilities,
+    }
+
+    for _, server in ipairs(servers) do
+      lspconfig[server].setup(opts[server])
+    end
+
+    -- Diagnostics
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+      update_in_insert = false,
+      virtual_text = {
+        format = function(diagnostic)
+          return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+        end,
+      },
+    })
 '''
 
 [[plugins]]
-repo = 'williamboman/mason-lspconfig.nvim'
-depends = ['mason.nvim', 'nvim-lspconfig', 'fidget.nvim', 'nvim-cmp']
-on_event = 'BufRead'
+repo = 'j-hui/fidget.nvim'
 lua_source = '''
-    require("rc.plugins.mason-lspconfig")
+    require("fidget").setup({})
 '''
 
 [[plugins]]
 repo = 'glepnir/lspsaga.nvim'
 rev = 'main'
+on_cmd = 'Lspsaga'
 lua_source = '''
     require("lspsaga").init_lsp_saga({
       diagnostic_header = { " ", " ", " ", " " },
@@ -28,12 +126,6 @@ lua_source = '''
         virtual_text = true,
       },
     })
-'''
-
-[[plugins]]
-repo = 'j-hui/fidget.nvim'
-lua_source = '''
-    require("fidget").setup({})
 '''
 
 [[plugins]]
@@ -51,7 +143,22 @@ lua_add = '''
     -- end)
 '''
 lua_source = '''
-    require("gtd").setup({
+    local gtd = require("gtd")
+    local fzf = require("fzf-lua")
+    local builtin = require("fzf-lua.previewer.builtin")
+
+    local custom_previewer = builtin.buffer_or_file:extend()
+
+    function custom_previewer:new(o, opts, fzf_win)
+      custom_previewer.super.new(self, o, opts, fzf_win)
+      return self
+    end
+
+    function custom_previewer:parse_entry(entry_str)
+      
+    end
+
+    gtd.setup({
       sources = {
         { name = "lsp" },
         { name = "findup" },
@@ -64,16 +171,15 @@ lua_source = '''
           table.insert(paths, path)
           path2loc[path] = v
         end
-        require("fzf-lua").fzf_exec(paths, {
+        fzf.fzf_exec(paths, {
           previewer = "builtin",
           prompt = "Select file> ",
           fn_selected = function(path, o)
             path = path[1]
             if path then
-              vim.pretty_print(path, path2loc)
               local location = path2loc[path]
-              vim.pretty_print(location)
-              require("gtd")._open(params, location)
+              vim.pretty_print(params, o)
+              gtd._open(params, location)
             else
               print("Canceled")
             end

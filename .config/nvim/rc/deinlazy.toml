@@ -12,6 +12,7 @@ lua_source = '''
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
 on_event = 'InsertEnter'
+on_ft = 'snippets'
 hook_source = '''
     let g:vsnip_snippet_dir = stdpath('config') . '/snippets'
     let g:vsnip_choice_delay = 200
