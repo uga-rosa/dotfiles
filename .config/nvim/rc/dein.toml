@@ -1,7 +1,4 @@
 [[plugins]]
-repo = 'lewis6991/impatient.nvim'
-
-[[plugins]]
 repo = 'vim-denops/denops.vim'
 
 [[plugins]]

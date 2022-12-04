@@ -5,7 +5,6 @@ let mapleader = "\<Space>"
 command! -nargs=+ -bang Keymap call vimrc#keymap(<bang>0, <f-args>)
 
 lua <<EOL
-pcall(require, "impatient")
 require("utils")
 require("rc.ftdetect")
 EOL
