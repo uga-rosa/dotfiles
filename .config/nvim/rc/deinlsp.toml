@@ -40,13 +40,15 @@ lua_source = '''
     local opts = setmetatable({}, {
       __index = function(self, _)
         return self["*"]
+      end,
+      __newindex = function(self, key, value)
+        value.on_attach = on_attach
+        value.capabilities = capabilities
+        rawset(self, key, value)
       end
     })
 
-    opts["*"] = {
-      on_attach = on_attach,
-      capabilities = capabilities,
-    }
+    opts["*"] = {}
 
     ---@param plugins string[]
     ---@return string[]
@@ -81,14 +83,10 @@ lua_source = '''
           },
         },
       },
-      on_attach = on_attach,
-      capabilities = capabilities,
     }
 
     opts.bashls = {
       filetypes = { "sh", "bash", "zsh" },
-      on_attach = on_attach,
-      capabilities = capabilities,
     }
 
     for _, server in ipairs(servers) do
@@ -155,7 +153,12 @@ lua_source = '''
     end
 
     function custom_previewer:parse_entry(entry_str)
-      
+      local _, filepath, row, col = entry_str:match("^(%d+)%. (.+):(%d+):(%d+):$")
+      return {
+        path  = filepath,
+        line  = tonumber(row) or 1,
+        col   = tonumber(col) + 1 or 1,
+      }
     end
 
     gtd.setup({
@@ -166,13 +169,17 @@ lua_source = '''
       },
       on_locations = function(params, locations)
         local paths, path2loc = {}, {}
-        for _, v in ipairs(locations) do
-          local path = vim.uri_to_fname(v.targetUri)
-          table.insert(paths, path)
-          path2loc[path] = v
+        for i, location in ipairs(locations) do
+          local row = location.targetSelectionRange.start.line + 1
+          local col = location.targetSelectionRange.start.character + 1
+          local path = ("%s. %s:%s:%s:"):format(i, vim.uri_to_fname(location.targetUri), row, col)
+          paths[i] = path
+          path2loc[path] = location
         end
         fzf.fzf_exec(paths, {
-          previewer = "builtin",
+          previewer = {
+            _ctor = custom_previewer,
+          },
           prompt = "Select file> ",
           fn_selected = function(path, o)
             path = path[1]
