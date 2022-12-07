@@ -3,5 +3,6 @@ vim.filetype.add({
     ahk = "autohotkey",
     inp = "packmol",
     uws = "uwsc",
+    jax = "help",
   },
 })

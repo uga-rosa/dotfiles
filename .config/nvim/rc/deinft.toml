@@ -1,10 +1,3 @@
-hook_add = '''
-    augroup vimrc
-      autocmd!
-      autocmd BufRead,BufNewFile *.jax setf help
-    augroup END
-'''
-
 [ftplugin]
 
 _ = '''
