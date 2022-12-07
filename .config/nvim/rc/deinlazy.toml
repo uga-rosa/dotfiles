@@ -130,6 +130,11 @@ lua_source = '''
     })
 '''
 
+[plugins.ftplugin]
+fzf = '''
+    tnoremap <buffer> <C-t> <C-t>
+'''
+
 [[plugins]]
 repo = 'lambdalisue/mr.vim'
 rev = 'main'
