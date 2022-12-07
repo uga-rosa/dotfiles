@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -eu
 
 DOTFILES_PATH=$(cd $(dirname $0); pwd)
