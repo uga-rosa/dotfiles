@@ -42,11 +42,11 @@ hook_add = '''
     let g:operator_sandwich_no_default_key_mappings = 1
     let g:textobj_sandwich_no_default_key_mappings = 1
     " operator
-    Keymap nxo sa <Plug>(sandwich-add)
-    Keymap nx  sd <Plug>(sandwich-delete)
-    Keymap o   sd <Plug>(sandwich-delete-auto)
-    Keymap nx  sr <Plug>(sandwich-replace)
-    Keymap o   sr <Plug>(sandwich-replace-auto)
+    Keymap nxo sa  <Plug>(sandwich-add)
+    Keymap nx  sd  <Plug>(sandwich-delete)
+    Keymap n   sdb <Plug>(sandwich-delete-auto)
+    Keymap nx  sr  <Plug>(sandwich-replace)
+    Keymap n   srb <Plug>(sandwich-replace-auto)
     " textobject
     Keymap xo  ib <Plug>(textobj-sandwich-auto-i)
     Keymap xo  ab <Plug>(textobj-sandwich-auto-a)
