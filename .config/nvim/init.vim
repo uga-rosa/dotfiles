@@ -6,6 +6,8 @@ require("utils")
 require("rc.ftdetect")
 EOL
 
+set runtimepath+=/home/uga/plugin/ipynb.nvim
+
 if filereadable(expand('~/.secret.vim'))
   source ~/.secret.vim
 endif
@@ -21,7 +23,7 @@ if &runtimepath !~# '/dein.vim'
   if !isdirectory(s:dein_dir)
     execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
   endif
-  execute 'set runtimepath^=' . fnamemodify(s:dein_dir, ':p')
+  execute 'set runtimepath+=' . fnamemodify(s:dein_dir, ':p')
 endif
 
 let g:dein#auto_recache = v:true

@@ -89,6 +89,20 @@ lua_source = '''
       filetypes = { "sh", "bash", "zsh" },
     }
 
+    opts.denols = {
+      init_options = {
+        lint = true,
+        unstable = true,
+        suggest = {
+          imports = {
+            hosts = {
+              ["https://deno.land"] = true,
+            },
+          },
+        },
+      },
+    }
+
     for _, server in ipairs(servers) do
       lspconfig[server].setup(opts[server])
     end

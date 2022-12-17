@@ -63,10 +63,7 @@ browser() {
     fi
 }
 
-# zenn start
-zs() {
-    npx zenn preview&
-    "$BROWSER" 'http://localhost:8000'
-}
+# zenn cli using Deno
+alias zenn="deno run -A npm:zenn-cli@latest"
 
 alias relogin='exec $SHELL -l'

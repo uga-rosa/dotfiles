@@ -482,10 +482,7 @@ hook_source = '''
           \ registerConvertResult: v:true,
           \ })
 
-    au User skkeleton-enable-post call s:skkeleton_enable()
-    function! s:skkeleton_enable() abort
-      lua CmpSourceSelect("skkeleton")
-    endfunction
+    au User skkeleton-enable-post  lua CmpSourceSelect("skkeleton")
     au User skkeleton-disable-post lua CmpSourceSelect("default")
 '''
 
