@@ -1,3 +1,4 @@
+vim.g["skkeleton#mapped_keys"] = { "<c-l>" }
 vim.fn["skkeleton#register_keymap"]("input", "<c-q>", "katakana")
 vim.fn["skkeleton#register_keymap"]("input", "<c-l>", "zenkaku")
 vim.fn["skkeleton#register_keymap"]("input", "'", "henkanPoint")
@@ -8,6 +9,7 @@ local rule = {
   ["/"] = "abbrev",
   -- 通常
   ["!"] = { "！", "" },
+  ["?"] = { "？", "" },
   [","] = { "、", "" },
   ["."] = { "。", "" },
   ["a"] = { "あ", "" },
@@ -15,12 +17,14 @@ local rule = {
   ["u"] = { "う", "" },
   ["e"] = { "え", "" },
   ["o"] = { "お", "" },
+  ["["] = { "「", "" },
+  ["]"] = { "」", "" },
   -- 促音、撥音、長音符
   -- US配列 + コロン、セミコロン入替
   -- 'はsticky shiftに
   q = { "ん", "" },
   [":"] = { "っ", "" },
-  [";"] = { "ー", "" },
+  [";"] = { "：", "" },
   ["-"] = { "ー", "" },
 }
 
