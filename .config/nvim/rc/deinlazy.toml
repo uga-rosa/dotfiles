@@ -475,6 +475,10 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'tweekmonster/helpful.vim'
+on_cmd = 'HelpfulVersion'
+
+[[plugins]]
 repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
 on_event = ['InsertEnter', 'CmdlineEnter']

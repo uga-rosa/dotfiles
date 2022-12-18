@@ -20,8 +20,6 @@ set smartcase
 
 set pumheight=25
 
-set nowrap
-
 " true color
 set termguicolors
 

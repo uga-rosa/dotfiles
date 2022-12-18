@@ -6,7 +6,7 @@ require("utils")
 require("rc.ftdetect")
 EOL
 
-set runtimepath+=/home/uga/plugin/ipynb.nvim
+set runtimepath+=/home/uga/plugin/nim-example.nvim
 
 if filereadable(expand('~/.secret.vim'))
   source ~/.secret.vim
