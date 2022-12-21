@@ -90,13 +90,15 @@ lua_source = '''
     }
 
     opts.denols = {
-      init_options = {
-        lint = true,
-        unstable = true,
-        suggest = {
-          imports = {
-            hosts = {
-              ["https://deno.land"] = true,
+      settings = {
+        deno = {
+          suggest = {
+            imports = {
+              hosts = {
+                ["https://deno.land"] = true,
+                ["https://crux.land"] = true,
+                ["https://x.nest.land"] = true,
+              },
             },
           },
         },
