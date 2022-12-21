@@ -153,14 +153,16 @@ lua_source = '''
     vim.opt.runtimepath:append(parser_install_dir)
 
     require("nvim-treesitter.configs").setup({
-      ensure_installed = "all",
+      ensure_installed = {
+        "lua",
+        "vim",
+        "toml",
+        "query",
+      },
       parser_install_dir = parser_install_dir,
       highlight = {
         enable = true,
-        disable = {
-          "help",
-          "typescript",
-        },
+        disable = { "help" },
       },
       textobjects = {
         select = {
