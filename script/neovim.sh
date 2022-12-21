@@ -10,6 +10,8 @@ neovim_dir="$HOME/.neovim"
 if [[ -d $neovim_dir ]]; then
   cd "$neovim_dir"
   git pull
+  make clean
+  rm -rf ./build
 else
   git clone --depth 1 https://github.com/neovim/neovim "$neovim_dir"
   cd "$neovim_dir"
