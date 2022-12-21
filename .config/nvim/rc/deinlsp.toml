@@ -56,8 +56,10 @@ lua_source = '''
       local paths = {}
       for _, plugin in ipairs(plugins) do
         local path = vim.fn["dein#get"](plugin).path
-        if vim.bool_fn.isdirectory(path .. "/lua") then
+        if path and vim.bool_fn.isdirectory(path .. "/lua") then
           table.insert(paths, path)
+        else
+          vim.notify("Invalid plugin name: " .. plugin)
         end
       end
       table.insert(paths, vim.fn.stdpath("config"))
