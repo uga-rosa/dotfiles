@@ -127,6 +127,7 @@ lua_source = '''
           ["ctrl-t"]  = actions.buf_tabedit,
         },
       },
+      file_icon_padding = " ",
     })
 '''
 
