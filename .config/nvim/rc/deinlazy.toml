@@ -159,6 +159,9 @@ lua_source = '''
         "vim",
         "toml",
         "query",
+        "markdown",
+        "python",
+        "go",
       },
       parser_install_dir = parser_install_dir,
       highlight = {
@@ -505,6 +508,16 @@ lua_source = '''
       markerHenkanSelect = ">>",
       registerConvertResult = true
     })
+'''
+
+[[plugins]]
+repo = 'monaqa/dial.nvim'
+on_map = '<Plug>(dial'
+hook_add = '''
+    Keymap nx <C-a> <Plug>(dial-increment)
+    xmap g<C-a> g<Plug>(dial-increment)
+    Keymap nx <C-x> <Plug>(dial-decrement)
+    xmap g<C-x> g<Plug>(dial-decrement)
 '''
 
 # Plugins for specific filetype
