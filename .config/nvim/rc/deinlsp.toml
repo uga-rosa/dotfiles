@@ -97,6 +97,7 @@ lua_source = '''
     opts.denols = {
       settings = {
         deno = {
+          enable = true,
           suggest = {
             imports = {
               hosts = {
