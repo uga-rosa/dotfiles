@@ -4,8 +4,8 @@ depends = 'denops.vim'
 on_event = 'BufRead'
 hook_add = '''
     let g:scorpeon_extensions_path = [
-      \ expand('$CACHE/vscode/extensions'),
       \ expand('$CACHE/scorpeon'),
+      \ expand('$CACHE/vscode/extensions'),
       \ ]
     let g:scorpeon_highlight = #{
       \ enable: ['typescript', 'nim'],
