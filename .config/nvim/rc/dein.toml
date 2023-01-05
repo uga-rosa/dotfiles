@@ -27,8 +27,7 @@ hook_source = '''
 '''
 
 [[plugins]]
-repo = 'feline-nvim/feline.nvim'
-depends = 'nvim-web-devicons'
+repo = 'nvim-lualine/lualine.nvim'
 lua_source = '''
-    require("rc.plugins.feline")
+    require("rc.plugins.lualine")
 '''
