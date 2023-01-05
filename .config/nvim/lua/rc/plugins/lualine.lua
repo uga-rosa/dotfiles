@@ -31,26 +31,31 @@ local theme = {
     a = { bg = color.indigo, fg = color.dark_blue, gui = "bold" },
     b = { bg = color.bg, fg = color.purple },
     c = { bg = color.bg, fg = color.cadet_blue },
+    x = { bg = color.bg, fg = color.emerald },
   },
   insert = {
     a = { bg = color.cadet_blue, fg = color.dark_blue, gui = "bold" },
     b = { bg = color.bg, fg = color.purple },
     c = { bg = color.bg, fg = color.cadet_blue },
+    x = { bg = color.bg, fg = color.emerald },
   },
   visual = {
     a = { bg = color.purple, fg = color.dark_blue, gui = "bold" },
     b = { bg = color.bg, fg = color.purple },
     c = { bg = color.bg, fg = color.cadet_blue },
+    x = { bg = color.bg, fg = color.emerald },
   },
   replace = {
     a = { bg = color.watermelon, fg = color.dark_blue, gui = "bold" },
     b = { bg = color.bg, fg = color.purple },
     c = { bg = color.bg, fg = color.cadet_blue },
+    x = { bg = color.bg, fg = color.emerald },
   },
   command = {
     a = { bg = color.emerald, fg = color.dark_blue, gui = "bold" },
     b = { bg = color.bg, fg = color.purple },
     c = { bg = color.bg, fg = color.cadet_blue },
+    x = { bg = color.bg, fg = color.emerald },
   },
   inactive = {
     a = { bg = color.bg, fg = color.dark_blue, gui = "bold" },
@@ -58,6 +63,28 @@ local theme = {
     c = { bg = color.bg, fg = color.cadet_blue },
   },
 }
+
+local function mode()
+  local m = safe_call("skkeleton#mode") or ""
+  if m == "" then
+    m = require("lualine.utils.mode").get_mode()
+  else
+    m = ("skk (%s)"):format(m)
+  end
+  return m
+end
+
+local function lsp_client_names()
+  local names = {}
+  for _, client in ipairs(vim.lsp.buf_get_clients(0)) do
+    table.insert(names, client.name)
+  end
+  if #names > 0 then
+    return " " .. table.concat(names, " ")
+  else
+    return ""
+  end
+end
 
 require("lualine").setup({
   options = {
@@ -72,19 +99,19 @@ require("lualine").setup({
     theme = theme,
   },
   sections = {
-    lualine_a = { function()
-      local mode = safe_call("skkeleton#mode") or ""
-      if mode == "" then
-        mode = require("lualine.utils.mode").get_mode()
-      else
-        mode = ("skk (%s)"):format(mode)
-      end
-      return mode
-    end },
+    lualine_a = { mode },
     lualine_b = { "branch", "diff", "diagnostics" },
     lualine_c = { "filetype", "filename" },
-    lualine_x = {},
+    lualine_x = { lsp_client_names },
     lualine_y = { "progress" },
     lualine_z = { "location" },
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { "filename" },
+    lualine_x = { "location" },
+    lualine_y = {},
+    lualine_z = {},
   },
 })
