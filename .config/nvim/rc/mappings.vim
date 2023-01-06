@@ -1,5 +1,6 @@
-let mapleader = "\<Space>"
 command! -nargs=+ -bang Keymap call vimrc#keymap(<bang>0, <f-args>)
+
+let mapleader = "\<Space>"
 
 " Disable mouse click for all mode
 for mode in ['', 'i', 'c', 't']

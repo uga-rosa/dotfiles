@@ -5,79 +5,96 @@ let g:scorpeon_extensions_path = [
       \ expand('~/.cache/vscode/extensions')
       \ ]
 let g:scorpeon_highlight = { 'enable': v:true }
-" packadd vim-jetpack
-" call jetpack#begin()
-" Jetpack 'tani/vim-jetpack', {'opt': 1}
-" Jetpack 'vim-denops/denops.vim'
-" Jetpack 'yuki-yano/fuzzy-motion.vim'
-" call jetpack#end()
 
-" let mapleader = "\<Space>"
+packadd vim-jetpack
+call jetpack#begin()
+Jetpack 'tani/vim-jetpack', {'opt': 1}
+Jetpack 'vim-denops/denops.vim'
+Jetpack 'yuki-yano/fuzzy-motion.vim'
+Jetpack 'vim-skk/skkeleton'
+call jetpack#end()
 
-" set fileencoding=utf-8
-" set fileformats=unix,dos,mac
-" set hidden
-" set title
-" set number
-" set showmatch
-" set cursorline
-" set expandtab
-" set tabstop=4
-" set shiftwidth=4
-" set softtabstop=2
-" set smartindent
-" set autoread
-" set noswapfile
-" set nobackup
-" set noundofile
-" set showcmd
-" set scrolloff=3
-" set ignorecase
-" set smartcase
-" set backspace=indent,eol,start
-" set shell=/bin/zsh
-" set timeoutlen=1000 ttimeoutlen=0
-" set wildmenu
-" set laststatus=2
+let mapleader = "\<Space>"
 
-" " cursor shape
-" if has('vim_starting')
-"     let &t_SI .= "\e[6 q"
-"     let &t_EI .= "\e[2 q"
-"     let &t_SR .= "\e[4 q"
-" endif
+set fileencoding=utf-8
+set fileformats=unix,dos,mac
+set hidden
+set title
+set number
+set showmatch
+set cursorline
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=2
+set smartindent
+set autoread
+set noswapfile
+set nobackup
+set noundofile
+set showcmd
+set scrolloff=3
+set ignorecase
+set smartcase
+set backspace=indent,eol,start
+set shell=/bin/zsh
+set timeoutlen=1000 ttimeoutlen=0
+set wildmenu
+set laststatus=2
 
-" autocmd FileType * setlocal formatoptions-=ro
+" cursor shape
+if has('vim_starting')
+    let &t_SI .= "\e[6 q"
+    let &t_EI .= "\e[2 q"
+    let &t_SR .= "\e[4 q"
+endif
 
-" nnoremap <silent> <esc><esc> <cmd>noh<cr>
-" nnoremap <leader><cr> o<esc>
+autocmd FileType * setlocal formatoptions-=ro
 
-" vnoremap < <gv
-" vnoremap > >gv
+nnoremap <silent> <esc><esc> <cmd>noh<cr>
+nnoremap <leader><cr> o<esc>
 
-" cnoremap <C-b> <Left>
-" cnoremap <C-f> <Right>
-" cnoremap <C-d> <Del>
-" cnoremap <C-a> <Home>
-" cnoremap <C-e> <End>
+vnoremap < <gv
+vnoremap > >gv
 
-" inoremap <C-b> <Left>
-" inoremap <C-f> <Right>
-" inoremap <C-d> <Del>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-d> <Del>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
 
-" nnoremap j gj
-" nnoremap k gk
-" nnoremap gj j
-" nnoremap gk k
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <C-d> <Del>
 
-" nnoremap x "_x
-" nnoremap s "_s
-" xnoremap p "_xP
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
 
-" noremap H ^
-" noremap L $
+nnoremap x "_x
+nnoremap s "_s
+xnoremap p "_xP
 
-" nnoremap Y y$
+noremap H ^
+noremap L $
 
-" " Fuzzy motion
-" nmap ss <Cmd>FuzzyMotion<CR>
+nnoremap Y y$
+
+" Fuzzy motion
+nmap ss <Cmd>FuzzyMotion<CR>
+
+" skkeleton
+inoremap <C-j> <Plug>(skkeleton-toggle)
+cnoremap <C-j> <Plug>(skkeleton-toggle)
+
+call skkeleton#config(#{
+      \ eggLikeNewline: v:true,
+      \ globalDictionaries: [
+      \   '~/.skk/SKK-JISYO.L',
+      \   '~/.skk/SKK-JISYO.edict2',
+      \ ],
+      \ markerHenkan: '<>',
+      \ markerHenkanSelect: '>>',
+      \ registerConvertResult: v:true,
+      \ })

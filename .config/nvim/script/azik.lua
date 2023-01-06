@@ -1,8 +1,3 @@
-vim.g["skkeleton#mapped_keys"] = { "<c-l>" }
-vim.fn["skkeleton#register_keymap"]("input", "<c-q>", "katakana")
-vim.fn["skkeleton#register_keymap"]("input", "<c-l>", "zenkaku")
-vim.fn["skkeleton#register_keymap"]("input", "'", "henkanPoint")
-
 local rule = {
   -- 関数
   [" "] = "henkanFirst",
@@ -161,4 +156,5 @@ set_rule("", nil, {
   ["vl"] = "→",
 })
 
-vim.fn["skkeleton#register_kanatable"]("azik", rule, true)
+local path = debug.getinfo(1, "S").source:sub(2)
+vim.fn.writefile({vim.json.encode(rule)}, vim.fn.fnamemodify(path, ':r') .. ".json")
