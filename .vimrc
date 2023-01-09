@@ -88,7 +88,15 @@ nmap ss <Cmd>FuzzyMotion<CR>
 inoremap <C-j> <Plug>(skkeleton-toggle)
 cnoremap <C-j> <Plug>(skkeleton-toggle)
 
+call add(g:skkeleton#mapped_keys, '<c-l>')
+call skkeleton#register_keymap('input', '<c-q>', 'katakana')
+call skkeleton#register_keymap('input', '<c-l>', 'zenkaku')
+call skkeleton#register_keymap('input', "'", 'henkanPoint')
+call skkeleton#register_kanatable('azik',
+      \ json_decode(join(readfile(expand('~/.config/nvim/script/azik.json')))), v:true)
+
 call skkeleton#config(#{
+      \ kanaTable: 'azik',
       \ eggLikeNewline: v:true,
       \ globalDictionaries: [
       \   '~/.skk/SKK-JISYO.L',
@@ -98,3 +106,29 @@ call skkeleton#config(#{
       \ markerHenkanSelect: '>>',
       \ registerConvertResult: v:true,
       \ })
+
+augroup my_skkeleton
+  au!
+  au User skkeleton-enable-post  call s:show_mode_enable()
+  au User skkeleton-disable-post call s:show_mode_disable()
+augroup END
+
+call prop_type_add('show_mode', #{ highlight: 'PMenuSel' })
+
+function! s:show_mode_enable() abort
+  au my_skkeleton CursorMovedI * call s:show_mode_update()
+endfunction
+
+function! s:show_mode_update() abort
+  call prop_remove(#{ type: 'show_mode' })
+  call prop_add(line('.'), 0, #{
+        \ type: 'show_mode',
+        \ text: skkeleton#mode(),
+        \ text_align: 'after',
+        \ })
+endfunction
+
+function! s:show_mode_disable() abort
+  au! my_skkeleton CursorMovedI
+  call prop_remove(#{ type: 'show_mode' })
+endfunction

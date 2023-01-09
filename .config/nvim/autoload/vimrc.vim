@@ -27,3 +27,7 @@ function! vimrc#syn_group() abort
   let id = synID(line('.'), col('.'), 1)
   echo synIDattr(id, 'name') '->' synIDattr(synIDtrans(id), 'name')
 endfunction
+
+function! vimrc#read_json(path) abort
+  return json_decode(join(readfile(expand(a:path))))
+endfunction

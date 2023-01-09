@@ -497,7 +497,7 @@ hook_source = '''
     call skkeleton#register_keymap('input', '<c-l>', 'zenkaku')
     call skkeleton#register_keymap('input', "'", 'henkanPoint')
     call skkeleton#register_kanatable('azik',
-          \ json_decode(readfile(stdpath('config') . '/script/azik.json')), v:true)
+          \ vimrc#read_json(stdpath('config') . '/script/azik.json'), v:true)
 
     call skkeleton#config(#{
           \ kanaTable: 'azik',
