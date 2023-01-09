@@ -523,7 +523,12 @@ hook_source = '''
     let s:id = 1234321
 
     function! s:show_mode_enable() abort
-      au my_skkeleton CursorMovedI * call nvim_buf_set_extmark(0, s:ns, line('.')-1, col('.')-1, #{
+      call s:show_mode_update()
+      au my_skkeleton CursorMovedI * call s:show_mode_update()
+    endfunction
+
+    function! s:show_mode_update() abort
+      call nvim_buf_set_extmark(0, s:ns, line('.')-1, col('.')-1, #{
             \ id: s:id,
             \ virt_text: [ [ skkeleton#mode(), 'PMenuSel' ] ],
             \ virt_text_pos: 'eol',
