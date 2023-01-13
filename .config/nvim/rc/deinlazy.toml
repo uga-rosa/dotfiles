@@ -551,6 +551,10 @@ hook_add = '''
     xmap g<C-x> g<Plug>(dial-decrement)
 '''
 
+[[plugins]]
+repo = 'mhinz/vim-sayonara'
+on_cmd = 'Sayonara'
+
 # Plugins for specific filetype
 
 [[plugins]]
