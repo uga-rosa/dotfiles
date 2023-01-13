@@ -102,6 +102,7 @@ cmp.setup({
   sorting = {
     comparators = {
       cmp.config.compare.offset,
+      cmp.config.compare.exact,
       cmp.config.compare.score,
       function(entry1, entry2)
         local _, entry1_under = entry1.completion_item.label:find("^_+")
@@ -115,8 +116,8 @@ cmp.setup({
         end
       end,
       cmp.config.compare.recently_used,
+      cmp.config.compare.locality,
       cmp.config.compare.kind,
-      cmp.config.compare.sort_text,
       cmp.config.compare.length,
       cmp.config.compare.order,
     },
