@@ -68,12 +68,6 @@ browser() {
     fi
 }
 
-# LSP
-ls_dir="$HOME/.cache/language-server"
-if [[ -d $ls_dir/bin ]]; then
-    export PATH="$PATH:$ls_dir/bin"
-fi
-
 # themis
 themis_bin="$HOME/.cache/dein/repos/github.com/thinca/vim-themis/bin"
 if [[ -d $themis_bin ]]; then
