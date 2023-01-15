@@ -134,10 +134,9 @@ lua_source = '''
 
 [[plugins]]
 repo = 'glepnir/lspsaga.nvim'
-rev = 'main'
 on_cmd = 'Lspsaga'
 lua_source = '''
-    require("lspsaga").init_lsp_saga({
+    require("lspsaga").setup({
       diagnostic_header = { " ", " ", " ", " " },
       code_action_lightbulb = {
         enable = true,
