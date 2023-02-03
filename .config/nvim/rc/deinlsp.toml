@@ -22,11 +22,11 @@ lua_source = '''
         vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
       end
 
-      buf_map("K", "<Cmd>Lspsaga hover_doc<CR>")
-      buf_map("[d", "<Cmd>Lspsaga diagnostic_jump_prev<CR>")
-      buf_map("]d", "<Cmd>Lspsaga diagnostic_jump_next<CR>")
-      buf_map("<leader>n", "<Cmd>Lspsaga rename<CR>")
-      buf_map("<leader>a", "<Cmd>Lspsaga code_action<CR>")
+      buf_map("K", vim.lsp.buf.hover)
+      buf_map("[d", vim.diagnostic.goto_prev)
+      buf_map("]d", vim.diagnostic.goto_next)
+      buf_map("<leader>n", vim.lsp.buf.rename)
+      buf_map("<leader>a", vim.lsp.buf.code_action)
 
       api.nvim_create_user_command("Format", function()
         vim.lsp.buf.format()
@@ -116,13 +116,29 @@ lua_source = '''
     end
 
     -- Diagnostics
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      update_in_insert = false,
-      virtual_text = {
-        format = function(diagnostic)
-          return string.format("%s (%s: %s)", diagnostic.message, diagnostic.source, diagnostic.code)
+    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1d3b53" })
+    vim.api.nvim_set_hl(0, "Title", { bg = "#1d3b53" })
+    vim.api.nvim_set_hl(0, "FloatBorder", { fg = "white", bg = "#1d3b53" })
+
+    vim.diagnostic.config({
+      float = {
+        border = "single",
+        title = "Diagnostics",
+        header = {},
+        format = function(diag)
+          if diag.code then
+            return ("[%s](%s): %s"):format(diag.source, diag.code, diag.message)
+          else
+            return ("[%s]: %s"):format(diag.source, diag.message)
+          end
         end,
       },
+    })
+
+    -- Hover
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = "single",
+      title = "Hover",
     })
 '''
 
@@ -130,21 +146,6 @@ lua_source = '''
 repo = 'j-hui/fidget.nvim'
 lua_source = '''
     require("fidget").setup({})
-'''
-
-[[plugins]]
-repo = 'glepnir/lspsaga.nvim'
-on_cmd = 'Lspsaga'
-lua_source = '''
-    require("lspsaga").setup({
-      diagnostic_header = { " ", " ", " ", " " },
-      code_action_lightbulb = {
-        enable = true,
-        enable_in_insert = false,
-        sign = false,
-        virtual_text = true,
-      },
-    })
 '''
 
 [[plugins]]
