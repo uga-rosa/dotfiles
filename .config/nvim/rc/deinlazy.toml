@@ -130,7 +130,6 @@ lua_source = '''
       file_icon_padding = " ",
     })
 '''
-
 [plugins.ftplugin]
 fzf = '''
     tnoremap <buffer> <C-t> <C-t>
@@ -343,6 +342,10 @@ lua_source = '''
         ["outputter/buffer/opener"] = "botright 10sp",
         ["outputter/buffer/close_on_empty"] = true,
       },
+      typescript = {
+        command = "deno",
+        exec = "%C run -A %S",
+      },
       lua = {
         command = ":luafile",
         exec = "%C %S",
@@ -382,7 +385,6 @@ hook_add = '''
     let g:partedit#prefix_pattern = '\s*'
     let g:partedit#auto_prefix = 0
 '''
-
 [plugins.ftplugin]
 toml_markdown = '''
     nnoremap <buffer> <C-p> <Cmd>call <SID>operator_partedit()<CR>
@@ -396,7 +398,7 @@ toml_markdown = '''
       endif
       call partedit#start(context.range[0][0], context.range[1][0],
             \ {'filetype': context.filetype})
-      nnoremap <buffer><nowait> Q <Cmd>ParteditEnd<CR>
+      nnoremap <buffer><nowait> Q <Cmd>w<CR><Cmd>ParteditEnd<CR>
     endfunction
 '''
 
@@ -554,6 +556,36 @@ hook_add = '''
 [[plugins]]
 repo = 'mhinz/vim-sayonara'
 on_cmd = 'Sayonara'
+
+[[plugins]]
+repo = '~/plugin/dressing.nvim'
+on_event = "BufEnter"
+depends = "fzf-lua"
+lua_source = '''
+    require("dressing").setup({
+      input = {
+        enabled = true,
+        mappings = {
+          n = {
+            ["<Esc>"] = "Close",
+            ["q"] = "Close",
+            ["<CR>"] = "Confirm",
+          },
+          i = {
+            ["<C-c>"] = "Close",
+            ["<CR>"] = "Confirm",
+            ["<Up>"] = "HistoryPrev",
+            ["<Down>"] = "HistoryNext",
+          },
+        },
+        mapping_extra_opts = { nowait = true },
+      },
+      select = {
+        enabled = true,
+        backend = { "fzf_lua", "builtin" },
+      },
+    })
+'''
 
 # Plugins for specific filetype
 
