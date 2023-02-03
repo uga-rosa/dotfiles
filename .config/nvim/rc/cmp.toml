@@ -39,19 +39,22 @@ repo = '~/plugin/cmp-dictionary'
 on_source = 'nvim-cmp'
 lua_source = '''
     local dict = require("cmp_dictionary")
+
     dict.setup({
-        dic = {
-            ["autohotkey"] = "~/dotfiles/dict/ahk.dict",
-            spelllang = {
-                en = "~/.dict/en.dict",
-            },
-        },
         exact = 2,
         async = true,
         first_case_insensitive = true,
         document = true,
     })
-    dict.update()
+
+    dict.switcher({
+      filetype = {
+        autohotkey = "~/dotfiles/dict/ahk.dict",
+      },
+      spelllang = {
+        en = "~/.dict/en.dict",
+      },
+    })
 '''
 
 [[plugins]]
