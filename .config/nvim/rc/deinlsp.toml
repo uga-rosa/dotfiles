@@ -1,6 +1,6 @@
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depends = ['fidget.nvim', 'cmp-nvim-lsp']
+depends = ['nvim-lsp-setup', 'fidget.nvim', 'cmp-nvim-lsp']
 on_event = ['BufRead', 'BufNewFile']
 lua_source = '''
     local api = vim.api
@@ -83,7 +83,7 @@ lua_source = '''
             path = { "lua/?.lua", "lua/?/init.lua" },
           },
           workspace = {
-            library = library({ "plenary.nvim", "nvim-cmp", "sqlite.lua" }),
+            library = library({ "plenary.nvim", "nvim-cmp", "nvim-lsp-setup" }),
             checkThirdParty = false,
           },
         },
@@ -114,32 +114,38 @@ lua_source = '''
     for _, server in ipairs(servers) do
       lspconfig[server].setup(opts[server])
     end
+'''
 
+[[plugins]]
+repo = '~/plugin/nvim-lsp-setup'
+lua_source = '''
     -- Highlights
     vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1d3b53" })
     vim.api.nvim_set_hl(0, "Title", { bg = "#1d3b53" })
     vim.api.nvim_set_hl(0, "FloatBorder", { fg = "white", bg = "#1d3b53" })
 
-    -- Diagnostics
-    vim.diagnostic.config({
-      float = {
+    require("nvim_lsp_setup").setup({
+      hover = {
         border = "single",
-        title = "Diagnostics",
-        header = {},
-        format = function(diag)
-          if diag.code then
-            return ("[%s](%s): %s"):format(diag.source, diag.code, diag.message)
-          else
-            return ("[%s]: %s"):format(diag.source, diag.message)
-          end
-        end,
+        title = "Hover",
       },
-    })
-
-    -- Hover
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-      border = "single",
-      title = "Hover",
+      diagnostic = {
+        float = {
+          border = "single",
+          title = "Diagnostics",
+          header = {},
+          format = function(diag)
+            if diag.code then
+              return ("[%s](%s): %s"):format(diag.source, diag.code, diag.message)
+            else
+              return ("[%s]: %s"):format(diag.source, diag.message)
+            end
+          end,
+        },
+      },
+      signature_help = {
+        border = "single",
+      },
     })
 '''
 
