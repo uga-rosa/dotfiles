@@ -127,6 +127,12 @@ lua_source = '''
           ["ctrl-t"]  = actions.buf_tabedit,
         },
       },
+      buffers = {
+        actions = {
+          ["ctrl-x"] = actions.buf_split,
+          ["ctrl-d"] = actions.buf_del,
+        },
+      },
       file_icon_padding = " ",
     })
 '''
@@ -567,8 +573,8 @@ lua_source = '''
         enabled = true,
         mappings = {
           n = {
-            ["<Esc>"] = "Close",
-            ["q"] = "Close",
+            ["<Esc>"] = { "Close", nowait = true },
+            ["q"] = { "Close", nowait = true },
             ["<CR>"] = "Confirm",
           },
           i = {
@@ -578,7 +584,6 @@ lua_source = '''
             ["<Down>"] = "HistoryNext",
           },
         },
-        mapping_extra_opts = { nowait = true },
       },
       select = {
         enabled = true,
