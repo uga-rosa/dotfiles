@@ -25,8 +25,11 @@ if [[ -d "$HOME/.pyenv" ]]; then
     eval "$(pyenv init -)"
 fi
 
+# luarocks
+eval $(luarocks path)
+
 # Rust
-[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+[[ -f "$HOME/.cargo/env" ]] && source ~/.cargo/env
 
 # Go
 export GOPATH="$HOME/.go"
@@ -43,11 +46,9 @@ export DENO_INSTALL="$HOME/.deno"
 export PATH="$HOME/.nimble/bin:$PATH"
 
 # Cuda
-export PATH="/usr/local/cuda/bin:$PATH"
-
-# gmxenv
-export PATH="$HOME/.gmxenv/bin:$PATH"
-export PATH="$HOME/.gmxenv/shims:$PATH"
+export CUDA_HOME="/usr/local/cuda"
+export PATH="$CUDA_HOME/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 
 # browser
 vivaldi="/mnt/c/Users/uga/AppData/Local/Vivaldi/Application/vivaldi.exe"
