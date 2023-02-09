@@ -26,42 +26,8 @@ setopt inc_append_history
 setopt share_history
 setopt AUTO_PARAM_KEYS
 
-# check if alias after sudo
-# alias sudo='sudo '
+# Safely remove
 alias rm="rm -i"
-
-# Go to home of Windows (for WSL)
-if [[ -d /mnt/e/home ]]; then
-    export WIN_HOME="/mnt/e/home"
-elif [[ -d /mnt/c/Users/uga ]]; then
-    export WIN_HOME="/mnt/c/Users/uga"
-fi
-home() {
-    if [[ -n "$WIN_HOME" ]]; then
-        cd "$WIN_HOME"
-    else
-        cd "$HOME"
-    fi
-}
-
-# browser
-vivaldi="/mnt/c/Users/uga/AppData/Local/Vivaldi/Application/vivaldi.exe"
-chrome="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
-if [[ -f $vivaldi ]]; then
-    export BROWSER="$vivaldi"
-elif [[ -f $chrome ]]; then
-    export BROWSER="$chrome"
-fi
-
-browser() {
-    if [[ -z $1 ]]; then
-        $BROWSER
-    elif [[ -f $1 ]]; then
-        $BROWSER $(wslpath -w ${1})
-    else
-        $BROWSER $1
-    fi
-}
 
 # zenn cli using Deno
 alias zenn="deno run -A npm:zenn-cli@latest"
