@@ -21,3 +21,9 @@ bindkey "^U" backward-kill-line
 autoload -U compinit; compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:default' menu select=1
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Gromacs 2022.4
+gromacs="/usr/local/gromacs-2022.4/bin/GMXRC"
+[ -f $gromacs ] && source "$gromacs"
