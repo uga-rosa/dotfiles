@@ -1,9 +1,7 @@
 /*
 !/.gitignore
 !/stylua.toml
-!/starship.toml
 !/flake8
 !/nvim/
-!/efm-langserver/
 !/cligen/
 !/afx/
