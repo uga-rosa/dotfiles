@@ -2,7 +2,7 @@
 " neovim in unix.
 
 lua <<EOL
-require("utils")
+require("rc.utils")
 require("rc.ftdetect")
 EOL
 
