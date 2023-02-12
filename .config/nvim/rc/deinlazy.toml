@@ -302,6 +302,7 @@ depends = 'denops.vim'
 on_cmd = 'FuzzyMotion'
 hook_add = '''
     nnoremap ss <Cmd>FuzzyMotion<CR>
+    let g:fuzzy_motion_matchers = ['fzf', 'kensaku']
 '''
 
 [[plugins]]
@@ -590,6 +591,20 @@ lua_source = '''
         backend = { "fzf_lua", "builtin" },
       },
     })
+'''
+
+[[plugins]]
+repo = '~/plugin/kensaku.vim'
+on_event = 'BufEnter'
+hook_source = '''
+    let romanTable = vimrc#json#read(stdpath('config') . '/script/azik.json')
+    let romanTable = values(map(romanTable, { key, val -> [key, val[0], 0] }))
+    call kensaku#set_roman_table(romanTable)
+
+    function! Search(value) abort
+      let @/ = '\v' .. kensaku#query(a:value)
+      normal! n
+    endfunction
 '''
 
 # Plugins for specific filetype
