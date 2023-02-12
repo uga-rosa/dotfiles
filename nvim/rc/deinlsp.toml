@@ -179,9 +179,9 @@ lua_source = '''
     function custom_previewer:parse_entry(entry_str)
       local _, filepath, row, col = entry_str:match("^(%d+)%. (.+):(%d+):(%d+):$")
       return {
-        path  = filepath,
-        line  = tonumber(row) or 1,
-        col   = tonumber(col) or 1,
+        path = filepath,
+        line = tonumber(row) or 1,
+        col  = tonumber(col) or 1,
       }
     end
 
@@ -233,6 +233,7 @@ lua_source = '''
     null.setup({
       diagnostics_format = "#{m} (#{s}: #{c})",
       sources = {
+        -- stylua (lua; formatter)
         function()
           local utils = require("null-ls.utils").make_conditional_utils()
           if utils.root_has_file("stylua.toml") then
@@ -247,7 +248,9 @@ lua_source = '''
             })
           end
         end,
+        -- fixjson (json; formatter)
         b.formatting.fixjson,
+        -- black (python; formatter)
         b.formatting.black,
       },
     })
