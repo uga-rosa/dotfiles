@@ -1,8 +1,9 @@
 #!/usr/bin/env -S deno run -A
 import { join } from "https://deno.land/std@0.174.0/path/mod.ts";
 
-const rule: { [key: string]: string[] } = {
+const rule: { [key: string]: string | string[] } = {
   // 通常
+  [" "]: "henkanFirst",
   ["!"]: ["！", ""],
   ["?"]: ["？", ""],
   [","]: ["、", ""],
