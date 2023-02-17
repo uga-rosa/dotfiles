@@ -66,10 +66,12 @@ local theme = {
 
 local function mode()
   local m = safe_call("skkeleton#mode") or ""
-  if m == "" then
-    m = require("lualine.utils.mode").get_mode()
-  else
+  if m ~= "" then
     m = ("skk (%s)"):format(m)
+  elseif vim.g.searchx_kensaku == 1 then
+    m = "Migemo"
+  else
+    m = require("lualine.utils.mode").get_mode()
   end
   return m
 end

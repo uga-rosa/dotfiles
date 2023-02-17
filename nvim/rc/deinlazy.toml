@@ -295,6 +295,29 @@ lua_source = '''
       markers = vim.split("ASDFGHJKL:QWERTYUIOP", ""),
     }
 '''
+hook_post_source = '''
+    cnoremap <M-j> <Cmd>call ToggleSearchxMigemo()<CR>
+
+    let g:searchx_kensaku = 0
+    function! ToggleSearchxMigemo() abort
+      if g:searchx_kensaku
+        let g:searchx.convert = { input -> input }
+        let g:searchx_kensaku = 0
+      else
+        unlet g:searchx.convert
+        function g:searchx.convert(input) abort
+          let jsregex = kensaku#query(a:input)
+          let vimregex = substitute(jsregex, '\\\@<![()|\\]', { m -> (m[0] ==# '(' ? '\%' : '\') . m[0] }, 'g')
+          return vimregex
+        endfunction
+        let g:searchx_kensaku = 1
+      endif
+      call timer_start(100, { -> execute("redrawstatus") })
+      if getcmdline() !=# ''
+        doautocmd <nomodeline> CmdlineChanged
+      endif
+    endfunction
+'''
 
 [[plugins]]
 repo = 'yuki-yano/fuzzy-motion.vim'
@@ -594,17 +617,12 @@ lua_source = '''
 '''
 
 [[plugins]]
-repo = '~/plugin/kensaku.vim'
+repo = 'lambdalisue/kensaku.vim'
 on_event = 'BufEnter'
 hook_source = '''
     let romanTable = vimrc#json#read(stdpath('config') . '/script/azik.json')
     let romanTable = values(map(romanTable, { key, val -> [key, val[0], 0] }))
     call kensaku#set_roman_table(romanTable)
-
-    function! Search(value) abort
-      let @/ = '\v' .. kensaku#query(a:value)
-      normal! n
-    endfunction
 '''
 
 # Plugins for specific filetype
