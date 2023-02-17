@@ -7,7 +7,7 @@ lua_source = '''
     local lspconfig = require("lspconfig")
 
     local servers = {
-      "sumneko_lua",
+      "lua_ls",
       "denols",
       "vimls",
       "gopls",
@@ -66,7 +66,7 @@ lua_source = '''
       return paths
     end
 
-    opts.sumneko_lua = {
+    opts.lua_ls = {
       settings = {
         Lua = {
           format = {
