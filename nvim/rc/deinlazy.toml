@@ -650,3 +650,18 @@ hook_add = '''
 [[plugins]]
 repo = 'uga-rosa/todo.nvim'
 on_ft = 'markdown'
+
+[[plugins]]
+repo = '~/plugin/jam.nvim'
+depends = 'pum.vim'
+on_event = 'InsertEnter'
+lua_source = '''
+    require("jam").setup({
+      keyLayout = "azik",
+      marker = vim.split("asdfghjkl", ""),
+      start_key = "<C-q>",
+    })
+'''
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
