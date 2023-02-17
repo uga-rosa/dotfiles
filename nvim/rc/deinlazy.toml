@@ -127,6 +127,9 @@ lua_source = '''
           ["ctrl-t"]  = actions.buf_tabedit,
         },
       },
+      files = {
+        prompt = "Files❯ ",
+      },
       buffers = {
         actions = {
           ["ctrl-x"] = actions.buf_split,
@@ -312,10 +315,8 @@ hook_post_source = '''
         endfunction
         let g:searchx_kensaku = 1
       endif
+      call searchx#redraw()
       call timer_start(100, { -> execute("redrawstatus") })
-      if getcmdline() !=# ''
-        doautocmd <nomodeline> CmdlineChanged
-      endif
     endfunction
 '''
 
