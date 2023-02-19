@@ -316,7 +316,8 @@ hook_post_source = '''
         let g:searchx_kensaku = 1
       endif
       call searchx#redraw()
-      call timer_start(100, { -> execute("redrawstatus") })
+      lua require('lualine').refresh()
+      redrawstatus
     endfunction
 '''
 
