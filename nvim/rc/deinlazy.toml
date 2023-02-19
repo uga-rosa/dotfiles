@@ -37,7 +37,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'machakann/vim-sandwich'
-on_map = ['<Plug>(sandwich-', '<Plug>(textobj-sandwich-']
+on_map = ['<Plug>', '<Plug>(textobj-sandwich-']
 hook_add = '''
     let g:operator_sandwich_no_default_key_mappings = 1
     let g:textobj_sandwich_no_default_key_mappings = 1
@@ -63,14 +63,14 @@ repo = 'kana/vim-operator-user'
 [[plugins]]
 repo = 'yuki-yano/vim-operator-replace'
 depends = 'vim-operator-user'
-on_map = '<Plug>(operator-replace)'
+on_map = '<Plug>'
 hook_add = '''
     Keymap nxo r <Plug>(operator-replace)
 '''
 
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
-on_map = "<Plug>(edgemotion-"
+on_map = "<Plug>"
 hook_add = '''
     Keymap nxo <C-j> <Plug>(edgemotion-j)
     Keymap nxo <C-k> <Plug>(edgemotion-k)
@@ -507,7 +507,7 @@ on_cmd = 'Capture'
 
 [[plugins]]
 repo = '~/plugin/contextment.vim'
-on_map = '<Plug>(contextment'
+on_map = '<Plug>'
 hook_add = '''
     Keymap nxo gc  <Plug>(contextment)
     Keymap n   gcc <Plug>(contextment-line)
@@ -576,7 +576,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'monaqa/dial.nvim'
-on_map = '<Plug>(dial'
+on_map = '<Plug>'
 hook_add = '''
     Keymap nx <C-a> <Plug>(dial-increment)
     xmap g<C-a> g<Plug>(dial-increment)
