@@ -221,4 +221,10 @@ cmp.setup.cmdline(":", {
   },
 })
 
+cmp.setup.cmdline("@", {
+  sources = {
+    { name = "buffer" },
+  },
+})
+
 cmp.event:on("confirm_done", require("autopairs.cmp").on_confirm_done())
