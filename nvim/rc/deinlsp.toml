@@ -112,6 +112,18 @@ lua_source = '''
       },
     }
 
+    local root_pattern = lspconfig.util.root_pattern
+
+    opts.tsserver = {
+      root_dir = function(fname)
+        if root_pattern("deno.json")(fname) then
+          return nil
+        end
+        return root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git")(fname)
+      end,
+      single_file_support = false,
+    }
+
     for _, server in ipairs(servers) do
       lspconfig[server].setup(opts[server])
     end
