@@ -278,6 +278,7 @@ lua_source = '''
 
 [[plugins]]
 repo = 'hrsh7th/vim-searchx'
+depends = 'kensaku.vim'
 on_func = 'searchx#start'
 hook_add = '''
     Keymap nx / <Cmd>call searchx#start({'dir': 1})<CR>
@@ -305,16 +306,13 @@ hook_post_source = '''
     function! ToggleSearchxMigemo() abort
       if g:searchx_kensaku
         let g:searchx.convert = { input -> input }
-        let g:searchx_kensaku = 0
       else
         unlet g:searchx.convert
         function g:searchx.convert(input) abort
-          let jsregex = kensaku#query(a:input)
-          let vimregex = substitute(jsregex, '\\\@<![()|\\]', { m -> (m[0] ==# '(' ? '\%' : '\') . m[0] }, 'g')
-          return vimregex
+          return kensaku#query(a:input)
         endfunction
-        let g:searchx_kensaku = 1
       endif
+      let g:searchx_kensaku = !g:searchx_kensaku
       call searchx#redraw()
       lua require('lualine').refresh()
       redrawstatus
@@ -323,7 +321,7 @@ hook_post_source = '''
 
 [[plugins]]
 repo = 'yuki-yano/fuzzy-motion.vim'
-depends = 'denops.vim'
+depends = ['denops.vim', 'kensaku.vim']
 on_cmd = 'FuzzyMotion'
 hook_add = '''
     nnoremap ss <Cmd>FuzzyMotion<CR>
@@ -493,7 +491,8 @@ lua_source = '''
     local ccc = require("ccc")
     ccc.setup({
       default_color = "#40bfbf",
-      point_char = "",
+      bar_char = '█',
+      point_char = '|',
       point_color = "#40bfbf",
       highlighter = {
         auto_enable = true,
@@ -620,11 +619,25 @@ lua_source = '''
 
 [[plugins]]
 repo = 'lambdalisue/kensaku.vim'
-on_event = 'BufEnter'
-hook_source = '''
+depends = 'denops.vim'
+on_cmd = 'KensakuGrep'
+hook_post_source = '''
     let romanTable = vimrc#json#read(stdpath('config') . '/script/azik.json')
     let romanTable = values(map(romanTable, { key, val -> [key, val[0], 0] }))
     call kensaku#set_roman_table(romanTable)
+
+    command! -nargs=1 KensakuGrep call KensakuGrep(<q-args>)
+    function! KensakuGrep(input) abort
+      if !executable('rg')
+        return
+      endif
+      let grepprg = &grepprg
+      set grepprg=rg\ -e\ $*\ --vimgrep
+      execute 'grep' string(kensaku#query(a:input, {
+            \ 'rxop': ['\|', '(', ')', '[', ']', ''],
+            \}))
+      let &grepprg = grepprg
+    endfunction
 '''
 
 # Plugins for specific filetype
@@ -651,18 +664,3 @@ hook_add = '''
 [[plugins]]
 repo = 'uga-rosa/todo.nvim'
 on_ft = 'markdown'
-
-[[plugins]]
-repo = '~/plugin/jam.nvim'
-depends = 'pum.vim'
-on_event = 'InsertEnter'
-lua_source = '''
-    require("jam").setup({
-      keyLayout = "azik",
-      marker = vim.split("asdfghjkl", ""),
-      start_key = "<C-q>",
-    })
-'''
-
-[[plugins]]
-repo = 'Shougo/pum.vim'

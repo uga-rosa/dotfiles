@@ -15,6 +15,7 @@ lua_source = '''
       "bashls",
       "nimls",
       "cssls",
+      "tsserver",
     }
 
     local function on_attach(_, bufnr)
