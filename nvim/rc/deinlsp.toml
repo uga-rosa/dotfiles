@@ -119,7 +119,7 @@ lua_source = '''
         if root_pattern("deno.json")(fname) then
           return nil
         end
-        return root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git")(fname)
+        return root_pattern("package.json", "tsconfig.json", "jsconfig.json")(fname)
       end,
       single_file_support = false,
     }
