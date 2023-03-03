@@ -2,6 +2,6 @@
 !/.gitignore
 !/stylua.toml
 !/flake8
-!/nvim/
+!/nvim
 !/cligen/
 !/afx/
