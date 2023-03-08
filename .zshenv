@@ -25,9 +25,6 @@ if [[ -d "$HOME/.pyenv" ]]; then
     eval "$(pyenv init -)"
 fi
 
-# luarocks
-eval $(luarocks path)
-
 # Rust
 [[ -f "$HOME/.cargo/env" ]] && source ~/.cargo/env
 
