@@ -4,7 +4,7 @@ snippet sp
 	fmt.${1|Sprint,Sprintln,Sprintf|}($2)
 snippet fp
 	fmt.${1|Fprint,Fprintln,Fprintf|}($2)
-snippet func
+snippet fn
 	func ${1:name}($2) $3 {
 		$0
 	}
@@ -39,7 +39,7 @@ snippet for
 		$0
 	}
 snippet for_inc
-	for ${1:i} := ${2:0}; i < ${3:10}; ${4:i++} {
+	for ${1:i} := ${2:0}; $1 < ${3:10}; ${4:$1++} {
 		$0
 	}
 snippet for_range
@@ -58,7 +58,7 @@ snippet default
 	default:
 		$0
 snippet rt
-	return $0
+	return
 snippet type
 	type $0
 snippet struct
@@ -69,3 +69,5 @@ snippet interface
 	interface {
 		$0
 	}
+snippet set
+	map[${1:int}]struct{}{}
