@@ -497,6 +497,7 @@ lua_source = '''
       highlighter = {
         auto_enable = true,
         lsp = true,
+        filetypes = { "css", "html" },
       },
     })
 '''
@@ -638,6 +639,13 @@ hook_post_source = '''
             \}))
       let &grepprg = grepprg
     endfunction
+'''
+
+[[plugins]]
+repo = 'mattn/vim-sonictemplate'
+on_cmd = 'Template'
+hook_source = '''
+    let g:sonictemplate_vim_template_dir = stdpath('config') . '/template'
 '''
 
 # Plugins for specific filetype
