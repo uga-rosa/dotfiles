@@ -1,8 +1,10 @@
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depends = ['nvim-lsp-setup', 'fidget.nvim', 'cmp-nvim-lsp']
+depends = ['fidget.nvim', 'cmp-nvim-lsp']
 on_event = ['BufRead', 'BufNewFile']
 lua_source = '''
+    require("rc.lsp")
+
     local api = vim.api
     local lspconfig = require("lspconfig")
 
@@ -84,7 +86,7 @@ lua_source = '''
             path = { "lua/?.lua", "lua/?/init.lua" },
           },
           workspace = {
-            library = library({ "plenary.nvim", "nvim-cmp", "nvim-lsp-setup" }),
+            library = library({ "plenary.nvim", "nvim-cmp" }),
             checkThirdParty = false,
           },
         },
@@ -127,39 +129,6 @@ lua_source = '''
     for _, server in ipairs(servers) do
       lspconfig[server].setup(opts[server])
     end
-'''
-
-[[plugins]]
-repo = '~/plugin/nvim-lsp-setup'
-lua_source = '''
-    -- Highlights
-    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1d3b53" })
-    vim.api.nvim_set_hl(0, "Title", { bg = "#1d3b53" })
-    vim.api.nvim_set_hl(0, "FloatBorder", { fg = "white", bg = "#1d3b53" })
-
-    require("nvim_lsp_setup").setup({
-      hover = {
-        border = "single",
-        title = "Hover",
-      },
-      diagnostic = {
-        float = {
-          border = "single",
-          title = "Diagnostics",
-          header = {},
-          format = function(diag)
-            if diag.code then
-              return ("[%s](%s): %s"):format(diag.source, diag.code, diag.message)
-            else
-              return ("[%s]: %s"):format(diag.source, diag.message)
-            end
-          end,
-        },
-      },
-      signature_help = {
-        border = "single",
-      },
-    })
 '''
 
 [[plugins]]
@@ -217,7 +186,7 @@ lua_source = '''
         local function open_with_cmd(cmd)
           return function (selected, _)
             local location = path2location[selected[1]]
-            gtd._open({ command = cmd }, location)
+            gtd.open({ command = cmd }, location)
           end
         end
 
