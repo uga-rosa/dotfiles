@@ -26,13 +26,20 @@ local opts = {
   },
 }
 
+local handlers = {
+  hover = vim.lsp.with(vim.lsp.handlers.hover, opts.hover),
+  signature_help = vim.lsp.with(vim.lsp.handlers.signature_help, opts.signature_help),
+}
+
 vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
   result.contents.value = result.contents.value:gsub("<br>", "\n")
-  vim.lsp.with(vim.lsp.handlers.hover, opts.hover)(err, result, ctx, config)
+  config = config or {}
+  config.max_width = 80
+  handlers.hover(err, result, ctx, config)
 end
 
 vim.diagnostic.config(opts.diagnostic)
 
 vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
-  vim.lsp.with(vim.lsp.handlers.signature_help, opts.signature_help)(err, result, ctx, config)
+  handlers.signature_help(err, result, ctx, config)
 end
