@@ -110,6 +110,19 @@ lua_add = '''
 '''
 lua_source = '''
     local actions = require("fzf-lua.actions")
+
+    local fd_opts = {
+      "--color=never",
+      "--type", "f",
+      "--hidden",
+      "--follow",
+      "--exclude", ".git",
+      "--exclude", "*.png",
+      "--exclude", "*.xlsx",
+      "--exclude", "*.docx",
+      "--exclude", "*.pdf",
+    }
+
     require("fzf-lua").setup({
       actions = {
         files = {
@@ -129,6 +142,7 @@ lua_source = '''
       },
       files = {
         prompt = "Files❯ ",
+        fd_opts = table.concat(fd_opts, " "),
       },
       buffers = {
         actions = {
@@ -497,7 +511,6 @@ lua_source = '''
       highlighter = {
         auto_enable = true,
         lsp = true,
-        filetypes = { "css", "html" },
       },
     })
 '''
