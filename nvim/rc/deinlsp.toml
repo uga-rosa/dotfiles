@@ -1,12 +1,12 @@
 [[plugins]]
-repo = 'neovim/nvim-lspconfig'
-depends = ['fidget.nvim', 'cmp-nvim-lsp']
+repo = 'williamboman/mason-lspconfig.nvim'
+depends = ['mason.nvim', 'nvim-lspconfig', 'fidget.nvim', 'cmp-nvim-lsp']
 on_event = ['BufRead', 'BufNewFile']
-lua_source = '''
-    require("rc.lsp")
-
+lua_post_source = '''
     local api = vim.api
     local lspconfig = require("lspconfig")
+
+    require("rc.lsp")
 
     local servers = {
       "lua_ls",
@@ -15,10 +15,13 @@ lua_source = '''
       "gopls",
       "pyright",
       "bashls",
-      "nimls",
-      "cssls",
       "tsserver",
     }
+
+    require("mason-lspconfig").setup({
+      ensure_installed = servers,
+      automatic_installation = true,
+    })
 
     local function on_attach(_, bufnr)
       local buf_map = function(lhs, rhs)
@@ -65,7 +68,6 @@ lua_source = '''
           vim.notify("Invalid plugin name: " .. plugin)
         end
       end
-      table.insert(paths, vim.fn.stdpath("config"))
       return paths
     end
 
@@ -126,10 +128,21 @@ lua_source = '''
       single_file_support = false,
     }
 
-    for _, server in ipairs(servers) do
-      lspconfig[server].setup(opts[server])
-    end
+    require("mason-lspconfig").setup_handlers({
+      function(server_name)
+        lspconfig[server_name].setup(opts[server_name])
+      end
+    })
 '''
+
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+lua_post_source = '''
+    require("mason").setup()
+'''
+
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
 
 [[plugins]]
 repo = 'j-hui/fidget.nvim'
