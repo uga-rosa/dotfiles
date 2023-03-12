@@ -454,11 +454,6 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = '4513ECHO/denops-gitter.vim'
-depends = 'denops.vim'
-on_path = 'gitter://'
-
-[[plugins]]
 repo = '~/plugin/translate.nvim'
 on_cmd = 'Translate'
 lua_add = '''
