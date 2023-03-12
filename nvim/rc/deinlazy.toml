@@ -560,11 +560,22 @@ hook_source = '''
 
     augroup my_skkeleton
       au!
-      au User skkeleton-enable-post  lua CmpSourceSelect('skkeleton')
-      au User skkeleton-disable-post lua CmpSourceSelect('default')
-      au User skkeleton-enable-post  call s:show_mode_enable()
-      au User skkeleton-disable-post call s:show_mode_disable()
+      au User skkeleton-enable-post  call s:skkeleton_enable()
+      au User skkeleton-disable-post call s:skkeleton_disable()
     augroup END
+
+    function! s:skkeleton_enable() abort
+      lua CmpSourceSelect('skkeleton')
+      call s:show_mode_enable()
+      lmap <buffer> <Tab> <C-n>
+      lmap <buffer> <S-Tab> <C-p>
+    endfunction
+
+    function! s:skkeleton_disable() abort
+      lua CmpSourceSelect('default')
+      call s:show_mode_disable()
+      lmapclear <buffer>
+    endfunction
 
     let s:ns = nvim_create_namespace('skkeleton')
     let s:id = 1234321
