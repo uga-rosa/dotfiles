@@ -57,6 +57,18 @@ local function is_truthy(v)
     or (type(v) == "number" and v ~= 0)
 end
 
+local function get_visible_buffers()
+  local bufs = {}
+  for _, win in ipairs(api.nvim_list_wins()) do
+    local buf = api.nvim_win_get_buf(win)
+    local byte_size = api.nvim_buf_get_offset(buf, api.nvim_buf_line_count(buf))
+    if byte_size < 1024 * 1024 then
+      table.insert(bufs, buf)
+    end
+  end
+  return bufs
+end
+
 cmp.setup({
   enabled = function()
     local disabled = false
@@ -156,27 +168,8 @@ cmp.setup({
     }),
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
   },
-})
-
-local function get_visible_buffers()
-  local bufs = {}
-  for _, win in ipairs(api.nvim_list_wins()) do
-    local buf = api.nvim_win_get_buf(win)
-    local byte_size = api.nvim_buf_get_offset(buf, api.nvim_buf_line_count(buf))
-    if byte_size < 1024 * 1024 then
-      table.insert(bufs, buf)
-    end
-  end
-  return bufs
-end
-
-local function get_sources(name)
-  if name == "skkeleton" then
-    return {
+  sources = {
       { name = "skkeleton" },
-    }
-  elseif name == "default" then
-    return {
       { name = "vsnip" },
       { name = "nvim_lsp" },
       { name = "nvim_lua" },
@@ -193,20 +186,8 @@ local function get_sources(name)
         keyword_length = 2,
         priority = 1,
       },
-    }
-  end
-end
-
-CmpSourceSelect = function(name)
-  local sources = get_sources(name)
-  if sources then
-    cmp.setup({
-      sources = sources,
-    })
-  end
-end
-
-CmpSourceSelect("default")
+  }
+})
 
 cmp.setup.cmdline("/", {
   sources = {

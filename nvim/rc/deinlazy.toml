@@ -565,14 +565,12 @@ hook_source = '''
     augroup END
 
     function! s:skkeleton_enable() abort
-      lua CmpSourceSelect('skkeleton')
       call s:show_mode_enable()
       lmap <buffer> <Tab> <C-n>
       lmap <buffer> <S-Tab> <C-p>
     endfunction
 
     function! s:skkeleton_disable() abort
-      lua CmpSourceSelect('default')
       call s:show_mode_disable()
       lmapclear <buffer>
     endfunction
