@@ -421,8 +421,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'monaqa/vim-partedit'
-rev = 'feat-prefix_pattern'
+repo = 'thinca/vim-partedit'
 on_cmd = 'Partedit'
 on_func = 'partedit#start'
 hook_add = '''
