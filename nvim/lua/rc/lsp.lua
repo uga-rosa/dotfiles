@@ -31,8 +31,37 @@ local handlers = {
   signature_help = vim.lsp.with(vim.lsp.handlers.signature_help, opts.signature_help),
 }
 
+---@param s string
+---@return string
+local function br2lf(s)
+  s = s:gsub("<br>", "\n")
+  return s
+end
+
+---@param err any
+---@param result? Hover
+---@param ctx any
+---@param config? table
 vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
-  result.contents.value = result.contents.value:gsub("<br>", "\n")
+  if result then
+    if type(result.contents) == "string" then
+      ---@cast result {contents: string}
+      result.contents = br2lf(result.contents)
+    elseif result.contents.value then
+      if result.contents.language or result.contents.kind == "markdown" then
+        result.contents.value = br2lf(result.contents.value)
+      end
+    elseif vim.tbl_islist(result.contents) then
+      ---@cast result {contents: MarkedString[]}
+      for i, v in ipairs(result.contents) do
+        if type(v) == "string" then
+          result.contents[i] = br2lf(v)
+        else
+          v.value = br2lf(v.value)
+        end
+      end
+    end
+  end
   config = config or {}
   config.max_width = 80
   handlers.hover(err, result, ctx, config)
