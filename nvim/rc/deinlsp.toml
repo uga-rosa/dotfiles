@@ -1,6 +1,12 @@
 [[plugins]]
 repo = 'williamboman/mason-lspconfig.nvim'
-depends = ['mason.nvim', 'nvim-lspconfig', 'fidget.nvim', 'cmp-nvim-lsp']
+depends = [
+    'mason.nvim',
+    'nvim-lspconfig',
+    'fidget.nvim',
+    'cmp-nvim-lsp',
+    'actions-preview.nvim'
+]
 on_event = ['BufRead', 'BufNewFile']
 lua_post_source = '''
     local api = vim.api
@@ -32,7 +38,7 @@ lua_post_source = '''
       buf_map("[d", vim.diagnostic.goto_prev)
       buf_map("]d", vim.diagnostic.goto_next)
       buf_map("<leader>n", vim.lsp.buf.rename)
-      buf_map("<leader>a", vim.lsp.buf.code_action)
+      buf_map("<leader>a", require("actions-preview").code_actions)
 
       api.nvim_create_user_command("Format", function()
         vim.lsp.buf.format()
@@ -250,3 +256,7 @@ lua_source = '''
       },
     })
 '''
+
+[[plugins]]
+repo = 'aznhe21/actions-preview.nvim'
+depends = 'nui.nvim'
