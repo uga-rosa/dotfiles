@@ -27,3 +27,15 @@ function! vimrc#syn_group() abort
   let id = synID(line('.'), col('.'), 1)
   echo synIDattr(id, 'name') '->' synIDattr(synIDtrans(id), 'name')
 endfunction
+
+function vimrc#keep_cursor(cmd) abort
+  let curwin_id = win_getid()
+  let view = winsaveview()
+  try
+    execute a:cmd
+  finally
+    if win_getid() == curwin_id
+      call winrestview(view)
+    endif
+  endtry
+endfunction
