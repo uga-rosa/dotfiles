@@ -29,6 +29,16 @@ lua_post_source = '''
       automatic_installation = true,
     })
 
+    ---@return boolean
+    local function is_active_null_ls()
+      for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+        if client.name == "null-ls" then
+          return true
+        end
+      end
+      return false
+    end
+
     local function on_attach(_, bufnr)
       local buf_map = function(lhs, rhs)
         vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
@@ -41,7 +51,11 @@ lua_post_source = '''
       buf_map("<leader>a", require("actions-preview").code_actions)
 
       api.nvim_create_user_command("Format", function()
-        vim.lsp.buf.format()
+        if not is_active_null_ls() and vim.bo.filetype == "lua" then
+          vim.cmd("KeepCursor %!stylua -f ~/.config/stylua.toml -")
+        else
+          vim.lsp.buf.format()
+        end
       end, {})
       buf_map("<leader>F", "<Cmd>Format<CR>")
     end
