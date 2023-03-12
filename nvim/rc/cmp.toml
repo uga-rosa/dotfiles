@@ -41,10 +41,10 @@ lua_source = '''
     local dict = require("cmp_dictionary")
 
     dict.setup({
-        exact = 2,
-        async = true,
-        first_case_insensitive = true,
-        document = true,
+      exact = 2,
+      async = true,
+      first_case_insensitive = true,
+      document = true,
     })
 
     dict.switcher({

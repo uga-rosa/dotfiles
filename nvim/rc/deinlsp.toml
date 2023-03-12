@@ -71,7 +71,7 @@ lua_post_source = '''
         value.on_attach = on_attach
         value.capabilities = capabilities
         rawset(self, key, value)
-      end
+      end,
     })
 
     opts["*"] = {}
@@ -151,7 +151,7 @@ lua_post_source = '''
     require("mason-lspconfig").setup_handlers({
       function(server_name)
         lspconfig[server_name].setup(opts[server_name])
-      end
+      end,
     })
 '''
 
@@ -196,7 +196,7 @@ lua_source = '''
       return {
         path = filepath,
         line = tonumber(row) or 1,
-        col  = tonumber(col) or 1,
+        col = tonumber(col) or 1,
       }
     end
 
@@ -217,7 +217,7 @@ lua_source = '''
         end
 
         local function open_with_cmd(cmd)
-          return function (selected, _)
+          return function(selected, _)
             local location = path2location[selected[1]]
             gtd.open({ command = cmd }, location)
           end
@@ -231,9 +231,9 @@ lua_source = '''
             ["ctrl-x"] = open_with_cmd("split"),
             ["ctrl-v"] = open_with_cmd("vsplit"),
             ["ctrl-t"] = open_with_cmd("tabedit"),
-          }
+          },
         })
-      end
+      end,
     })
 '''
 
