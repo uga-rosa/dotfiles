@@ -12,6 +12,9 @@ repo = 'kkharji/sqlite.lua'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
+hook_add = '''
+    let g:context_filetype#search_offset = 500
+'''
 
 [[plugins]]
 repo = 'thinca/vim-themis'
