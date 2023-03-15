@@ -51,7 +51,7 @@ lua_post_source = '''
       buf_map("<leader>a", require("actions-preview").code_actions)
 
       api.nvim_create_user_command("Format", function()
-        if not is_active_null_ls() and vim.bo.filetype == "lua" then
+        if vim.bo.filetype == "lua" and not is_active_null_ls() then
           vim.cmd("KeepCursor %!stylua -f ~/.config/stylua.toml -")
         else
           vim.lsp.buf.format()
