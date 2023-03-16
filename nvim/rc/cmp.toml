@@ -245,7 +245,7 @@ repo = 'hrsh7th/cmp-vsnip'
 on_source = 'nvim-cmp'
 
 [[plugins]]
-repo = '~/plugin/cmp-dictionary'
+repo = 'uga-rosa/cmp-dictionary'
 on_source = 'nvim-cmp'
 lua_source = '''
     local dict = require("cmp_dictionary")
@@ -268,5 +268,5 @@ lua_source = '''
 '''
 
 [[plugins]]
-repo = '~/plugin/cmp-skkeleton'
+repo = 'uga-rosa/cmp-skkeleton'
 on_source = 'nvim-cmp'

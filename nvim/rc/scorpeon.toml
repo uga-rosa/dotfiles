@@ -1,5 +1,5 @@
 [[plugins]]
-repo = '~/plugin/scorpeon.vim'
+repo = 'uga-rosa/scorpeon.vim'
 depends = 'denops.vim'
 on_event = 'BufRead'
 hook_add = '''
