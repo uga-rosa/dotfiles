@@ -654,6 +654,10 @@ hook_source = '''
     let g:sonictemplate_vim_template_dir = stdpath('config') . '/template'
 '''
 
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+on_cmd = 'Qfreplace'
+
 # Plugins for specific filetype
 
 [[plugins]]
