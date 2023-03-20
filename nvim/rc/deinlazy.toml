@@ -391,13 +391,9 @@ lua_source = '''
         exec = "%C run -A %S",
       },
       lua = {
-        command = ":luafile",
-        exec = "%C %S",
-        runner = "vimscript",
-      },
-      lua_vusted = {
-        command = "vusted",
-        exec = "%C %s",
+        command = "nvim",
+        tempfile = "%{tempname()}.lua",
+        exec = [[%c --clean --headless -c 'source %s' -c 'cquit 0']],
       },
       nimble = {
         command = "nimble",
