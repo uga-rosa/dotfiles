@@ -26,6 +26,9 @@ repo = 'hrsh7th/nvim-kit'
 repo = 'MunifTanjim/nui.nvim'
 
 [[plugins]]
+repo = 'itchyny/vim-qfedit'
+
+[[plugins]]
 repo = 'bluz71/vim-nightfly-guicolors'
 hook_source = '''
     let g:nightflyItalics = v:false
