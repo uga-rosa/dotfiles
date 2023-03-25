@@ -22,6 +22,7 @@ lua_post_source = '''
       "pyright",
       "bashls",
       "tsserver",
+      "sqlls",
     }
 
     require("mason-lspconfig").setup({
