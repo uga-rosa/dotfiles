@@ -491,7 +491,9 @@ hook_add = '''
     nnoremap <C-c> <Cmd>CccPick<CR>
 '''
 lua_source = '''
-    require("ccc").setup({
+    local ccc = require("ccc")
+
+    ccc.setup({
       default_color = "#40bfbf",
       highlighter = {
         auto_enable = true,
@@ -545,32 +547,13 @@ lua_source = '''
       markerHenkanSelect = ">>",
       registerConvertResult = true,
     })
+'''
 
-    local function skkeleton_enable()
-      vim.keymap.set("l", "<Tab>", "<C-n>", { buffer = true })
-      vim.keymap.set("l", "<S-Tab>", "<C-p>", { buffer = true })
-      vim.opt_local.cursorline = true
-    end
-
-    local function skkeleton_disable()
-      vim.keymap.del("l", "<Tab>", { buffer = true })
-      vim.keymap.del("l", "<S-Tab>", { buffer = true })
-      vim.opt_local.cursorline = false
-    end
-
-    local id = vim.api.nvim_create_augroup("my_skkeleton", {})
-
-    vim.api.nvim_create_autocmd("User", {
-      group = id,
-      pattern = "skkeleton-enable-post",
-      callback = skkeleton_enable,
-    })
-
-    vim.api.nvim_create_autocmd("User", {
-      group = id,
-      pattern = "skkeleton-disable-post",
-      callback = skkeleton_disable,
-    })
+[[plugins]]
+repo = 'delphinus/skkeleton_indicator.nvim'
+on_source = 'skkeleton'
+lua_source = '''
+    require("skkeleton_indicator").setup()
 '''
 
 [[plugins]]
