@@ -38,14 +38,7 @@ nnoremap x "_x
 inoremap <C-f> <C-g>U<Right>
 inoremap <C-b> <C-g>U<Left>
 inoremap <C-d> <Del>
-
-" Command mode
-cnoremap <C-f> <Right>
-cnoremap <C-b> <Left>
-cnoremap <C-a> <Home>
-cnoremap <C-e> <End>
-cnoremap <C-h> <BS>
-cnoremap <C-d> <Del>
+" Use emcl.nvim for command mode
 
 " Close tab
 nnoremap qt <Cmd>tabclose<CR>

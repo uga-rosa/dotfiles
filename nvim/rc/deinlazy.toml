@@ -557,6 +557,31 @@ lua_source = '''
 '''
 
 [[plugins]]
+repo = 'delphinus/emcl.nvim'
+on_event = "CmdlineEnter"
+lua_source = '''
+    require("emcl").setup({
+      enabled = {
+        "ForwardChar",
+        "BackwardChar",
+        "BeginningOfLine",
+        "EndOfLine",
+        "AbortCommand",
+        "ForwardWord",
+        "BackwardWord",
+        "DeleteChar",
+        "BackwardDeleteChar",
+        "KillWord",
+        "DeleteBackwardsToWhiteSpace",
+        "BackwardKillWord",
+        "TransposeChar",
+        "TransposeWord",
+        "ToggleExternalCommand",
+      },
+    })
+'''
+
+[[plugins]]
 repo = 'monaqa/dial.nvim'
 on_map = '<Plug>'
 hook_add = '''
