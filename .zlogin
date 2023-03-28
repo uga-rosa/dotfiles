@@ -6,8 +6,6 @@ bindkey "^O" edit-command-line
 # Editor
 export EDITOR=nvim
 alias nv="nvim"
-alias v="nvim"
-alias nvr="/usr/local/nvim-v0.8.1/bin/nvim"
 
 # tmux color
 export TERM="tmux-256color"
