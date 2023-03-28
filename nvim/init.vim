@@ -2,6 +2,10 @@
 " neovim in unix.
 
 lua <<EOL
+if vim.loader then
+  vim.loader.enable()
+end
+
 require("rc.utils")
 require("rc.ftdetect")
 EOL
