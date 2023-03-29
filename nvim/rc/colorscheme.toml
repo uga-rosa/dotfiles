@@ -1,0 +1,22 @@
+[[plugins]]
+repo = 'bluz71/vim-nightfly-guicolors'
+hook_source = '''
+    let g:nightflyItalics = v:false
+    colorscheme nightfly
+'''
+
+[[plugins]]
+repo = 'EdenEast/nightfox.nvim'
+on_event = 'BufEnter'
+hook_source = '''
+    colorscheme nightfox
+'''
+
+[[plugins]]
+repo = 'folke/tokyonight.nvim'
+hook_source = '''
+    colorscheme tokyonight
+'''
+
+[[plugins]]
+repo = 'rebelot/kanagawa.nvim'
