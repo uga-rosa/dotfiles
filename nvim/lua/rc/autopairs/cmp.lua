@@ -1,4 +1,4 @@
-local handlers = require("autopairs.handlers")
+local handlers = require("rc.autopairs.handlers")
 local cmp = require("cmp")
 
 local Kind = cmp.lsp.CompletionItemKind

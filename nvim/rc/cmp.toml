@@ -213,7 +213,7 @@ lua_post_source = '''
       },
     })
 
-    cmp.event:on("confirm_done", require("autopairs.cmp").on_confirm_done())
+    cmp.event:on("confirm_done", require("rc.autopairs.cmp").on_confirm_done())
 '''
 
 [[plugins]]

@@ -1,4 +1,4 @@
-local utils = require("autopairs.utils")
+local utils = require("rc.autopairs.utils")
 
 local M = {}
 
