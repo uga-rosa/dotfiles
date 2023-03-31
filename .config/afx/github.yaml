@@ -57,6 +57,9 @@ github:
         zstyle ':prompt:pure:git:branch' color '#ae81ff'
       sources:
         - pure.zsh
+      env:
+        PURE_PROMPT_SYMBOL: '>'
+        PURE_PROMPT_VICMD_SYMBOL: '<'
     depends-on:
       - mafredri/zsh-async
   - name: mafredri/zsh-async
