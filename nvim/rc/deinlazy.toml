@@ -2,6 +2,14 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+repo = 'rebelot/heirline.nvim'
+depends = 'nightfox.nvim'
+on_event = 'BufEnter'
+lua_source = '''
+    require("rc.heirline")
+'''
+
+[[plugins]]
 repo = 'hrsh7th/vim-vsnip'
 on_event = 'InsertEnter'
 on_ft = 'snippets'
