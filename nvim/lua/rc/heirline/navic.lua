@@ -90,6 +90,6 @@ return {
   provider = function(self)
     return self.child:eval()
   end,
-  hl = { fg = "fg" },
+  hl = { fg = "fg", bg = "bg" },
   update = "CursorMoved",
 }
