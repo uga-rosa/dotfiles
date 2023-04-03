@@ -527,6 +527,19 @@ repo = 'tweekmonster/helpful.vim'
 on_cmd = 'HelpfulVersion'
 
 [[plugins]]
+repo = 'haya14busa/vim-asterisk'
+on_map = '<Plug>'
+hook_add = '''
+    Keymap nxo *   <Plug>(asterisk-z*)
+    Keymap nxo #   <Plug>(asterisk-z#)
+    Keymap nxo g*  <Plug>(asterisk-gz*)
+    Keymap nxo g#  <Plug>(asterisk-gz#)
+'''
+hook_source = '''
+    let g:asterisk#keeppos = 1
+'''
+
+[[plugins]]
 repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
 on_event = ['InsertEnter', 'CmdlineEnter']
