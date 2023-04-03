@@ -245,14 +245,15 @@ repo = 'hrsh7th/cmp-vsnip'
 on_source = 'nvim-cmp'
 
 [[plugins]]
-repo = 'uga-rosa/cmp-dictionary'
+# repo = 'uga-rosa/cmp-dictionary'
+repo = '~/plugin/cmp-dictionary'
 on_source = 'nvim-cmp'
 lua_source = '''
     local dict = require("cmp_dictionary")
 
     dict.setup({
       exact = 2,
-      async = true,
+      sqlite = true,
       first_case_insensitive = true,
       document = true,
     })
