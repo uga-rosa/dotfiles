@@ -48,8 +48,8 @@ if dein#min#load_state(s:path)
   let s:dein_lsp_toml = s:base_dir . 'deinlsp.toml'
   let s:cmp_toml = s:base_dir . 'cmp.toml'
   let s:colorscheme_toml = s:base_dir . 'colorscheme.toml'
-  let s:scorpeon_toml = s:base_dir . 'scorpeon.toml'
   let s:dein_ft_toml = s:base_dir . 'deinft.toml'
+  " let s:scorpeon_toml = s:base_dir . 'scorpeon.toml'
 
   call dein#begin(s:path)
 
@@ -58,8 +58,8 @@ if dein#min#load_state(s:path)
   call dein#load_toml(s:dein_lsp_toml, {'lazy' : 1})
   call dein#load_toml(s:cmp_toml, {'lazy' : 1})
   call dein#load_toml(s:colorscheme_toml, {'lazy' : 1})
-  call dein#load_toml(s:scorpeon_toml, {'lazy' : 1})
   call dein#load_toml(s:dein_ft_toml)
+  " call dein#load_toml(s:scorpeon_toml, {'lazy' : 1})
 
   let s:work_dir = expand('~/plugin')
   if isdirectory(s:work_dir)
