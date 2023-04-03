@@ -1,5 +1,6 @@
 [[plugins]]
 repo = 'bluz71/vim-nightfly-guicolors'
+if = 0
 hook_source = '''
     let g:nightflyItalics = v:false
     colorscheme nightfly
@@ -7,16 +8,17 @@ hook_source = '''
 
 [[plugins]]
 repo = 'EdenEast/nightfox.nvim'
-on_event = 'BufEnter'
 hook_source = '''
     colorscheme nightfox
 '''
 
 [[plugins]]
 repo = 'folke/tokyonight.nvim'
+if = 0
 hook_source = '''
     colorscheme tokyonight
 '''
 
 [[plugins]]
 repo = 'rebelot/kanagawa.nvim'
+if = 0

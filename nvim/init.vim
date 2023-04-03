@@ -43,21 +43,21 @@ if dein#min#load_state(s:path)
   let g:dein#inline_vimrcs = ['options.vim', 'mappings.vim']
   let g:dein#inline_vimrcs = map(g:dein#inline_vimrcs, { _, v -> s:base_dir . v })
 
+  let s:colorscheme_toml = s:base_dir . 'colorscheme.toml'
   let s:dein_toml = s:base_dir . 'dein.toml'
   let s:dein_lazy_toml = s:base_dir . 'deinlazy.toml'
   let s:dein_lsp_toml = s:base_dir . 'deinlsp.toml'
   let s:cmp_toml = s:base_dir . 'cmp.toml'
-  let s:colorscheme_toml = s:base_dir . 'colorscheme.toml'
   let s:dein_ft_toml = s:base_dir . 'deinft.toml'
   " let s:scorpeon_toml = s:base_dir . 'scorpeon.toml'
 
   call dein#begin(s:path)
 
+  call dein#load_toml(s:colorscheme_toml)
   call dein#load_toml(s:dein_toml)
   call dein#load_toml(s:dein_lazy_toml, {'lazy' : 1})
   call dein#load_toml(s:dein_lsp_toml, {'lazy' : 1})
   call dein#load_toml(s:cmp_toml, {'lazy' : 1})
-  call dein#load_toml(s:colorscheme_toml, {'lazy' : 1})
   call dein#load_toml(s:dein_ft_toml)
   " call dein#load_toml(s:scorpeon_toml, {'lazy' : 1})
 
