@@ -3,7 +3,7 @@ repo = 'Shougo/dein.vim'
 
 [[plugins]]
 repo = 'rebelot/heirline.nvim'
-depends = 'nightfox.nvim'
+depends = ['nightfox.nvim', 'nvim-navic']
 on_event = 'BufEnter'
 lua_source = '''
     require("rc.heirline")

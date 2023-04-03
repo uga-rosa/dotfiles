@@ -5,7 +5,8 @@ depends = [
     'nvim-lspconfig',
     'fidget.nvim',
     'cmp-nvim-lsp',
-    'actions-preview.nvim'
+    'actions-preview.nvim',
+    'nvim-navic',
 ]
 on_event = ['BufReadPre']
 lua_post_source = '''
@@ -40,7 +41,7 @@ lua_post_source = '''
       return false
     end
 
-    local function on_attach(_, bufnr)
+    local function on_attach(client, bufnr)
       local buf_map = function(lhs, rhs)
         vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
       end
@@ -59,6 +60,10 @@ lua_post_source = '''
         end
       end, {})
       buf_map("<leader>F", "<Cmd>Format<CR>")
+
+      if client.server_capabilities.documentSymbolProvider then
+        require("nvim-navic").attach(client, bufnr)
+      end
     end
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -297,3 +302,7 @@ lua_source = '''
 [[plugins]]
 repo = 'aznhe21/actions-preview.nvim'
 depends = 'nui.nvim'
+
+[[plugins]]
+repo = 'SmiteshP/nvim-navic'
+depends = 'nvim-lspconfig'

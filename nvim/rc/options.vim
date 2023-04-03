@@ -32,6 +32,8 @@ set inccommand=split
 " クリックはrc/mappings.vimで無効化
 set mouse=ni
 
+" heirlineで出す
+set noshowmode
 " ステータスラインを下だけに
 set laststatus=3
 

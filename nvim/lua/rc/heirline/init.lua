@@ -28,4 +28,7 @@ heirline.setup({
       hl = { fg = "bg", bg = "fg" },
     },
   },
+  winbar = {
+    require("rc.heirline.navic"),
+  },
 })
