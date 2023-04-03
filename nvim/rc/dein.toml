@@ -35,3 +35,10 @@ lua_source = '''
       name = "default",
     })
 '''
+
+[[plugins]]
+repo = 'rebelot/heirline.nvim'
+depends = ['nightfox.nvim', 'nvim-navic']
+lua_source = '''
+    require("rc.heirline")
+'''
