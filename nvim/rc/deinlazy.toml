@@ -149,7 +149,7 @@ lua_source = '''
         },
       },
       files = {
-        prompt = "Files❯ ",
+        prompt = "Files> ",
         fd_opts = table.concat(fd_opts, " "),
       },
       buffers = {
