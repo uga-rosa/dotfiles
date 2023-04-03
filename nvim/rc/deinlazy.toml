@@ -433,7 +433,8 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'monaqa/nvim-treesitter-clipping'
+# repo = 'monaqa/nvim-treesitter-clipping'
+repo = 'uga-rosa/nvim-treesitter-clipping'
 depends = ['nvim-treesitter', 'vim-partedit']
 on_lua = 'nvim-treesitter-clipping'
 lua_add = '''
