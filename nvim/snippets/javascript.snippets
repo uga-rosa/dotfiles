@@ -5,23 +5,21 @@ snippet l
 snippet c
 	const $1 = $0
 snippet func
-	function $1($2): $3 {
+	function $1($2) {
 		$0
 	}
 snippet arrow_func
-	($1): $2 => {
+	($1) => {
 		$0
 	}
 snippet func(async)
-	async function $1($2): Promise<${3:void}> {
+	async function $1($2) {
 		$0
 	}
 snippet arrow_func(async)
-	async ($1): Promise<${2:void}> => {
+	async ($1) => {
 		$0
 	}
-snippet promise
-	Promise<$1>
 snippet p
 	console.log($1)
 snippet if
@@ -38,5 +36,10 @@ snippet for_of
 	}
 snippet for_of(await)
 	for await (${1|const,let|} $2 of $3) {
+		$0
+	}
+snippet constructor_react
+	constructor(props) {
+		super(props)
 		$0
 	}

@@ -2,3 +2,21 @@ extends javascript
 
 snippet dax
 	import $ from "https://deno.land/x/dax/mod.ts";
+snippet func
+	function $1($2): $3 {
+		$0
+	}
+snippet arrow_func
+	($1): $2 => {
+		$0
+	}
+snippet func(async)
+	async function $1($2): Promise<${3:void}> {
+		$0
+	}
+snippet arrow_func(async)
+	async ($1): Promise<${2:void}> => {
+		$0
+	}
+snippet promise
+	Promise<$1>
