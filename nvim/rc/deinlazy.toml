@@ -111,38 +111,39 @@ lua_add = '''
 lua_source = '''
     local actions = require("fzf-lua.actions")
 
-    local fd_opts = {
-      "--color=never",
-      "--type", "f",
-      "--hidden",
-      "--follow",
-      "--exclude", ".git",
-      "--exclude", "*.png",
-      "--exclude", "*.xlsx",
-      "--exclude", "*.docx",
-      "--exclude", "*.pdf",
+    local exclude_extensions = {
+      "png",
+      "xlsx",
+      "docx",
+      "pdf",
     }
+
+    -- Default
+    local fd_opts = "--color=never --type f --hidden --follow --exclude .git"
+    for _, ext in ipairs(exclude_extensions) do
+      fd_opts = fd_opts .. (" --exclude '*.%s'"):format(ext)
+    end
 
     require("fzf-lua").setup({
       actions = {
         files = {
           ["default"] = actions.file_edit_or_qf,
-          ["ctrl-x"]  = actions.file_split,
-          ["ctrl-v"]  = actions.file_vsplit,
-          ["ctrl-t"]  = actions.file_tabedit,
-          ["alt-q"]   = actions.file_sel_to_qf,
-          ["alt-l"]   = actions.file_sel_to_ll,
+          ["ctrl-x"] = actions.file_split,
+          ["ctrl-v"] = actions.file_vsplit,
+          ["ctrl-t"] = actions.file_tabedit,
+          ["alt-q"] = actions.file_sel_to_qf,
+          ["alt-l"] = actions.file_sel_to_ll,
         },
         buffers = {
           ["default"] = actions.buf_edit,
-          ["ctrl-x"]  = actions.buf_split,
-          ["ctrl-v"]  = actions.buf_vsplit,
-          ["ctrl-t"]  = actions.buf_tabedit,
+          ["ctrl-x"] = actions.buf_split,
+          ["ctrl-v"] = actions.buf_vsplit,
+          ["ctrl-t"] = actions.buf_tabedit,
         },
       },
       files = {
         prompt = "Files> ",
-        fd_opts = table.concat(fd_opts, " "),
+        fd_opts = fd_opts,
       },
       buffers = {
         actions = {
