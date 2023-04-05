@@ -319,17 +319,13 @@ hook_post_source = '''
 
     let g:searchx_kensaku = 0
     function! ToggleSearchxMigemo() abort
-      if g:searchx_kensaku
-        let g:searchx.convert = { input -> input }
-      else
-        unlet g:searchx.convert
-        function g:searchx.convert(input) abort
-          return kensaku#query(a:input)
-        endfunction
-      endif
       let g:searchx_kensaku = !g:searchx_kensaku
+      if g:searchx_kensaku
+        let g:searchx.convert = { input -> kensaku#query(input) }
+      else
+        let g:searchx.convert = { input -> input }
+      endif
       call searchx#redraw()
-      lua require('lualine').refresh()
       redrawstatus
     endfunction
 '''

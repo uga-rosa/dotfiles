@@ -1,6 +1,9 @@
 return {
   init = function(self)
     self.mode = vim.fn.mode(1):sub(1, 1)
+    if self.mode == "c" and vim.g.searchx_kensaku == 1 then
+      self.mode = "k"
+    end
   end,
   hl = function(self)
     return { fg = self.mode_colors[self.mode] }
@@ -20,6 +23,7 @@ return {
       r = "REPLACE",
       ["!"] = "SHELL",
       t = "TERMINAL",
+      k = "MIGEMO",
     },
     mode_colors = {
       n = "fg",
@@ -35,6 +39,7 @@ return {
       r = "orange",
       ["!"] = "fg",
       t = "green",
+      k = "red",
     },
   },
   {
