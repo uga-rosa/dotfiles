@@ -22,7 +22,7 @@ lua = '''
     call vimrc#set_indent(tab_size, is_hard_tab)
 '''
 
-typescript_vim_sh_html_xhtml_nim = '''
+typescript_vim_sh_html_xhtml_nim_markdown = '''
     call vimrc#set_indent(2)
 '''
 
