@@ -114,7 +114,11 @@ lua_source = '''
     local exclude_extensions = {
       "png",
       "xlsx",
+      "xls",
       "docx",
+      "doc",
+      "pptx",
+      "ppt",
       "pdf",
     }
 
