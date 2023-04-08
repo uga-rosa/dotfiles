@@ -7,8 +7,9 @@ depends = [
     'cmp-nvim-lsp',
     'actions-preview.nvim',
     'nvim-navic',
+    'lsp_signature.nvim',
 ]
-on_event = ['BufReadPre']
+on_event = ['BufReadPre', 'BufNewFile']
 lua_post_source = '''
     local api = vim.api
     local lspconfig = require("lspconfig")
@@ -64,6 +65,8 @@ lua_post_source = '''
       if client.server_capabilities.documentSymbolProvider then
         require("nvim-navic").attach(client, bufnr)
       end
+
+      require("lsp_signature").on_attach({}, bufnr)
     end
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -306,3 +309,6 @@ depends = 'nui.nvim'
 [[plugins]]
 repo = 'SmiteshP/nvim-navic'
 depends = 'nvim-lspconfig'
+
+[[plugins]]
+repo = 'ray-x/lsp_signature.nvim'
