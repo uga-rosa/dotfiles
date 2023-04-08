@@ -178,7 +178,6 @@ lua_post_source = '''
           { name = "vsnip" },
           { name = "nvim_lsp" },
           { name = "nvim_lua" },
-          { name = "nvim_lsp_signature_help" },
           { name = "path" },
           {
             name = "buffer",
@@ -233,10 +232,6 @@ repo = 'hrsh7th/cmp-nvim-lua'
 on_source = 'nvim-cmp'
 
 [[plugins]]
-repo = 'hrsh7th/cmp-nvim-lsp-signature-help'
-on_source = 'nvim-cmp'
-
-[[plugins]]
 repo = 'hrsh7th/cmp-cmdline'
 on_source = 'nvim-cmp'
 
@@ -245,8 +240,8 @@ repo = 'hrsh7th/cmp-vsnip'
 on_source = 'nvim-cmp'
 
 [[plugins]]
-# repo = 'uga-rosa/cmp-dictionary'
-repo = '~/plugin/cmp-dictionary'
+repo = 'uga-rosa/cmp-dictionary'
+# repo = '~/plugin/cmp-dictionary'
 on_source = 'nvim-cmp'
 lua_source = '''
     local dict = require("cmp_dictionary")
