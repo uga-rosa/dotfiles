@@ -3,11 +3,10 @@ local heirline = require("heirline")
 heirline.setup({
   opts = {
     colors = require("rc.heirline.colors"),
-    disable_winbar_cb = function(args)
-      local buf = args.buf
-      local ft = vim.bo[buf].filetype
-      local excludes = { "fzf" }
-      return vim.tbl_contains(excludes, ft)
+    -- For floating windows, disable winbar.
+    disable_winbar_cb = function()
+      local config = vim.api.nvim_win_get_config(0)
+      return config.relative ~= ""
     end,
   },
   statusline = {
