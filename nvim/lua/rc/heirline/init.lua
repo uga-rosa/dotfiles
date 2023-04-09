@@ -3,6 +3,12 @@ local heirline = require("heirline")
 heirline.setup({
   opts = {
     colors = require("rc.heirline.colors"),
+    disable_winbar_cb = function(args)
+      local buf = args.buf
+      local ft = vim.bo[buf].filetype
+      local excludes = { "fzf" }
+      return vim.tbl_contains(excludes, ft)
+    end,
   },
   statusline = {
     -- global setting
