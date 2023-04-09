@@ -181,6 +181,10 @@ lua_source = '''
     vim.opt.runtimepath:append(parser_install_dir)
 
     require("nvim-treesitter.configs").setup({
+      highlight = {
+        enable = true,
+        disable = { "vimdoc" },
+      },
       ensure_installed = {
         "lua",
         "vim",
@@ -191,10 +195,6 @@ lua_source = '''
         "go",
       },
       parser_install_dir = parser_install_dir,
-      highlight = {
-        enable = true,
-        disable = { "help" },
-      },
       textobjects = {
         select = {
           enable = true,
@@ -426,8 +426,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-# repo = 'monaqa/nvim-treesitter-clipping'
-repo = 'uga-rosa/nvim-treesitter-clipping'
+repo = 'monaqa/nvim-treesitter-clipping'
 depends = ['nvim-treesitter', 'vim-partedit']
 on_lua = 'nvim-treesitter-clipping'
 lua_add = '''
