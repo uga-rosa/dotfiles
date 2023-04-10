@@ -1,12 +1,17 @@
 local heirline = require("heirline")
 
+---@param winid integer?
+---@return boolean
+local function is_float_win(winid)
+  local config = vim.api.nvim_win_get_config(winid or 0)
+  return config.relative ~= ""
+end
+
 heirline.setup({
   opts = {
     colors = require("rc.heirline.colors"),
-    -- For floating windows, disable winbar.
     disable_winbar_cb = function()
-      local config = vim.api.nvim_win_get_config(0)
-      return config.relative ~= ""
+      return is_float_win()
     end,
   },
   statusline = {
