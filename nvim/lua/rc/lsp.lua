@@ -12,6 +12,7 @@ local opts = {
       border = "single",
       title = "Diagnostics",
       header = {},
+      suffix = {},
       format = function(diag)
         if diag.code then
           return ("[%s](%s): %s"):format(diag.source, diag.code, diag.message)
