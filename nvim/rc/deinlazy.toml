@@ -233,10 +233,6 @@ repo = 'nvim-treesitter/nvim-treesitter-textobjects'
 repo = 'p00f/nvim-ts-rainbow'
 
 [[plugins]]
-repo = 'nvim-treesitter/playground'
-on_cmd = 'TSPlaygroundToggle'
-
-[[plugins]]
 repo = 'lambdalisue/fern.vim'
 on_cmd = 'Fern'
 hook_add = '''
