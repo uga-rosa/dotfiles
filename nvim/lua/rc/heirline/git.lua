@@ -13,7 +13,6 @@ return {
     provider = function(self)
       return "  " .. self.status_dict.head
     end,
-    hl = { bold = true },
   },
   {
     condition = function(self)

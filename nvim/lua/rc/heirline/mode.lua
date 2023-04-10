@@ -50,7 +50,7 @@ return {
       return " " .. self.mode_names[self.mode]
     end,
     hl = function(self)
-      return { fg = "bg", bg = self.mode_colors[self.mode], bold = true }
+      return { fg = "bg", bg = self.mode_colors[self.mode] }
     end,
   },
   {
