@@ -50,10 +50,7 @@ setopt inc_append_history
 setopt share_history
 setopt AUTO_PARAM_KEYS
 
-# Safely remove
+# safely remove
 alias rm="rm -i"
-
-# zenn cli using Deno
-alias zenn="deno run -A npm:zenn-cli@latest"
 
 alias relogin='exec $SHELL -l'
