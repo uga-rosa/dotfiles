@@ -7,11 +7,18 @@ local function is_float_win(winid)
   return config.relative ~= ""
 end
 
+local function is_disable_buf(bufid)
+  local filetype = vim.api.nvim_buf_get_option(bufid, "filetype")
+  return ({
+    fern = true,
+  })[filetype]
+end
+
 heirline.setup({
   opts = {
     colors = require("rc.heirline.colors"),
-    disable_winbar_cb = function()
-      return is_float_win()
+    disable_winbar_cb = function(arg)
+      return is_float_win() or is_disable_buf(arg.buf)
     end,
   },
   statusline = {
