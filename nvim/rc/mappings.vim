@@ -45,3 +45,6 @@ nnoremap qt <Cmd>tabclose<CR>
 
 " Macro
 nnoremap Q @q
+
+" Esc in terminal
+tnoremap <Esc> <C-\><C-n>
