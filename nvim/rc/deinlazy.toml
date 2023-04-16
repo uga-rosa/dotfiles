@@ -402,6 +402,10 @@ lua_source = '''
       },
     }
 '''
+[plugins.ftplugin]
+markdown = '''
+    nnoremap <buffer> @r <Cmd>lua require("rc.quickrun").run_under_cursor_block()<CR>
+'''
 
 [[plugins]]
 repo = 'lambdalisue/vim-quickrun-neovim-job'
