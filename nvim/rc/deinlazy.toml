@@ -715,17 +715,6 @@ lua_add = '''
     end, {})
 '''
 
-[[plugins]]
-repo = "uga-rosa/ugaterm.nvim"
-on_cmd = ["UgatermToggle", "UgatermNew"]
-hook_add = '''
-    Keymap nt <C-t> <Cmd>UgatermToggle<CR>
-    Keymap nt <C-S-t> <Cmd>UgatermNew<CR>
-'''
-lua_source = '''
-    require("ugaterm").setup()
-'''
-
 # Plugins for specific filetype
 
 [[plugins]]
