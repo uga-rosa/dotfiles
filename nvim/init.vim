@@ -2,12 +2,11 @@
 " neovim in unix.
 
 lua <<EOL
-if vim.loader then
-  vim.loader.enable()
-end
-
+vim.loader.enable()
 require("rc.utils")
 require("rc.ftdetect")
+require("rc.options")
+require("rc.mappings")
 EOL
 
 if filereadable(expand('~/.secret.vim'))
@@ -39,9 +38,6 @@ let g:dein#auto_remote_plugins = v:false
 let s:path = $CACHE . '/dein'
 if dein#min#load_state(s:path)
   let s:base_dir = fnamemodify(expand('<sfile>'), ':h') . '/rc/'
-
-  let g:dein#inline_vimrcs = ['options.vim', 'mappings.vim']
-  let g:dein#inline_vimrcs = map(g:dein#inline_vimrcs, { _, v -> s:base_dir . v })
 
   let s:dein_toml = s:base_dir . 'dein.toml'
   let s:dein_lazy_toml = s:base_dir . 'deinlazy.toml'
