@@ -52,6 +52,7 @@ lua_source = '''
 
 [[plugins]]
 repo = "uga-rosa/ugaterm.nvim"
-hook_add = '''
-    Keymap nt <C-t> <Cmd>UgatermToggle<CR>
+lua_add = '''
+    vim.keymap.set({ "n", "t" }, "<C-t>", "<Cmd>UgatermToggle<CR>")
+    vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 '''

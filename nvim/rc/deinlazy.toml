@@ -38,20 +38,20 @@ hook_source = '''
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 on_map = ['<Plug>', '<Plug>(textobj-sandwich-']
-hook_add = '''
-    let g:operator_sandwich_no_default_key_mappings = 1
-    let g:textobj_sandwich_no_default_key_mappings = 1
-    " operator
-    Keymap nxo sa  <Plug>(sandwich-add)
-    Keymap nx  sd  <Plug>(sandwich-delete)
-    Keymap n   sdb <Plug>(sandwich-delete-auto)
-    Keymap nx  sr  <Plug>(sandwich-replace)
-    Keymap n   srb <Plug>(sandwich-replace-auto)
-    " textobject
-    Keymap xo  ib <Plug>(textobj-sandwich-auto-i)
-    Keymap xo  ab <Plug>(textobj-sandwich-auto-a)
-    Keymap xo  is <Plug>(textobj-query-auto-i)
-    Keymap xo  as <Plug>(textobj-query-auto-a)
+lua_add = '''
+    vim.g.operator_sandwich_no_default_key_mappings = true
+    vim.g.textobj_sandwich_no_default_key_mappings = true
+    -- Operator
+    vim.keymap.set({ "n", "x", "o" }, "sa", "<Plug>(sandwich-add)")
+    vim.keymap.set({ "n", "x" }, "sd", "<Plug>(sandwich-delete)")
+    vim.keymap.set("n", "sdb", "<Plug>(sandwich-delete-auto)")
+    vim.keymap.set({ "n", "x" }, "sr", "<Plug>(sandwich-replace)")
+    vim.keymap.set("n", "srb", "<Plug>(sandwich-replace-auto)")
+    -- Textobject
+    vim.keymap.set({ "x", "o" }, "ib", "<Plug>(textobj-sandwich-auto-i)")
+    vim.keymap.set({ "x", "o" }, "ab", "<Plug>(textobj-sandwich-auto-a)")
+    vim.keymap.set({ "x", "o" }, "is", "<Plug>(textobj-query-auto-i)")
+    vim.keymap.set({ "x", "o" }, "as", "<Plug>(textobj-query-auto-a)")
 '''
 hook_source = '''
     call operator#sandwich#set('add', 'char', 'skip_space', 1)
@@ -64,16 +64,16 @@ repo = 'kana/vim-operator-user'
 repo = 'yuki-yano/vim-operator-replace'
 depends = 'vim-operator-user'
 on_map = '<Plug>'
-hook_add = '''
-    Keymap nxo r <Plug>(operator-replace)
+lua_add = '''
+    vim.keymap.set({ "n", "x", "o" }, "r", "<Plug>(operator-replace)")
 '''
 
 [[plugins]]
 repo = 'haya14busa/vim-edgemotion'
 on_map = "<Plug>"
-hook_add = '''
-    Keymap nxo <C-j> <Plug>(edgemotion-j)
-    Keymap nxo <C-k> <Plug>(edgemotion-k)
+lua_add = '''
+    vim.keymap.set({ "n", "x", "o" }, "<C-j>", "<Plug>(edgemotion-j)")
+    vim.keymap.set({ "n", "x", "o" }, "<C-k>", "<Plug>(edgemotion-k)")
 '''
 
 [[plugins]]
@@ -82,23 +82,23 @@ depends = ['nvim-web-devicons', 'mr.vim']
 on_cmd = 'FzfLua'
 on_lua = 'fzf-lua'
 hook_add = '''
-    nnoremap <leader>r  <Cmd>FzfLua resume<CR>
-    nnoremap <leader>f  <Cmd>FzfLua files<CR>
-    nnoremap <leader>b  <Cmd>FzfLua buffers<CR>
-    nnoremap <leader>o  <Cmd>FzfLua oldfiles<CR>
-    nnoremap <leader>lg <Cmd>FzfLua live_grep<CR>
-    nnoremap <leader>/  <Cmd>FzfLua blines<CR>
-    nnoremap <leader>gf <Cmd>FzfLua git_files<CR>
-    nnoremap <leader>h  <Cmd>FzfLua help_tags<CR>
+    nnoremap <Space>r  <Cmd>FzfLua resume<CR>
+    nnoremap <Space>f  <Cmd>FzfLua files<CR>
+    nnoremap <Space>b  <Cmd>FzfLua buffers<CR>
+    nnoremap <Space>o  <Cmd>FzfLua oldfiles<CR>
+    nnoremap <Space>lg <Cmd>FzfLua live_grep<CR>
+    nnoremap <Space>/  <Cmd>FzfLua blines<CR>
+    nnoremap <Space>gf <Cmd>FzfLua git_files<CR>
+    nnoremap <Space>h  <Cmd>FzfLua help_tags<CR>
     nnoremap q:         <Cmd>FzfLua command_history<CR>
     nnoremap q;         q:
     nnoremap q/         <Cmd>FzfLua search_history<CR>
 
-    nnoremap <leader>i  <Cmd>FzfLua diagnostics_document<CR>
+    nnoremap <Space>i  <Cmd>FzfLua diagnostics_document<CR>
     nnoremap gr         <Cmd>FzfLua lsp_references<CR>
 '''
 lua_add = '''
-    vim.keymap.set("n", "<leader>m", function()
+    vim.keymap.set("n", "<Space>m", function()
       require("fzf-lua").fzf_exec(vim.fn["mr#mru#list"](), {
         previewer = "builtin",
         prompt = "MRU> ",
@@ -282,9 +282,9 @@ lua_source = '''
           return "<Ignore>"
         end, { expr = true })
         -- Actions
-        map({ "n", "v" }, "<leader>gs", ":Gitsigns stage_hunk<CR>")
-        map({ "n", "v" }, "<leader>gu", ":Gitsigns undo_stage_hunk<CR>")
-        map({ "n", "v" }, "<leader>gr", ":Gitsigns reset_hunk<CR>")
+        map({ "n", "v" }, "<Space>gs", ":Gitsigns stage_hunk<CR>")
+        map({ "n", "v" }, "<Space>gu", ":Gitsigns undo_stage_hunk<CR>")
+        map({ "n", "v" }, "<Space>gr", ":Gitsigns reset_hunk<CR>")
         -- Text object
         map({ "o", "x" }, "ig", ":<C-U>Gitsigns select_hunk<CR>")
       end,
@@ -295,13 +295,11 @@ lua_source = '''
 repo = 'hrsh7th/vim-searchx'
 depends = 'kensaku.vim'
 on_func = 'searchx#start'
-hook_add = '''
-    Keymap nx / <Cmd>call searchx#start({'dir': 1})<CR>
-    Keymap nx ? <Cmd>call searchx#start({'dir': 0})<CR>
-
-    Keymap nx n     <Cmd>call searchx#next()<CR>
-    Keymap nx N     <Cmd>call searchx#prev()<CR>
-    Keymap c  <C-l> <Cmd>call searchx#clear()<CR>
+lua_add = '''
+    vim.keymap.set({ "n", "x" }, "/", "<Cmd>call searchx#start({'dir': 1})<CR>")
+    vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({'dir': 0})<CR>")
+    vim.keymap.set({ "n", "x" }, "n", "<Cmd>call searchx#next()<CR>")
+    vim.keymap.set({ "n", "x" }, "N", "<Cmd>call searchx#prev()<CR>")
 '''
 lua_source = '''
     vim.g.searchx = {
@@ -342,14 +340,14 @@ hook_add = '''
 [[plugins]]
 repo = 'tyru/open-browser.vim'
 on_map = '<Plug>(openbrowser-smart-search)'
-hook_add = '''
-    let g:openbrowser_browser_commands = [
-    \   {
-    \     'name': 'vivaldi.exe',
-    \     'args': ['{browser}', '{uri}']
-    \   }
-    \]
-    Keymap nx <M-o> <Plug>(openbrowser-smart-search)
+lua_add = '''
+    vim.g.openbrowser_browser_commands = {
+      {
+        name = "wslview",
+        args = { "{browser}", "{uri}" },
+      },
+    }
+    vim.keymap.set({ "n", "x" }, "<M-o>", "<Plug>(openbrowser-smart-search)")
 '''
 
 [[plugins]]
@@ -362,8 +360,8 @@ hook_add = '''
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
 on_map = '<Plug>(EasyAlign)'
-hook_add = '''
-    Keymap nx ga <Plug>(EasyAlign)
+lua_add = '''
+    vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
 '''
 
 [[plugins]]
@@ -510,9 +508,9 @@ on_cmd = 'Capture'
 [[plugins]]
 repo = 'uga-rosa/contextment.vim'
 on_map = '<Plug>'
-hook_add = '''
-    Keymap nxo gc  <Plug>(contextment)
-    Keymap n   gcc <Plug>(contextment-line)
+lua_add = '''
+    vim.keymap.set({ "n", "x", "o" }, "gc", "<Plug>(contextment)")
+    vim.keymap.set("n", "gcc", "<Plug>(contextment-line)")
 '''
 
 [[plugins]]
@@ -522,11 +520,11 @@ on_cmd = 'HelpfulVersion'
 [[plugins]]
 repo = 'haya14busa/vim-asterisk'
 on_map = '<Plug>'
-hook_add = '''
-    Keymap nxo *   <Plug>(asterisk-z*)
-    Keymap nxo #   <Plug>(asterisk-z#)
-    Keymap nxo g*  <Plug>(asterisk-gz*)
-    Keymap nxo g#  <Plug>(asterisk-gz#)
+lua_add = '''
+    vim.keymap.set({ "n", "x", "o" }, "*", "<Plug>(asterisk-z*)")
+    vim.keymap.set({ "n", "x", "o" }, "#", "<Plug>(asterisk-z#)")
+    vim.keymap.set({ "n", "x", "o" }, "g*", "<Plug>(asterisk-gz*)")
+    vim.keymap.set({ "n", "x", "o" }, "g#", "<Plug>(asterisk-gz#)")
 '''
 hook_source = '''
     let g:asterisk#keeppos = 1
@@ -536,8 +534,8 @@ hook_source = '''
 repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
 on_event = ['InsertEnter', 'CmdlineEnter']
-hook_add = '''
-    Keymap ic <C-j> <Plug>(skkeleton-toggle)
+lua_add = '''
+    vim.keymap.set({ "i", "c" }, "<C-j>", "<Plug>(skkeleton-toggle)")
 '''
 lua_source = '''
     vim.g["skkeleton#mapped_keys"] = { "<c-l>" }
@@ -598,11 +596,11 @@ lua_source = '''
 [[plugins]]
 repo = 'monaqa/dial.nvim'
 on_map = '<Plug>'
-hook_add = '''
-    Keymap nx <C-a> <Plug>(dial-increment)
-    xmap g<C-a> g<Plug>(dial-increment)
-    Keymap nx <C-x> <Plug>(dial-decrement)
-    xmap g<C-x> g<Plug>(dial-decrement)
+lua_add = '''
+    vim.keymap.set({ "n", "x" }, "<C-a>", "<Plug>(dial-increment)")
+    vim.keymap.set({ "n", "x" }, "<C-x>", "<Plug>(dial-decrement)")
+    vim.keymap.set("x", "g<C-a>", "g<Plug>(dial-increment)")
+    vim.keymap.set("x", "g<C-x>", "g<Plug>(dial-decrement)")
 '''
 
 [[plugins]]
