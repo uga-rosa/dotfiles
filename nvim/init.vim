@@ -3,7 +3,7 @@
 
 lua <<EOL
 vim.loader.enable()
-require("rc.utils")
+require("rc.vim")
 require("rc.ftdetect")
 require("rc.options")
 require("rc.mappings")
