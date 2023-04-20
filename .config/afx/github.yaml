@@ -77,3 +77,9 @@ github:
       link:
         - from: .
           to: $HOME/.tmux/plugins/tpm
+  - name: yuki-yano/zeno.zsh
+    owner: yuki-yano
+    repo: zeno.zsh
+    plugin:
+      sources:
+        - zeno.zsh
