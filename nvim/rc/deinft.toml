@@ -8,39 +8,49 @@ _ = '''
     setl formatoptions+=mMl
 '''
 
-lua = '''
-    let stylua_toml = filereadable('stylua.toml') ? 'stylua.toml' 
-            \ : filereadable('.stylua.toml') ? '.stylua.toml' : '~/.config/stylua.toml'
-    let [tab_size, is_hard_tab] = [2, 0]
-    for line in readfile(expand(stylua_toml))
-      if line =~# 'indent_width'
-        let tab_size = str2nr(matchstr(line, '\d\+'))
-      elseif line =~# 'indent_type'
-        let is_hard_tab = line =~# 'Tabs'
-      endif
-    endfor
-    lua require("rc").set_indent(tab_size, is_hard_tab)
+lua_lua = '''
+    local function filereadable(path)
+        return vim.bool_fn.filereadable(vim.fn.expand(path))
+    end
+
+    local stylua_toml
+    if filereadable("stylua.toml") then
+      stylua_toml = "stylua.toml"
+    elseif filereadable(".stylua.toml") then
+      stylua_toml = ".stylua.toml"
+    else
+      stylua_toml = vim.fn.expand("~/.config/stylua.toml")
+    end
+
+    local tab_size, is_hard_tab = 2, false
+    for line in io.lines(stylua_toml) do
+      if vim.startswith(line, "indent_width") then
+        tab_size = tonumber(line:match("%d+")) or 2
+      elseif vim.startswith(line, "indent_type") then
+        is_hard_tab = not not line:find("Tabs")
+      end
+    end
+
+    require("rc").set_indent(tab_size, is_hard_tab)
 '''
 
-typescript_vim_sh_html_xhtml_nim_markdown = '''
-    lua require("rc").set_indent(2)
+lua_typescript_vim_sh_html_xhtml_nim_markdown = '''
+    require("rc").set_indent(2)
 '''
 
-python = '''
-    lua require("rc").set_indent(4)
+lua_python_toml = '''
+    require("rc").set_indent(4)
 '''
 
-qf_go = '''
-    lua require("rc").set_indent(4, true)
+lua_qf_go = '''
+    require("rc").set_indent(4, true)
 '''
 
-help = '''
-    lua require("rc").set_indent(8, true)
+lua_help = '''
+    require("rc").set_indent(8, true)
 '''
 
 toml = '''
-    lua require("rc").set_indent(4)
-
     setl foldenable
     setl foldmethod=expr
     setl foldexpr=<SID>fold_expr(v:lnum)

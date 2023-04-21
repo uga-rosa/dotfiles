@@ -1,10 +1,8 @@
 local M = {}
 
----@param tab_size? integer
+---@param tab_size integer
 ---@param is_hard_tab? boolean
 function M.set_indent(tab_size, is_hard_tab)
-  tab_size = vim.F.if_nil(tab_size, 4)
-  is_hard_tab = vim.F.if_nil(is_hard_tab, false)
   vim.opt_local.expandtab = not is_hard_tab
   vim.opt_local.tabstop = tab_size
   vim.opt_local.softtabstop = tab_size
