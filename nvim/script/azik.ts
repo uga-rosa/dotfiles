@@ -32,9 +32,6 @@ const rule: { [key: string]: string | string[] } = {
   ["."]: ["。", ""],
   [">"]: ["＞", ""],
   ["?"]: ["？", ""],
-  // 関数
-  [" "]: "henkanFirst",
-  ["/"]: "abbrev",
   // 促音、撥音、長音符
   // US配列 + コロン、セミコロン入替
   // 'はsticky shiftに
