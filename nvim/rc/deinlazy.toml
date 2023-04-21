@@ -20,14 +20,12 @@ hook_source = '''
           \   char: '<CR>',
           \   at: '{\%#}',
           \   input: '<CR>\ ',
-          \   input_after: '<CR>\ ',
           \   filetype: 'vim'
           \ },
           \ #{
           \   char: '<CR>',
           \   at: '\[\%#]',
           \   input: '<CR>\ ',
-          \   input_after: '<CR>\ ',
           \   filetype: 'vim'
           \ }]
     for rule in s:lexima_my_rules
@@ -74,6 +72,14 @@ on_map = "<Plug>"
 lua_add = '''
     vim.keymap.set({ "n", "x", "o" }, "<C-j>", "<Plug>(edgemotion-j)")
     vim.keymap.set({ "n", "x", "o" }, "<C-k>", "<Plug>(edgemotion-k)")
+'''
+
+[[plugins]]
+repo = 'lambdalisue/mr.vim'
+rev = 'main'
+hook_source = '''
+    let g:mr_mru_disabled = 1
+    let g:mr_mrr_disabled = 1
 '''
 
 [[plugins]]
@@ -160,15 +166,8 @@ lua_source = '''
 '''
 [plugins.ftplugin]
 fzf = '''
+    " See ugaterm config
     tnoremap <buffer> <C-t> <C-t>
-'''
-
-[[plugins]]
-repo = 'lambdalisue/mr.vim'
-rev = 'main'
-hook_source = '''
-    let g:mr_mru_disabled = 1
-    let g:mr_mrr_disabled = 1
 '''
 
 [[plugins]]
@@ -289,6 +288,29 @@ lua_source = '''
         map({ "o", "x" }, "ig", ":<C-U>Gitsigns select_hunk<CR>")
       end,
     })
+'''
+
+[[plugins]]
+repo = 'lambdalisue/kensaku.vim'
+depends = 'denops.vim'
+on_cmd = 'KensakuGrep'
+hook_post_source = '''
+    let romanTable = vimrc#json#read(stdpath('config') . '/script/azik.json')
+    let romanTable = values(map(romanTable, { key, val -> [key, val[0], 0] }))
+    call kensaku#set_roman_table(romanTable)
+
+    command! -nargs=1 KensakuGrep call KensakuGrep(<q-args>)
+    function! KensakuGrep(input) abort
+      if !executable('rg')
+        return
+      endif
+      let grepprg = &grepprg
+      set grepprg=rg\ -e\ $*\ --vimgrep
+      execute 'grep' string(kensaku#query(a:input, {
+            \ 'rxop': ['\|', '(', ')', '[', ']', ''],
+            \}))
+      let &grepprg = grepprg
+    endfunction
 '''
 
 [[plugins]]
@@ -531,13 +553,6 @@ hook_source = '''
 '''
 
 [[plugins]]
-repo = 'delphinus/skkeleton_indicator.nvim'
-on_source = 'skkeleton'
-lua_source = '''
-    require("skkeleton_indicator").setup()
-'''
-
-[[plugins]]
 repo = 'delphinus/emcl.nvim'
 on_event = "CmdlineEnter"
 lua_source = '''
@@ -573,10 +588,6 @@ lua_add = '''
 '''
 
 [[plugins]]
-repo = 'mhinz/vim-sayonara'
-on_cmd = 'Sayonara'
-
-[[plugins]]
 repo = 'stevearc/dressing.nvim'
 on_event = "BufEnter"
 depends = "fzf-lua"
@@ -603,29 +614,6 @@ lua_source = '''
         backend = { "fzf_lua", "builtin" },
       },
     })
-'''
-
-[[plugins]]
-repo = 'lambdalisue/kensaku.vim'
-depends = 'denops.vim'
-on_cmd = 'KensakuGrep'
-hook_post_source = '''
-    let romanTable = vimrc#json#read(stdpath('config') . '/script/azik.json')
-    let romanTable = values(map(romanTable, { key, val -> [key, val[0], 0] }))
-    call kensaku#set_roman_table(romanTable)
-
-    command! -nargs=1 KensakuGrep call KensakuGrep(<q-args>)
-    function! KensakuGrep(input) abort
-      if !executable('rg')
-        return
-      endif
-      let grepprg = &grepprg
-      set grepprg=rg\ -e\ $*\ --vimgrep
-      execute 'grep' string(kensaku#query(a:input, {
-            \ 'rxop': ['\|', '(', ')', '[', ']', ''],
-            \}))
-      let &grepprg = grepprg
-    endfunction
 '''
 
 [[plugins]]

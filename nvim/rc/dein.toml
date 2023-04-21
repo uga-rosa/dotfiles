@@ -88,3 +88,9 @@ lua_source = '''
       registerConvertResult = true,
     })
 '''
+
+[[plugins]]
+repo = 'delphinus/skkeleton_indicator.nvim'
+lua_source = '''
+    require("skkeleton_indicator").setup()
+'''
