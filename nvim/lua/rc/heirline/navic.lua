@@ -1,6 +1,7 @@
 return {
   condition = function()
-    return require("nvim-navic").is_available()
+    local ok, navic = pcall(require, "nvim-navic")
+    return ok and navic.is_available()
   end,
   static = {
     -- create a type highlight map
