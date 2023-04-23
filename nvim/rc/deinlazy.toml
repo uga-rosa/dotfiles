@@ -192,6 +192,8 @@ lua_source = '''
         "markdown",
         "python",
         "go",
+        "javascript",
+        "typescript",
       },
       parser_install_dir = parser_install_dir,
       textobjects = {
