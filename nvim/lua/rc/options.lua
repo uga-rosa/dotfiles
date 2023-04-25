@@ -32,6 +32,9 @@ vim.opt.inccommand = "split"
 -- クリックはrc/mappings.vimで無効化
 vim.opt.mouse = "ni"
 
+-- highlight columns after 'textwidth'
+vim.opt.colorcolumn = "+1"
+
 -- heirlineで出す
 vim.opt.showmode = false
 -- ステータスラインを下だけに
