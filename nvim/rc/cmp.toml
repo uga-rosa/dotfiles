@@ -56,12 +56,6 @@ lua_post_source = '''
       end
     end
 
-    -- stylua: ignore
-    local function is_truthy(v)
-      return (type(v) == "boolean" and v == true)
-        or (type(v) == "number" and v ~= 0)
-    end
-
     local function get_visible_buffers()
       local bufs = {}
       for _, win in ipairs(api.nvim_list_wins()) do
@@ -77,7 +71,7 @@ lua_post_source = '''
     cmp.setup({
       enabled = function()
         local disabled = false
-        disabled = disabled or is_truthy(vim.g.cmp_disabled)
+        disabled = disabled or vim.fn.empty(vim.g.cmp_disabled) == 0
         disabled = disabled or (api.nvim_buf_get_option(0, "buftype") == "prompt")
         disabled = disabled or (vim.fn.reg_recording() ~= "")
         disabled = disabled or (vim.fn.reg_executing() ~= "")
@@ -174,23 +168,23 @@ lua_post_source = '''
         ["<CR>"] = cmp.mapping.confirm({ select = true }),
       },
       sources = {
-          { name = "skkeleton" },
-          { name = "vsnip" },
-          { name = "nvim_lsp" },
-          { name = "nvim_lua" },
-          { name = "path" },
-          {
-            name = "buffer",
-            option = {
-              get_bufnrs = get_visible_buffers,
-            },
+        { name = "skkeleton" },
+        { name = "vsnip" },
+        { name = "nvim_lsp" },
+        { name = "nvim_lua" },
+        { name = "path" },
+        {
+          name = "buffer",
+          option = {
+            get_bufnrs = get_visible_buffers,
           },
-          {
-            name = "dictionary",
-            keyword_length = 2,
-            priority = 1,
-          },
-      }
+        },
+        {
+          name = "dictionary",
+          keyword_length = 2,
+          priority = 1,
+        },
+      },
     })
 
     cmp.setup.cmdline("/", {
