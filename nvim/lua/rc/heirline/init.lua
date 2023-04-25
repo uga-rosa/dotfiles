@@ -11,6 +11,7 @@ local function is_disable_buf(bufid)
   local filetype = vim.api.nvim_buf_get_option(bufid, "filetype")
   return ({
     fern = true,
+    ugaterm = true,
   })[filetype]
 end
 
