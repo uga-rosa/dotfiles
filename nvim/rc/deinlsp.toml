@@ -7,9 +7,8 @@ depends = [
     'cmp-nvim-lsp',
     'actions-preview.nvim',
     'nvim-navic',
-    'lsp_signature.nvim',
 ]
-on_event = ['BufReadPre', 'BufNewFile']
+on_event = ['BufRead', 'BufNewFile']
 lua_post_source = '''
     local api = vim.api
     local lspconfig = require("lspconfig")
@@ -17,21 +16,30 @@ lua_post_source = '''
 
     require("rc.lsp")
 
-    local servers = {
-      "lua_ls",
-      "denols",
-      "vimls",
-      "gopls",
-      "pyright",
-      "bashls",
-      "tsserver",
-      "sqlls",
-    }
-
     require("mason-lspconfig").setup({
-      ensure_installed = servers,
+      ensure_installed = {
+        "lua_ls",
+        "vimls",
+        "gopls",
+        "pyright",
+        "bashls",
+        "tsserver",
+        "sqlls",
+      },
       automatic_installation = true,
     })
+
+    ---Register callback function on LspAttach
+    ---@param callback fun(client, bufnr)
+    local function on_attach(callback)
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local bufnr = args.buf
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          callback(client, bufnr)
+        end,
+      })
+    end
 
     ---@return boolean
     local function is_active_null_ls()
@@ -43,7 +51,7 @@ lua_post_source = '''
       return false
     end
 
-    local function on_attach(client, bufnr)
+    on_attach(function(client, bufnr)
       local buf_map = function(lhs, rhs)
         vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
       end
@@ -54,21 +62,22 @@ lua_post_source = '''
       buf_map("<Space>n", vim.lsp.buf.rename)
       buf_map("<Space>a", require("actions-preview").code_actions)
 
-      api.nvim_create_user_command("Format", function()
-        if vim.bo.filetype == "lua" and not is_active_null_ls() then
-          rc.keep_cursor("%!stylua -f ~/.config/stylua.toml -")
-        else
-          vim.lsp.buf.format()
-        end
-      end, {})
-      buf_map("<Space>F", "<Cmd>Format<CR>")
+      local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+      if client.server_capabilities.documentFormattingProvider or ft == "lua" then
+        api.nvim_create_user_command("Format", function()
+          if ft == "lua" and not is_active_null_ls() then
+            rc.keep_cursor("%!stylua -f ~/.config/stylua.toml -")
+          else
+            vim.lsp.buf.format()
+          end
+        end, {})
+        buf_map("<Space>F", "<Cmd>Format<CR>")
+      end
 
       if client.server_capabilities.documentSymbolProvider then
         require("nvim-navic").attach(client, bufnr)
       end
-
-      require("lsp_signature").on_attach({}, bufnr)
-    end
+    end)
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
@@ -78,13 +87,27 @@ lua_post_source = '''
         return self["*"]
       end,
       __newindex = function(self, key, value)
-        value.on_attach = on_attach
         value.capabilities = capabilities
         rawset(self, key, value)
       end,
     })
 
     opts["*"] = {}
+
+    ---@param plugins string[]
+    ---@return string[]
+    local function get_plugin_path(plugins)
+      local paths = {}
+      for _, plugin in ipairs(plugins) do
+        local path = vim.fn["dein#get"](plugin).path
+        if path and vim.bool_fn.isdirectory(path .. "/lua") then
+          table.insert(paths, path)
+        else
+          vim.notify("Invalid plugin name: " .. plugin)
+        end
+      end
+      return paths
+    end
 
     ---@param rocks string[]
     ---@return string[]
@@ -103,21 +126,6 @@ lua_post_source = '''
     end
 
     ---@param plugins string[]
-    ---@return string[]
-    local function get_plugin_path(plugins)
-      local paths = {}
-      for _, plugin in ipairs(plugins) do
-        local path = vim.fn["dein#get"](plugin).path
-        if path and vim.bool_fn.isdirectory(path .. "/lua") then
-          table.insert(paths, path)
-        else
-          vim.notify("Invalid plugin name: " .. plugin)
-        end
-      end
-      return paths
-    end
-
-    ---@param plugins string[]
     ---@param rocks string[]
     ---@return string[]
     local function library(plugins, rocks)
@@ -128,6 +136,7 @@ lua_post_source = '''
       settings = {
         Lua = {
           format = {
+            -- Use stylua
             enable = false,
           },
           diagnostics = {
@@ -171,11 +180,12 @@ lua_post_source = '''
         },
       },
     }
+    lspconfig.denols.setup(opts.denols)
 
     opts.tsserver = {
       root_dir = function(fname)
         if root_pattern("deno.json")(fname) then
-          return nil
+          return
         end
         return root_pattern("package.json", "tsconfig.json", "jsconfig.json")(fname)
       end,
@@ -206,7 +216,7 @@ lua_source = '''
 
 [[plugins]]
 repo = 'hrsh7th/nvim-gtd'
-on_event = ['BufRead']
+on_event = 'BufRead'
 lua_add = '''
     vim.keymap.set("n", "gd", function()
       require("gtd").exec({ command = "edit" })
@@ -274,7 +284,7 @@ lua_source = '''
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
 depends = 'plenary.nvim'
-on_ft = ['lua', 'python', 'json', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact']
+on_source = 'nvim-lspconfig'
 lua_source = '''
     local null = require("null-ls")
     local b = null.builtins
@@ -310,6 +320,3 @@ depends = 'nui.nvim'
 [[plugins]]
 repo = 'SmiteshP/nvim-navic'
 depends = 'nvim-lspconfig'
-
-[[plugins]]
-repo = 'ray-x/lsp_signature.nvim'
