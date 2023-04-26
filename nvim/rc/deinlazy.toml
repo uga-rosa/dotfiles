@@ -673,6 +673,29 @@ lua_add = '''
     end, {})
 '''
 
+[[plugins]]
+repo = 'folke/zen-mode.nvim'
+on_cmd = 'ZenMode'
+lua_source = '''
+    local function get_offset()
+      local wininfo = vim.fn.getwininfo(vim.api.nvim_get_current_win())[1]
+      return wininfo.textoff or 0
+    end
+
+    require("zen-mode").setup({
+      window = {
+        width = function()
+          local textwidth = vim.opt.textwidth:get()
+          if textwidth > 0 then
+            return textwidth + get_offset() * 2
+          else
+            return 120
+          end
+        end,
+      },
+    })
+'''
+
 # Plugins for specific filetype
 
 [[plugins]]
