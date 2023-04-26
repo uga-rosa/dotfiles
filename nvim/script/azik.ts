@@ -176,6 +176,12 @@ set_rule("", undefined, {
   ["vj"]: "↓",
   ["vk"]: "↑",
   ["vl"]: "→",
+  ["v/"]: "・",
+  ["v,"]: "‥",
+  ["v."]: "...",
+  ["v-"]: "〜",
+  ["v["]: "『",
+  ["v]"]: "』",
 });
 
 const dirname = new URL(".", import.meta.url).pathname;
