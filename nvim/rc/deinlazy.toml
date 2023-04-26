@@ -185,9 +185,8 @@ lua_source = '''
         enable = true,
         disable = { "vimdoc" },
       },
+      -- lua, vim. help (vimdoc) parser is in neovim core.
       ensure_installed = {
-        "lua",
-        "vim",
         "toml",
         "query",
         "markdown",
