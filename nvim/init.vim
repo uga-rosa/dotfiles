@@ -2,7 +2,10 @@
 " neovim in unix.
 
 lua <<EOL
-vim.loader.enable()
+if vim.loader then
+  -- v0.9.0 doesn't have vim.loader yet.
+  vim.loader.enable()
+end
 require("rc.vim")
 require("rc.ftdetect")
 require("rc.options")
