@@ -35,3 +35,15 @@ vim.keymap.set("i", "<C-d>", "<Del>")
 
 -- Macro
 vim.keymap.set("n", "Q", "@q")
+
+-- Buffer move
+vim.keymap.set("n", "[b", "<Cmd>bprevious<CR>", { silent = true })
+vim.keymap.set("n", "]b", "<Cmd>bnext<CR>", { silent = true })
+vim.keymap.set("n", "[B", "<Cmd>bfirst<CR>", { silent = true })
+vim.keymap.set("n", "]B", "<Cmd>blast<CR>", { silent = true })
+
+-- Tabpage move
+vim.keymap.set("n", "[t", "<Cmd>tabprevious<CR>", { silent = true })
+vim.keymap.set("n", "]t", "<Cmd>tabnext<CR>", { silent = true })
+vim.keymap.set("n", "[T", "<Cmd>tabfirst<CR>", { silent = true })
+vim.keymap.set("n", "]T", "<Cmd>tablast<CR>", { silent = true })
