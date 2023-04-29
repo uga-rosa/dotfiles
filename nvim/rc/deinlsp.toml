@@ -164,7 +164,7 @@ lua_post_source = '''
     local root_pattern = lspconfig.util.root_pattern
 
     opts.denols = {
-      root_dir = root_pattern("deno.json"),
+      root_dir = root_pattern("deno.json", "deno.jsonc"),
       settings = {
         deno = {
           enable = true,
@@ -184,7 +184,7 @@ lua_post_source = '''
 
     opts.tsserver = {
       root_dir = function(fname)
-        if root_pattern("deno.json")(fname) then
+        if root_pattern("deno.json", "deno.jsonc")(fname) then
           return
         end
         return root_pattern("package.json", "tsconfig.json", "jsconfig.json")(fname)
