@@ -676,6 +676,11 @@ lua_source = '''
     })
 '''
 
+[[plugins]]
+repo = 'tani/hey.vim'
+depends = 'denops.vim'
+on_cmd = 'Hey'
+
 # Plugins for markdown {{{
 [[plugins]]
 repo = 'mattn/vim-maketable'
