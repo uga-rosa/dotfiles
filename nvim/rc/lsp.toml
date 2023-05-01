@@ -173,9 +173,26 @@ lua_post_source = '''
 
     local root_pattern = lspconfig.util.root_pattern
 
+    local function root_tsserver(fname)
+      if root_pattern("deno.json", "deno.jsonc")(fname) then
+        return
+      end
+      return root_pattern("package.json", "tsconfig.json", "jsconfig.json")(fname)
+    end
+
+    opts.tsserver = {
+      root_dir = root_tsserver,
+      single_file_support = false,
+    }
+
     -- Don't use mason to install (use local deno runtime).
     opts.denols = {
-      root_dir = root_pattern("deno.json", "deno.jsonc"),
+      root_dir = function(fname)
+        if root_tsserver(fname) then
+          return
+        end
+        return root_pattern("deno.json", "deno.jsonc", ".")(fname)
+      end,
       settings = {
         deno = {
           enable = true,
@@ -206,16 +223,6 @@ lua_post_source = '''
         })
       end, {})
     end)
-
-    opts.tsserver = {
-      root_dir = function(fname)
-        if root_pattern("deno.json", "deno.jsonc")(fname) then
-          return
-        end
-        return root_pattern("package.json", "tsconfig.json", "jsconfig.json")(fname)
-      end,
-      single_file_support = false,
-    }
 
     opts.jsonls = {
       filetypes = { "json", "jsonc" },
