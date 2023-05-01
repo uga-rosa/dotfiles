@@ -230,7 +230,9 @@ lua_post_source = '''
     opts.yamlls = {
       settings = {
         yaml = {
-          schemas = require("schemastore").yaml.schemas(),
+          schemaStore = {
+            enable = true,
+          },
         },
       },
     }
