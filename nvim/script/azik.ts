@@ -1,7 +1,6 @@
-#!/usr/bin/env -S deno run -A
 import { join } from "https://deno.land/std@0.174.0/path/mod.ts";
 
-const rule: { [key: string]: string | string[] } = {
+const rule: { [key: string]: [string, string] } = {
   // あ行
   ["a"]: ["あ", ""],
   ["i"]: ["い", ""],
@@ -35,16 +34,16 @@ const rule: { [key: string]: string | string[] } = {
   // 促音、撥音、長音符
   // US配列 + コロン、セミコロン入替
   // 'はsticky shiftに
-  q: ["ん", ""],
+  ["q"]: ["ん", ""],
   [":"]: ["っ", ""],
   [";"]: ["：", ""],
   ["-"]: ["ー", ""],
 };
 
 const set_key = (key: string, val: string | string[]) => {
-  if (typeof val === "string" && val) {
+  if (typeof val === "string" && val !== "") {
     rule[key] = [val, ""];
-  } else if (typeof val === "object" && val[0]) {
+  } else if (typeof val === "object" && val[0] !== "") {
     rule[key] = [val.join(""), ""];
   }
 };
@@ -75,9 +74,7 @@ const set_rule = (
     set_key(s + "w", [e, "い"]);
     set_key(s + "p", [o, "う"]);
   }
-  if (spc_rule) {
-    Object.entries(spc_rule)?.forEach(([key, value]) => set_key(key, value));
-  }
+  Object.entries(spc_rule || {}).forEach(([key, value]) => set_key(key, value));
 };
 
 // 仕様
@@ -87,14 +84,25 @@ const set_rule = (
 // あ行は特殊なルールもないので上
 set_rule("k", ["か", "き", "く", "け", "こ"]);
 set_rule("s", ["さ", "し", "す", "せ", "そ"]);
-set_rule("t", ["た", "ち", "つ", "て", "と"], { tsa: "つぁ" });
-set_rule("n", ["な", "に", "ぬ", "ね", "の"], { nn: "ん" });
+set_rule("t", ["た", "ち", "つ", "て", "と"], {
+  tsa: "つぁ",
+});
+set_rule("n", ["な", "に", "ぬ", "ね", "の"], {
+  nn: "ん",
+});
 set_rule("h", ["は", "ひ", "ふ", "へ", "ほ"]);
-set_rule("f", ["ふぁ", "ふぃ", "ふ", "ふぇ", "ふぉ"], { fp: "ふぉー" });
-set_rule("m", ["ま", "み", "む", "め", "も"], { mn: "もの" });
+set_rule("f", ["ふぁ", "ふぃ", "ふ", "ふぇ", "ふぉ"], {
+  fp: "ふぉー",
+});
+set_rule("m", ["ま", "み", "む", "め", "も"], {
+  mn: "もの",
+});
 set_rule("y", ["や", "", "ゆ", "", "よ"]);
 set_rule("r", ["ら", "り", "る", "れ", "ろ"]);
-set_rule("w", ["わ", "うぃ", "", "うぇ", "を"], { wl: "うぉん", wp: "うぉー" });
+set_rule("w", ["わ", "うぃ", "", "うぇ", "を"], {
+  wl: "うぉん",
+  wp: "うぉー",
+});
 
 // 濁音、半濁音
 set_rule("g", ["が", "ぎ", "ぐ", "げ", "ご"]);
@@ -139,39 +147,20 @@ set_rule("l", ["ぁ", "ぃ", "ぅ", "ぇ", "ぉ"]);
 set_rule("ly", ["ゃ", "", "ゅ", "", "ょ"]);
 
 // 特殊拡張
+// deno-fmt-ignore
 set_rule("", undefined, {
-  kt: "こと",
-  st: "した",
-  tt: "たち",
-  ht: "ひと",
-  wt: "わた",
-  mn: "もの",
-  ms: "ます",
-  ds: "です",
-  km: "かも",
-  tm: "ため",
-  dm: "でも",
-  kr: "から",
-  sr: "する",
-  tr: "たら",
-  nr: "なる",
-  yr: "よる",
-  rr: "られ",
-  zr: "ざる",
-  mt: "また",
-  tb: "たび",
-  nb: "ねば",
-  bt: "びと",
-  gr: "がら",
-  gt: "ごと",
-  nt: "にち",
-  dt: "だち",
-  wr: "われ",
+  kt: "こと", st: "した", tt: "たち", ht: "ひと",
+  wt: "わた", mn: "もの", ms: "ます", ds: "です",
+  km: "かも", tm: "ため", dm: "でも", kr: "から",
+  sr: "する", tr: "たら", nr: "なる", yr: "よる",
+  rr: "られ", zr: "ざる", mt: "また", tb: "たび",
+  nb: "ねば", bt: "びと", gr: "がら", gt: "ごと",
+  nt: "にち", dt: "だち", wr: "われ",
 });
 
 // 独自
 set_rule("", undefined, {
-  // 矢印
+  // 矢印等
   ["vh"]: "←",
   ["vj"]: "↓",
   ["vk"]: "↑",
@@ -184,6 +173,7 @@ set_rule("", undefined, {
   ["v]"]: "』",
 });
 
+// 保存
 const dirname = new URL(".", import.meta.url).pathname;
 Deno.writeTextFileSync(
   join(dirname, "azik.json"),
