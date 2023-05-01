@@ -42,7 +42,7 @@ lua_post_source = '''
     end
 
     ---@return boolean
-    local function is_active_ls(client_name)
+    local function is_active(client_name)
       for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
         if client.name == client_name then
           return true
@@ -62,22 +62,9 @@ lua_post_source = '''
       buf_map("<Space>n", vim.lsp.buf.rename)
       buf_map("<Space>a", require("actions-preview").code_actions)
 
-      local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
-      if client.server_capabilities.documentFormattingProvider or ft == "lua" then
+      if client.server_capabilities.documentFormattingProvider then
         api.nvim_create_user_command("Format", function()
-          if ft == "lua" and not is_active_ls("null-ls") then
-            rc.keep_cursor("%!stylua -f ~/.config/stylua.toml -")
-          else
-            vim.lsp.buf.format({
-              filter = function(c)
-                if c.name == "null-ls" and is_active_ls("denols") then
-                  -- For prettier
-                  return false
-                end
-                return true
-              end,
-            })
-          end
+          vim.lsp.buf.format()
         end, {})
         buf_map("<Space>F", "<Cmd>Format<CR>")
       end
@@ -165,12 +152,26 @@ lua_post_source = '''
       },
     }
 
+    on_attach(function(client, bufnr)
+      if client.name ~= "lua_ls" then
+        return
+      end
+      api.nvim_buf_create_user_command(bufnr, "Format", function()
+        if not is_active("null-ls") then
+          rc.keep_cursor("%!stylua -f ~/.config/stylua.toml -")
+        else
+          vim.lsp.buf.format()
+        end
+      end, {})
+    end)
+
     opts.bashls = {
       filetypes = { "sh", "bash", "zsh" },
     }
 
     local root_pattern = lspconfig.util.root_pattern
 
+    -- Don't use mason to install (use local deno runtime).
     opts.denols = {
       root_dir = root_pattern("deno.json", "deno.jsonc"),
       settings = {
@@ -189,6 +190,20 @@ lua_post_source = '''
       },
     }
     lspconfig.denols.setup(opts.denols)
+
+    on_attach(function(client, bufnr)
+      if client.name ~= "denols" then
+        return
+      end
+      api.nvim_buf_create_user_command(bufnr, "Format", function()
+        vim.lsp.buf.format({
+          filter = function(c)
+            -- Enable only deno fmt (disable prettier)
+            return c.name == "denols"
+          end,
+        })
+      end, {})
+    end)
 
     opts.tsserver = {
       root_dir = function(fname)
