@@ -42,9 +42,9 @@ lua_post_source = '''
     end
 
     ---@return boolean
-    local function is_active_null_ls()
+    local function is_active_ls(client_name)
       for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
-        if client.name == "null-ls" then
+        if client.name == client_name then
           return true
         end
       end
@@ -65,10 +65,18 @@ lua_post_source = '''
       local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
       if client.server_capabilities.documentFormattingProvider or ft == "lua" then
         api.nvim_create_user_command("Format", function()
-          if ft == "lua" and not is_active_null_ls() then
+          if ft == "lua" and not is_active_ls("null-ls") then
             rc.keep_cursor("%!stylua -f ~/.config/stylua.toml -")
           else
-            vim.lsp.buf.format()
+            vim.lsp.buf.format({
+              filter = function(c)
+                if c.name == "null-ls" and is_active_ls("denols") then
+                  -- For prettier
+                  return false
+                end
+                return true
+              end,
+            })
           end
         end, {})
         buf_map("<Space>F", "<Cmd>Format<CR>")
