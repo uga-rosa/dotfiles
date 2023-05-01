@@ -7,6 +7,7 @@ depends = [
     'cmp-nvim-lsp',
     'actions-preview.nvim',
     'nvim-navic',
+    'SchemaStore.nvim',
 ]
 on_event = ['BufRead', 'BufNewFile']
 lua_post_source = '''
@@ -24,7 +25,8 @@ lua_post_source = '''
         "pyright",
         "bashls",
         "tsserver",
-        "sqlls",
+        "jsonls",
+        "yamlls",
       },
       automatic_installation = true,
     })
@@ -215,6 +217,24 @@ lua_post_source = '''
       single_file_support = false,
     }
 
+    opts.jsonls = {
+      filetypes = { "json", "jsonc" },
+      settings = {
+        json = {
+          schemas = require("schemastore").json.schemas(),
+          validate = { enable = true },
+        },
+      },
+    }
+
+    opts.yamlls = {
+      settings = {
+        yaml = {
+          schemas = require("schemastore").yaml.schemas(),
+        },
+      },
+    }
+
     require("mason-lspconfig").setup_handlers({
       function(server_name)
         lspconfig[server_name].setup(opts[server_name])
@@ -343,3 +363,6 @@ depends = 'nui.nvim'
 [[plugins]]
 repo = 'SmiteshP/nvim-navic'
 depends = 'nvim-lspconfig'
+
+[[plugins]]
+repo = 'b0o/SchemaStore.nvim'
