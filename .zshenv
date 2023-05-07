@@ -1,13 +1,13 @@
 # windows_commands
-export PATH=$HOME/.windows_command:$PATH
+export PATH="$HOME/.windows_command:$PATH"
 
 # afx (package manager for zsh)
 export AFX_COMMAND_PATH="$HOME/.afx/bin"
 export PATH="$AFX_COMMAND_PATH:$PATH"
 
 # Path to my local dir
-export PATH=$HOME/bin:$PATH
-export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # pkg-config
 export PKG_CONFIG_PATH="/usr/lib/x86_64-linux-gnu/pkgconfig"
@@ -33,6 +33,7 @@ export GOPATH="$HOME/.go"
 export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 
 # Node
+export PATH="$HOME/.nodenv/bin:$PATH"
 export PATH=$PATH:./node_modules/.bin
 
 # deno
@@ -46,25 +47,6 @@ export PATH="$HOME/.nimble/bin:$PATH"
 export CUDA_HOME="/usr/local/cuda"
 export PATH="$CUDA_HOME/bin:$PATH"
 export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
-
-# browser
-vivaldi="/mnt/c/Users/uga/AppData/Local/Vivaldi/Application/vivaldi.exe"
-chrome="/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"
-if [[ -f $vivaldi ]]; then
-    export BROWSER="$vivaldi"
-elif [[ -f $chrome ]]; then
-    export BROWSER="$chrome"
-fi
-
-browser() {
-    if [[ -z $1 ]]; then
-        $BROWSER
-    elif [[ -f $1 ]]; then
-        $BROWSER $(wslpath -w ${1})
-    else
-        $BROWSER $1
-    fi
-}
 
 # themis
 themis_bin="$HOME/.cache/dein/repos/github.com/thinca/vim-themis/bin"

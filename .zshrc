@@ -54,3 +54,6 @@ setopt AUTO_PARAM_KEYS
 alias rm="rm -i"
 
 alias relogin='exec $SHELL -l'
+
+# nodenv
+eval "$(nodenv init - zsh)"
