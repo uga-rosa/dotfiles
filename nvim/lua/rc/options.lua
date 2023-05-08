@@ -7,12 +7,14 @@ vim.opt.signcolumn = "yes"
 
 vim.opt.showmatch = true
 
+-- 2幅スペース
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
-
 vim.opt.expandtab = true
-vim.opt.smartindent = true
+
+-- 要らん
 vim.opt.swapfile = false
+
 vim.opt.scrolloff = 3
 
 vim.opt.ignorecase = true
@@ -42,9 +44,6 @@ vim.opt.laststatus = 3
 
 -- jaxしかないプラグインもある
 vim.opt.helplang = { "en", "ja" }
-
--- クリップボード連携
-vim.opt.clipboard = "unnamedplus"
 
 -- vimgrep
 vim.opt.grepprg = "rg --vimgrep"

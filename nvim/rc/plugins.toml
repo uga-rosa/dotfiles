@@ -95,3 +95,11 @@ repo = 'delphinus/skkeleton_indicator.nvim'
 lua_source = '''
     require("skkeleton_indicator").setup()
 '''
+
+[[plugins]]
+repo = 'ojroques/vim-oscyank'
+hook_add = '''
+    nnoremap <Space>c <Plug>OSCYankOperator
+    nnoremap <Space>cc <Plug>OSCYankOperator_
+    xnoremap <Space>c <Plug>OSCYankVisual
+'''
