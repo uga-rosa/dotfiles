@@ -1,4 +1,6 @@
 import { join } from "https://deno.land/std@0.174.0/path/mod.ts";
+import { hiraToKata } from "./hira_kata.ts";
+import { kataToHanKata } from "./hira_hankata.ts";
 
 const rule: { [key: string]: [string, string] } = {
   // あ行
@@ -173,9 +175,20 @@ set_rule("", undefined, {
   ["v]"]: "』",
 });
 
-// 保存
+// For skkeleton
 const dirname = new URL(".", import.meta.url).pathname;
 Deno.writeTextFileSync(
-  join(dirname, "azik.json"),
+  join(dirname, "azik_skkeleton.json"),
   JSON.stringify(rule, undefined, 2),
+);
+
+// For CorvusSKK
+Deno.writeTextFileSync(
+  join(dirname, "azik_corvus.txt"),
+  Object.entries(rule).reduce((acc, cur) => {
+      const [rom, [hira, _]] = cur
+      const kata = hiraToKata(hira);
+      const hankata = kataToHanKata(kata);
+      return acc + [rom, hira, kata, hankata, 0].join("\t") + "\n";
+    }, ""),
 );
