@@ -43,8 +43,8 @@ let s:path = $CACHE . '/dein'
 if dein#min#load_state(s:path)
   let s:base_dir = fnamemodify(expand('<sfile>'), ':h') . '/rc/'
 
-  let s:dein_toml = s:base_dir . 'plugins.toml'
-  let s:dein_lazy_toml = s:base_dir . 'plugins_lazy.toml'
+  let s:dein_toml = s:base_dir . 'dein.toml'
+  let s:dein_lazy_toml = s:base_dir . 'dein_lazy.toml'
   let s:dein_lsp_toml = s:base_dir . 'lsp.toml'
   let s:cmp_toml = s:base_dir . 'cmp.toml'
   let s:dein_ft_toml = s:base_dir . 'ftplugin.toml'
