@@ -45,6 +45,9 @@ vim.opt.laststatus = 3
 -- jaxしかないプラグインもある
 vim.opt.helplang = { "en", "ja" }
 
+-- clipboard
+vim.opt.clipboard = "unnamedplus"
+
 -- vimgrep
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.grepformat = "%f:%l:%c:%m"
