@@ -503,6 +503,20 @@ lua_source = '''
         auto_enable = true,
         lsp = true,
       },
+      pickers = {
+        ccc.picker.hex,
+        ccc.picker.css_rgb,
+        ccc.picker.css_hsl,
+        ccc.picker.css_hwb,
+        ccc.picker.css_lab,
+        ccc.picker.css_lch,
+        ccc.picker.css_oklab,
+        ccc.picker.css_oklch,
+        ccc.picker.trailing_space({
+          enable = { "markdown", "help" },
+        }),
+        ccc.picker.ansi_escape()
+      },
     })
 '''
 
@@ -712,14 +726,3 @@ on_ft = 'markdown'
 [[plugins]]
 repo = 'Vimjas/vim-python-pep8-indent'
 on_ft = 'python'
-
-[[plugins]]
-repo = 'lukoshkin/trailing-whitespace'
-on_ft = 'markdown'
-lua_source = '''
-    require("trailing-whitespace").setup({
-      patterns = { [[\s\+$]] },
-      palette = { markdown = "RosyBrown" },
-      default_color = "PaleVioletRed",
-    })
-'''
