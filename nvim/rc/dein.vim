@@ -55,8 +55,6 @@ endif
 
 filetype plugin indent on
 
-call dein#call_hook('source')
-
 if dein#check_install()
   call dein#install()
 endif
