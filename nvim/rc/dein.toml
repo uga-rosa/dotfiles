@@ -103,3 +103,20 @@ hook_add = '''
     nnoremap <Space>cc <Plug>OSCYankOperator_
     xnoremap <Space>c <Plug>OSCYankVisual
 '''
+
+[[plugins]]
+repo = 'notomo/waitevent.nvim'
+lua_source = '''
+    vim.env.GIT_EDITOR = require("waitevent").editor({
+      open = function (ctx, path)
+        vim.cmd.tabedit(path)
+        ctx.tcd()
+        vim.bo.bufhidden = "wipe"
+      end
+    })
+
+    vim.env.EDITOR = require("waitevent").editor({
+      done_events = {},
+      cancel_events = {},
+    })
+'''
