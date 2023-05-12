@@ -34,7 +34,7 @@ export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
 
 # Node
 export PATH="$HOME/.nodenv/bin:$PATH"
-export PATH=$PATH:./node_modules/.bin
+export PATH="./node_modules/.bin:$PATH"
 
 # deno
 export PATH="$PATH:$HOME/.deno/bin"
