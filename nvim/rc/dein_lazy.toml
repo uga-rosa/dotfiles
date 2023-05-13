@@ -11,7 +11,7 @@ lua_source = '''
 [[plugins]]
 repo = 'vim-skk/skkeleton'
 depends = 'denops.vim'
-on_event = 'VimEnter'
+on_source = 'denops.vim'
 lua_add = '''
     vim.keymap.set({ "i", "c" }, "<C-j>", "<Plug>(skkeleton-toggle)")
 '''
