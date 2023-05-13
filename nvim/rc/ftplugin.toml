@@ -9,29 +9,33 @@ _ = '''
 '''
 
 lua_lua = '''
-    local function filereadable(path)
-        return vim.bool_fn.filereadable(vim.fn.expand(path))
-    end
-
-    local stylua_toml
-    if filereadable("stylua.toml") then
-      stylua_toml = "stylua.toml"
-    elseif filereadable(".stylua.toml") then
-      stylua_toml = ".stylua.toml"
-    else
-      stylua_toml = vim.fn.expand("~/.config/stylua.toml")
-    end
-
-    local tab_size, is_hard_tab = 2, false
-    for line in io.lines(stylua_toml) do
-      if vim.startswith(line, "indent_width") then
-        tab_size = tonumber(line:match("%d+")) or 2
-      elseif vim.startswith(line, "indent_type") then
-        is_hard_tab = not not line:find("Tabs")
+    local function findFirstExistingFilePath(paths)
+      for _, path in ipairs(paths) do
+        path = vim.fs.normalize(path)
+        if vim.fs.isfile(path) then
+          return path
+        end
       end
     end
 
-    require("rc").set_indent(tab_size, is_hard_tab)
+    local stylua_toml = findFirstExistingFilePath({
+      "stylua.toml",
+      ".stylua.toml",
+      "~/.config/stylua.toml",
+    })
+
+    if stylua_toml then
+      local tab_size, is_hard_tab = 2, false
+      for line in io.lines(stylua_toml) do
+        if vim.startswith(line, "indent_width") then
+          tab_size = tonumber(line:match("%d+")) or 2
+        elseif vim.startswith(line, "indent_type") then
+          is_hard_tab = not not line:find("Tabs")
+        end
+      end
+
+      require("rc").set_indent(tab_size, is_hard_tab)
+    end
 '''
 
 lua_typescript_vim_sh_html_xhtml_nim_markdown = '''
