@@ -122,7 +122,7 @@ lua_add = '''
 
 [[plugins]]
 repo = 'ibhagwan/fzf-lua'
-depends = ['nvim-web-devicons']
+depends = ['nvim-web-devicons', 'nvim-lspconfig']
 on_cmd = 'FzfLua'
 on_lua = 'fzf-lua'
 lua_add = '''
@@ -144,6 +144,9 @@ lua_add = '''
 '''
 lua_source = '''
     local actions = require("fzf-lua.actions")
+    local utils = require("fzf-lua.utils")
+    local path = require("fzf-lua.path")
+    local root_pattern = require("lspconfig.util").root_pattern
 
     local exclude_extensions = {
       "png",
@@ -162,13 +165,60 @@ lua_source = '''
       fd_opts = fd_opts .. (" --exclude '*.%s'"):format(ext)
     end
 
+    ---@see https://github.com/ibhagwan/fzf-lua/blob/main/lua/fzf-lua/actions.lua
+    local function file_tabedit(selected, opts)
+      local is_term = utils.is_term_buffer(0)
+      for i = 1, #selected do
+        local entry = path.entry_to_file(selected[i], opts, opts.force_uri)
+        if entry.path == "<none>" then
+          goto continue
+        end
+        entry.ctag = opts._ctag and path.entry_to_ctag(selected[i])
+        local fullpath = entry.path or entry.uri and entry.uri:match("^%a+://(.*)")
+        if not path.starts_with_separator(fullpath) then
+          fullpath = path.join({ opts.cwd or vim.loop.cwd(), fullpath })
+        end
+        -- add current location to jumplist
+        if not is_term then
+          vim.cmd("normal! m`")
+        end
+        if entry.path then
+          -- do not run ':<cmd> <file>' for uri entries (#341)
+          local relpath = path.relative(entry.path, vim.loop.cwd())
+          entry.path = vim.fn.fnameescape(relpath)
+        end
+        vim.cmd.tabedit(entry.path)
+        -- Set tab-local cwd
+        local root = root_pattern(".git")(fullpath)
+        if root then
+          vim.cmd.tcd(root)
+        end
+        -- Java LSP entries, 'jdt://...' or LSP locations
+        if entry.uri then
+          vim.lsp.util.jump_to_location(entry, "utf-16")
+        elseif entry.ctag then
+          vim.api.nvim_win_set_cursor(0, { 1, 0 })
+          vim.fn.search(entry.ctag, "W")
+        elseif entry.line > 1 or entry.col > 1 then
+          -- make sure we have valid column
+          -- 'nvim-dap' for example sets columns to 0
+          entry.col = entry.col and entry.col > 0 and entry.col or 1
+          vim.api.nvim_win_set_cursor(0, { tonumber(entry.line), tonumber(entry.col) - 1 })
+        end
+        if not is_term and not opts.no_action_zz then
+          vim.cmd("norm! zvzz")
+        end
+        ::continue::
+      end
+    end
+
     require("fzf-lua").setup({
       actions = {
         files = {
           ["default"] = actions.file_edit_or_qf,
           ["ctrl-x"] = actions.file_split,
           ["ctrl-v"] = actions.file_vsplit,
-          ["ctrl-t"] = actions.file_tabedit,
+          ["ctrl-t"] = file_tabedit,
           ["alt-q"] = actions.file_sel_to_qf,
           ["alt-l"] = actions.file_sel_to_ll,
         },
