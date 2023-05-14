@@ -10,12 +10,7 @@ _ = '''
 
 lua_lua = '''
     local function findFirstExistingFilePath(paths)
-      for _, path in ipairs(paths) do
-        path = vim.fs.normalize(path)
-        if vim.fs.isfile(path) then
-          return path
-        end
-      end
+      return vim.iter(paths):map(vim.fs.normalize):find(vim.fs.isfile)
     end
 
     local stylua_toml = findFirstExistingFilePath({
