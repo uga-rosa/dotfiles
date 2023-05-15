@@ -113,7 +113,7 @@ lua_add = '''
 '''
 
 [[plugins]]
-repo = 'haya14busa/vim-edgemotion'
+repo = 'uga-rosa/vim-edgemotion'
 on_map = "<Plug>"
 lua_add = '''
     vim.keymap.set({ "n", "x", "o" }, "<C-j>", "<Plug>(edgemotion-j)")
