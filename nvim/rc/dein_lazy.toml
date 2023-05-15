@@ -671,49 +671,6 @@ repo = 'thinca/vim-qfreplace'
 on_cmd = 'Qfreplace'
 
 [[plugins]]
-repo = 'kkiyama117/zenn-vim'
-on_func = 'zenn#'
-hook_add = '''
-    let g:zenn#article#edit_new_cmd = "edit"
-    command! -nargs=0 ZennUpdate call zenn#update()
-    command! -nargs=0 ZennPreview call zenn#preview()
-    command! -nargs=0 ZennStopPreview call zenn#stop_preview()
-    command! -nargs=0 ZennNewBook call zenn#new_book()
-    command! -nargs=0 ZennNewArticle call s:zenn_new_article()
-
-    function! s:zenn_new_article() abort
-      let args_dict = #{ emoji: '🐈' }
-      call zenn#article#new_article(args_dict)
-            \.then(
-            \ { arr -> zenn#echo#echo_msg(arr)})
-            \.catch(
-            \ { arr -> zenn#echo#echo_err(arr)}
-            \)
-    endfunction
-'''
-lua_add = '''
-    ---@return string? url
-    local function zenn_url()
-      local url = "https://zenn.dev/uga_rosa/articles/"
-      local name = vim.api.nvim_buf_get_name(0)
-      local dirname = vim.fn.fnamemodify(name, ":h:t")
-      local extname = vim.fn.fnamemodify(name, ":e")
-      if dirname == "articles" and extname == "md" then
-        return url .. vim.fn.fnamemodify(name, ":t:r")
-      else
-        vim.notify("Outside of the zenn article", vim.log.levels.WARN)
-      end
-    end
-
-    vim.api.nvim_create_user_command("ZennOpen", function()
-      local url = zenn_url()
-      if url then
-        vim.fn.system({ "wslview", url })
-      end
-    end, {})
-'''
-
-[[plugins]]
 repo = 'folke/zen-mode.nvim'
 on_cmd = 'ZenMode'
 lua_source = '''
