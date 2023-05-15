@@ -322,7 +322,7 @@ lua_source = '''
 [[plugins]]
 repo = 'lambdalisue/kensaku.vim'
 depends = 'denops.vim'
-on_cmd = 'KensakuGrep'
+on_source = 'denops.vim'
 hook_post_source = '''
     let romanTable = vimrc#json#read(stdpath('config') . '/script/azik.json')
     let romanTable = values(map(romanTable, { key, val -> [key, val[0], 0] }))
@@ -382,7 +382,7 @@ hook_post_source = '''
 [[plugins]]
 repo = 'yuki-yano/fuzzy-motion.vim'
 depends = ['denops.vim', 'kensaku.vim']
-on_cmd = 'FuzzyMotion'
+on_source = 'denops.vim'
 hook_add = '''
     nnoremap ss <Cmd>FuzzyMotion<CR>
     let g:fuzzy_motion_matchers = ['fzf', 'kensaku']
@@ -696,7 +696,7 @@ lua_source = '''
 [[plugins]]
 repo = 'tani/hey.vim'
 depends = 'denops.vim'
-on_cmd = 'Hey'
+on_source = 'denops.vim'
 hook_source = '''
     nnoremap <M-u> <Plug>HeyUndo
 '''
@@ -732,21 +732,6 @@ lua_source = '''
 [[plugins]]
 repo = 'mattn/vim-maketable'
 on_ft = 'markdown'
-
-[[plugins]]
-repo = 'tani/glance-vim'
-depends = 'denops.vim'
-on_cmd = 'Glance'
-hook_add = '''
-    let g:glance#server_open = v:false
-    let g:glance#markdown_plugins = ['https://esm.sh/markdown-it-emoji']
-
-    command! GlanceOpen call s:glance_open()
-    function! s:glance_open() abort
-      Glance
-      call system('vivaldi.exe http://localhost:8765')
-    endfunction
-'''
 
 [[plugins]]
 repo = 'uga-rosa/todo.nvim'
