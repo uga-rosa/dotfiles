@@ -34,9 +34,9 @@ if dein#min#load_state(s:path)
   call dein#begin(s:path)
 
   call dein#load_toml(s:dein_toml)
-  call dein#load_toml(s:dein_lazy_toml, {'lazy' : 1})
-  call dein#load_toml(s:dein_lsp_toml, {'lazy' : 1})
-  call dein#load_toml(s:cmp_toml, {'lazy' : 1})
+  call dein#load_toml(s:dein_lazy_toml, {'lazy': 1})
+  call dein#load_toml(s:dein_lsp_toml, {'lazy': 1})
+  call dein#load_toml(s:cmp_toml, {'lazy': 1})
   call dein#load_toml(s:dein_ft_toml)
 
   let s:work_dir = expand('~/plugin')
