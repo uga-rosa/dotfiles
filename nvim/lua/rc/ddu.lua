@@ -13,29 +13,36 @@ end
 
 ---@param name string
 ---@param params table?
+---@param sync boolean?
 ---@return function
-function M.call_action(name, params)
+function M.call_action(name, params, sync)
   return function()
-    vim.fn["ddu#ui#ff#do_action"](name, params or vim.empty_dict())
+    if sync then
+      vim.fn["ddu#ui#sync_action"](name, params or vim.empty_dict())
+    else
+      vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
+    end
   end
 end
 
 ---@param name string
 ---@param params table?
+---@param sync boolean?
 ---@return function
-function M.itemAction(name, params)
+function M.itemAction(name, params, sync)
   local opts = {
     name = name,
     params = params,
   }
-  return M.call_action("itemAction", opts)
+  return M.call_action("itemAction", opts, sync)
 end
 
 function M.open_tab()
-  M.itemAction("open", { command = "tabedit" })()
+  M.itemAction("open", { command = "tabedit" }, true)()
   local root = vim
     .iter(vim.fs.find({ "init.vim", ".git" }, {
       upward = true,
+      path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
     }))
     :map(vim.fs.dirname)
     :totable()[1]
