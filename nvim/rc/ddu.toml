@@ -49,6 +49,12 @@ lua_add = '''
         _ = {
           defaultAction = "open",
         },
+        command_history = {
+          defaultAction = "execute",
+        },
+        search_history = {
+          defaultAction = "execute",
+        },
       },
       filterParams = {
         matcher_fzf = {
@@ -217,6 +223,34 @@ lua_add = '''
       require("rc.ddu").start({
         "command_history",
         name = "command_history",
+      })
+    end)
+'''
+
+[[plugins]]
+repo = 'uga-rosa/ddu-source-search_history'
+lua_add = '''
+    vim.keymap.set("n", "q/", "<Cmd>Ddu search_history<CR>")
+
+    local ddu = require("rc.ddu")
+
+    local function map(mode, lhs, rhs)
+      vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
+    end
+
+    require("rc.utils").package_set("ddu_command", "search_history", function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "ddu-ff-filter",
+        callback = function()
+          map("i", "<C-e>", ddu.itemAction("edit"))
+          map("i", "<C-d>", ddu.itemAction("delete"))
+        end,
+        once = true,
+      })
+
+      require("rc.ddu").start({
+        "search_history",
+        name = "search_history",
       })
     end)
 '''
