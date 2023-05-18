@@ -22,6 +22,8 @@ repo = 'cohama/lexima.vim'
 on_event = 'InsertEnter'
 hook_source = '''
     let g:lexima_ctrlh_as_backspace = 1
+    let g:lexima_disable_on_nofile = 1
+
     let s:lexima_my_rules = [
           \ #{
           \   char: '<CR>',

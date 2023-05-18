@@ -77,10 +77,13 @@ lua_add = '''
       pattern = "ddu-ff-filter",
       callback = function()
         -- Close UI
-        map({ "i", "n" }, "<C-c>", ddu.call_action("quit"))
+        map("i", "<C-c>", ddu.call_action("quit"))
         -- Close filter window
-        map("n", "q", ddu.call_action("closeFilterWindow"))
-        map("n", "<Esc>", ddu.call_action("closeFilterWindow"))
+        -- Need to disable lexima's mapping. See below
+        map("i", "<Esc>", function()
+          ddu.call_action("closeFilterWindow")()
+          vim.cmd.stopinsert()
+        end)
         -- Open file
         map("i", "<CR>", ddu.itemAction("open"))
         map("i", "<C-x>", ddu.itemAction("open", { command = "split" }))
@@ -89,6 +92,20 @@ lua_add = '''
         -- Move cursor
         map("i", "<C-n>", ddu.execute("normal! j"))
         map("i", "<C-p>", ddu.execute("normal! k"))
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("InsertEnter", {
+      pattern = "*",
+      callback = function()
+        vim.g.lexima_map_escape = "<Esc>"
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("InsertEnter", {
+      pattern = "*ddu-ff-filter*",
+      callback = function()
+        vim.g.lexima_map_escape = ""
       end,
     })
 
