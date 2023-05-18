@@ -187,6 +187,35 @@ lua_add = '''
     end)
 '''
 
+[[plugins]]
+repo = 'matsui54/ddu-source-command_history'
+lua_add = '''
+    vim.keymap.set("n", "q:", "<Cmd>Ddu command_history<CR>")
+
+    local ddu = require("rc.ddu")
+
+    local function map(mode, lhs, rhs)
+      vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
+    end
+
+    require("rc.utils").package_set("ddu_command", "command_history", function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "ddu-ff-filter",
+        callback = function()
+          map("i", "<CR>", ddu.itemAction("execute"))
+          map("i", "<C-e>", ddu.itemAction("edit"))
+          map("i", "<C-d>", ddu.itemAction("delete"))
+        end,
+        once = true,
+      })
+
+      require("rc.ddu").start({
+        "command_history",
+        name = "command_history",
+      })
+    end)
+'''
+
 # Filters
 [[plugins]]
 repo = 'yuki-yano/ddu-filter-fzf'
