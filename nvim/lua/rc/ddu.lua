@@ -3,11 +3,9 @@ local M = {}
 ---@param config table
 function M.start(config)
   local sources = {}
-  for k, v in pairs(config) do
-    if type(k) == "number" then
-      sources[k] = { name = v }
-      config[k] = nil
-    end
+  for i, v in ipairs(config) do
+    sources[i] = { name = v }
+    config[i] = nil
   end
   config.sources = sources
   vim.fn["ddu#start"](config)
