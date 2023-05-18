@@ -45,6 +45,11 @@ lua_add = '''
           sorters = {},
         },
       },
+      kindOptions = {
+        _ = {
+          defaultAction = "open",
+        },
+      },
       filterParams = {
         matcher_fzf = {
           highlightMatched = "DduSearchMatched",
@@ -64,7 +69,7 @@ lua_add = '''
         -- Close UI
         map("n", "<C-c>", ddu.call_action("quit"))
         -- Open file
-        map("n", "<CR>", ddu.itemAction("open"))
+        map("n", "<CR>", ddu.itemAction("default"))
         map("n", "<C-x>", ddu.itemAction("open", { command = "split" }))
         map("n", "<C-v>", ddu.itemAction("open", { command = "vsplit" }))
         map("n", "<C-t>", ddu.open_tab)
@@ -86,7 +91,7 @@ lua_add = '''
           vim.cmd.stopinsert()
         end)
         -- Open file
-        map("i", "<CR>", ddu.itemAction("open"))
+        map("i", "<CR>", ddu.itemAction("default"))
         map("i", "<C-x>", ddu.itemAction("open", { command = "split" }))
         map("i", "<C-v>", ddu.itemAction("open", { command = "vsplit" }))
         map("i", "<C-t>", ddu.open_tab)
