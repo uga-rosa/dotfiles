@@ -79,7 +79,8 @@ lua_add = '''
         -- Close UI
         map("i", "<C-c>", ddu.call_action("quit"))
         -- Close filter window
-        -- Need to disable lexima's mapping. See below
+        -- Lexima overwrite <Esc> mapping
+        vim.b.lexima_disabled = true
         map("i", "<Esc>", function()
           ddu.call_action("closeFilterWindow")()
           vim.cmd.stopinsert()
@@ -92,20 +93,6 @@ lua_add = '''
         -- Move cursor
         map("i", "<C-n>", ddu.execute("normal! j"))
         map("i", "<C-p>", ddu.execute("normal! k"))
-      end,
-    })
-
-    vim.api.nvim_create_autocmd("InsertEnter", {
-      pattern = "*",
-      callback = function()
-        vim.g.lexima_map_escape = "<Esc>"
-      end,
-    })
-
-    vim.api.nvim_create_autocmd("InsertEnter", {
-      pattern = "*ddu-ff-filter*",
-      callback = function()
-        vim.g.lexima_map_escape = ""
       end,
     })
 
