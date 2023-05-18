@@ -174,6 +174,19 @@ lua_add = '''
     end)
 '''
 
+[[plugins]]
+repo = 'Shougo/ddu-source-file_old'
+lua_add = '''
+    vim.keymap.set("n", "<Space>o", "<Cmd>Ddu oldfiles<CR>")
+
+    require("rc.utils").package_set("ddu_command", "oldfiles", function()
+      require("rc.ddu").start({
+        "file_old",
+        name = "oldfiles",
+      })
+    end)
+'''
+
 # Filters
 [[plugins]]
 repo = 'yuki-yano/ddu-filter-fzf'

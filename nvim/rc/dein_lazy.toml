@@ -91,7 +91,6 @@ on_lua = 'fzf-lua'
 lua_add = '''
     vim.keymap.set("n", "<Space>r", "<Cmd>FzfLua resume<CR>")
     vim.keymap.set("n", "<Space>b", "<Cmd>FzfLua buffers<CR>")
-    vim.keymap.set("n", "<Space>o", "<Cmd>FzfLua oldfiles<CR>")
     vim.keymap.set("n", "<Space>/", "<Cmd>FzfLua blines<CR>")
     vim.keymap.set("n", "<Space>gf", "<Cmd>FzfLua git_files<CR>")
     vim.keymap.set("n", "q:", "<Cmd>FzfLua command_history<CR>")
