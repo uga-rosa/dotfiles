@@ -1,5 +1,21 @@
 [[plugins]]
 repo = 'Shougo/ddu.vim'
+lua_add = '''
+    vim.api.nvim_create_user_command("Ddu", function(args)
+      local sub_command = args.args
+      local f = require("ddu_command")[sub_command]
+      if f then
+        f()
+      else
+        vim.notify("Unknown sub command: " .. sub_command)
+      end
+    end, {
+      nargs = 1,
+      complete = function()
+        return vim.tbl_keys(require("ddu_command"))
+      end,
+    })
+'''
 
 # UI
 [[plugins]]
@@ -7,9 +23,19 @@ repo = 'Shougo/ddu-ui-ff'
 
 # Sources
 [[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+lua_add = '''
+    require("rc.utils").package_set("ddu_command", "files", function()
+      require("rc.ddu").start({
+        "file_rec",
+      })
+    end)
+'''
+
+[[plugins]]
 repo = 'shun/ddu-source-rg'
-lua_source = '''
-    vim.api.nvim_create_user_command("DduLiveRg", function()
+lua_add = '''
+    require("rc.utils").package_set("ddu_command", "live_grep", function()
       local root = require("rc.utils").find_root()
       require("rc.ddu").start({
         "rg",
@@ -27,7 +53,7 @@ lua_source = '''
           },
         },
       })
-    end, {})
+    end)
 '''
 
 # Filters
