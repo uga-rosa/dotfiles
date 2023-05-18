@@ -267,6 +267,7 @@ lua_source = '''
 '''
 
 [[plugins]]
+if = 0
 repo = 'hrsh7th/nvim-gtd'
 on_event = 'BufRead'
 lua_add = '''
