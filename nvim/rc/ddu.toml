@@ -29,3 +29,11 @@ lua_source = '''
       })
     end, {})
 '''
+
+# Filters
+[[plugins]]
+repo = 'yuki-yano/ddu-filter-fzf'
+
+# Kinds
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
