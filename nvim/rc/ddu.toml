@@ -116,6 +116,8 @@ repo = 'Shougo/ddu-ui-ff'
 [[plugins]]
 repo = 'Shougo/ddu-source-file_rec'
 lua_add = '''
+    vim.keymap.set("n", "<Space>f", "<Cmd>Ddu files<CR>")
+
     require("rc.utils").package_set("ddu_command", "files", function()
       require("rc.ddu").start({
         "file_rec",
@@ -127,6 +129,8 @@ lua_add = '''
 [[plugins]]
 repo = 'shun/ddu-source-rg'
 lua_add = '''
+    vim.keymap.set("n", "<Space>lg", "<Cmd>Ddu live_grep<CR>")
+
     require("rc.utils").package_set("ddu_command", "live_grep", function()
       require("rc.ddu").start({
         "rg",
