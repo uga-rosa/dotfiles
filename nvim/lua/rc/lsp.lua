@@ -1,6 +1,5 @@
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#1d3b53" })
-vim.api.nvim_set_hl(0, "Title", { bg = "#1d3b53" })
-vim.api.nvim_set_hl(0, "FloatBorder", { fg = "white", bg = "#1d3b53" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#011627" })
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = "white" })
 
 local opts = {
   hover = {
