@@ -2,11 +2,7 @@ local conditions = require("heirline.conditions")
 
 return {
   init = function(self)
-    if vim.bo.filetype == "fzf" then
-      self.filename = "fzf-lua"
-    else
-      self.filename = vim.api.nvim_buf_get_name(0)
-    end
+    self.filename = vim.api.nvim_buf_get_name(0)
   end,
   {
     provider = " \u{E0B0} ", -- [[ ]]
