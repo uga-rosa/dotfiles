@@ -8,6 +8,9 @@ lua_add = '''
     local columns = vim.opt.columns:get()
     local width, col = math.floor(columns * 0.8), math.floor(columns * 0.1)
 
+    local palette = require("nightfly").palette
+    vim.api.nvim_set_hl(0, "DduSearchMatched", { fg = palette.black, bg = palette.emerald })
+
     vim.fn["ddu#custom#patch_global"]({
       ui = "ff",
       uiParams = {
@@ -40,6 +43,11 @@ lua_add = '''
           ignoreCase = true,
           matchers = { "matcher_fzf" },
           sorters = {},
+        },
+      },
+      filterParams = {
+        matcher_fzf = {
+          highlightMatched = "DduSearchMatched",
         },
       },
     })
