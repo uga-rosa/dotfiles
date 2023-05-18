@@ -161,6 +161,19 @@ lua_add = '''
     end)
 '''
 
+[[plugins]]
+repo = 'matsui54/ddu-source-help'
+lua_add = '''
+    vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
+
+    require("rc.utils").package_set("ddu_command", "help_tags", function()
+      require("rc.ddu").start({
+        "help",
+        name = "help_tags",
+      })
+    end)
+'''
+
 # Filters
 [[plugins]]
 repo = 'yuki-yano/ddu-filter-fzf'
