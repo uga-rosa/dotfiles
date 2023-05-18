@@ -33,19 +33,16 @@ function M.itemAction(name, params)
   return M.call_action("itemAction", opts)
 end
 
----@return function
 function M.open_tab()
-  return function()
-    M.itemAction("open", { command = "tabedit" })()
-    local root = vim
-      .iter(vim.fs.find({ "init.vim", ".git" }, {
-        upward = true,
-      }))
-      :map(vim.fs.dirname)
-      :totable()[1]
-    if root then
-      vim.cmd.tcd(root)
-    end
+  M.itemAction("open", { command = "tabedit" })()
+  local root = vim
+    .iter(vim.fs.find({ "init.vim", ".git" }, {
+      upward = true,
+    }))
+    :map(vim.fs.dirname)
+    :totable()[1]
+  if root then
+    vim.cmd.tcd(root)
   end
 end
 
