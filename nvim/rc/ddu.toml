@@ -216,6 +216,19 @@ lua_add = '''
     end)
 '''
 
+[[plugins]]
+repo = 'mikanIchinose/ddu-source-zenn'
+lua_add = '''
+    vim.keymap.set("n", "<Space>z", "<Cmd>Ddu zenn<CR>")
+
+    require("rc.utils").package_set("ddu_command", "zenn", function()
+      require("rc.ddu").start({
+        "zenn",
+        name = "zenn",
+      })
+    end)
+'''
+
 # Filters
 [[plugins]]
 repo = 'yuki-yano/ddu-filter-fzf'
