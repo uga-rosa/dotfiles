@@ -89,15 +89,11 @@ depends = ['nvim-web-devicons', 'nvim-lspconfig']
 on_cmd = 'FzfLua'
 on_lua = 'fzf-lua'
 lua_add = '''
-    vim.keymap.set("n", "<Space>r", "<Cmd>FzfLua resume<CR>")
-    vim.keymap.set("n", "<Space>/", "<Cmd>FzfLua blines<CR>")
-    vim.keymap.set("n", "<Space>gf", "<Cmd>FzfLua git_files<CR>")
     vim.keymap.set("n", "q:", "<Cmd>FzfLua command_history<CR>")
     vim.keymap.set("n", "q;", "q:")
     vim.keymap.set("n", "q/", "<Cmd>FzfLua search_history<CR>")
 
     -- LSP
-    vim.keymap.set("n", "<Space>i", "<Cmd>FzfLua diagnostics_document<CR>")
     vim.keymap.set("n", "gr", "<Cmd>FzfLua lsp_references<CR>")
 '''
 lua_source = '''
