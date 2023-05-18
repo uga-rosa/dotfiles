@@ -1,16 +1,13 @@
 [[plugins]]
 repo = 'Shougo/ddu.vim'
-on_source = 'denops.vim'
 
 # UI
 [[plugins]]
 repo = 'Shougo/ddu-ui-ff'
-on_source = 'ddu.vim'
 
 # Sources
 [[plugins]]
 repo = 'shun/ddu-source-rg'
-on_source = 'ddu.vim'
 lua_source = '''
     vim.api.nvim_create_user_command("DduLiveRg", function()
       local root = require("rc.utils").find_root()
