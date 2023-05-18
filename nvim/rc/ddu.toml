@@ -1,6 +1,50 @@
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 lua_add = '''
+    local height, row = (function()
+      local lines = vim.opt.lines:get()
+      return math.floor(lines * 0.8), math.floor(lines * 0.1)
+    end)()
+    local width, col = (function()
+      local columns = vim.opt.columns:get()
+      return math.floor(columns * 0.8), math.floor(columns * 0.1)
+    end)()
+
+    vim.fn["ddu#custom#patch_global"]({
+      ui = "ff",
+      uiParams = {
+        ff = {
+          startFilter = true,
+          prompt = "> ",
+          split = "floating",
+          winHeight = height,
+          winRow = row,
+          winWidth = width,
+          winCol = col,
+          floatingBorder = "single",
+          filterFloatingPosition = "top",
+          autoAction = {
+            name = "preview",
+          },
+          previewFloating = true,
+          previewFloatingBorder = "single",
+          previewSplit = "vertical",
+          previewFloatingTitle = "Preview",
+          previewWidth = math.floor(width / 2),
+          highlights = {
+            floating = "Normal",
+            floatingBorder = "Normal",
+          },
+        },
+      },
+      sourceOptions = {
+        _ = {
+          ignoreCase = true,
+          matchers = { "matcher_fzf" },
+          sorters = {},
+        },
+      },
+    })
     vim.api.nvim_create_user_command("Ddu", function(args)
       local sub_command = args.args
       local f = require("ddu_command")[sub_command]
