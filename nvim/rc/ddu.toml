@@ -187,6 +187,19 @@ lua_add = '''
     end)
 '''
 
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
+lua_add = '''
+    vim.keymap.set("n", "<Space>b", "<Cmd>Ddu buffers<CR>")
+
+    require("rc.utils").package_set("ddu_command", "buffers", function()
+      require("rc.ddu").start({
+        "buffer",
+        name = "buffers",
+      })
+    end)
+'''
+
 # Filters
 [[plugins]]
 repo = 'yuki-yano/ddu-filter-fzf'
