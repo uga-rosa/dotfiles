@@ -13,4 +13,17 @@ function M.find_root(path)
     :totable()[1]
 end
 
+---@param package_name string
+---@param key unknown
+---@param value unknown
+function M.package_set(package_name, key, value)
+  local module = (package.preload[package_name] or function()
+    return {}
+  end)()
+  module[key] = value
+  package.preload[package_name] = function()
+    return module
+  end
+end
+
 return M
