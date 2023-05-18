@@ -1,6 +1,8 @@
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 lua_add = '''
+    local ddu = require("rc.ddu")
+
     local height, row = (function()
       local lines = vim.opt.lines:get()
       return math.floor(lines * 0.8), math.floor(lines * 0.1)
@@ -45,6 +47,47 @@ lua_add = '''
         },
       },
     })
+
+    local function map(mode, lhs, rhs)
+      vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
+    end
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "ddu-ff",
+      callback = function()
+        -- Highlight cursor line
+        vim.opt_local.cursorline = true
+        -- Close UI
+        map("n", "<C-c>", ddu.call_action("quit"))
+        -- Open file
+        map("n", "<CR>", ddu.itemAction("open"))
+        map("n", "<C-x>", ddu.itemAction("open", { command = "split" }))
+        map("n", "<C-v>", ddu.itemAction("open", { command = "vsplit" }))
+        map("n", "<C-t>", ddu.open_tab)
+        -- Enter filter
+        map("n", "i", ddu.call_action("openFilterWindow"))
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "ddu-ff-filter",
+      callback = function()
+        -- Close UI
+        map({ "i", "n" }, "<C-c>", ddu.call_action("quit"))
+        -- Close filter window
+        map("n", "q", ddu.call_action("closeFilterWindow"))
+        map("n", "<Esc>", ddu.call_action("closeFilterWindow"))
+        -- Open file
+        map("i", "<CR>", ddu.itemAction("open"))
+        map("i", "<C-x>", ddu.itemAction("open", { command = "split" }))
+        map("i", "<C-v>", ddu.itemAction("open", { command = "vsplit" }))
+        map("i", "<C-t>", ddu.open_tab)
+        -- Move cursor
+        map("i", "<C-n>", ddu.execute("normal! j"))
+        map("i", "<C-p>", ddu.execute("normal! k"))
+      end,
+    })
+
     vim.api.nvim_create_user_command("Ddu", function(args)
       local sub_command = args.args
       local f = require("ddu_command")[sub_command]
