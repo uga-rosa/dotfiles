@@ -119,6 +119,7 @@ lua_add = '''
     require("rc.utils").package_set("ddu_command", "files", function()
       require("rc.ddu").start({
         "file_rec",
+        name = "files",
       })
     end)
 '''
@@ -127,20 +128,12 @@ lua_add = '''
 repo = 'shun/ddu-source-rg'
 lua_add = '''
     require("rc.utils").package_set("ddu_command", "live_grep", function()
-      local root = require("rc.utils").find_root()
       require("rc.ddu").start({
         "rg",
-        name = "file#rg",
+        name = "live_grep",
         sourceOptions = {
           rg = {
-            path = root,
             volatile = true,
-          },
-        },
-        uiParams = {
-          ff = {
-            ignoreEmpty = false,
-            autoResize = false,
           },
         },
       })
