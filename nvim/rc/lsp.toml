@@ -28,7 +28,6 @@ lua_post_source = '''
         "jsonls",
         "yamlls",
       },
-      automatic_installation = true,
     })
 
     ---Register callback function on LspAttach
@@ -267,7 +266,6 @@ lua_source = '''
 '''
 
 [[plugins]]
-if = 0
 repo = 'hrsh7th/nvim-gtd'
 on_event = 'BufRead'
 lua_add = '''
@@ -277,25 +275,7 @@ lua_add = '''
 '''
 lua_source = '''
     local gtd = require("gtd")
-    local fzf = require("fzf-lua")
-    local builtin = require("fzf-lua.previewer.builtin")
-
-    local custom_previewer = builtin.buffer_or_file:extend()
-
-    function custom_previewer:new(o, opts, fzf_win)
-      custom_previewer.super.new(self, o, opts, fzf_win)
-      setmetatable(self, custom_previewer)
-      return self
-    end
-
-    function custom_previewer:parse_entry(entry_str)
-      local _, filepath, row, col = entry_str:match("^(%d+)%. (.+):(%d+):(%d+):$")
-      return {
-        path = filepath,
-        line = tonumber(row) or 1,
-        col = tonumber(col) or 1,
-      }
-    end
+    local ddu = require("rc.ddu")
 
     gtd.setup({
       sources = {
@@ -304,31 +284,9 @@ lua_source = '''
         { name = "walk" },
       },
       on_locations = function(_, locations)
-        local paths, path2location = {}, {}
-        for i, location in ipairs(locations) do
-          local row = location.targetSelectionRange.start.line + 1
-          local col = location.targetSelectionRange.start.character + 1
-          local path = ("%s. %s:%s:%s:"):format(i, vim.uri_to_fname(location.targetUri), row, col)
-          table.insert(paths, path)
-          path2location[path] = location
-        end
-
-        local function open_with_cmd(cmd)
-          return function(selected, _)
-            local location = path2location[selected[1]]
-            gtd.open({ command = cmd }, location)
-          end
-        end
-
-        fzf.fzf_exec(paths, {
-          previewer = custom_previewer,
-          prompt = "Go to definition> ",
-          actions = {
-            ["default"] = open_with_cmd("edit"),
-            ["ctrl-x"] = open_with_cmd("split"),
-            ["ctrl-v"] = open_with_cmd("vsplit"),
-            ["ctrl-t"] = open_with_cmd("tabedit"),
-          },
+        ddu.start({
+          { name = "nvim-gtd", params = { locations = locations } },
+          name = "nvim-gtd",
         })
       end,
     })
