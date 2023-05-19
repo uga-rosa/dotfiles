@@ -4,7 +4,7 @@ local M = {}
 function M.start(config)
   local sources = {}
   for i, v in ipairs(config) do
-    sources[i] = { name = v }
+    sources[i] = type(v) == "string" and { name = v } or v
     config[i] = nil
   end
   config.sources = sources
