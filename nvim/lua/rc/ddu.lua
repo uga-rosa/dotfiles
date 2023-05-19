@@ -16,12 +16,9 @@ end
 ---@param sync boolean?
 ---@return function
 function M.call_action(name, params, sync)
+  local act = sync and vim.fn["ddu#ui#sync_action"] or vim.fn["ddu#ui#do_action"]
   return function()
-    if sync then
-      vim.fn["ddu#ui#sync_action"](name, params or vim.empty_dict())
-    else
-      vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
-    end
+    act(name, params or vim.empty_dict())
   end
 end
 
