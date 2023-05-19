@@ -175,12 +175,27 @@ lua_add = '''
 [[plugins]]
 repo = 'kuuote/ddu-source-mr'
 lua_add = '''
-    vim.keymap.set("n", "<Space>o", "<Cmd>Ddu mru<CR>")
+    vim.keymap.set("n", "<Space>w", "<Cmd>Ddu mrw<CR>")
+    vim.keymap.set("n", "<Space>u", "<Cmd>Ddu mru<CR>")
 
     require("rc.utils").package_set("ddu_command", "mru", function()
       require("rc.ddu").start({
         { name = "mr", params = { kind = "mru" } },
         name = "mru",
+      })
+    end)
+
+    require("rc.utils").package_set("ddu_command", "mrw", function()
+      require("rc.ddu").start({
+        { name = "mr", params = { kind = "mrw" } },
+        name = "mrw",
+      })
+    end)
+
+    require("rc.utils").package_set("ddu_command", "mrr", function()
+      require("rc.ddu").start({
+        { name = "mr", params = { kind = "mrr" } },
+        name = "mrr",
       })
     end)
 '''
