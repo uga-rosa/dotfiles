@@ -31,7 +31,7 @@ vim.opt.foldenable = false
 -- :s などのプレビューが出る
 vim.opt.inccommand = "split"
 
--- クリックはrc/mappings.vimで無効化
+-- クリックはlua/rc/mappings.luaで無効化
 vim.opt.mouse = "ni"
 
 -- highlight columns after 'textwidth'
