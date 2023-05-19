@@ -173,14 +173,14 @@ lua_add = '''
 '''
 
 [[plugins]]
-repo = 'Shougo/ddu-source-file_old'
+repo = 'kuuote/ddu-source-mr'
 lua_add = '''
-    vim.keymap.set("n", "<Space>o", "<Cmd>Ddu oldfiles<CR>")
+    vim.keymap.set("n", "<Space>o", "<Cmd>Ddu mru<CR>")
 
-    require("rc.utils").package_set("ddu_command", "oldfiles", function()
+    require("rc.utils").package_set("ddu_command", "mru", function()
       require("rc.ddu").start({
-        "file_old",
-        name = "oldfiles",
+        { name = "mr", params = { kind = "mru" } },
+        name = "mru",
       })
     end)
 '''

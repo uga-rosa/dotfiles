@@ -97,3 +97,6 @@ lua_add = '''
       end,
     })
 '''
+
+[[plugins]]
+repo = 'lambdalisue/mr.vim'
