@@ -108,12 +108,12 @@ lua_add = '''
     })
 
     vim.api.nvim_create_user_command("Ddu", function(args)
-      local sub_command = args.args
-      local f = require("ddu_command")[sub_command]
+      local subcommand = args.args
+      local f = require("ddu_command")[subcommand]
       if f then
         f()
       else
-        vim.notify("Unknown sub command: " .. sub_command)
+        vim.notify("Unknown subcommand: " .. subcommand)
       end
     end, {
       nargs = 1,
