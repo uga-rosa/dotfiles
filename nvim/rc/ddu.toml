@@ -149,7 +149,6 @@ lua_add = '''
     require("rc.utils").package_set("ddu_command", "live_grep", function()
       require("rc.ddu").start({
         "rg",
-        name = "live_grep",
         sourceOptions = {
           rg = {
             volatile = true,
@@ -165,10 +164,7 @@ lua_add = '''
     vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
 
     require("rc.utils").package_set("ddu_command", "help_tags", function()
-      require("rc.ddu").start({
-        "help",
-        name = "help_tags",
-      })
+      require("rc.ddu").start({ "help" })
     end)
 '''
 
@@ -180,22 +176,34 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "mru", function()
       require("rc.ddu").start({
-        { name = "mr", params = { kind = "mru" } },
-        name = "mru",
+        {
+          name = "mr",
+          params = {
+            kind = "mru",
+          },
+        },
       })
     end)
 
     require("rc.utils").package_set("ddu_command", "mrw", function()
       require("rc.ddu").start({
-        { name = "mr", params = { kind = "mrw" } },
-        name = "mrw",
+        {
+          name = "mr",
+          params = {
+            kind = "mrw",
+          },
+        },
       })
     end)
 
     require("rc.utils").package_set("ddu_command", "mrr", function()
       require("rc.ddu").start({
-        { name = "mr", params = { kind = "mrr" } },
-        name = "mrr",
+        {
+          name = "mr",
+          params = {
+            kind = "mrr",
+          },
+        },
       })
     end)
 '''
@@ -222,10 +230,7 @@ lua_add = '''
         once = true,
       })
 
-      require("rc.ddu").start({
-        "command_history",
-        name = "command_history",
-      })
+      require("rc.ddu").start({ "command_history" })
     end)
 '''
 
@@ -250,10 +255,7 @@ lua_add = '''
         once = true,
       })
 
-      require("rc.ddu").start({
-        "search_history",
-        name = "search_history",
-      })
+      require("rc.ddu").start({ "search_history" })
     end)
 '''
 
@@ -266,7 +268,6 @@ lua_add = '''
       local zenn_root = vim.fs.normalize("~/zenn")
       require("rc.ddu").start({
         "zenn",
-        name = "zenn",
         sourceOptions = {
           zenn = {
             path = zenn_root,
