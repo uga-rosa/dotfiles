@@ -15,7 +15,7 @@ export class Source extends BaseSource<Params> {
     return new ReadableStream({
       start(controller) {
         const locations = args.sourceParams.locations;
-        const items = locations.map((location, i) => {
+        const items = locations.map((location) => {
           const url = new URL(location.targetUri)
           console.log(url)
           const path = url.pathname
@@ -23,7 +23,7 @@ export class Source extends BaseSource<Params> {
             location.targetSelectionRange.start;
           return {
             word: path,
-            display: `${i}. ${path}:${lineNr}:${col}`,
+            display: `${path}:${lineNr}:${col}`,
             action: { path, lineNr, col },
           };
         });
