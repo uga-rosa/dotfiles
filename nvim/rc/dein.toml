@@ -25,6 +25,9 @@ repo = 'hrsh7th/nvim-kit'
 
 [[plugins]]
 repo = 'MunifTanjim/nui.nvim'
+
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
 # }}}
 
 [[plugins]]

@@ -164,6 +164,13 @@ hook_source = '''
 '''
 
 [[plugins]]
+repo = 'lambdalisue/fern-renderer-nerdfont.vim'
+on_source = 'fern.vim'
+hook_add = '''
+    let g:fern#renderer = 'nerdfont'
+'''
+
+[[plugins]]
 repo = 'lewis6991/gitsigns.nvim'
 on_event = 'BufRead'
 lua_source = '''
