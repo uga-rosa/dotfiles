@@ -135,8 +135,15 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "files", function()
       require("rc.ddu").start({
-        "file_rec",
-        name = "files",
+        {
+          name = "file_rec",
+          params = {
+            ignoredDirectories = {
+              ".git",
+              "node_modules",
+            },
+          },
+        },
       })
     end)
 '''
