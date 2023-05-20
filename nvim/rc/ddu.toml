@@ -42,7 +42,7 @@ lua_add = '''
         _ = {
           ignoreCase = true,
           matchers = { "matcher_fzf" },
-          sorters = {},
+          converters = { "converter_devicon" },
         },
       },
       kindOptions = {
@@ -278,7 +278,11 @@ lua_add = '''
 
 # Filters
 [[plugins]]
-repo = 'yuki-yano/ddu-filter-fzf'
+# repo = 'yuki-yano/ddu-filter-fzf'
+repo = '~/plugin/ddu-filter-fzf'
+
+[[plugins]]
+repo = '~/plugin/ddu-filter-converter_devicon'
 
 # Kinds
 [[plugins]]
