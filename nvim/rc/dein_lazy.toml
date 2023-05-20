@@ -422,9 +422,6 @@ translate = '''
 [[plugins]]
 repo = 'uga-rosa/ccc.nvim'
 on_event = 'BufRead'
-hook_add = '''
-    nnoremap <C-c> <Cmd>CccPick<CR>
-'''
 lua_source = '''
     local ccc = require("ccc")
 
