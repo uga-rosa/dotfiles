@@ -43,14 +43,6 @@ if dein#min#load_state(s:path)
   call dein#load_toml(s:cmp_toml, {'lazy': 1})
   call dein#load_toml(s:ddu_toml)
 
-  let s:work_dir = expand('~/plugin')
-  if isdirectory(s:work_dir)
-    call dein#local(s:work_dir,
-          \ #{ frozen: 1, merged: 0 },
-          \ [ 'vim*', 'nvim*', '*.vim', '*.nvim' ]
-          \)
-  endif
-
   call dein#end()
   call dein#save_state()
 endif
