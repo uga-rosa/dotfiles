@@ -15,8 +15,6 @@ lua_post_source = '''
     local lspconfig = require("lspconfig")
     local rc = require("rc.utils")
 
-    require("rc.lsp")
-
     require("mason-lspconfig").setup({
       ensure_installed = {
         "lua_ls",
