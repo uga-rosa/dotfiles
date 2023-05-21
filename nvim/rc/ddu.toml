@@ -224,22 +224,9 @@ lua_add = '''
 
     local ddu = require("rc.ddu")
 
-    local function map(mode, lhs, rhs)
-      vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
-    end
-
     require("rc.utils").package_set("ddu_command", "command_history", function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "ddu-ff-filter",
-        callback = function()
-          map("i", "<CR>", ddu.itemAction("execute"))
-          map("i", "<C-e>", ddu.itemAction("edit"))
-          map("i", "<C-d>", ddu.itemAction("delete"))
-        end,
-        once = true,
-      })
-
-      require("rc.ddu").start({ "command_history" })
+      ddu.history_mapping()
+      ddu.start({ "command_history" })
     end)
 '''
 
@@ -250,21 +237,9 @@ lua_add = '''
 
     local ddu = require("rc.ddu")
 
-    local function map(mode, lhs, rhs)
-      vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
-    end
-
     require("rc.utils").package_set("ddu_command", "search_history", function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "ddu-ff-filter",
-        callback = function()
-          map("i", "<C-e>", ddu.itemAction("edit"))
-          map("i", "<C-d>", ddu.itemAction("delete"))
-        end,
-        once = true,
-      })
-
-      require("rc.ddu").start({ "search_history" })
+      ddu.history_mapping()
+      ddu.start({ "search_history" })
     end)
 '''
 

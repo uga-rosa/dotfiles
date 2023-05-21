@@ -57,4 +57,28 @@ function M.execute(cmd)
   end
 end
 
+function M.history_mapping()
+  local function map(mode, lhs, rhs)
+    vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
+  end
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "ddu-ff",
+    callback = function()
+      map("n", "<C-e>", M.itemAction("edit"))
+      map("n", "<C-d>", M.itemAction("delete"))
+    end,
+    once = true,
+  })
+
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "ddu-ff-filter",
+    callback = function()
+      map("i", "<C-e>", M.itemAction("edit"))
+      map("i", "<C-d>", M.itemAction("delete"))
+    end,
+    once = true,
+  })
+end
+
 return M
