@@ -73,7 +73,7 @@ lua_add = '''
         -- Highlight cursor line
         vim.opt_local.cursorline = true
         -- Close UI
-        map("n", "<C-c>", ddu.call_action("quit"))
+        map("n", "<Esc>", ddu.call_action("quit"))
         -- Open file
         map("n", "<CR>", ddu.itemAction("default"))
         map("n", "<C-x>", ddu.itemAction("open", { command = "split" }))
@@ -88,7 +88,8 @@ lua_add = '''
       pattern = "ddu-ff-filter",
       callback = function()
         -- Close UI
-        map("i", "<C-c>", ddu.call_action("quit"))
+        map("i", "<C-q>", ddu.call_action("quit"))
+        map("n", "<Esc>", ddu.call_action("quit"))
         -- Close filter window
         -- Lexima overwrite <Esc> mapping
         vim.b.lexima_disabled = true
