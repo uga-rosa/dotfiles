@@ -22,9 +22,9 @@ let g:dein#install_max_processes = 100
 let g:dein#auto_remote_plugins = v:false
 
 let s:path = $CACHE . '/dein'
+let s:home_dir = stdpath('config') . '/'
 if dein#min#load_state(s:path)
-  " let s:base_dir = fnamemodify(expand('<sfile>'), ':h') . '/'
-  let s:base_dir = stdpath('config') . '/rc/'
+  let s:base_dir = s:home_dir . 'rc/'
 
   let s:dein_toml = s:base_dir . 'dein.toml'
   let s:dein_lazy_toml = s:base_dir . 'dein_lazy.toml'
@@ -34,8 +34,8 @@ if dein#min#load_state(s:path)
   let s:ddu_toml = s:base_dir . 'ddu.toml'
 
   call dein#begin(s:path, [
-        \ stdpath('config') . '/init.vim',
-        \ s:base_dir . 'dein.vim',
+        \ s:home_dir . 'init.vim',
+        \ s:home_dir . 'dein.vim',
         \])
 
   call dein#load_toml(s:dein_toml)
