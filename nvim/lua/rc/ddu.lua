@@ -13,10 +13,10 @@ end
 
 ---@param name string
 ---@param params table?
----@param sync boolean?
+---@param async boolean?
 ---@return function
-function M.call_action(name, params, sync)
-  local act = sync and vim.fn["ddu#ui#sync_action"] or vim.fn["ddu#ui#do_action"]
+function M.call_action(name, params, async)
+  local act = async and vim.fn["ddu#ui#do_action"] or vim.fn["ddu#ui#sync_action"]
   return function()
     act(name, params or vim.empty_dict())
   end
@@ -24,14 +24,14 @@ end
 
 ---@param name string
 ---@param params table?
----@param sync boolean?
+---@param async boolean?
 ---@return function
-function M.itemAction(name, params, sync)
+function M.itemAction(name, params, async)
   local opts = {
     name = name,
     params = params,
   }
-  return M.call_action("itemAction", opts, sync)
+  return M.call_action("itemAction", opts, async)
 end
 
 function M.open_tab()
