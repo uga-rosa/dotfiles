@@ -35,7 +35,7 @@ function M.itemAction(name, params, async)
 end
 
 function M.open_tab()
-  M.itemAction("open", { command = "tabedit" }, true)()
+  M.itemAction("open", { command = "tabedit" })()
   local root = vim
     .iter(vim.fs.find({ "init.vim", ".git" }, {
       upward = true,
