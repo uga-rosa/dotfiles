@@ -16,4 +16,4 @@ if filereadable(expand('~/.secret.vim'))
   source ~/.secret.vim
 endif
 
-execute 'source' fnamemodify(expand('<sfile>'), ':h') . '/rc/dein.vim'
+execute 'source' stdpath('config') . '/dein.vim'

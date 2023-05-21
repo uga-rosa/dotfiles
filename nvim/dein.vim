@@ -23,7 +23,8 @@ let g:dein#auto_remote_plugins = v:false
 
 let s:path = $CACHE . '/dein'
 if dein#min#load_state(s:path)
-  let s:base_dir = fnamemodify(expand('<sfile>'), ':h') . '/'
+  " let s:base_dir = fnamemodify(expand('<sfile>'), ':h') . '/'
+  let s:base_dir = stdpath('config') . '/rc/'
 
   let s:dein_toml = s:base_dir . 'dein.toml'
   let s:dein_lazy_toml = s:base_dir . 'dein_lazy.toml'
@@ -32,13 +33,16 @@ if dein#min#load_state(s:path)
   let s:dein_ft_toml = s:base_dir . 'ftplugin.toml'
   let s:ddu_toml = s:base_dir . 'ddu.toml'
 
-  call dein#begin(s:path)
+  call dein#begin(s:path, [
+        \ stdpath('config') . '/init.vim',
+        \ s:base_dir . 'dein.vim',
+        \])
 
   call dein#load_toml(s:dein_toml)
   call dein#load_toml(s:dein_lazy_toml, {'lazy': 1})
   call dein#load_toml(s:dein_lsp_toml, {'lazy': 1})
   call dein#load_toml(s:cmp_toml, {'lazy': 1})
-  call dein#load_toml(s:dein_ft_toml)
+  " call dein#load_toml(s:dein_ft_toml)
   call dein#load_toml(s:ddu_toml)
 
   let s:work_dir = expand('~/plugin')
