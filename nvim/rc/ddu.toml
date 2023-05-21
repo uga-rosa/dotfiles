@@ -97,6 +97,7 @@ lua_add = '''
           ddu.call_action("closeFilterWindow")()
           vim.cmd.stopinsert()
         end)
+        map("i", "<C-c>", "<Esc>")
         -- Open file
         map("i", "<CR>", ddu.itemAction("default"))
         map("i", "<C-x>", ddu.itemAction("open", { command = "split" }))

@@ -64,6 +64,7 @@ ft_event.lua = function()
 end
 
 ft_event.toml = function()
+  set_indent(4)
   vim.opt_local.foldenable = true
   vim.opt_local.foldmethod = "expr"
   vim.opt_local.foldexpr = "vimrc#fold_toml(v:lnum)"
