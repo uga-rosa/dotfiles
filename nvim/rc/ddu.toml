@@ -130,18 +130,25 @@ repo = 'Shougo/ddu-ui-ff'
 
 # Sources
 [[plugins]]
-repo = 'Shougo/ddu-source-file_rec'
+repo = 'matsui54/ddu-source-file_external'
 lua_add = '''
     vim.keymap.set("n", "<Space>f", "<Cmd>Ddu files<CR>")
 
     require("rc.utils").package_set("ddu_command", "files", function()
       require("rc.ddu").start({
         {
-          name = "file_rec",
+          name = "file_external",
           params = {
-            ignoredDirectories = {
+            cmd = {
+              "fd",
+              "--type",
+              "f",
+              "--color",
+              "never",
+              "--hidden",
+              "--follow",
+              "--exclude",
               ".git",
-              "node_modules",
             },
           },
         },
