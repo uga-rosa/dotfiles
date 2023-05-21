@@ -159,6 +159,7 @@ lua_add = '''
         sourceOptions = {
           rg = {
             volatile = true,
+            matchers = {},
           },
         },
       })
@@ -278,6 +279,7 @@ lua_add = '''
         sourceOptions = {
           zenn = {
             path = zenn_root,
+            converters = {},
           },
         },
       })
