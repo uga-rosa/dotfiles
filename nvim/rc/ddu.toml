@@ -88,7 +88,7 @@ lua_add = '''
       pattern = "ddu-ff-filter",
       callback = function()
         -- Close UI
-        map("i", "<C-q>", ddu.call_action("quit"))
+        map("i", "<C-c>", ddu.call_action("quit"))
         map("n", "<Esc>", ddu.call_action("quit"))
         -- Close filter window
         -- Lexima overwrite <Esc> mapping
@@ -97,7 +97,6 @@ lua_add = '''
           ddu.call_action("closeFilterWindow")()
           vim.cmd.stopinsert()
         end)
-        map("i", "<C-c>", "<Esc>")
         -- Open file
         map("i", "<CR>", ddu.itemAction("default"))
         map("i", "<C-x>", ddu.itemAction("open", { command = "split" }))
