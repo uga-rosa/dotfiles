@@ -6,10 +6,10 @@ if vim.loader then
   -- v0.9.0 doesn't have vim.loader yet.
   vim.loader.enable()
 end
-require("rc.vim")
-require("rc.ftdetect")
-require("rc.options")
-require("rc.mappings")
+require("rc.conf.vim")
+require("rc.conf.ftdetect")
+require("rc.conf.options")
+require("rc.conf.mappings")
 EOL
 
 if filereadable(expand('~/.secret.vim'))
