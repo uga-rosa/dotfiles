@@ -17,7 +17,6 @@ export class Source extends BaseSource<Params> {
         const locations = args.sourceParams.locations;
         const items = locations.map((location) => {
           const url = new URL(location.targetUri)
-          console.log(url)
           const path = url.pathname
           const { line: lineNr, character: col } =
             location.targetSelectionRange.start;
