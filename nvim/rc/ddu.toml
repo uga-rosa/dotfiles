@@ -258,6 +258,16 @@ lua_add = '''
 '''
 
 [[plugins]]
+repo = 'gamoutatsumi/ddu-source-nvim-lsp'
+lua_add = '''
+    vim.keymap.set("n", "gr", "<Cmd>Ddu references<CR>")
+
+    require("rc.utils").package_set("ddu_command", "references", function()
+      require("rc.ddu").start({ "nvim_lsp_references" })
+    end)
+'''
+
+[[plugins]]
 repo = 'mikanIchinose/ddu-source-zenn'
 lua_add = '''
     vim.keymap.set("n", "<Space>z", "<Cmd>Ddu zenn<CR>")
