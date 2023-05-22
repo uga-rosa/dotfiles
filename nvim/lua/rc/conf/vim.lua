@@ -60,4 +60,5 @@ end
 function vim.fs.write(fname, data)
   local fd = assert(uv.fs_open(fname, "w", 438))
   assert(uv.fs_write(fd, data))
+  uv.fs_close(fd)
 end
