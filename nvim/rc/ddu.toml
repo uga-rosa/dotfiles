@@ -180,7 +180,14 @@ lua_add = '''
     vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
 
     require("rc.utils").package_set("ddu_command", "help_tags", function()
-      require("rc.ddu").start({ "help" })
+      require("rc.ddu").start({
+        "help",
+        sourceOptions = {
+          help = {
+            converters = {},
+          },
+        },
+      })
     end)
 '''
 
