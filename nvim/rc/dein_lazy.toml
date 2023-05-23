@@ -219,19 +219,6 @@ hook_post_source = '''
     let romanTable = vimrc#json#read(stdpath('config') . '/script/azik.json')
     let romanTable = values(map(romanTable, { key, val -> [key, val[0], 0] }))
     call kensaku#set_roman_table(romanTable)
-
-    command! -nargs=1 KensakuGrep call KensakuGrep(<q-args>)
-    function! KensakuGrep(input) abort
-      if !executable('rg')
-        return
-      endif
-      let grepprg = &grepprg
-      set grepprg=rg\ -e\ $*\ --vimgrep
-      execute 'grep' string(kensaku#query(a:input, {
-            \ 'rxop': ['\|', '(', ')', '[', ']', ''],
-            \}))
-      let &grepprg = grepprg
-    endfunction
 '''
 
 [[plugins]]
