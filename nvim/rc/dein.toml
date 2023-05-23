@@ -103,3 +103,7 @@ lua_add = '''
 
 [[plugins]]
 repo = 'lambdalisue/mr.vim'
+
+[[plugins]]
+if = 0
+repo = '~/plugin/skk-learning.nvim'
