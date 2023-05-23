@@ -1,7 +1,7 @@
 return {
   init = function(self)
     self.mode = vim.fn.mode(1):sub(1, 1)
-    if self.mode == "c" and vim.g.searchx_kensaku == 1 then
+    if self.mode == "c" and vim.g.searchx_kensaku then
       self.mode = "k"
     end
   end,

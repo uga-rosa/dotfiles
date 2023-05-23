@@ -238,11 +238,24 @@ hook_post_source = '''
 repo = 'hrsh7th/vim-searchx'
 depends = 'kensaku.vim'
 on_func = 'searchx#start'
-lua_add = '''
-    vim.keymap.set({ "n", "x" }, "/", "<Cmd>call searchx#start({'dir': 1})<CR>")
-    vim.keymap.set({ "n", "x" }, "?", "<Cmd>call searchx#start({'dir': 0})<CR>")
-    vim.keymap.set({ "n", "x" }, "n", "<Cmd>call searchx#next()<CR>")
-    vim.keymap.set({ "n", "x" }, "N", "<Cmd>call searchx#prev()<CR>")
+hook_add = '''
+    function! s:kensaku_start(dir) abort
+      let g:searchx_kensaku = v:true
+      au User SearchxLeave ++once let g:searchx_kensaku = v:false
+      call searchx#start(#{
+            \ dir: a:dir,
+            \ convert: {input -> kensaku#query(input)}
+            \})
+    endfunction
+
+    for mode in ['n', 'x']
+      execute mode . 'noremap / <Cmd>call searchx#start(#{dir: 1})<CR>'
+      execute mode . 'noremap ? <Cmd>call searchx#start(#{dir: 0})<CR>'
+      execute mode . 'noremap n <Cmd>call searchx#next()<CR>'
+      execute mode . 'noremap N <Cmd>call searchx#prev()<CR>'
+      execute mode . 'noremap <M-/> <Cmd>call <SID>kensaku_start(1)<CR>'
+      execute mode . 'noremap <M-?> <Cmd>call <SID>kensaku_start(0)<CR>'
+    endfor
 '''
 lua_source = '''
     vim.g.searchx = {
@@ -254,21 +267,6 @@ lua_source = '''
       },
       markers = vim.split("ASDFGHJKL:QWERTYUIOP", ""),
     }
-'''
-hook_post_source = '''
-    cnoremap <M-j> <Cmd>call ToggleSearchxMigemo()<CR>
-
-    let g:searchx_kensaku = 0
-    function! ToggleSearchxMigemo() abort
-      let g:searchx_kensaku = !g:searchx_kensaku
-      if g:searchx_kensaku
-        let g:searchx.convert = { input -> kensaku#query(input) }
-      else
-        let g:searchx.convert = { input -> input }
-      endif
-      call searchx#redraw()
-      redrawstatus
-    endfunction
 '''
 
 [[plugins]]
