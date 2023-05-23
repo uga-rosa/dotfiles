@@ -6,7 +6,7 @@ set -eu
 # sudo apt install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl doxygen
 
 # build
-neovim_dir="$HOME/.neovim"
+neovim_dir="/tmp/neovim"
 if [[ -d $neovim_dir ]]; then
   rm -rf $neovim_dir
 fi
