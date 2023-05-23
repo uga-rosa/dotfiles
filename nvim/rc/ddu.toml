@@ -102,6 +102,9 @@ lua_add = '''
         -- Move cursor
         map("i", "<C-n>", ddu.execute("normal! j"))
         map("i", "<C-p>", ddu.execute("normal! k"))
+        -- Emacs like keymapping
+        map("i", "<C-a>", "<Home>")
+        map("i", "<C-e>", "<End>")
       end,
     })
 
