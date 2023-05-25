@@ -433,7 +433,7 @@ lua_source = '''
         ccc.picker.css_oklab,
         ccc.picker.css_oklch,
         ccc.picker.trailing_space({
-          enable = { "markdown", "help" },
+          enable = { "markdown" },
         }),
       },
     })
