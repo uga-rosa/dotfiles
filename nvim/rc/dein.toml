@@ -57,6 +57,10 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'skk-dev/dict'
+if = 0
+
+[[plugins]]
 repo = 'vim-skk/skkeleton'
 lua_add = '''
     vim.keymap.set({ "i", "c" }, "<C-j>", "<Plug>(skkeleton-toggle)")
@@ -75,12 +79,12 @@ lua_add = '''
         kanaTable["/"] = "abbrev"
         vim.fn["skkeleton#register_kanatable"]("azik", kanaTable, true)
 
+        local dict_dir = vim.fn["dein#get"]("dict").path
         vim.fn["skkeleton#config"]({
           kanaTable = "azik",
           eggLikeNewline = true,
           globalDictionaries = {
-            "~/.skk/SKK-JISYO.L",
-            "~/.skk/SKK-JISYO.edict2",
+            vim.fs.joinpath(dict_dir, "SKK-JISYO.L"),
           },
           markerHenkan = "<>",
           markerHenkanSelect = ">>",
