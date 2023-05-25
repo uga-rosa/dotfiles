@@ -59,6 +59,7 @@ hook_add = '''
 [[plugins]]
 repo = 'skk-dev/dict'
 if = 0
+path = '~/.local/share/skk'
 
 [[plugins]]
 repo = 'vim-skk/skkeleton'
