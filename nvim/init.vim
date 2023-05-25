@@ -13,8 +13,8 @@ require("rc.conf.vim")
 require("rc.conf.lsp")
 EOL
 
-if filereadable(expand('~/.secret.vim'))
-  source ~/.secret.vim
+if filereadable(expand('~/.secret/key.vim'))
+  source ~/.secret/key.vim
 endif
 
 execute 'source' stdpath('config') . '/dein.vim'

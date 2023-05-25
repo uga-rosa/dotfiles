@@ -87,6 +87,7 @@ lua_add = '''
           globalDictionaries = {
             vim.fs.joinpath(dict_dir, "SKK-JISYO.L"),
           },
+          userJisyo = "~/.secret/SKK-JISYO.user",
           markerHenkan = "<>",
           markerHenkanSelect = ">>",
           registerConvertResult = true,
