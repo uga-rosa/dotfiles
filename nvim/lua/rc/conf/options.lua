@@ -25,8 +25,8 @@ vim.opt.pumheight = 25
 -- true color
 vim.opt.termguicolors = true
 
--- 折り畳みは使わない
-vim.opt.foldenable = false
+-- 折り畳み
+vim.opt.foldmethod = "marker"
 
 -- :s などのプレビューが出る
 vim.opt.inccommand = "split"
