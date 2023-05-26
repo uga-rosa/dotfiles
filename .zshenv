@@ -49,8 +49,5 @@ export PATH="$CUDA_HOME/bin:$PATH"
 export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 
 # themis
-themis_bin="$HOME/.cache/dein/repos/github.com/thinca/vim-themis/bin"
-if [[ -d $themis_bin ]]; then
-    export PATH="$PATH:$themis_bin"
-    export THEMIS_VIM="nvim"
-fi
+alias themis="$HOME/.local/share/vim-themis/bin/themis"
+export THEMIS_VIM="nvim"

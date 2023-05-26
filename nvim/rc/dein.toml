@@ -19,6 +19,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'thinca/vim-themis'
+path = '~/.local/share/vim-themis'
 
 [[plugins]]
 repo = 'hrsh7th/nvim-kit'
