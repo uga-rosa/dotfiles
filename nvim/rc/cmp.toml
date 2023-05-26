@@ -12,34 +12,6 @@ lua_post_source = '''
 
     local cmp = require("cmp")
 
-    local lspkind = {
-      Text = "",
-      Method = "",
-      Function = "",
-      Constructor = "",
-      Field = "ﰠ",
-      Variable = "",
-      Class = "ﴯ",
-      Interface = "",
-      Module = "",
-      Property = "ﰠ",
-      Unit = "塞",
-      Value = "",
-      Enum = "",
-      Keyword = "",
-      Snippet = "",
-      Color = "",
-      File = "",
-      Reference = "",
-      Folder = "",
-      EnumMember = "",
-      Constant = "",
-      Struct = "פּ",
-      Event = "",
-      Operator = "",
-      TypeParameter = "",
-    }
-
     local function jump_next(fallback)
       if vim.fn["vsnip#jumpable"](1) == 1 then
         feedkey("<Plug>(vsnip-jump-next)")
@@ -93,7 +65,7 @@ lua_post_source = '''
       },
       formatting = {
         format = function(entry, vim_item)
-          vim_item.kind = lspkind[vim_item.kind] .. " " .. vim_item.kind
+          vim_item.kind = require("rc.lsp").kind[vim_item.kind] .. " " .. vim_item.kind
           vim_item.menu = ({
             buffer = "[Buffer]",
             path = "[Path]",

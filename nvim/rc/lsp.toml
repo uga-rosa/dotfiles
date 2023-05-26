@@ -3,15 +3,12 @@ repo = 'williamboman/mason-lspconfig.nvim'
 depends = [
     'mason.nvim',
     'nvim-lspconfig',
-    'fidget.nvim',
     'cmp-nvim-lsp',
-    'actions-preview.nvim',
-    'nvim-navic',
     'SchemaStore.nvim',
 ]
 on_event = ['BufRead', 'BufNewFile']
 lua_post_source = '''
-    local api = vim.api
+    local on_attach = require("rc.lsp").on_attach
     local lspconfig = require("lspconfig")
     local rc = require("rc.utils")
 
@@ -27,18 +24,6 @@ lua_post_source = '''
         "yamlls",
       },
     })
-
-    ---Register callback function on LspAttach
-    ---@param callback fun(client, bufnr)
-    local function on_attach(callback)
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local bufnr = args.buf
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          callback(client, bufnr)
-        end,
-      })
-    end
 
     ---@return boolean
     local function is_active(client_name)
@@ -59,17 +44,12 @@ lua_post_source = '''
       buf_map("[d", vim.diagnostic.goto_prev)
       buf_map("]d", vim.diagnostic.goto_next)
       buf_map("<Space>n", vim.lsp.buf.rename)
-      buf_map("<Space>a", require("actions-preview").code_actions)
+      buf_map("<Space>F", "<Cmd>Format<CR>")
 
       if client.server_capabilities.documentFormattingProvider then
-        api.nvim_create_user_command("Format", function()
+        vim.api.nvim_create_user_command("Format", function()
           vim.lsp.buf.format()
         end, {})
-        buf_map("<Space>F", "<Cmd>Format<CR>")
-      end
-
-      if client.server_capabilities.documentSymbolProvider then
-        require("nvim-navic").attach(client, bufnr)
       end
     end)
 
@@ -144,7 +124,7 @@ lua_post_source = '''
             path = { "lua/?.lua", "lua/?/init.lua", "?.lua", "?/init.lua" },
           },
           workspace = {
-            library = library({ "plenary.nvim", "nvim-cmp" }, { "vusted" }),
+            library = library({ "nvim-cmp" }, { "vusted" }),
             checkThirdParty = false,
           },
         },
@@ -155,7 +135,7 @@ lua_post_source = '''
       if client.name ~= "lua_ls" then
         return
       end
-      api.nvim_buf_create_user_command(bufnr, "Format", function()
+      vim.api.nvim_buf_create_user_command(bufnr, "Format", function()
         if not is_active("null-ls") then
           rc.keep_cursor("%!stylua -f ~/.config/stylua.toml -")
         else
@@ -211,7 +191,7 @@ lua_post_source = '''
       if client.name ~= "denols" then
         return
       end
-      api.nvim_buf_create_user_command(bufnr, "Format", function()
+      vim.api.nvim_buf_create_user_command(bufnr, "Format", function()
         vim.lsp.buf.format({
           filter = function(c)
             -- Enable only deno fmt (disable prettier)
@@ -259,6 +239,7 @@ repo = 'neovim/nvim-lspconfig'
 
 [[plugins]]
 repo = 'j-hui/fidget.nvim'
+on_source = 'nvim-lspconfig'
 lua_source = '''
     require("fidget").setup({})
 '''
@@ -325,10 +306,28 @@ lua_source = '''
 [[plugins]]
 repo = 'aznhe21/actions-preview.nvim'
 depends = 'nui.nvim'
+on_source = 'nvim-lspconfig'
+lua_source = '''
+    vim.keymap.set("n", "<Space>a", require("actions-preview").code_actions)
+'''
 
 [[plugins]]
 repo = 'SmiteshP/nvim-navic'
-depends = 'nvim-lspconfig'
+on_source = 'nvim-lspconfig'
+lua_source = '''
+    require("rc.lsp").on_attach(function(client, bufnr)
+      if client.server_capabilities.documentSymbolProvider then
+        require("nvim-navic").attach(client, bufnr)
+      end
+    end)
+'''
+
+[[plugins]]
+repo = 'utilyre/barbecue.nvim'
+on_source = 'nvim-navic'
+lua_source = '''
+    require("barbecue").setup()
+'''
 
 [[plugins]]
 repo = 'b0o/SchemaStore.nvim'
