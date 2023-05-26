@@ -1,4 +1,18 @@
 github:
+  - name: jdxcode/rtx
+    description: Runtime Executor (asdf rust clone)
+    owner: jdxcode
+    repo: rtx
+    release:
+      name: rtx
+      tag: v1.30.4
+      asset:
+        filename: '{{ .Release.Name }}-{{ .Release.Tag }}-{{ .OS }}-{{ .Arch }}.tar.gz'
+        replacements:
+          amd64: x64
+    command:
+      link:
+        - from: '**/bin/rtx'
   - name: b4b4r07/gomi
     description: Replacement for UNIX rm command!
     owner: b4b4r07
