@@ -288,7 +288,7 @@ lua_add = '''
 
 # Filters
 [[plugins]]
-repo = 'yuki-yano/ddu-filter-fzf'
+repo = 'uga-rosa/ddu-filter-fzf'
 
 [[plugins]]
 repo = '~/plugin/ddu-filter-converter_devicon'
