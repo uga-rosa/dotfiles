@@ -18,7 +18,6 @@ bindkey -e
 bindkey "^U" backward-kill-line
 
 # Completion
-autoload -U compinit; compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*:default' menu select=1
 
