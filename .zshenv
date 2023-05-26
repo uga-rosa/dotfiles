@@ -6,7 +6,6 @@ export AFX_COMMAND_PATH="$HOME/.afx/bin"
 export PATH="$AFX_COMMAND_PATH:$PATH"
 
 # Path to my local dir
-export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # pkg-config
@@ -23,14 +22,13 @@ export LC_CTYPE="$LANGUAGE"
 
 # Go
 export GOPATH="$HOME/.go"
-export PATH="$PATH:/usr/local/go/bin:$GOPATH/bin"
+export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH"
 
 # Node
-export PATH="$HOME/.nodenv/bin:$PATH"
 export PATH="./node_modules/.bin:$PATH"
 
 # deno
-export PATH="$PATH:$HOME/.deno/bin"
+export PATH="$HOME/.deno/bin:$PATH"
 export DENO_INSTALL="$HOME/.deno"
 
 # Nim
