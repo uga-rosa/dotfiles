@@ -9,6 +9,10 @@ lua_source = '''
 '''
 
 [[plugins]]
+repo = 'ibhagwan/fzf-lua'
+on_cmd = 'FzfLua'
+
+[[plugins]]
 repo = 'hrsh7th/vim-vsnip'
 on_event = 'InsertEnter'
 on_path = '.*\.snippets'
