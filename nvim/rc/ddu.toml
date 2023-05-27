@@ -42,6 +42,7 @@ lua_add = '''
         _ = {
           ignoreCase = true,
           matchers = { "matcher_fzf" },
+          sorters = { "sorter_length", "sorter_fzf" },
           converters = { "converter_devicon" },
         },
       },
@@ -288,10 +289,16 @@ lua_add = '''
 
 # Filters
 [[plugins]]
-repo = 'uga-rosa/ddu-filter-fzf'
+repo = 'yuki-yano/ddu-filter-fzf'
 
 [[plugins]]
-repo = '~/plugin/ddu-filter-converter_devicon'
+repo = 'uga-rosa/ddu-filter-sorter_length'
+
+[[plugins]]
+repo = 'uga-rosa/ddu-filter-converter_devicon'
+
+[[plugins]]
+repo = '~/plugin/ddu-filter-converter_git-status'
 
 # Kinds
 [[plugins]]
