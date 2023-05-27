@@ -2,7 +2,8 @@ local conditions = require("heirline.conditions")
 
 return {
   init = function(self)
-    self.filename = vim.api.nvim_buf_get_name(0)
+    local filename = vim.api.nvim_buf_get_name(0)
+    self.filename = filename:gsub("%%", "%%%%")
   end,
   {
     provider = " \u{E0B0} ", -- [[ ]]
