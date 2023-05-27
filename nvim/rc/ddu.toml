@@ -42,8 +42,11 @@ lua_add = '''
         _ = {
           ignoreCase = true,
           matchers = { "matcher_fzf" },
-          sorters = { "sorter_length", "sorter_fzf" },
+          sorters = { "sorter_fzf" },
           converters = { "converter_devicon" },
+        },
+        file_external = {
+          sorters = { "sorter_length", "sorter_fzf" },
         },
       },
       kindOptions = {
