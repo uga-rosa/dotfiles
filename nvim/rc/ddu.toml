@@ -48,6 +48,10 @@ lua_add = '''
         file_external = {
           sorters = { "sorter_length", "sorter_fzf" },
         },
+        zenn = {
+          path = vim.fs.normalize("~/zenn"),
+          converters = {},
+        }
       },
       kindOptions = {
         _ = {
@@ -277,16 +281,7 @@ lua_add = '''
     vim.keymap.set("n", "<Space>z", "<Cmd>Ddu zenn<CR>")
 
     require("rc.utils").package_set("ddu_command", "zenn", function()
-      local zenn_root = vim.fs.normalize("~/zenn")
-      require("rc.ddu").start({
-        "zenn",
-        sourceOptions = {
-          zenn = {
-            path = zenn_root,
-            converters = {},
-          },
-        },
-      })
+      require("rc.ddu").start({ "zenn" })
     end)
 '''
 
