@@ -43,6 +43,7 @@ lua_post_source = '''
       buf_map("K", vim.lsp.buf.hover)
       buf_map("[d", vim.diagnostic.goto_prev)
       buf_map("]d", vim.diagnostic.goto_next)
+      buf_map("gd", vim.lsp.buf.definition)
       buf_map("<Space>n", vim.lsp.buf.rename)
       buf_map("<Space>F", "<Cmd>Format<CR>")
 
@@ -242,33 +243,6 @@ repo = 'j-hui/fidget.nvim'
 on_source = 'nvim-lspconfig'
 lua_source = '''
     require("fidget").setup({})
-'''
-
-[[plugins]]
-repo = 'hrsh7th/nvim-gtd'
-on_event = 'BufRead'
-lua_add = '''
-    vim.keymap.set("n", "gd", function()
-      require("gtd").exec({ command = "edit" })
-    end)
-'''
-lua_source = '''
-    local gtd = require("gtd")
-    local ddu = require("rc.ddu")
-
-    gtd.setup({
-      sources = {
-        { name = "lsp" },
-        { name = "findup" },
-        { name = "walk" },
-      },
-      on_locations = function(_, locations)
-        ddu.start({
-          { name = "nvim-gtd", params = { locations = locations } },
-          name = "nvim-gtd",
-        })
-      end,
-    })
 '''
 
 [[plugins]]

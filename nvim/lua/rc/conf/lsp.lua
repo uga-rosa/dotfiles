@@ -29,6 +29,7 @@ local opts = {
 local handlers = {
   hover = vim.lsp.with(vim.lsp.handlers.hover, opts.hover),
   signature_help = vim.lsp.with(vim.lsp.handlers.signature_help, opts.signature_help),
+  definition = vim.lsp.handlers["textDocument/definition"],
 }
 
 ---@param s string
@@ -71,4 +72,28 @@ vim.diagnostic.config(opts.diagnostic)
 
 vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, config)
   handlers.signature_help(err, result, ctx, config)
+end
+
+vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
+  if err then
+    vim.notify(err, vim.log.levels.ERROR)
+    return
+  end
+  if not result then
+    return
+  end
+  -- result type is `Location | Location[] | LocationLink[]`
+  if #result == 1 or result.uri then
+    -- single location
+    handlers.definition(err, result, ctx, config)
+  else
+    require("rc.ddu").start({
+      {
+        name = "lsp_definitions",
+        params = {
+          locations = result,
+        },
+      },
+    })
+  end
 end

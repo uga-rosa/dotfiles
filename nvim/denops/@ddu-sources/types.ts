@@ -2,6 +2,11 @@
 
 type DocumentUri = string;
 
+export interface Location {
+  uri: DocumentUri;
+  range: Range;
+}
+
 /**
  * Defines an unsigned integer number in the range of 0 to 2^31 - 1.
  */
