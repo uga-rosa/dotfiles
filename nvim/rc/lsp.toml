@@ -74,7 +74,7 @@ lua_post_source = '''
       local paths = {}
       for _, plugin in ipairs(plugins) do
         local path = vim.fn["dein#get"](plugin).path
-        if path and vim.bool_fn.isdirectory(path .. "/lua") then
+        if path and vim.fs.isdir(path .. "/lua") then
           table.insert(paths, path)
         else
           vim.notify("Invalid plugin name: " .. plugin)
@@ -121,7 +121,7 @@ lua_post_source = '''
           },
           runtime = {
             version = "LuaJIT",
-            path = { "lua/?.lua", "lua/?/init.lua", "?.lua", "?/init.lua" },
+            path = { "?.lua", "?/init.lua" },
           },
           workspace = {
             library = library({}, { "vusted" }),
