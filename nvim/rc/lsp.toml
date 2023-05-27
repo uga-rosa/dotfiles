@@ -124,7 +124,7 @@ lua_post_source = '''
             path = { "lua/?.lua", "lua/?/init.lua", "?.lua", "?/init.lua" },
           },
           workspace = {
-            library = library({ "nvim-cmp" }, { "vusted" }),
+            library = library({}, { "vusted" }),
             checkThirdParty = false,
           },
         },
