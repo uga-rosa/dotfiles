@@ -3,9 +3,9 @@ local conditions = require("heirline.conditions")
 return {
   condition = conditions.has_diagnostics,
   static = {
-    error_icon = " ",
-    warn_icon = " ",
-    info_icon = " ",
+    error_icon = "󰅚 ",
+    warn_icon = "󰀪 ",
+    info_icon = "󰌶 ",
     hint_icon = " ",
   },
   init = function(self)
