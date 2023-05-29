@@ -1,4 +1,6 @@
-local M = {}
+local M = {
+  cb = {},
+}
 
 ---@param config table
 function M.start(config)
@@ -12,30 +14,49 @@ function M.start(config)
 end
 
 ---@param name string
----@param params table?
----@param async boolean?
+---@param params table
 ---@return function
-function M.call_action(name, params, async)
-  local act = async and vim.fn["ddu#ui#do_action"] or vim.fn["ddu#ui#sync_action"]
+function M.wrap_action(name, params)
   return function()
-    act(name, params or vim.empty_dict())
+    vim.fn["ddu#ui#do_action"](name, params)
   end
 end
 
+---@param action string
+---@param params? table
+---@param from_insert? boolean
+---@return string
+function M.map_action(action, params, from_insert)
+  local cmd = ""
+  if from_insert then
+    cmd = "<Esc>"
+  end
+  if params == nil then
+    cmd = cmd .. ("<Cmd>call ddu#ui#do_action('%s')<CR>"):format(action)
+  else
+    local id = #M.cb + 1
+    M.cb[id] = M.wrap_action(action, params)
+    cmd = cmd .. ("<Cmd>lua require('rc.ddu').cb[%d]()<CR>"):format(id)
+  end
+  return cmd
+end
+
 ---@param name string
----@param params table?
----@param async boolean?
----@return function
-function M.itemAction(name, params, async)
-  local opts = {
-    name = name,
-    params = params,
-  }
-  return M.call_action("itemAction", opts, async)
+---@param params? table
+---@param from_insert? boolean
+---@return string
+function M.map_item_action(name, params, from_insert)
+  return M.map_action("itemAction", { name = name, params = params }, from_insert)
+end
+
+---@param cmd string
+---@return string
+function M.map_execute(cmd)
+  return ("<Cmd>call ddu#ui#ff#execute('%s')<CR><Cmd>redraw<CR>"):format(cmd)
 end
 
 function M.open_tab()
-  M.itemAction("open", { command = "tabedit" })()
+  vim.fn["ddu#ui#sync_action"]("itemAction", { name = "open", params = { command = "tabedit" } })
   local root = vim
     .iter(vim.fs.find({ "init.vim", ".git" }, {
       upward = true,
@@ -48,15 +69,6 @@ function M.open_tab()
   end
 end
 
----@param cmd string
----@return function
-function M.execute(cmd)
-  return function()
-    vim.fn["ddu#ui#ff#execute"](cmd)
-    vim.cmd("redraw!")
-  end
-end
-
 function M.history_mapping()
   local function map(mode, lhs, rhs)
     vim.keymap.set(mode, lhs, rhs, { buffer = true, silent = true, nowait = true })
@@ -65,8 +77,8 @@ function M.history_mapping()
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "ddu-ff",
     callback = function()
-      map("n", "<C-e>", M.itemAction("edit"))
-      map("n", "<C-d>", M.itemAction("delete"))
+      map("n", "<C-e>", M.map_item_action("edit"))
+      map("n", "<C-d>", M.map_item_action("delete"))
     end,
     once = true,
   })
@@ -74,8 +86,8 @@ function M.history_mapping()
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "ddu-ff-filter",
     callback = function()
-      map("i", "<C-e>", M.itemAction("edit"))
-      map("i", "<C-d>", M.itemAction("delete"))
+      map("i", "<C-e>", M.map_item_action("edit"))
+      map("i", "<C-d>", M.map_item_action("delete"))
     end,
     once = true,
   })

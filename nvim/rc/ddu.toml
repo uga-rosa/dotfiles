@@ -51,7 +51,7 @@ lua_add = '''
         zenn = {
           path = vim.fs.normalize("~/zenn"),
           converters = {},
-        }
+        },
       },
       kindOptions = {
         _ = {
@@ -81,14 +81,14 @@ lua_add = '''
         -- Highlight cursor line
         vim.opt_local.cursorline = true
         -- Close UI
-        map("n", "<Esc>", ddu.call_action("quit"))
+        map("n", "<Esc>", ddu.map_action("quit"))
         -- Open file
-        map("n", "<CR>", ddu.itemAction("default"))
-        map("n", "<C-x>", ddu.itemAction("open", { command = "split" }))
-        map("n", "<C-v>", ddu.itemAction("open", { command = "vsplit" }))
+        map("n", "<CR>", ddu.map_item_action("default"))
+        map("n", "<C-x>", ddu.map_item_action("open", { command = "split" }))
+        map("n", "<C-v>", ddu.map_item_action("open", { command = "vsplit" }))
         map("n", "<C-t>", ddu.open_tab)
         -- Enter filter
-        map("n", "i", ddu.call_action("openFilterWindow"))
+        map("n", "i", ddu.map_action("openFilterWindow"))
       end,
     })
 
@@ -96,20 +96,20 @@ lua_add = '''
       pattern = "ddu-ff-filter",
       callback = function()
         -- Close UI
-        map("i", "<C-c>", "<Esc><Cmd>call ddu#ui#do_action('quit')<CR>")
-        map("n", "<Esc>", ddu.call_action("quit"))
+        map("i", "<C-c>", ddu.map_action("quit", nil, true))
+        map("n", "<Esc>", ddu.map_action("quit"))
         -- Close filter window
         -- Lexima overwrite <Esc> mapping
         vim.b.lexima_disabled = true
-        map("i", "<Esc>", "<Esc><Cmd>call ddu#ui#do_action('closeFilterWindow')<CR>")
+        map("i", "<Esc>", ddu.map_action("closeFilterWindow", nil, true))
         -- Open file
-        map("i", "<CR>", ddu.itemAction("default"))
-        map("i", "<C-x>", ddu.itemAction("open", { command = "split" }))
-        map("i", "<C-v>", ddu.itemAction("open", { command = "vsplit" }))
+        map("i", "<CR>", ddu.map_item_action("default", nil, true))
+        map("i", "<C-x>", ddu.map_item_action("open", { command = "split" }, true))
+        map("i", "<C-v>", ddu.map_item_action("open", { command = "split" }, true))
         map("i", "<C-t>", ddu.open_tab)
         -- Move cursor
-        map("i", "<C-n>", ddu.execute("normal! j"))
-        map("i", "<C-p>", ddu.execute("normal! k"))
+        map("i", "<C-n>", ddu.map_execute("normal! j"))
+        map("i", "<C-p>", ddu.map_execute("normal! k"))
         -- Emacs like keymapping
         map("i", "<C-a>", "<Home>")
         map("i", "<C-e>", "<End>")
@@ -262,16 +262,6 @@ lua_add = '''
     require("rc.utils").package_set("ddu_command", "search_history", function()
       ddu.history_mapping()
       ddu.start({ "search_history" })
-    end)
-'''
-
-[[plugins]]
-repo = 'gamoutatsumi/ddu-source-nvim-lsp'
-lua_add = '''
-    vim.keymap.set("n", "gr", "<Cmd>Ddu references<CR>")
-
-    require("rc.utils").package_set("ddu_command", "references", function()
-      require("rc.ddu").start({ "nvim_lsp_references" })
     end)
 '''
 
