@@ -34,9 +34,14 @@ export class Source extends BaseSource<Params> {
     return new ReadableStream({
       start(controller) {
         const locations = args.sourceParams.locations;
-        const items = locations.map((location) => {
+        const items = locations.flatMap((location) => {
           let path = getUri(location);
-          if (!path.startsWith("deno:")) {
+          // filter deno virtual buffers with udd fragments
+          // #(^|~|<|=)
+          if (/^deno:.*%23(%5E|%7E|%3C|%3D)/.test(path)) {
+            return [];
+          }
+          if (path.startsWith("file:")) {
             path = new URL(path).pathname;
           }
           const range = getRange(location);
