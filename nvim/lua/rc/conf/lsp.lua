@@ -107,3 +107,22 @@ vim.lsp.handlers["textDocument/definition"] = location_handler
 vim.lsp.handlers["textDocument/declaration"] = location_handler
 vim.lsp.handlers["textDocument/typeDefinition"] = location_handler
 vim.lsp.handlers["textDocument/implementation"] = location_handler
+vim.lsp.handlers["textDocument/references"] = function(_, result, _, _)
+  if result == nil or vim.tbl_isempty(result) then
+    vim.notify("No references found", vim.log.levels.INFO)
+  else
+    require("rc.ddu").start({
+      {
+        name = "lsp_locations",
+        params = {
+          locations = result,
+        },
+      },
+      uiParams = {
+        ff = {
+          floatingTitle = "References",
+        },
+      },
+    })
+  end
+end
