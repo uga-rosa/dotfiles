@@ -74,26 +74,36 @@ vim.lsp.handlers["textDocument/signatureHelp"] = function(err, result, ctx, conf
   handlers.signature_help(err, result, ctx, config)
 end
 
-vim.lsp.handlers["textDocument/definition"] = function(err, result, ctx, config)
-  if err then
-    vim.notify(err, vim.log.levels.ERROR)
+local function location_handler(_, result, ctx, config)
+  if result == nil or vim.tbl_isempty(result) then
+    vim.notify("No location found", vim.log.levels.INFO)
     return
   end
-  if not result then
-    return
-  end
-  -- result type is `Location | Location[] | LocationLink[]`
-  if #result == 1 or result.uri then
-    -- single location
-    handlers.definition(err, result, ctx, config)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  config = config or {}
+
+  if not vim.tbl_islist(result) then
+    vim.lsp.util.jump_to_location(result, client.offset_encoding, config.reuse_win)
+  elseif #result == 1 then
+    vim.lsp.util.jump_to_location(result[1], client.offset_encoding, config.reuse_win)
   else
     require("rc.ddu").start({
       {
-        name = "lsp_definitions",
+        name = "lsp_locations",
         params = {
           locations = result,
+        },
+      },
+      uiParams = {
+        ff = {
+          floatingTitle = "LSP locations",
         },
       },
     })
   end
 end
+
+vim.lsp.handlers["textDocument/definition"] = location_handler
+vim.lsp.handlers["textDocument/declaration"] = location_handler
+vim.lsp.handlers["textDocument/typeDefinition"] = location_handler
+vim.lsp.handlers["textDocument/implementation"] = location_handler
