@@ -36,6 +36,7 @@ lua_add = '''
             floating = "Normal",
             floatingBorder = "Normal",
           },
+          ignoreEmpty = true,
         },
       },
       sourceOptions = {
@@ -272,6 +273,32 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "zenn", function()
       require("rc.ddu").start({ "zenn" })
+    end)
+'''
+
+[[plugins]]
+repo = "~/plugin/ddu-source-nvim-lsp"
+lua_add = '''
+    require("rc.utils").package_set("ddu_command", "lsp_definition", function()
+      require("rc.ddu").start({
+        {
+          name = "nvim_lsp",
+          params = {
+            method = "textDocument/definition",
+          },
+        },
+      })
+    end)
+
+    require("rc.utils").package_set("ddu_command", "lsp_references", function()
+      require("rc.ddu").start({
+        {
+          name = "nvim_lsp",
+          params = {
+            method = "textDocument/references",
+          },
+        },
+      })
     end)
 '''
 
