@@ -24,26 +24,35 @@ hook_source = '''
 [[plugins]]
 repo = 'cohama/lexima.vim'
 on_event = 'InsertEnter'
-hook_source = '''
-    let g:lexima_ctrlh_as_backspace = 1
-    let g:lexima_disable_on_nofile = 1
+lua_source = '''
+    vim.g.lexima_ctrlh_as_backspace = 1
+    vim.g.lexima_disable_on_nofile = 1
 
-    let s:lexima_my_rules = [
-          \ #{
-          \   char: '<CR>',
-          \   at: '{\%#}',
-          \   input: '<CR>\ ',
-          \   filetype: 'vim'
-          \ },
-          \ #{
-          \   char: '<CR>',
-          \   at: '\[\%#]',
-          \   input: '<CR>\ ',
-          \   filetype: 'vim'
-          \ }]
-    for rule in s:lexima_my_rules
-      call lexima#add_rule(rule)
-    endfor
+    local my_rules = {
+      {
+        char = "<CR>",
+        at = [[{\%#}]],
+        input = [[<CR>\ ]],
+        filetype = "vim",
+      },
+      {
+        char = "<CR>",
+        at = [=[\[\%#]]=],
+        input = [[<CR>\ ]],
+        filetype = "vim",
+      },
+      {
+        char = "*",
+        at = [[/\*\%#]],
+        input = [[*<CR><BS> * ]],
+        input_after = [[<CR>*/]],
+        filetype = { "javascript", "typescript" },
+      },
+    }
+
+    for _, rule in ipairs(my_rules) do
+      vim.fn["lexima#add_rule"](rule)
+    end
 '''
 
 [[plugins]]
