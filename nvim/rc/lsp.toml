@@ -44,6 +44,7 @@ lua_post_source = '''
       buf_map("[d", vim.diagnostic.goto_prev)
       buf_map("]d", vim.diagnostic.goto_next)
       buf_map("gd", vim.lsp.buf.definition)
+      buf_map("gr", vim.lsp.buf.references)
       buf_map("<Space>n", vim.lsp.buf.rename)
       buf_map("<Space>F", "<Cmd>Format<CR>")
 

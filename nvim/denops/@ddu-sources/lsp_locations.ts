@@ -41,7 +41,7 @@ export class Source extends BaseSource<Params> {
           }
           const range = getRange(location);
           const { line, character } = range.start;
-          const [lineNr, col] = [line + 1, character + 2];
+          const [lineNr, col] = [line + 1, character + 1];
           return {
             word: path,
             display: `${path}:${lineNr}:${col}`,
