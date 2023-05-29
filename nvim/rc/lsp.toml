@@ -43,8 +43,8 @@ lua_post_source = '''
       buf_map("K", vim.lsp.buf.hover)
       buf_map("[d", vim.diagnostic.goto_prev)
       buf_map("]d", vim.diagnostic.goto_next)
-      buf_map("gd", vim.lsp.buf.definition)
-      buf_map("gr", vim.lsp.buf.references)
+      buf_map("gd", require("rc.lsp").definition)
+      buf_map("gr", require("rc.lsp").references)
       buf_map("<Space>n", vim.lsp.buf.rename)
       buf_map("<Space>F", "<Cmd>Format<CR>")
 
