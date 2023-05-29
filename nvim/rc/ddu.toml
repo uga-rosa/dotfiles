@@ -279,12 +279,16 @@ lua_add = '''
 [[plugins]]
 repo = "~/plugin/ddu-source-nvim-lsp"
 lua_add = '''
+    vim.keymap.set("n", "gd", "<Cmd>Ddu lsp_definition<CR>")
+    vim.keymap.set("n", "gr", "<Cmd>Ddu lsp_references<CR>")
+
     require("rc.utils").package_set("ddu_command", "lsp_definition", function()
       require("rc.ddu").start({
         {
           name = "nvim_lsp",
           params = {
             method = "textDocument/definition",
+            autoJump = true,
           },
         },
       })
