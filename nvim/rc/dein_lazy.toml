@@ -300,10 +300,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
-on_map = '<Plug>(EasyAlign)'
-lua_add = '''
-    vim.keymap.set({ "n", "x" }, "ga", "<Plug>(EasyAlign)")
-'''
+on_cmd = 'EasyAlign'
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
