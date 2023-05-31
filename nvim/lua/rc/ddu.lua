@@ -2,14 +2,25 @@ local M = {
   cb = {},
 }
 
----@param config table
-function M.start(config)
-  local sources = {}
-  for i, v in ipairs(config) do
-    sources[i] = type(v) == "string" and { name = v } or v
-    config[i] = nil
+---@class Source
+---@field [1] string
+---@field name string
+---@field param table
+
+---@param source string|Source
+---@param config table|nil
+function M.start(source, config)
+  config = config or {}
+  if type(source) == "string" then
+    source = { { name = source } }
+  else
+    if source[1] then
+      source.name = source[1]
+      source[1] = nil
+    end
+    source = { source }
   end
-  config.sources = sources
+  config.sources = source
   vim.fn["ddu#start"](config)
 end
 

@@ -152,21 +152,9 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "files", function()
       require("rc.ddu").start({
-        {
-          name = "file_external",
-          params = {
-            cmd = {
-              "fd",
-              "--type",
-              "f",
-              "--color",
-              "never",
-              "--hidden",
-              "--follow",
-              "--exclude",
-              ".git",
-            },
-          },
+        "file_external",
+        params = {
+          cmd = vim.split("fd --type f --color never --hidden --follow --exclude .git", " "),
         },
       })
     end)
@@ -178,8 +166,12 @@ lua_add = '''
     vim.keymap.set("n", "<Space>lg", "<Cmd>Ddu live_grep<CR>")
 
     require("rc.utils").package_set("ddu_command", "live_grep", function()
-      require("rc.ddu").start({
-        "rg",
+      require("rc.ddu").start("rg", {
+        uiParams = {
+          ff = {
+            ignoreEmpty = false,
+          },
+        },
         sourceOptions = {
           rg = {
             volatile = true,
@@ -196,8 +188,7 @@ lua_add = '''
     vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
 
     require("rc.utils").package_set("ddu_command", "help_tags", function()
-      require("rc.ddu").start({
-        "help",
+      require("rc.ddu").start("help", {
         sourceOptions = {
           help = {
             converters = {},
@@ -215,33 +206,27 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "mru", function()
       require("rc.ddu").start({
-        {
-          name = "mr",
-          params = {
-            kind = "mru",
-          },
+        "mr",
+        params = {
+          kind = "mru",
         },
       })
     end)
 
     require("rc.utils").package_set("ddu_command", "mrw", function()
       require("rc.ddu").start({
-        {
-          name = "mr",
-          params = {
-            kind = "mrw",
-          },
+        "mr",
+        params = {
+          kind = "mrw",
         },
       })
     end)
 
     require("rc.utils").package_set("ddu_command", "mrr", function()
       require("rc.ddu").start({
-        {
-          name = "mr",
-          params = {
-            kind = "mrr",
-          },
+        "mr",
+        params = {
+          kind = "mrr",
         },
       })
     end)
@@ -256,7 +241,7 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "command_history", function()
       ddu.history_mapping()
-      ddu.start({ "command_history" })
+      ddu.start("command_history")
     end)
 '''
 
@@ -269,7 +254,7 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "search_history", function()
       ddu.history_mapping()
-      ddu.start({ "search_history" })
+      ddu.start("search_history")
     end)
 '''
 
@@ -279,7 +264,7 @@ lua_add = '''
     vim.keymap.set("n", "<Space>z", "<Cmd>Ddu zenn<CR>")
 
     require("rc.utils").package_set("ddu_command", "zenn", function()
-      require("rc.ddu").start({ "zenn" })
+      require("rc.ddu").start("zenn")
     end)
 '''
 
@@ -298,12 +283,11 @@ lua_add = '''
     }) do
       require("rc.utils").package_set("ddu_command", sub_command, function()
         require("rc.ddu").start({
-          {
-            name = "nvim_lsp",
-            params = {
-              method = method,
-            },
+          "nvim_lsp",
+          params = {
+            method = method,
           },
+        }, {
           sync = true,
           uiParams = {
             ff = {
@@ -316,23 +300,20 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "lsp_references", function()
       require("rc.ddu").start({
-        {
-          name = "nvim_lsp",
-          params = {
-            method = "textDocument/references",
-          },
+        "nvim_lsp",
+        params = {
+          method = "textDocument/references",
         },
       })
     end)
 
     require("rc.utils").package_set("ddu_command", "lsp_document_symbol", function()
       require("rc.ddu").start({
-        {
-          name = "nvim_lsp",
-          params = {
-            method = "textDocument/documentSymbol",
-          },
+        "nvim_lsp",
+        params = {
+          method = "textDocument/documentSymbol",
         },
+      }, {
         sourceOptions = {
           nvim_lsp = {
             converters = { "converter_lsp_symbol" },
@@ -347,13 +328,12 @@ lua_add = '''
       }, function(input)
         input = input or ""
         require("rc.ddu").start({
-          {
-            name = "nvim_lsp",
-            params = {
-              method = "workspace/symbol",
-              query = input,
-            },
+          "nvim_lsp",
+          params = {
+            method = "workspace/symbol",
+            query = input,
           },
+        }, {
           sourceOptions = {
             nvim_lsp = {
               converters = { "converter_lsp_symbol" },
@@ -365,12 +345,11 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "lsp_dynamic_workspace_symbol", function()
       require("rc.ddu").start({
-        {
-          name = "nvim_lsp",
-          params = {
-            method = "workspace/symbol",
-          },
+        "nvim_lsp",
+        params = {
+          method = "workspace/symbol",
         },
+      }, {
         uiParams = {
           ff = {
             ignoreEmpty = false,
@@ -387,17 +366,15 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "diagnostic", function()
       require("rc.ddu").start({
-        {
-          name = "nvim_diagnostic",
-          params = {
-            buffer = 0,
-          },
+        "nvim_diagnostic",
+        params = {
+          buffer = 0,
         },
       })
     end)
 
     require("rc.utils").package_set("ddu_command", "diagnostic_all", function()
-      require("rc.ddu").start({ "nvim_diagnostic" })
+      require("rc.ddu").start("nvim_diagnostic")
     end)
 '''
 
