@@ -11,16 +11,17 @@ local M = {
 ---@param config table|nil
 function M.start(source, config)
   config = config or {}
+  local sources = {}
   if type(source) == "string" then
-    source = { { name = source } }
+    sources = { { name = source } }
   else
     if source[1] then
       source.name = source[1]
       source[1] = nil
     end
-    source = { source }
+    sources = { source }
   end
-  config.sources = source
+  config.sources = sources
   vim.fn["ddu#start"](config)
 end
 
@@ -67,7 +68,7 @@ function M.map_execute(cmd)
 end
 
 function M.open_tab()
-  vim.fn["ddu#ui#sync_action"]("itemAction", { name = "open", params = { command = "tabedit" } })
+  M.wrap_action("itemAction", { name = "open", params = { command = "tabedit" } })()
   local root = vim
     .iter(vim.fs.find({ "init.vim", ".git" }, {
       upward = true,
