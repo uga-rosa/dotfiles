@@ -305,7 +305,11 @@ lua_add = '''
             },
           },
           sync = true,
-          uiParams = { ff = { immediateAction = "open" } },
+          uiParams = {
+            ff = {
+              immediateAction = "open",
+            },
+          },
         })
       end)
     end
