@@ -83,6 +83,11 @@ lua_add = '''
         vim.opt_local.cursorline = true
         -- Close UI
         map("n", "<Esc>", ddu.map_action("quit"))
+        -- Toggle selected state for
+        -- All items
+        map("n", "a", ddu.map_action("toggleAllItems"))
+        -- cursor item
+        map("n", " ", ddu.map_action("toggleSelectItem"))
         -- Open file
         map("n", "<CR>", ddu.map_item_action("default"))
         map("n", "<C-x>", ddu.map_item_action("open", { command = "split" }))
@@ -90,6 +95,8 @@ lua_add = '''
         map("n", "<C-t>", ddu.open_tab)
         -- Enter filter
         map("n", "i", ddu.map_action("openFilterWindow"))
+        -- Send quickfix
+        map("n", "q", ddu.map_item_action("quickfix"))
       end,
     })
 
