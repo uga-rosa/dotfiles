@@ -364,6 +364,31 @@ lua_add = '''
       })
     end)
 
+    for sub_command, method in pairs({
+      lsp_incoming_call = "callHierarchy/incomingCalls",
+      lsp_outgoing_call = "callHierarchy/outgoingCalls",
+    }) do
+      require("rc.utils").package_set("ddu_command", sub_command, function()
+        require("rc.ddu").start({
+          "nvim_lsp",
+          params = {
+            method = method,
+          },
+        }, {
+          uiParams = {
+            ff = {
+              displayTree = true,
+            },
+          },
+          sourceOptions = {
+            nvim_lsp = {
+              converters = {},
+            },
+          },
+        })
+      end)
+    end
+
     require("rc.utils").package_set("ddu_command", "diagnostic", function()
       require("rc.ddu").start({
         "nvim_diagnostic",
