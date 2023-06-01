@@ -97,6 +97,8 @@ lua_add = '''
         map("n", "i", ddu.map_action("openFilterWindow"))
         -- Send quickfix
         map("n", "q", ddu.map_item_action("quickfix"))
+        -- Expand item tree
+        map("n", "e", ddu.map_action("expandItem"))
       end,
     })
 
