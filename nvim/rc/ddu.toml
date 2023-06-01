@@ -269,7 +269,7 @@ lua_add = '''
 '''
 
 [[plugins]]
-repo = "~/plugin/ddu-source-nvim_lsp"
+repo = '~/plugin/ddu-source-nvim_lsp'
 lua_add = '''
     vim.keymap.set("n", "gd", "<Cmd>Ddu lsp_definition<CR>")
     vim.keymap.set("n", "gt", "<Cmd>Ddu lsp_type_definition<CR>")
