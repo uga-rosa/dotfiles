@@ -98,7 +98,7 @@ lua_add = '''
         -- Send quickfix
         map("n", "q", ddu.map_item_action("quickfix"))
         -- Expand item tree
-        map("n", "e", ddu.map_action("expandItem"))
+        map("n", "e", ddu.map_action("expandItem", { mode = "toggle" }))
       end,
     })
 
@@ -380,6 +380,7 @@ lua_add = '''
           uiParams = {
             ff = {
               displayTree = true,
+              startFilter = false,
             },
           },
           sourceOptions = {
