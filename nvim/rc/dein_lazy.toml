@@ -428,6 +428,10 @@ lua_source = '''
       highlighter = {
         auto_enable = true,
         lsp = true,
+        excludes = {
+          "ddu-ui",
+          "ddu-ui-filter",
+        },
       },
       pickers = {
         ccc.picker.hex,
