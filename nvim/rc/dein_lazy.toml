@@ -584,6 +584,10 @@ hook_source = '''
 '''
 
 [[plugins]]
+repo = 'github/copilot.vim'
+on_cmd = 'Copilot'
+
+[[plugins]]
 repo = 'delphinus/cellwidths.nvim'
 on_event = 'BufEnter'
 lua_source = '''
