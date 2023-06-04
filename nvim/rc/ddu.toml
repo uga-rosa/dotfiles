@@ -271,7 +271,7 @@ lua_add = '''
 '''
 
 [[plugins]]
-repo = '~/plugin/ddu-source-nvim_lsp'
+repo = '~/plugin/ddu-source-lsp'
 lua_add = '''
     vim.keymap.set("n", "gd", "<Cmd>Ddu lsp_definition<CR>")
     vim.keymap.set("n", "gt", "<Cmd>Ddu lsp_type_definition<CR>")
@@ -285,7 +285,7 @@ lua_add = '''
     }) do
       require("rc.utils").package_set("ddu_command", sub_command, function()
         require("rc.ddu").start({
-          "nvim_lsp",
+          "lsp_definition",
           params = {
             method = method,
           },
@@ -301,21 +301,11 @@ lua_add = '''
     end
 
     require("rc.utils").package_set("ddu_command", "lsp_references", function()
-      require("rc.ddu").start({
-        "nvim_lsp",
-        params = {
-          method = "textDocument/references",
-        },
-      })
+      require("rc.ddu").start("lsp_references")
     end)
 
-    require("rc.utils").package_set("ddu_command", "lsp_document_symbol", function()
-      require("rc.ddu").start({
-        "nvim_lsp",
-        params = {
-          method = "textDocument/documentSymbol",
-        },
-      }, {
+    require("rc.utils").package_set("ddu_command", "lsp_documentSymbol", function()
+      require("rc.ddu").start("lsp_documentSymbol", {
         sourceOptions = {
           nvim_lsp = {
             converters = { "converter_lsp_symbol" },
@@ -330,9 +320,8 @@ lua_add = '''
       }, function(input)
         input = input or ""
         require("rc.ddu").start({
-          "nvim_lsp",
+          "lsp_workspaceSymbol",
           params = {
-            method = "workspace/symbol",
             query = input,
           },
         }, {
@@ -345,13 +334,8 @@ lua_add = '''
       end)
     end)
 
-    require("rc.utils").package_set("ddu_command", "lsp_dynamic_workspace_symbol", function()
-      require("rc.ddu").start({
-        "nvim_lsp",
-        params = {
-          method = "workspace/symbol",
-        },
-      }, {
+    require("rc.utils").package_set("ddu_command", "lsp_dynamic_workspaceSymbol", function()
+      require("rc.ddu").start("lsp_workspaceSymbol", {
         uiParams = {
           ff = {
             ignoreEmpty = false,
@@ -372,7 +356,7 @@ lua_add = '''
     }) do
       require("rc.utils").package_set("ddu_command", sub_command, function()
         require("rc.ddu").start({
-          "nvim_lsp",
+          "lsp_hierarchy",
           params = {
             method = method,
           },
@@ -394,7 +378,7 @@ lua_add = '''
 
     require("rc.utils").package_set("ddu_command", "diagnostic", function()
       require("rc.ddu").start({
-        "nvim_diagnostic",
+        "diagnostic",
         params = {
           buffer = 0,
         },
@@ -402,7 +386,7 @@ lua_add = '''
     end)
 
     require("rc.utils").package_set("ddu_command", "diagnostic_all", function()
-      require("rc.ddu").start("nvim_diagnostic")
+      require("rc.ddu").start("diagnostic")
     end)
 '''
 
