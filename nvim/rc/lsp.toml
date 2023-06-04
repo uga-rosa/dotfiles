@@ -285,6 +285,13 @@ lua_source = '''
 '''
 
 [[plugins]]
+repo = 'matsui54/denops-signature_help'
+on_source = 'nvim-lspconfig'
+hook_post_source = '''
+    call signature_help#enable()
+'''
+
+[[plugins]]
 repo = 'SmiteshP/nvim-navic'
 on_source = 'nvim-lspconfig'
 lua_source = '''
