@@ -307,7 +307,7 @@ lua_add = '''
     require("rc.utils").package_set("ddu_command", "lsp_documentSymbol", function()
       require("rc.ddu").start("lsp_documentSymbol", {
         sourceOptions = {
-          nvim_lsp = {
+          lsp_documentSymbol = {
             converters = { "converter_lsp_symbol" },
           },
         },
@@ -326,7 +326,7 @@ lua_add = '''
           },
         }, {
           sourceOptions = {
-            nvim_lsp = {
+            lsp_workspaceSymbol = {
               converters = { "converter_lsp_symbol" },
             },
           },
@@ -342,7 +342,7 @@ lua_add = '''
           },
         },
         sourceOptions = {
-          nvim_lsp = {
+          lsp_workspaceSymbol = {
             volatile = true,
             converters = { "converter_lsp_symbol" },
           },
@@ -368,7 +368,7 @@ lua_add = '''
             },
           },
           sourceOptions = {
-            nvim_lsp = {
+            lsp_hierarchy = {
               converters = {},
             },
           },
