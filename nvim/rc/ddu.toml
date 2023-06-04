@@ -376,17 +376,17 @@ lua_add = '''
       end)
     end
 
-    require("rc.utils").package_set("ddu_command", "diagnostic", function()
+    require("rc.utils").package_set("ddu_command", "lsp_diagnostic", function()
       require("rc.ddu").start({
-        "diagnostic",
+        "lsp_diagnostic",
         params = {
           buffer = 0,
         },
       })
     end)
 
-    require("rc.utils").package_set("ddu_command", "diagnostic_all", function()
-      require("rc.ddu").start("diagnostic")
+    require("rc.utils").package_set("ddu_command", "lsp_diagnostic_all", function()
+      require("rc.ddu").start("lsp_diagnostic")
     end)
 '''
 
