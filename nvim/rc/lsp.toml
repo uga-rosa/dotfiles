@@ -170,16 +170,16 @@ lua_post_source = '''
         end
         return root_pattern("deno.json", "deno.jsonc", ".")(fname)
       end,
-      settings = {
-        deno = {
-          enable = true,
-          suggest = {
-            imports = {
-              hosts = {
-                ["https://deno.land"] = true,
-                ["https://crux.land"] = true,
-                ["https://x.nest.land"] = true,
-              },
+      init_options = {
+        enable = true,
+        lint = true,
+        unstable = true,
+        suggest = {
+          imports = {
+            hosts = {
+              ["https://deno.land"] = true,
+              ["https://cdn.nest.land"] = true,
+              ["https://crux.land"] = true,
             },
           },
         },
