@@ -46,9 +46,6 @@ lua_add = '''
           sorters = { "sorter_fzf" },
           converters = { "converter_devicon" },
         },
-        file_external = {
-          sorters = { "sorter_length", "sorter_fzf" },
-        },
         zenn = {
           path = vim.fs.normalize("~/zenn"),
           converters = {},
@@ -272,6 +269,7 @@ lua_add = '''
 
 [[plugins]]
 repo = '~/plugin/ddu-source-lsp'
+# repo = 'uga-rosa/ddu-source-lsp'
 lua_add = '''
     vim.keymap.set("n", "gd", "<Cmd>Ddu lsp_definition<CR>")
     vim.keymap.set("n", "gt", "<Cmd>Ddu lsp_type_definition<CR>")
@@ -356,7 +354,7 @@ lua_add = '''
     }) do
       require("rc.utils").package_set("ddu_command", sub_command, function()
         require("rc.ddu").start({
-          "lsp_hierarchy",
+          "lsp_callHierarchy",
           params = {
             method = method,
           },
@@ -393,9 +391,6 @@ lua_add = '''
 # Filters
 [[plugins]]
 repo = 'yuki-yano/ddu-filter-fzf'
-
-[[plugins]]
-repo = 'uga-rosa/ddu-filter-sorter_length'
 
 [[plugins]]
 repo = 'uga-rosa/ddu-filter-converter_devicon'
