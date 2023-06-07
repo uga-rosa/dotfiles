@@ -19,7 +19,7 @@ lua_post_source = '''
         "gopls",
         "pyright",
         "bashls",
-        "tsserver",
+        "vtsls",
         "jsonls",
         "yamlls",
       },
@@ -150,28 +150,12 @@ lua_post_source = '''
 
     local root_pattern = lspconfig.util.root_pattern
 
-    local function root_tsserver(fname)
-      if root_pattern("deno.json", "deno.jsonc")(fname) then
-        return
-      end
-      return root_pattern("package.json", "tsconfig.json", "jsconfig.json")(fname)
-    end
-
-    opts.tsserver = {
-      root_dir = root_tsserver,
-      single_file_support = false,
-    }
-
     -- Don't use mason to install (use local deno runtime).
     opts.denols = {
       root_dir = function(fname)
-        if root_tsserver(fname) then
-          return
-        end
         return root_pattern("deno.json", "deno.jsonc", ".")(fname)
       end,
       init_options = {
-        enable = true,
         lint = true,
         unstable = true,
         suggest = {
@@ -186,6 +170,23 @@ lua_post_source = '''
       },
     }
     lspconfig.denols.setup(opts.denols)
+
+    opts.vtsls = {
+      root_dir = function(fname)
+        if not root_pattern("deno.json", "deno.jsonc", ".")(fname) then
+          return root_pattern("tsconfig.json")(fname)
+            or root_pattern("package.json", "jsconfig.json", ".git")(fname)
+        end
+      end,
+      single_file_support = false,
+      settings = {
+        typescript = {
+          suggest = {
+            completionFunctionCalls = true,
+          },
+        },
+      },
+    }
 
     on_attach(function(client, bufnr)
       if client.name ~= "denols" then
