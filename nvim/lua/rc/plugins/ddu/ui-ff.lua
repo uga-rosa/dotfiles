@@ -1,3 +1,5 @@
+local helper = require("rc.helper.ddu")
+
 ---@type LazySpec
 local spec = {
   {
@@ -9,7 +11,7 @@ local spec = {
       local columns = vim.opt.columns:get()
       local width, col = math.floor(columns * 0.8), math.floor(columns * 0.1)
 
-      vim.fn["ddu#custom#patch_global"]({
+      helper.patch_global({
         ui = "ff",
         uiParams = {
           ff = {

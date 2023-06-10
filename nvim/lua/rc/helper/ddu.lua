@@ -1,3 +1,6 @@
+local utils = require("rc.utils")
+local ddu = vim.af.ddu
+
 local M = {}
 
 ---@class Source
@@ -22,11 +25,11 @@ function M.start(name, source, config)
   end
   config.sources = sources
   config.name = name
-  vim.fn["ddu#start"](config)
+  ddu.start(config)
 end
 
 function M.subcommand(subcommand, callback)
-  require("rc.utils").package_set("ddu_command", subcommand, callback)
+  utils.package_set("ddu_command", subcommand, callback)
 end
 
 ---@param name string
@@ -36,7 +39,7 @@ function M.action(name, params)
   return function()
     vim.cmd.stopinsert()
     vim.schedule(function()
-      vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
+      ddu.ui.do_action(name, params or vim.empty_dict())
     end)
   end
 end
@@ -52,13 +55,13 @@ end
 ---@return function
 function M.execute(cmd)
   return function()
-    vim.fn["ddu#ui#ff#execute"](cmd)
+    ddu.ui.ff.execute(cmd)
     vim.cmd.redraw()
   end
 end
 
-function M.open_tab()
-  M.wrap_action("itemAction", { name = "open", params = { command = "tabedit" } })()
+function M.open_project()
+  ddu.ui.do_action("itemAction", { name = "open", params = { command = "tabedit" } })
   local root = vim
     .iter(vim.fs.find({ "init.vim", ".git" }, {
       upward = true,
@@ -105,6 +108,17 @@ function M.ff_filter_map(name, callback)
       end
     end,
   })
+end
+
+---@param dict table
+function M.patch_global(dict)
+  ddu.custom.patch_global(dict)
+end
+
+---@param name string
+---@param dict table
+function M.patch_local(name, dict)
+  ddu.custom.patch_local(name, dict)
 end
 
 return M

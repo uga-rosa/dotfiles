@@ -19,7 +19,7 @@ local spec = {
       vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
     end,
     config = function()
-      vim.fn["ddu#custom#patch_global"]({
+      helper.patch_global({
         kindOptions = {
           help = {
             defaultAction = "open",

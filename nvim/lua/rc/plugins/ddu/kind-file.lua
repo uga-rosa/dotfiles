@@ -20,7 +20,7 @@ local spec = {
     "Shougo/ddu-kind-file",
     dependencies = "Shougo/ddu.vim",
     config = function()
-      vim.fn["ddu#custom#patch_global"]({
+      helper.patch_global({
         kindOptions = {
           file = {
             defaultAction = "open",

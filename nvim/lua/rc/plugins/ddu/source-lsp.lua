@@ -38,7 +38,7 @@ local spec = {
         helper.start("lsp", "lsp_references")
       end)
 
-      vim.fn["ddu#custom#patch_local"]("lsp:symbol", {
+      helper.patch_local("lsp:symbol", {
         sourceOptions = {
           _ = {
             converters = { "converter_lsp_symbol" },
@@ -79,7 +79,7 @@ local spec = {
         })
       end)
 
-      vim.fn["ddu#custom#patch_local"]("lsp:hierarchy", {
+      helper.patch_local("lsp:hierarchy", {
         uiParams = {
           ff = {
             displayTree = true,

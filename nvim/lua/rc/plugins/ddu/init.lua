@@ -19,8 +19,7 @@ end)
 
 helper.ff_filter_map(nil, function(map)
   -- Close UI
-  -- map("i", "<C-c>", "<Esc><Cmd>call ddu#ui#do_action('quit')<CR>")
-  map("i", "<C-c>", helper.action('quit'))
+  map("i", "<C-c>", helper.action("quit"))
   -- Lexima overwrite <Esc> mapping
   vim.b.lexima_disabled = true
   -- Close filter window
@@ -29,7 +28,7 @@ helper.ff_filter_map(nil, function(map)
   map("i", "<C-n>", helper.execute("normal! j"))
   map("i", "<C-p>", helper.execute("normal! k"))
   -- Default itemAction
-  map("i", "<CR>",  "<Esc><Cmd>call ddu#ui#do_action('itemAction')<CR>")
+  map("i", "<CR>", helper.item_action("default"))
 end)
 
 vim.api.nvim_create_user_command("Ddu", function(args)

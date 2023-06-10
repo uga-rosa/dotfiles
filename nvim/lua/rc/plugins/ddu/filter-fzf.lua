@@ -1,3 +1,5 @@
+local helper = require("rc.helper.ddu")
+
 ---@type LazySpec
 local spec = {
   {
@@ -10,7 +12,7 @@ local spec = {
       local palette = require("nightfly").palette
       vim.api.nvim_set_hl(0, "DduSearchMatched", { fg = palette.black, bg = palette.emerald })
 
-      vim.fn["ddu#custom#patch_global"]({
+      helper.patch_global({
         sourceOptions = {
           _ = {
             matchers = { "matcher_fzf" },
