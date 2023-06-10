@@ -28,7 +28,7 @@ local spec = {
       vim.g.textobj_sandwich_no_default_key_mappings = true
     end,
     config = function()
-      vim.fn["operator#sandwich#set"]("add", "char", "skip_space", 1)
+      vim.af.operator.sandwich.set("add", "char", "skip_space", 1)
     end,
   },
 }

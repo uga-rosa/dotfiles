@@ -45,7 +45,7 @@ local spec = {
       for key, value in pairs(romanTableObj) do
         table.insert(romanTable, { key, value[1], 0 })
       end
-      vim.fn["kensaku#set_roman_table"](romanTable)
+      vim.af.kensaku.set_roman_table(romanTable)
     end,
   },
 }
