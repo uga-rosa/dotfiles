@@ -63,20 +63,6 @@ function M.execute(cmd)
   end
 end
 
-function M.open_project()
-  ddu.ui.do_action("itemAction", { name = "open", params = { command = "tabedit" } })
-  local root = vim
-    .iter(vim.fs.find({ "init.vim", ".git" }, {
-      upward = true,
-      path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
-    }))
-    :map(vim.fs.dirname)
-    :totable()[1]
-  if root then
-    vim.cmd.tcd(root)
-  end
-end
-
 ---@param name? string If nil, map is set globally
 ---@param callback fun(map: fun(lhs: string, rhs: string|function))
 function M.ff_map(name, callback)
