@@ -62,10 +62,3 @@ ft_event.lua = function()
     set_indent(tab_size, is_hard_tab)
   end
 end
-
-ft_event.toml = function()
-  set_indent(4)
-  vim.opt_local.foldenable = true
-  vim.opt_local.foldmethod = "expr"
-  vim.opt_local.foldexpr = "vimrc#fold_toml(v:lnum)"
-end
