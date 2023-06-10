@@ -9,6 +9,9 @@ end
 -- Release for prefix
 vim.keymap.set("n", "s", "<Nop>")
 
+-- Enable <Esc> in terminal mode
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+
 -- Go to first/end line
 vim.keymap.set({ "n", "x", "o" }, "H", "^")
 vim.keymap.set({ "n", "x", "o" }, "L", "$")

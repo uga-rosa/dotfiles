@@ -1,0 +1,5 @@
+require("rc.conf.options")
+require("rc.conf.mappings")
+require("rc.conf.vim")
+require("rc.conf.ftdetect")
+require("rc.conf.lsp")
