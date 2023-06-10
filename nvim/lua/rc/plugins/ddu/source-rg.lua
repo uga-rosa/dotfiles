@@ -9,7 +9,7 @@ local spec = {
       vim.keymap.set("n", "<Space>lg", "<Cmd>Ddu live_grep<CR>")
     end,
     config = function()
-      helper.subcommand("live_grep", function()
+      helper.register("live_grep", function()
         helper.start("file", "rg", {
           uiParams = {
             ff = {

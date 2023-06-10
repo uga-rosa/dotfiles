@@ -28,8 +28,11 @@ function M.start(name, source, config)
   ddu.start(config)
 end
 
-function M.subcommand(subcommand, callback)
-  utils.package_set("ddu_command", subcommand, callback)
+---Register sub command
+---@param name string
+---@param callback function
+function M.register(name, callback)
+  utils.package_set("ddu_command", name, callback)
 end
 
 ---@param name string

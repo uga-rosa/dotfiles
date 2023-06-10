@@ -27,7 +27,7 @@ local spec = {
         },
       })
 
-      helper.subcommand("help_tags", function()
+      helper.register("help_tags", function()
         helper.start("help", "help", {
           uiParams = {
             ff = {

@@ -14,7 +14,7 @@ local spec = {
     end,
     config = function()
       for _, kind in ipairs({ "mru", "mrw", "mrr" }) do
-        helper.subcommand(kind, function()
+        helper.register(kind, function()
           helper.start("file", {
             "mr",
             params = {

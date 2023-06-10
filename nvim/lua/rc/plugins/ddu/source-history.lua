@@ -19,7 +19,7 @@ local spec = {
       vim.keymap.set("n", "q:", "<Cmd>Ddu command_history<CR>")
     end,
     config = function()
-      helper.subcommand("command_history", function()
+      helper.register("command_history", function()
         helper.start("history", "command_history", {
           kindOptions = {
             _ = {
@@ -37,7 +37,7 @@ local spec = {
       vim.keymap.set("n", "q/", "<Cmd>Ddu search_history<CR>")
     end,
     config = function()
-      helper.subcommand("search_history", function()
+      helper.register("search_history", function()
         helper.start("history", "search_history", {
           kindOptions = {
             _ = {

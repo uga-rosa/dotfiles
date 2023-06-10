@@ -17,7 +17,7 @@ local spec = {
         lsp_type_definition = "textDocument/typeDefinition",
         lsp_implementation = "textDocument/implementation",
       }) do
-        helper.subcommand(subcommand, function()
+        helper.register(subcommand, function()
           helper.start("lsp:definition", {
             "lsp_definition",
             params = {
@@ -34,7 +34,7 @@ local spec = {
         end)
       end
 
-      helper.subcommand("lsp_references", function()
+      helper.register("lsp_references", function()
         helper.start("lsp", "lsp_references")
       end)
 
@@ -46,11 +46,11 @@ local spec = {
         },
       })
 
-      helper.subcommand("lsp_document_symbol", function()
+      helper.register("lsp_document_symbol", function()
         helper.start("lsp:symbol", "lsp_documentSymbol")
       end)
 
-      helper.subcommand("lsp_workspace_symbol", function()
+      helper.register("lsp_workspace_symbol", function()
         vim.ui.input({
           prompt = "A query string to filter symbols by: ",
         }, function(input)
@@ -64,7 +64,7 @@ local spec = {
         end)
       end)
 
-      helper.subcommand("lsp_dynamic_workspaceSymbol", function()
+      helper.register("lsp_dynamic_workspaceSymbol", function()
         helper.start("lsp:symbol", "lsp_workspaceSymbol", {
           uiParams = {
             ff = {
@@ -92,7 +92,7 @@ local spec = {
         lsp_incoming_call = "callHierarchy/incomingCalls",
         lsp_outgoing_call = "callHierarchy/outgoingCalls",
       }) do
-        helper.subcommand(subcommand, function()
+        helper.register(subcommand, function()
           helper.start("lsp:hierarchy", {
             "lsp_callHierarchy",
             params = {
@@ -106,7 +106,7 @@ local spec = {
         lsp_super_type = "typeHierarchy/supertypes",
         lsp_sub_type = "typeHierarchy/subtypes",
       }) do
-        helper.subcommand(subcommand, function()
+        helper.register(subcommand, function()
           helper.start("lsp:hierarchy", {
             "lsp_typeHierarchy",
             params = {
@@ -120,7 +120,7 @@ local spec = {
         lsp_diagnostic = 0,
         lsp_diagnostic_all = vim.NIL,
       }) do
-        helper.subcommand(subcommand, function()
+        helper.register(subcommand, function()
           helper.start("lsp", {
             "lsp_diagnostic",
             params = {

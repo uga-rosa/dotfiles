@@ -9,7 +9,7 @@ local spec = {
       vim.keymap.set("n", "<Space>f", "<Cmd>Ddu files<CR>")
     end,
     config = function()
-      helper.subcommand("files", function()
+      helper.register("files", function()
         helper.start("file", {
           "file_external",
           params = {
