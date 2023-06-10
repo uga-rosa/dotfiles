@@ -28,7 +28,15 @@ local spec = {
       })
 
       helper.subcommand("help_tags", function()
-        helper.start("help", "help")
+        helper.start("help", "help", {
+          uiParams = {
+            ff = {
+              onPreview = vim.af.denops.callback.register(function()
+                vim.cmd("normal! zt")
+              end),
+            },
+          },
+        })
       end)
     end,
   },

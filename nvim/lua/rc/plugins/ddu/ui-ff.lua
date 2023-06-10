@@ -32,6 +32,9 @@ local spec = {
             previewSplit = "vertical",
             previewFloatingTitle = "Preview",
             previewWidth = math.floor(width / 2),
+            previewWindowOptions = {
+              { "&scrolloff", 0 },
+            },
             highlights = {
               floating = "Normal",
               floatingBorder = "Normal",
