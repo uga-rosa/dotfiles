@@ -31,7 +31,7 @@ local spec = {
         lsp_implementation = "textDocument/implementation",
       }) do
         helper.register(subcommand, function()
-          helper.start("lsp:definition", {
+          helper.start("lsp", {
             "lsp_definition",
             params = {
               method = method,
