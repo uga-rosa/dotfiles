@@ -1,5 +1,18 @@
 local helper = require("rc.helper.ddu")
 
+helper.ff_map("lsp", function(map)
+  map("<CR>", helper.item_action("open"))
+  map("<C-x>", helper.item_action("open", { command = "split" }))
+  map("<C-v>", helper.item_action("open", { command = "vsplit" }))
+  map("q", helper.item_action("quickfix"))
+end)
+
+helper.ff_filter_map("lsp", function(map)
+  map("i", "<CR>", helper.item_action("open"))
+  map("i", "<C-x>", helper.item_action("open", { command = "split" }))
+  map("i", "<C-v>", helper.item_action("open", { command = "vsplit" }))
+end)
+
 ---@type LazySpec
 local spec = {
   {
@@ -116,7 +129,7 @@ local spec = {
         end)
       end
 
-      for subcommand, buffer in ipairs({
+      for subcommand, buffer in pairs({
         lsp_diagnostic = 0,
         lsp_diagnostic_all = vim.NIL,
       }) do
