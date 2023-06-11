@@ -20,9 +20,6 @@ end)
 helper.ff_filter_map(nil, function(map)
   -- Close UI
   map("i", "<C-c>", helper.action("quit", nil, true))
-  -- Lexima overwrite <Esc> mapping
-  vim.b.lexima_disabled = true
-  map("i", "<Esc>", "<Esc>")
   -- Close filter window
   map("n", "<Esc>", helper.action("closeFilterWindow", nil, true))
   -- Move cursor

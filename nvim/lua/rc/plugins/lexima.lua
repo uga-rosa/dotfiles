@@ -6,6 +6,7 @@ local spec = {
     config = function()
       vim.g.lexima_ctrlh_as_backspace = 1
       vim.g.lexima_disable_on_nofile = 1
+      vim.g.lexima_map_escape = ""
 
       local my_rules = {
         {
