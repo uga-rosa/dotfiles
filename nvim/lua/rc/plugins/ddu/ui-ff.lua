@@ -6,11 +6,6 @@ local spec = {
     "Shougo/ddu-ui-ff",
     dependencies = "Shougo/ddu.vim",
     config = function()
-      local lines = vim.opt.lines:get()
-      local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
-      local columns = vim.opt.columns:get()
-      local width, col = math.floor(columns * 0.8), math.floor(columns * 0.1)
-
       helper.patch_global({
         ui = "ff",
         uiParams = {
@@ -18,10 +13,6 @@ local spec = {
             startFilter = true,
             prompt = "> ",
             split = "floating",
-            winHeight = height,
-            winRow = row,
-            winWidth = width,
-            winCol = col,
             floatingBorder = "single",
             filterFloatingPosition = "top",
             autoAction = {
@@ -31,7 +22,6 @@ local spec = {
             previewFloatingBorder = "single",
             previewSplit = "vertical",
             previewFloatingTitle = "Preview",
-            previewWidth = math.floor(width / 2),
             previewWindowOptions = {
               { "&scrolloff", 0 },
             },
@@ -42,6 +32,30 @@ local spec = {
             ignoreEmpty = true,
           },
         },
+      })
+
+      local function resize()
+        local lines = vim.opt.lines:get()
+        local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
+        local columns = vim.opt.columns:get()
+        local width, col = math.floor(columns * 0.8), math.floor(columns * 0.1)
+
+        helper.patch_global({
+          uiParams = {
+            ff = {
+              winHeight = height,
+              winRow = row,
+              winWidth = width,
+              winCol = col,
+              previewWidth = math.floor(width / 2),
+            },
+          },
+        })
+      end
+      resize()
+
+      vim.api.nvim_create_autocmd("VimResized", {
+        callback = resize,
       })
     end,
   },
