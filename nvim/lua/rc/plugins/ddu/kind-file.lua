@@ -11,9 +11,9 @@ end)
 
 helper.ff_filter_map("file", function(map)
   -- Open file
-  map("i", "<C-x>", helper.item_action("open", { command = "split" }))
-  map("i", "<C-v>", helper.item_action("open", { command = "vsplit" }))
-  map("i", "<C-t>", helper.item_action("openProject"))
+  map("i", "<C-x>", helper.item_action("open", { command = "split" }, true))
+  map("i", "<C-v>", helper.item_action("open", { command = "vsplit" }, true))
+  map("i", "<C-t>", helper.item_action("openProject", nil, true))
 end)
 
 ---@type LazySpec
