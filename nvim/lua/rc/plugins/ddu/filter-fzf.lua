@@ -5,7 +5,7 @@ local spec = {
   {
     "yuki-yano/ddu-filter-fzf",
     dependencies = {
-      "Shougo/ddu.vim",
+      "ddu.vim",
       "bluz71/vim-nightfly-colors",
     },
     config = function()

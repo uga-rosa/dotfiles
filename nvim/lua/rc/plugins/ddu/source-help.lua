@@ -14,7 +14,8 @@ end)
 local spec = {
   {
     "matsui54/ddu-source-help",
-    dependencies = "Shougo/ddu.vim",
+    dir = "~/plugin/ddu-source-help",
+    dependencies = "ddu.vim",
     init = function()
       vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
     end,

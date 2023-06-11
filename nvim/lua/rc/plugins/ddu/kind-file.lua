@@ -20,7 +20,7 @@ end)
 local spec = {
   {
     "Shougo/ddu-kind-file",
-    dependencies = "Shougo/ddu.vim",
+    dependencies = "ddu.vim",
     config = function()
       helper.patch_global({
         kindOptions = {

@@ -14,7 +14,7 @@ end)
 local spec = {
   {
     "matsui54/ddu-source-command_history",
-    dependencies = "Shougo/ddu.vim",
+    dependencies = "ddu.vim",
     init = function()
       vim.keymap.set("n", "q:", "<Cmd>Ddu command_history<CR>")
     end,
@@ -32,7 +32,7 @@ local spec = {
   },
   {
     "uga-rosa/ddu-source-search_history",
-    dependencies = "Shougo/ddu.vim",
+    dependencies = "ddu.vim",
     init = function()
       vim.keymap.set("n", "q/", "<Cmd>Ddu search_history<CR>")
     end,

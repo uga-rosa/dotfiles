@@ -4,7 +4,7 @@ local helper = require("rc.helper.ddu")
 local spec = {
   {
     "uga-rosa/ddu-filter-converter_devicon",
-    dependencies = "Shougo/ddu.vim",
+    dependencies = "ddu.vim",
     config = function()
       helper.patch_local("file", {
         sourceOptions = {

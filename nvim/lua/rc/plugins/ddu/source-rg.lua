@@ -4,7 +4,7 @@ local helper = require("rc.helper.ddu")
 local spec = {
   {
     "shun/ddu-source-rg",
-    dependencies = "Shougo/ddu.vim",
+    dependencies = "ddu.vim",
     init = function()
       vim.keymap.set("n", "<Space>lg", "<Cmd>Ddu live_grep<CR>")
     end,

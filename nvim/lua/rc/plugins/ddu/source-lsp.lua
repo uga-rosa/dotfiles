@@ -17,7 +17,7 @@ end)
 local spec = {
   {
     dir = "~/plugin/ddu-source-lsp",
-    dependencies = "Shougo/ddu.vim",
+    dependencies = "ddu.vim",
     init = function()
       vim.keymap.set("n", "gd", "<Cmd>Ddu lsp_definition<CR>")
       vim.keymap.set("n", "gt", "<Cmd>Ddu lsp_type_definition<CR>")

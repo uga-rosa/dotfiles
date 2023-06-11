@@ -4,7 +4,7 @@ local helper = require("rc.helper.ddu")
 local spec = {
   {
     "matsui54/ddu-source-file_external",
-    dependencies = "Shougo/ddu.vim",
+    dependencies = "ddu.vim",
     init = function()
       vim.keymap.set("n", "<Space>f", "<Cmd>Ddu files<CR>")
     end,

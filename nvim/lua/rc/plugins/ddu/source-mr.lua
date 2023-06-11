@@ -5,7 +5,7 @@ local spec = {
   {
     "kuuote/ddu-source-mr",
     dependencies = {
-      "Shougo/ddu.vim",
+      "ddu.vim",
       "lambdalisue/mr.vim",
     },
     init = function()

@@ -4,7 +4,7 @@ local helper = require("rc.helper.ddu")
 local spec = {
   {
     "Shougo/ddu-ui-ff",
-    dependencies = "Shougo/ddu.vim",
+    dependencies = "ddu.vim",
     config = function()
       helper.patch_global({
         ui = "ff",

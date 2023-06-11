@@ -4,7 +4,7 @@ local helper = require("rc.helper.ddu")
 local spec = {
   {
     "mikanIchinose/ddu-source-zenn",
-    dependencies = "Shougo/ddu.vim",
+    dependencies = "ddu.vim",
     init = function ()
       vim.keymap.set("n", "<Space>z", "<Cmd>Ddu zenn<CR>")
     end,
