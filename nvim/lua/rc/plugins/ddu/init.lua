@@ -19,16 +19,17 @@ end)
 
 helper.ff_filter_map(nil, function(map)
   -- Close UI
-  map("i", "<C-c>", helper.action("quit"))
+  map("i", "<C-c>", helper.action("quit", nil, true))
   -- Lexima overwrite <Esc> mapping
   vim.b.lexima_disabled = true
+  map("i", "<Esc>", "<Esc>")
   -- Close filter window
-  map("n", "<Esc>", helper.action("closeFilterWindow"))
+  map("n", "<Esc>", helper.action("closeFilterWindow", nil, true))
   -- Move cursor
   map("i", "<C-n>", helper.execute("normal! j"))
   map("i", "<C-p>", helper.execute("normal! k"))
   -- Default itemAction
-  map("i", "<CR>", helper.item_action("default"))
+  map("i", "<CR>", helper.item_action("default", nil, true))
 end)
 
 vim.api.nvim_create_user_command("Ddu", function(args)
@@ -50,6 +51,7 @@ end, {
 local spec = {
   {
     "Shougo/ddu.vim",
+    name = "ddu.vim",
     dependencies = "vim-denops/denops.vim",
     import = "rc.plugins.ddu",
   },

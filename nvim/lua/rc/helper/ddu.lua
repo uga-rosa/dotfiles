@@ -37,21 +37,27 @@ end
 
 ---@param name string
 ---@param params? table
+---@param stopinsert? boolean
 ---@return function
-function M.action(name, params)
+function M.action(name, params, stopinsert)
   return function()
-    vim.cmd.stopinsert()
-    vim.schedule(function()
+    if stopinsert then
+      vim.cmd.stopinsert()
+      vim.schedule(function()
+        ddu.ui.do_action(name, params or vim.empty_dict())
+      end)
+    else
       ddu.ui.do_action(name, params or vim.empty_dict())
-    end)
+    end
   end
 end
 
 ---@param name string
 ---@param params? table
+---@param stopinsert? boolean
 ---@return function
-function M.item_action(name, params)
-  return M.action("itemAction", { name = name, params = params })
+function M.item_action(name, params, stopinsert)
+  return M.action("itemAction", { name = name, params = params }, stopinsert)
 end
 
 ---@param cmd string

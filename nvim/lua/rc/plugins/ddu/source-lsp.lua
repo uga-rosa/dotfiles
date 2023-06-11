@@ -8,9 +8,9 @@ helper.ff_map("lsp", function(map)
 end)
 
 helper.ff_filter_map("lsp", function(map)
-  map("i", "<CR>", helper.item_action("open"))
-  map("i", "<C-x>", helper.item_action("open", { command = "split" }))
-  map("i", "<C-v>", helper.item_action("open", { command = "vsplit" }))
+  map("i", "<CR>", helper.item_action("open", nil, true))
+  map("i", "<C-x>", helper.item_action("open", { command = "split" }, true))
+  map("i", "<C-v>", helper.item_action("open", { command = "vsplit" }, true))
 end)
 
 ---@type LazySpec
