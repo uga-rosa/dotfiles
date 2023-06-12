@@ -32,6 +32,15 @@ local spec = {
       helper.register("help_tags", function()
         helper.start("help", "help")
       end)
+
+      helper.register("lazy_readme", function()
+        helper.start("help", {
+          "help",
+          params = {
+            readme = "only",
+          },
+        })
+      end)
     end,
   },
 }
