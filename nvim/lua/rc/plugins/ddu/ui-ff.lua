@@ -23,6 +23,11 @@ local spec = {
             previewSplit = "vertical",
             previewFloatingTitle = "Preview",
             previewWindowOptions = {
+              { "&signcolumn", "no" },
+              { "&foldcolumn", 0 },
+              { "&foldenable", 0 },
+              { "&number", 0 },
+              { "&wrap", 0 },
               { "&scrolloff", 0 },
             },
             highlights = {
@@ -48,6 +53,7 @@ local spec = {
               winWidth = width,
               winCol = col,
               previewWidth = math.floor(width / 2),
+              previewHeight = height,
             },
           },
         })

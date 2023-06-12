@@ -6,7 +6,7 @@ helper.ff_map("history", function(map)
 end)
 
 helper.ff_filter_map("history", function(map)
-  map("i", "<C-e>", helper.item_action("edit"))
+  map("i", "<C-e>", helper.item_action("edit", nil, true))
   map("i", "<C-d>", helper.item_action("delete"))
 end)
 
