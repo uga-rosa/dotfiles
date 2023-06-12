@@ -7,6 +7,7 @@ local spec = {
       require("dressing").setup({
         input = {
           enabled = true,
+          insert_only = false,
           mappings = {
             n = {
               ["<Esc>"] = { "Close", nowait = true },

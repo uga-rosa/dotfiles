@@ -305,8 +305,6 @@ local spec = {
               })
             end
           end,
-          -- prettier
-          null.builtins.formatting.prettier,
           -- fixjson (json; formatter)
           builtin.formatting.fixjson,
           -- black (python; formatter)
