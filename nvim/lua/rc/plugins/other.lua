@@ -129,8 +129,8 @@ local spec = {
   {
     "uga-rosa/ugaterm.nvim",
     keys = {
-      { "<Space>tt", "<Cmd>UgatermToggle<CR>", mode = { "n", "t" } },
-      { "<Space>tn", "<Cmd>UgatermNewWithName<CR>", mode = { "n", "t" } },
+      { "<M-t>", "<Cmd>UgatermToggle<CR>", mode = { "n", "t" } },
+      { "<M-n>", "<Cmd>UgatermNewWithName<CR>", mode = { "n", "t" } },
     },
   },
 }
