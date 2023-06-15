@@ -194,7 +194,7 @@ local spec = {
       -- Don't use mason to install (use local deno runtime).
       opts.denols = {
         root_dir = function(fname)
-          return root_pattern("deno.json", "deno.jsonc", ".")(fname)
+          return root_pattern("deno.json", "deno.jsonc")(fname)
         end,
         init_options = {
           lint = true,
@@ -214,7 +214,7 @@ local spec = {
 
       opts.vtsls = {
         root_dir = function(fname)
-          if not root_pattern("deno.json", "deno.jsonc", ".")(fname) then
+          if not root_pattern("deno.json", "deno.jsonc")(fname) then
             return root_pattern("tsconfig.json")(fname)
               or root_pattern("package.json", "jsconfig.json", ".git")(fname)
           end
