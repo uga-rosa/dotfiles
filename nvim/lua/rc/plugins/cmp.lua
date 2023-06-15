@@ -69,14 +69,37 @@ local spec = {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-nvim-lua",
       "hrsh7th/cmp-cmdline",
-      "uga-rosa/cmp-dictionary",
-      "uga-rosa/cmp-skkeleton",
       "hrsh7th/cmp-vsnip",
       {
         "hrsh7th/vim-vsnip",
         init = function()
           vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
           vim.g.vsnip_choice_delay = 200
+        end,
+      },
+      {
+        "uga-rosa/cmp-skkeleton",
+        dependencies = "vim-skk/skkeleton",
+      },
+      {
+        "uga-rosa/cmp-dictionary",
+        name = "cmp-dictionary",
+        dependencies = "nvim-lua/plenary.nvim",
+        config = function()
+          local dict = require("cmp_dictionary")
+          dict.setup({
+            exact = 2,
+            first_case_insensitive = true,
+            document = true,
+          })
+          dict.switcher({
+            filetype = {
+              autohotkey = "~/dotfiles/dict/ahk.dict",
+            },
+            spelllang = {
+              en = "~/.dict/en.dict",
+            },
+          })
         end,
       },
     },
