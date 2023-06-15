@@ -42,3 +42,8 @@ export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 # themis
 alias themis="$HOME/.local/share/vim-themis/bin/themis"
 export THEMIS_VIM="nvim"
+
+# denops test
+export DENOPS_TEST_DENOPS_PATH="$HOME/.local/share/nvim/lazy/denops.vim"
+export DENOPS_TEST_VIM=$(command -v vim)
+export DENOPS_TEST_NVIM=$(command -v nvim)
