@@ -1,5 +1,4 @@
 local utils = require("rc.utils")
-local ddu = vim.af.ddu
 
 local M = {}
 
@@ -25,7 +24,7 @@ function M.start(name, source, config)
   end
   config.sources = sources
   config.name = name
-  ddu.start(config)
+  vim.fn["ddu#start"](config)
 end
 
 ---Register sub command
@@ -44,10 +43,10 @@ function M.action(name, params, stopinsert)
     if stopinsert then
       vim.cmd.stopinsert()
       vim.schedule(function()
-        ddu.ui.do_action(name, params or vim.empty_dict())
+        vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
       end)
     else
-      ddu.ui.do_action(name, params or vim.empty_dict())
+      vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
     end
   end
 end
@@ -64,7 +63,7 @@ end
 ---@return function
 function M.execute(cmd)
   return function()
-    ddu.ui.ff.execute(cmd)
+    vim.fn["ddu#ui#ff#execute"](cmd)
     vim.cmd.redraw()
   end
 end
@@ -107,13 +106,13 @@ end
 
 ---@param dict table
 function M.patch_global(dict)
-  ddu.custom.patch_global(dict)
+  vim.fn["ddu#custom#patch_global"](dict)
 end
 
 ---@param name string
 ---@param dict table
 function M.patch_local(name, dict)
-  ddu.custom.patch_local(name, dict)
+  vim.fn["ddu#custom#patch_local"](name, dict)
 end
 
 return M

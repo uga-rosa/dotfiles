@@ -323,7 +323,7 @@ local spec = {
     cond = false,
     config = function()
       vim.g.lsp_settings_filetype_typescript = { "deno" }
-      vim.af.lsp.enable()
+      vim.fn["lsp#enable"]()
     end,
   },
   {

@@ -30,7 +30,7 @@ local spec = {
         },
       })
 
-      vim.af.ddu.custom.action("kind", "file", "openProject", function(args)
+      vim.fn["ddu#custom#action"]("kind", "file", "openProject", function(args)
         for _, item in ipairs(args.items) do
           local path = item.action.path
             or (item.action.bufnr and vim.api.nvim_buf_get_name(item.action.bufnr))

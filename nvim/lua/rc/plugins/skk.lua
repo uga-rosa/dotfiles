@@ -16,21 +16,19 @@ local spec = {
       vim.api.nvim_create_autocmd("User", {
         pattern = "DenopsPluginPost:skkeleton",
         callback = function()
-          local skkeleton = vim.af.skkeleton
-
           vim.g["skkeleton#mapped_keys"] = { "<c-l>" }
-          skkeleton.register_keymap("input", "<c-q>", "katakana")
-          skkeleton.register_keymap("input", "<c-l>", "zenkaku")
-          skkeleton.register_keymap("input", "'", "henkanPoint")
+          vim.fn["skkeleton#register_keymap"]("input", "<c-q>", "katakana")
+          vim.fn["skkeleton#register_keymap"]("input", "<c-l>", "zenkaku")
+          vim.fn["skkeleton#register_keymap"]("input", "'", "henkanPoint")
           local path = vim.fn.stdpath("config") .. "/script/azik_skkeleton.json"
           local buffer = vim.fs.read(path)
           local kanaTable = vim.json.decode(buffer)
           kanaTable[" "] = "henkanFirst"
           kanaTable["/"] = "abbrev"
-          skkeleton.register_kanatable("azik", kanaTable, true)
+          vim.fn["skkeleton#register_kanatable"]("azik", kanaTable, true)
 
           local lazy_root = require("lazy.core.config").options.root
-          skkeleton.config({
+          vim.fn["skkeleton#config"]({
             kanaTable = "azik",
             eggLikeNewline = true,
             globalDictionaries = {

@@ -62,19 +62,3 @@ function vim.fs.write(fname, data)
   assert(uv.fs_write(fd, data))
   uv.fs_close(fd)
 end
-
-local meta = {}
-
-meta.__call = function(self, ...)
-  local keys = rawget(self, "_keys")
-  return vim.fn[table.concat(keys, "#")](...)
-end
-
-meta.__index = function(self, key)
-  local keys = rawget(self, "_keys") or {}
-  return setmetatable({ _keys = vim.list_extend(vim.deepcopy(keys), { key }) }, meta)
-end
-
---- autoload function wrapper
---- vim.fa.foo.bar.baz() is same as vim.fn["foo#bar#baz"]\()
-vim.af = setmetatable({}, meta)

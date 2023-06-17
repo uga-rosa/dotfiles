@@ -31,7 +31,7 @@ local spec = {
       }
 
       for _, rule in ipairs(my_rules) do
-        vim.af.lexima.add_rule(rule)
+        vim.fn["lexima#add_rule"](rule)
       end
     end,
   },
