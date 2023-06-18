@@ -5,7 +5,7 @@ local spec = {
   {
     "mikanIchinose/ddu-source-zenn",
     dependencies = "ddu.vim",
-    init = function ()
+    init = function()
       vim.keymap.set("n", "<Space>z", "<Cmd>Ddu zenn<CR>")
     end,
     config = function()
@@ -13,6 +13,7 @@ local spec = {
         helper.start("file", "zenn", {
           sourceOptions = {
             zenn = {
+              path = vim.fs.normalize("~/zenn"),
               converters = {},
             },
           },
