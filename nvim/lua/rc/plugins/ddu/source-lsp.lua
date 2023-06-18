@@ -1,14 +1,12 @@
 local helper = require("rc.helper.ddu")
 
 helper.ff_map("lsp", function(map)
-  map("<CR>", helper.item_action("open"))
   map("<C-x>", helper.item_action("open", { command = "split" }))
   map("<C-v>", helper.item_action("open", { command = "vsplit" }))
   map("q", helper.item_action("quickfix"))
 end)
 
 helper.ff_filter_map("lsp", function(map)
-  map("i", "<CR>", helper.item_action("open", nil, true))
   map("i", "<C-x>", helper.item_action("open", { command = "split" }, true))
   map("i", "<C-v>", helper.item_action("open", { command = "vsplit" }, true))
 end)
@@ -22,8 +20,20 @@ local spec = {
       vim.keymap.set("n", "gd", "<Cmd>Ddu lsp_definition<CR>")
       vim.keymap.set("n", "gt", "<Cmd>Ddu lsp_type_definition<CR>")
       vim.keymap.set("n", "gr", "<Cmd>Ddu lsp_references<CR>")
+      vim.keymap.set({ "n", "x" }, "<Space>a", "<Cmd>Ddu lsp_codeAction<CR>")
     end,
     config = function()
+      helper.patch_global({
+        kindOptions = {
+          lsp = {
+            defaultAction = "open",
+          },
+          lsp_codeAction = {
+            defaultAction = "apply",
+          },
+        },
+      })
+
       for subcommand, method in pairs({
         lsp_declaration = "textDocument/declaration",
         lsp_definition = "textDocument/definition",
@@ -142,6 +152,10 @@ local spec = {
           })
         end)
       end
+
+      helper.register("lsp_codeAction", function()
+        helper.start("codeAction", "lsp_codeAction")
+      end)
     end,
   },
 }
