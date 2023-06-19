@@ -5,7 +5,7 @@ github:
     repo: rtx
     release:
       name: rtx
-      tag: v1.30.4
+      tag: v1.32.0
       asset:
         filename: '{{ .Release.Name }}-{{ .Release.Tag }}-{{ .OS }}-{{ .Arch }}.tar.gz'
         replacements:
@@ -19,13 +19,13 @@ github:
     repo: gomi
     release:
       name: gomi
-      tag: v1.1.3
+      tag: v1.1.6
     command:
       alias:
         rr: gomi
       link:
         - from: gomi
-  - name: stedolan/jq
+  - name: jqlang/jq
     description: Command-line JSON processor
     owner: stedolan
     repo: jq
@@ -46,7 +46,7 @@ github:
     repo: zoxide
     release:
       name: zoxide
-      tag: "v0.9.0"
+      tag: v0.9.1
       asset:
         filename: '{{ .Release.Name }}-{{ replace .Release.Tag "v" "" }}-{{ .Arch }}-{{ .OS }}.tar.gz'
         replacements:
@@ -81,7 +81,7 @@ github:
     repo: bat
     release:
       name: bat
-      tag: v0.22.1
+      tag: v0.23.0
       asset:
         filename: '{{ .Release.Name }}-{{ .Release.Tag }}-{{ .Arch }}-{{ .OS }}.tar.gz'
         replacements:
@@ -96,7 +96,7 @@ github:
     repo: fd
     release:
       name: fd
-      tag: v8.6.0
+      tag: v8.7.0
       asset:
         filename: '{{ .Release.Name }}-{{ .Release.Tag }}-{{ .Arch }}-{{ .OS }}.tar.gz'
         replacements:
@@ -126,7 +126,7 @@ github:
     repo: lazygit
     release:
       name: lazygit
-      tag: v0.36.0
+      tag: v0.38.2
       asset:
         filename: '{{ .Release.Name }}_{{ replace .Release.Tag "v" "" }}_{{ .OS }}_{{ .Arch }}.tar.gz'
         replacements:
@@ -143,7 +143,7 @@ github:
     repo: cli
     release:
       name: gh
-      tag: v2.25.1
+      tag: v2.30.0
       asset:
         filename: '{{ .Release.Name }}_{{ replace .Release.Tag "v" "" }}_{{ .OS }}_{{ .Arch }}.tar.gz'
     command:
@@ -154,7 +154,7 @@ github:
     repo: dust
     release:
       name: dust
-      tag: v0.8.3
+      tag: v0.8.6
       asset:
         filename: '{{ .Release.Name }}-{{ .Release.Tag }}-{{ .Arch }}-{{ .OS }}.tar.gz'
         replacements:
