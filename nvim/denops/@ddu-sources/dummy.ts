@@ -22,12 +22,12 @@ export class Source extends BaseSource<Params> {
         );
 
         controller.enqueue([{
-          word: params.name,
+          word: `>>${params.name}<<`,
           highlights: [{
             name: "ddu-dummy",
             hl_group,
             col: 1,
-            width: byteLength(params.name),
+            width: byteLength(params.name) + 4,
           }],
         }]);
         controller.close();

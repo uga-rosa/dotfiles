@@ -66,7 +66,7 @@ local spec = {
           {
             "dummy",
             params = {
-              name = ">>Definition<<",
+              name = "Definition",
               color = "#fc514e",
             },
             options = {
@@ -78,7 +78,7 @@ local spec = {
           {
             "dummy",
             params = {
-              name = ">>References<<",
+              name = "References",
               color = "#5e97ec",
             },
             options = {
