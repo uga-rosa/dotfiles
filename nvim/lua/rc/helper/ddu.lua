@@ -7,7 +7,7 @@ local M = {}
 ---@field params table
 
 ---@param name string
----@param source string|Source|Source[]
+---@param source string|Source|(Source|string)[]
 ---@param config? table
 function M.start(name, source, config)
   config = config or {}
@@ -21,8 +21,12 @@ function M.start(name, source, config)
     sources = { source }
   else
     -- Source[]
-    for _, s in ipairs(source) do
-      s.name, s[1] = s[1], nil
+    for i, s in ipairs(source) do
+      if type(s) == "string" then
+        source[i] = { name = s }
+      else
+        s.name, s[1] = s[1], nil
+      end
     end
     sources = source
   end
