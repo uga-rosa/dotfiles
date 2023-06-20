@@ -137,7 +137,7 @@ local function peek_line(lnum, dir, expect)
 end
 
 ---@param dir number
----@return fun(): string
+---@return function
 function M.move_ignore_dummy(dir)
   return function()
     local lnum = vim.fn.line(".")
@@ -146,9 +146,8 @@ function M.move_ignore_dummy(dir)
     end
     lnum = lnum + dir
     if 1 <= lnum and lnum <= vim.fn.line("$") then
-      return lnum .. "gg"
+      vim.cmd("normal! " .. lnum .. "gg")
     end
-    return ""
   end
 end
 
