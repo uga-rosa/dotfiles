@@ -5,6 +5,10 @@ local spec = {
     config = function()
       vim.g.nightflyItalics = false
       vim.cmd.colorscheme("nightfly")
+
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#011627" })
+      vim.api.nvim_set_hl(0, "FloatBorder", { fg = "white" })
+      vim.api.nvim_set_hl(0, "LspInlayHint", { link = "Comment" })
     end,
   },
   {

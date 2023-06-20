@@ -1,6 +1,3 @@
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#011627" })
-vim.api.nvim_set_hl(0, "FloatBorder", { fg = "white" })
-
 local opts = {
   hover = {
     border = "single",
