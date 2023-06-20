@@ -15,9 +15,6 @@ helper.ff_map(nil, function(map)
   map(" ", helper.action("toggleSelectItem"))
   -- Expand item tree
   map("e", helper.action("expandItem", { mode = "toggle" }))
-  -- Move cursor ignoring dummy items
-  map("j", helper.move_ignore_dummy(1))
-  map("k", helper.move_ignore_dummy(-1))
 end)
 
 helper.ff_filter_map(nil, function(map)

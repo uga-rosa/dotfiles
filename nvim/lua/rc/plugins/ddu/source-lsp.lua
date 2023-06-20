@@ -70,7 +70,6 @@ local spec = {
         return {
           "dummy",
           params = { word = word, hl_group = hl_group },
-          options = { matchers = {}, sorters = {} },
         }
       end
 
