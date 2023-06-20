@@ -82,7 +82,7 @@ function M.ff_map(name, callback)
   name = name or "default"
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "ddu-ff",
-    group = vim.api.nvim_create_augroup("ddu-ui-ff-map-" .. name, {}),
+    group = vim.api.nvim_create_augroup("ddu-ui-ff-map-" .. name, { clear = false }),
     callback = function()
       -- Enable `file` map also for `file:foo`
       if name == "default" or vim.startswith(vim.b.ddu_ui_name, name) then
@@ -101,7 +101,7 @@ function M.ff_filter_map(name, callback)
   name = name or "default"
   vim.api.nvim_create_autocmd("FileType", {
     pattern = "ddu-ff-filter",
-    group = vim.api.nvim_create_augroup("ddu-ui-ff-filter-map-" .. name, {}),
+    group = vim.api.nvim_create_augroup("ddu-ui-ff-filter-map-" .. name, { clear = false }),
     callback = function()
       -- Enable `file` map also for `file:foo`
       if name == "default" or vim.startswith(vim.b.ddu_ui_name, name) then
