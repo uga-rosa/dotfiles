@@ -3,24 +3,28 @@ local utils = require("rc.utils")
 local M = {}
 
 ---@class Source
----@field [1] string
----@field name string
----@field param table
+---@field [1] string name
+---@field params table
 
 ---@param name string
----@param source string|Source
+---@param source string|Source|Source[]
 ---@param config? table
 function M.start(name, source, config)
   config = config or {}
   local sources = {}
   if type(source) == "string" then
+    -- string
     sources = { { name = source } }
-  else
-    if source[1] then
-      source.name = source[1]
-      source[1] = nil
-    end
+  elseif source.params then
+    -- Source
+    source.name, source[1] = source[1], nil
     sources = { source }
+  else
+    -- Source[]
+    for _, s in ipairs(source) do
+      s.name, s[1] = s[1], nil
+    end
+    sources = source
   end
   config.sources = sources
   config.name = name
