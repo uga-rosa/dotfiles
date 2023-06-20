@@ -191,10 +191,34 @@ local spec = {
 
       local root_pattern = lspconfig.util.root_pattern
 
+      ---@param fname string
+      ---@return boolean
+      local function in_node_repo(fname)
+        return root_pattern("tsconfig.json", "package.json", "jsconfig.json")(fname) ~= nil
+      end
+
+      opts.vtsls = {
+        root_dir = function(fname)
+          if in_node_repo(fname) then
+            return root_pattern("tsconfig.json", "package.json", "jsconfig.json")(fname)
+          end
+        end,
+        single_file_support = false,
+        settings = {
+          typescript = {
+            suggest = {
+              completionFunctionCalls = true,
+            },
+          },
+        },
+      }
+
       -- Don't use mason to install (use local deno runtime).
       opts.denols = {
         root_dir = function(fname)
-          return root_pattern("deno.json", "deno.jsonc")(fname)
+          if not in_node_repo(fname) then
+            return root_pattern("deno.json", "deno.jsonc", ".git")(fname)
+          end
         end,
         init_options = {
           lint = true,
@@ -211,23 +235,6 @@ local spec = {
         },
       }
       lspconfig.denols.setup(opts.denols)
-
-      opts.vtsls = {
-        root_dir = function(fname)
-          if not root_pattern("deno.json", "deno.jsonc")(fname) then
-            return root_pattern("tsconfig.json")(fname)
-              or root_pattern("package.json", "jsconfig.json", ".git")(fname)
-          end
-        end,
-        single_file_support = false,
-        settings = {
-          typescript = {
-            suggest = {
-              completionFunctionCalls = true,
-            },
-          },
-        },
-      }
 
       on_attach(function(client, bufnr)
         if client.name ~= "denols" then
