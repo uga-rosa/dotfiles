@@ -273,14 +273,29 @@ local spec = {
   {
     "utilyre/barbecue.nvim",
     event = "VeryLazy",
-    dependencies = { "SmiteshP/nvim-navic" },
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons",
+    },
     config = function()
-      require("barbecue").setup()
-      on_attach(function(client, bufnr)
-        if client.server_capabilities.documentSymbolProvider then
-          require("nvim-navic").attach(client, bufnr)
-        end
-      end)
+      require("barbecue").setup({
+        attach_navic = true,
+        create_autocmd = false,
+        exclude_filetypes = { "ugaterm" },
+      })
+
+      vim.api.nvim_create_autocmd({
+        "WinResized",
+        "BufWinEnter",
+        "CursorHold",
+        "InsertLeave",
+        "BufModifiedSet",
+      }, {
+        group = vim.api.nvim_create_augroup("barbecue.updater", {}),
+        callback = function()
+          require("barbecue.ui").update()
+        end,
+      })
     end,
   },
   {

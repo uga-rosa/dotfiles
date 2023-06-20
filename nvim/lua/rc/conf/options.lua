@@ -1,6 +1,6 @@
 vim.opt.fileencoding = "utf-8"
 
-vim.opt.updatetime = 100
+vim.opt.updatetime = 200
 
 vim.opt.number = true
 vim.opt.signcolumn = "yes"
