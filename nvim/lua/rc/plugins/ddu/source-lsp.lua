@@ -75,22 +75,22 @@ local spec = {
 
       helper.register("lsp_definition_all", function()
         helper.start("lsp", {
-          dummy("Definition", "#fc514e"),
+          dummy(">>Definition<<", "#fc514e"),
           { "lsp_definition", params = { method = "textDocument/definition" } },
-          dummy("Type definition", "#ffcb8b"),
+          dummy(">>Type definition<<", "#ffcb8b"),
           { "lsp_definition", params = { method = "textDocument/typeDefinition" } },
-          dummy("Declaration", "#21c7a8"),
+          dummy(">>Declaration<<", "#21c7a8"),
           { "lsp_definition", params = { method = "textDocument/declaration" } },
-          dummy("Implementation", "#5e97ec"),
+          dummy(">>Implementation<<", "#5e97ec"),
           { "lsp_definition", params = { method = "textDocument/implementation" } },
         })
       end)
 
       helper.register("lsp_finder", function()
         helper.start("lsp", {
-          dummy("Definition", "#fc514e"),
+          dummy(">>Definition<<", "#fc514e"),
           "lsp_definition",
-          dummy("References", "#5e97ec"),
+          dummy(">>References<<", "#5e97ec"),
           { "lsp_references", params = { includeDeclaration = false } },
         })
       end)
