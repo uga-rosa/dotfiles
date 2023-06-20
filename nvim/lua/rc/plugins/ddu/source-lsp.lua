@@ -61,6 +61,35 @@ local spec = {
         helper.start("lsp", "lsp_references")
       end)
 
+      helper.register("lsp_finder", function()
+        helper.start("lsp", {
+          {
+            "dummy",
+            params = {
+              name = ">>Definition<<",
+              color = "#fc514e",
+            },
+            options = {
+              matchers = {},
+              sorters = {},
+            },
+          },
+          "lsp_definition",
+          {
+            "dummy",
+            params = {
+              name = ">>References<<",
+              color = "#5e97ec",
+            },
+            options = {
+              matchers = {},
+              sorters = {},
+            },
+          },
+          "lsp_references",
+        })
+      end)
+
       helper.patch_local("lsp:symbol", {
         sourceOptions = {
           _ = {
