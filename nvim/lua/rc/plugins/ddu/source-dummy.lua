@@ -1,27 +1,24 @@
 local helper = require("rc.helper.ddu")
 
----@param lnum number 1-index
----@param dir number
----@param expect string pattern
----@return boolean?
-local function peek_line(lnum, dir, expect)
-  local next_line = vim.fn.getline(lnum + dir)
-  if string.find(next_line, expect) then
-    return true
-  end
+---@param items table[] DduItem[]
+---@param index number
+---@return boolean
+local function is_dummy(items, index)
+  return items[index] and items[index].__sourceName == "dummy"
 end
 
 ---@param dir number
 ---@return function
 local function move_ignore_dummy(dir)
   return function()
-    local lnum = vim.fn.line(".")
-    while peek_line(lnum, dir, "^>>.*<<$") do
-      lnum = lnum + dir
+    local items = vim.fn["ddu#ui#get_items"]()
+    local index = vim.fn.line(".") + dir
+
+    while is_dummy(items, index) do
+      index = index + dir
     end
-    lnum = lnum + dir
-    if 1 <= lnum and lnum <= vim.fn.line("$") then
-      vim.cmd("normal! " .. lnum .. "gg")
+    if 1 <= index and index <= #items then
+      vim.cmd("normal! " .. index .. "gg")
     end
   end
 end
