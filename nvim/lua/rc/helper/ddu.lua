@@ -125,4 +125,31 @@ function M.patch_local(name, dict)
   vim.fn["ddu#custom#patch_local"](name, dict)
 end
 
+---@param lnum number 1-index
+---@param dir number
+---@param expect string pattern
+---@return boolean?
+local function peek_line(lnum, dir, expect)
+  local next_line = vim.fn.getline(lnum + dir)
+  if string.find(next_line, expect) then
+    return true
+  end
+end
+
+---@param dir number
+---@return fun(): string
+function M.move_ignore_dummy(dir)
+  return function()
+    local lnum = vim.fn.line(".")
+    while peek_line(lnum, dir, "^>>.*<<$") do
+      lnum = lnum + dir
+    end
+    lnum = lnum + dir
+    if 1 <= lnum and lnum <= vim.fn.line("$") then
+      return lnum .. "gg"
+    end
+    return ""
+  end
+end
+
 return M

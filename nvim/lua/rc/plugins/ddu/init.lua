@@ -1,32 +1,5 @@
 local helper = require("rc.helper.ddu")
 
----@param lnum number 1-index
----@param dir number
----@param expect string pattern
----@return boolean?
-local function peek_line(lnum, dir, expect)
-  local next_line = vim.fn.getline(lnum + dir)
-  if string.find(next_line, expect) then
-    return true
-  end
-end
-
----@param dir number
----@return fun(): string
-local function move_ignore_dummy(dir)
-  return function()
-    local lnum = vim.fn.line(".")
-    while peek_line(lnum, dir, "^>>.*<<$") do
-      lnum = lnum + dir
-    end
-    lnum = lnum + dir
-    if 1 <= lnum and lnum <= vim.fn.line("$") then
-      return lnum .. "gg"
-    end
-    return ""
-  end
-end
-
 helper.ff_map(nil, function(map)
   -- Highlight cursor line
   vim.opt_local.cursorline = true
@@ -43,8 +16,8 @@ helper.ff_map(nil, function(map)
   -- Expand item tree
   map("e", helper.action("expandItem", { mode = "toggle" }))
   -- Move cursor ignoring dummy items
-  map("j", move_ignore_dummy(1), { expr = true })
-  map("k", move_ignore_dummy(-1), { expr = true })
+  map("j", helper.move_ignore_dummy(1), { expr = true })
+  map("k", helper.move_ignore_dummy(-1), { expr = true })
 end)
 
 helper.ff_filter_map(nil, function(map)
