@@ -15,6 +15,9 @@ helper.ff_map(nil, function(map)
   map("e", helper.action("expandItem", { mode = "toggle" }))
   -- Default itemAction
   map("<CR>", helper.item_action("default"))
+  -- Move cursor ignoring dummy items
+  map("j", "vimrc#ddu#move(1, 1)", { expr = true })
+  map("k", "vimrc#ddu#move(-1, 1)", { expr = true })
 end)
 
 helper.ff_filter_map(nil, function(map)
@@ -23,8 +26,8 @@ helper.ff_filter_map(nil, function(map)
   -- Close filter window
   map("n", "<Esc>", helper.action("closeFilterWindow", nil, true))
   -- Move cursor
-  map("i", "<C-n>", helper.execute("normal! j"))
-  map("i", "<C-p>", helper.execute("normal! k"))
+  map("i", "<C-n>", helper.execute("normal j"))
+  map("i", "<C-p>", helper.execute("normal k"))
   -- Default itemAction
   map("i", "<CR>", helper.item_action("default", nil, true))
 end)

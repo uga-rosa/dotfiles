@@ -77,7 +77,7 @@ function M.execute(cmd)
 end
 
 ---@param name? string If nil, map is set globally
----@param callback fun(map: fun(lhs: string, rhs: string|function))
+---@param callback fun(map: fun(lhs: string, rhs: string|function, opts?: table))
 function M.ff_map(name, callback)
   name = name or "default"
   vim.api.nvim_create_autocmd("FileType", {
@@ -86,8 +86,9 @@ function M.ff_map(name, callback)
     callback = function()
       -- Enable `file` map also for `file:foo`
       if name == "default" or vim.startswith(vim.b.ddu_ui_name, name) then
-        callback(function(lhs, rhs)
-          vim.keymap.set("n", lhs, rhs, { nowait = true, buffer = true, silent = true })
+        callback(function(lhs, rhs, opts)
+          opts = vim.tbl_extend("keep", opts or {}, { nowait = true, buffer = true, silent = true })
+          vim.keymap.set("n", lhs, rhs, opts)
         end)
       end
     end,
@@ -95,7 +96,7 @@ function M.ff_map(name, callback)
 end
 
 ---@param name? string If nil, map is set globally
----@param callback fun(map: fun(mode: string|string[], lhs: string, rhs: string|function))
+---@param callback fun(map: fun(mode: string|string[], lhs: string, rhs: string|function, opts?: table))
 function M.ff_filter_map(name, callback)
   name = name or "default"
   vim.api.nvim_create_autocmd("FileType", {
@@ -104,8 +105,9 @@ function M.ff_filter_map(name, callback)
     callback = function()
       -- Enable `file` map also for `file:foo`
       if name == "default" or vim.startswith(vim.b.ddu_ui_name, name) then
-        callback(function(mode, lhs, rhs)
-          vim.keymap.set(mode, lhs, rhs, { nowait = true, buffer = true, silent = true })
+        callback(function(mode, lhs, rhs, opts)
+          opts = vim.tbl_extend("keep", opts or {}, { nowait = true, buffer = true, silent = true })
+          vim.keymap.set(mode, lhs, rhs, opts)
         end)
       end
     end,
