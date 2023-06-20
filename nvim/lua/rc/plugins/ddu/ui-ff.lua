@@ -52,8 +52,9 @@ local spec = {
               winRow = row,
               winWidth = width,
               winCol = col,
-              previewWidth = math.floor(width / 2),
               previewHeight = height,
+              previewRow = row + 1,
+              previewWidth = math.floor(width / 2),
             },
           },
         })
