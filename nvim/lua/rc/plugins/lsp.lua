@@ -83,6 +83,13 @@ local spec = {
             vim.lsp.buf.format()
           end, {})
         end
+
+        if client.server_capabilities.inlayHintProvider then
+          vim.lsp.buf.inlay_hint(bufnr, true)
+          vim.api.nvim_buf_create_user_command(bufnr, "InlayHintToggle", function()
+            vim.lsp.buf.inlay_hint(bufnr, nil)
+          end, {})
+        end
       end)
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -168,6 +175,9 @@ local spec = {
               library = library({ "lazy.nvim" }, { "vusted" }),
               checkThirdParty = false,
             },
+            hint = {
+              enable = true,
+            },
           },
         },
       }
@@ -197,6 +207,18 @@ local spec = {
         return root_pattern("tsconfig.json", "package.json", "jsconfig.json")(fname) ~= nil
       end
 
+      local typescriptInlayHints = {
+        parameterNames = {
+          enabled = "literals",
+          suppressWhenArgumentMatchesName = true,
+        },
+        parameterTypes = { enabled = true },
+        variableTypes = { enabled = false },
+        propertyDeclarationTypes = { enabled = true },
+        functionLikeReturnTypes = { enabled = true },
+        enumMemberValues = { enabled = true },
+      }
+
       opts.vtsls = {
         root_dir = function(fname)
           if in_node_repo(fname) then
@@ -209,6 +231,7 @@ local spec = {
             suggest = {
               completionFunctionCalls = true,
             },
+            inlayHints = typescriptInlayHints,
           },
         },
       }
@@ -232,6 +255,7 @@ local spec = {
               },
             },
           },
+          inlayHints = typescriptInlayHints,
         },
       }
       lspconfig.denols.setup(opts.denols)
