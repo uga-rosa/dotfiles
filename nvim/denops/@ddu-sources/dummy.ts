@@ -2,8 +2,8 @@ import { BaseSource } from "https://deno.land/x/ddu_vim@v3.2.1/types.ts";
 import { Denops } from "https://deno.land/x/ddu_vim@v3.2.1/deps.ts";
 
 type Params = {
-  name: string;
-  color: string;
+  word: string;
+  hl_group: string;
 };
 
 export class Source extends BaseSource<Params> {
@@ -14,20 +14,16 @@ export class Source extends BaseSource<Params> {
     denops: Denops;
   }) {
     return new ReadableStream({
-      async start(controller) {
+      start(controller) {
         const params = args.sourceParams;
-        const hl_group = `DduDummy${params.name.replace(/[^a-zA-Z]/g, "")}`;
-        await args.denops.cmd(
-          `highlight default ${hl_group} guifg=${params.color}`,
-        );
 
         controller.enqueue([{
-          word: `>>${params.name}<<`,
+          word: `>>${params.word}<<`,
           highlights: [{
             name: "ddu-dummy",
-            hl_group,
+            hl_group: params.hl_group,
             col: 1,
-            width: byteLength(params.name) + 4,
+            width: byteLength(params.word) + 4,
           }],
         }]);
         controller.close();
@@ -37,8 +33,8 @@ export class Source extends BaseSource<Params> {
 
   params() {
     return {
-      name: "dummy",
-      color: "#000000",
+      word: "dummy",
+      hl_group: "Error"
     };
   }
 }

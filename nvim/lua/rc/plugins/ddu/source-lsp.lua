@@ -61,32 +61,25 @@ local spec = {
         helper.start("lsp", "lsp_references")
       end)
 
+      ---@param word string
+      ---@param color string
+      ---@return Source
+      local function dummy(word, color)
+        local hl_group = "DduDummy" .. color:gsub("[^a-zA-Z0-9]", "")
+        vim.api.nvim_set_hl(0, hl_group, { fg = color })
+        return {
+          "dummy",
+          params = { word = word, hl_group = hl_group },
+          options = { matchers = {}, sorters = {} },
+        }
+      end
+
       helper.register("lsp_finder", function()
         helper.start("lsp", {
-          {
-            "dummy",
-            params = {
-              name = "Definition",
-              color = "#fc514e",
-            },
-            options = {
-              matchers = {},
-              sorters = {},
-            },
-          },
+          dummy("Definition", "#fc514e"),
           "lsp_definition",
-          {
-            "dummy",
-            params = {
-              name = "References",
-              color = "#5e97ec",
-            },
-            options = {
-              matchers = {},
-              sorters = {},
-            },
-          },
-          "lsp_references",
+          dummy("References", "#5e97ec"),
+          { "lsp_references", params = { includeDeclaration = false } },
         })
       end)
 
