@@ -90,7 +90,7 @@ local spec = {
               vim.lsp.buf.inlay_hint(bufnr, true)
             end,
           })
-          vim.api.nvim_create_autocmd({ "CursorMoved", "InsertEnter" }, {
+          vim.api.nvim_create_autocmd("InsertEnter", {
             callback = function()
               vim.lsp.buf.inlay_hint(bufnr, false)
             end,
