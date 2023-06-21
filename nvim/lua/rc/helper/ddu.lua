@@ -85,7 +85,7 @@ function M.ff_map(name, callback)
     group = vim.api.nvim_create_augroup("ddu-ui-ff-map-" .. name, { clear = false }),
     callback = function()
       -- Enable `file` map also for `file:foo`
-      if name == "default" or vim.startswith(vim.b.ddu_ui_name, name) then
+      if name == "default" or string.find(vim.b.ddu_ui_name, name) then
         callback(function(lhs, rhs, opts)
           opts = vim.tbl_extend("keep", opts or {}, { nowait = true, buffer = true, silent = true })
           vim.keymap.set("n", lhs, rhs, opts)
@@ -104,7 +104,7 @@ function M.ff_filter_map(name, callback)
     group = vim.api.nvim_create_augroup("ddu-ui-ff-filter-map-" .. name, { clear = false }),
     callback = function()
       -- Enable `file` map also for `file:foo`
-      if name == "default" or vim.startswith(vim.b.ddu_ui_name, name) then
+      if name == "default" or string.find(vim.b.ddu_ui_name, name) then
         callback(function(mode, lhs, rhs, opts)
           opts = vim.tbl_extend("keep", opts or {}, { nowait = true, buffer = true, silent = true })
           vim.keymap.set(mode, lhs, rhs, opts)

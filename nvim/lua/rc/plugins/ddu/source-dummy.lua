@@ -23,7 +23,7 @@ local function move_ignore_dummy(dir)
   end
 end
 
-helper.ff_map(nil, function(map)
+helper.ff_map("dummy", function(map)
   -- Move cursor ignoring dummy items
   map("j", move_ignore_dummy(1))
   map("k", move_ignore_dummy(-1))

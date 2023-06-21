@@ -74,7 +74,7 @@ local spec = {
       end
 
       helper.register("lsp_definition_all", function()
-        helper.start("lsp", {
+        helper.start("lsp:dummy", {
           dummy(">>Definition<<", "#fc514e"),
           { "lsp_definition", params = { method = "textDocument/definition" } },
           dummy(">>Type definition<<", "#ffcb8b"),
@@ -87,7 +87,7 @@ local spec = {
       end)
 
       helper.register("lsp_finder", function()
-        helper.start("lsp", {
+        helper.start("lsp:dummy", {
           dummy(">>Definition<<", "#fc514e"),
           "lsp_definition",
           dummy(">>References<<", "#5e97ec"),
