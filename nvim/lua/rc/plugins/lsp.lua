@@ -85,10 +85,16 @@ local spec = {
         end
 
         if client.server_capabilities.inlayHintProvider then
-          vim.lsp.buf.inlay_hint(bufnr, true)
-          vim.api.nvim_buf_create_user_command(bufnr, "InlayHintToggle", function()
-            vim.lsp.buf.inlay_hint(bufnr, nil)
-          end, {})
+          vim.api.nvim_create_autocmd("CursorHold", {
+            callback = function()
+              vim.lsp.buf.inlay_hint(bufnr, true)
+            end,
+          })
+          vim.api.nvim_create_autocmd({ "CursorMoved", "InsertEnter" }, {
+            callback = function()
+              vim.lsp.buf.inlay_hint(bufnr, false)
+            end,
+          })
         end
       end)
 
@@ -311,21 +317,6 @@ local spec = {
     config = function()
       require("barbecue").setup({
         attach_navic = true,
-        create_autocmd = false,
-        exclude_filetypes = { "ugaterm" },
-      })
-
-      vim.api.nvim_create_autocmd({
-        "WinResized",
-        "BufWinEnter",
-        "CursorHold",
-        "InsertLeave",
-        "BufModifiedSet",
-      }, {
-        group = vim.api.nvim_create_augroup("barbecue.updater", {}),
-        callback = function()
-          require("barbecue.ui").update()
-        end,
       })
     end,
   },
