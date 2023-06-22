@@ -11,9 +11,10 @@ export class Filter extends BaseFilter<Params> {
         item.kind = "Text";
       }
       if (item.kind in Kind2Icon) {
+        const kindWithIcon = `${Kind2Icon[item.kind as Kind]} ${item.kind}`;
         item = {
           ...item,
-          kind: `${Kind2Icon[item.kind as Kind]} ${item.kind}`,
+          kind: kindWithIcon,
           highlights: [
             ...item.highlights ?? [],
             {
@@ -21,7 +22,7 @@ export class Filter extends BaseFilter<Params> {
               type: "kind",
               hl_group: `CmpItemKind${item.kind}`,
               col: 0,
-              width: byteLength(item.kind) + 4,
+              width: byteLength(kindWithIcon),
             },
           ],
         };

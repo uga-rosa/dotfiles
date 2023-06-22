@@ -89,7 +89,7 @@ local spec = {
             minAutoCompleteLength = 1,
             matchers = { "matcher_fuzzy" },
             sorters = { "sorter_fuzzy" },
-            converters = { "converter_fuzzy", "converter_lsp_kind" },
+            converters = { "converter_fuzzy", "converter_lsp-kind" },
           },
           skkeleton = {
             mark = "[Skk]",
