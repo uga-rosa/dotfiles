@@ -3,18 +3,18 @@ local helper = require("rc.helper.ddu")
 ---@param items table[] DduItem[]
 ---@param index number
 ---@return boolean
-local function is_separator(items, index)
-  return items[index] and items[index].__sourceName == "separator"
+local function is_dummy(items, index)
+  return items[index] and items[index].__sourceName == "dummy"
 end
 
 ---@param dir number
 ---@return function
-local function move_ignore_separator(dir)
+local function move_ignore_dummy(dir)
   return function()
     local items = vim.fn["ddu#ui#get_items"]()
     local index = vim.fn.line(".") + dir
 
-    while is_separator(items, index) do
+    while is_dummy(items, index) do
       index = index + dir
     end
     if 1 <= index and index <= #items then
@@ -23,22 +23,21 @@ local function move_ignore_separator(dir)
   end
 end
 
-helper.ff_map("separator", function(map)
+helper.ff_map("dummy", function(map)
   -- Move cursor ignoring dummy items
-  map("j", move_ignore_separator(1))
-  map("k", move_ignore_separator(-1))
+  map("j", move_ignore_dummy(1))
+  map("k", move_ignore_dummy(-1))
 end)
 
 ---@type LazySpec
 local spec = {
   {
-    "uga-rosa/ddu-source-separator",
-    dir = "~/plugin/ddu-source-separator",
+    "Shougo/ddu-source-dummy",
     dependencies = "ddu.vim",
     config = function()
       helper.patch_global({
         sourceOptions = {
-          separator = {
+          dummy = {
             matchers = {},
             sorters = {},
             converters = {},

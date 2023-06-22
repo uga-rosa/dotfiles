@@ -65,16 +65,16 @@ local spec = {
       ---@param color string
       ---@return Source
       local function separator(word, color)
-        local hlGroup = "DduSeparator" .. color:gsub("[^a-zA-Z0-9]", "")
+        local hlGroup = "DduDummy" .. color:gsub("[^a-zA-Z0-9]", "")
         vim.api.nvim_set_hl(0, hlGroup, { fg = color })
         return {
-          "separator",
+          "dummy",
           params = { word = word, hlGroup = hlGroup },
         }
       end
 
       helper.register("lsp_definition_all", function()
-        helper.start("lsp:separator", {
+        helper.start("lsp:dummy", {
           separator(">>Definition<<", "#fc514e"),
           { "lsp_definition", params = { method = "textDocument/definition" } },
           separator(">>Type definition<<", "#ffcb8b"),
@@ -87,7 +87,7 @@ local spec = {
       end)
 
       helper.register("lsp_finder", function()
-        helper.start("lsp:separator", {
+        helper.start("lsp:dummy", {
           separator(">>Definition<<", "#fc514e"),
           "lsp_definition",
           separator(">>References<<", "#5e97ec"),
