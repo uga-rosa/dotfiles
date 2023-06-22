@@ -23,14 +23,8 @@ local spec = {
     },
     import = "rc.plugins.ddc",
     init = function()
-      vim.keymap.set({ "i", "c" }, "<C-n>", function()
-        vim.fn["pum#map#insert_relative"](1)
-        vim.cmd("do User DdcItemInsert")
-      end)
-      vim.keymap.set({ "i", "c" }, "<C-p>", function()
-        vim.fn["pum#map#insert_relative"](-1)
-        vim.cmd("do User DdcItemInsert")
-      end)
+      vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1)<CR>")
+      vim.keymap.set({ "i", "c" }, "<C-p>", "<Cmd>call pum#map#insert_relative(-1)<CR>")
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyPluginPost:lexima",
         callback = function()
@@ -60,7 +54,7 @@ local spec = {
       )
 
       vim.api.nvim_create_autocmd("User", {
-        pattern = "DdcItemInsert",
+        pattern = "PumCompleteChanged",
         callback = function()
           helper.menu:open()
         end,
