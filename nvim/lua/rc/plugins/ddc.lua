@@ -31,7 +31,7 @@ local spec = {
           vim.keymap.set("i", "<CR>", function()
             if vim.fn["pum#visible"]() then
               if not vim.fn["pum#entered"]() then
-                vim.fn["pum#map#select_relative"](1)
+                vim.cmd("noautocmd call pum#map#select_relative(+1)")
               end
               return vim.fn["pum#map#confirm"]()
             else
