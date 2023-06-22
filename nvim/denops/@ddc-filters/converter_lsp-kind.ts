@@ -21,7 +21,7 @@ export class Filter extends BaseFilter<Params> {
               name: "ddc-kind-mark",
               type: "kind",
               hl_group: `CmpItemKind${item.kind}`,
-              col: 0,
+              col: 1,
               width: byteLength(kindWithIcon),
             },
           ],
