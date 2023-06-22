@@ -64,33 +64,33 @@ local spec = {
       ---@param word string
       ---@param color string
       ---@return Source
-      local function dummy(word, color)
-        local hl_group = "DduDummy" .. color:gsub("[^a-zA-Z0-9]", "")
-        vim.api.nvim_set_hl(0, hl_group, { fg = color })
+      local function separator(word, color)
+        local hlGroup = "DduSeparator" .. color:gsub("[^a-zA-Z0-9]", "")
+        vim.api.nvim_set_hl(0, hlGroup, { fg = color })
         return {
-          "dummy",
-          params = { word = word, hl_group = hl_group },
+          "separator",
+          params = { word = word, hlGroup = hlGroup },
         }
       end
 
       helper.register("lsp_definition_all", function()
-        helper.start("lsp:dummy", {
-          dummy(">>Definition<<", "#fc514e"),
+        helper.start("lsp:separator", {
+          separator(">>Definition<<", "#fc514e"),
           { "lsp_definition", params = { method = "textDocument/definition" } },
-          dummy(">>Type definition<<", "#ffcb8b"),
+          separator(">>Type definition<<", "#ffcb8b"),
           { "lsp_definition", params = { method = "textDocument/typeDefinition" } },
-          dummy(">>Declaration<<", "#21c7a8"),
+          separator(">>Declaration<<", "#21c7a8"),
           { "lsp_definition", params = { method = "textDocument/declaration" } },
-          dummy(">>Implementation<<", "#5e97ec"),
+          separator(">>Implementation<<", "#5e97ec"),
           { "lsp_definition", params = { method = "textDocument/implementation" } },
         })
       end)
 
       helper.register("lsp_finder", function()
-        helper.start("lsp:dummy", {
-          dummy(">>Definition<<", "#fc514e"),
+        helper.start("lsp:separator", {
+          separator(">>Definition<<", "#fc514e"),
           "lsp_definition",
-          dummy(">>References<<", "#5e97ec"),
+          separator(">>References<<", "#5e97ec"),
           { "lsp_references", params = { includeDeclaration = false } },
         })
       end)
