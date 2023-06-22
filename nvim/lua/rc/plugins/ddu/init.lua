@@ -15,6 +15,8 @@ helper.ff_map(nil, function(map)
   map(" ", helper.action("toggleSelectItem"))
   -- Expand item tree
   map("e", helper.action("expandItem", { mode = "toggle" }))
+  -- Show available actions
+  map("+", helper.action("chooseAction"))
 end)
 
 helper.ff_filter_map(nil, function(map)
