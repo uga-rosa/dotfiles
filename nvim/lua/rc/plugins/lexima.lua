@@ -33,6 +33,8 @@ local spec = {
       for _, rule in ipairs(my_rules) do
         vim.fn["lexima#add_rule"](rule)
       end
+
+      vim.cmd("do User LazyPluginPost:lexima")
     end,
   },
 }

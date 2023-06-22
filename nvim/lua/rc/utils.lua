@@ -52,4 +52,19 @@ function M.createWrapper(fn, ...)
   end
 end
 
+---@generic T
+---@param arr T[]
+---@param callback fun(x: T): number
+---@param init? number
+function M.max(arr, callback, init)
+  local max_value = init or 0
+  for _, elem in ipairs(arr) do
+    local m = callback(elem)
+    if m > max_value then
+      max_value = m
+    end
+  end
+  return max_value
+end
+
 return M
