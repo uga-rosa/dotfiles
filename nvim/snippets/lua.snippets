@@ -41,3 +41,7 @@ snippet fnil
 	${1:a} = vim.F.if_nil($1, ${2:b})
 snippet p
 	vim.print($0)
+snippet if
+	if ${1:cond} then
+		$0
+	end
