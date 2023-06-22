@@ -19,6 +19,7 @@ local spec = {
         end,
       },
       "uga-rosa/ddc-source-buffer",
+      "vim-skk/skkeleton",
     },
     import = "rc.plugins.ddc",
     init = function()
@@ -72,6 +73,11 @@ local spec = {
       })
     end,
     config = function()
+      local sources = {
+        default = { "vsnip", "buffer" },
+        skkeleton = { "skkeleton" },
+      }
+
       helper.patch_global({
         ui = "pum",
         autoCompleteEvents = {
@@ -83,13 +89,19 @@ local spec = {
           "CmdlineChanged",
         },
         backspaceCompletion = true,
-        sources = { "vsnip", "buffer" },
+        sources = sources.default,
         sourceOptions = {
           _ = {
             minAutoCompleteLength = 1,
             matchers = { "matcher_fuzzy" },
             sorters = { "sorter_fuzzy" },
             converters = { "converter_fuzzy", "converter_lsp_kind" },
+          },
+          skkeleton = {
+            mark = "[Skk]",
+            matchers = { "skkeleton" },
+            sorters = {},
+            converters = {},
           },
           vsnip = { mark = "[Vsnip]" },
           buffer = { mark = "[Buffer]" },
@@ -107,6 +119,19 @@ local spec = {
             end),
           },
         },
+      })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "skkeleton-enable-post",
+        callback = function()
+          helper.patch_global("sources", sources.skkeleton)
+        end,
+      })
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "skkeleton-disable-post",
+        callback = function()
+          helper.patch_global("sources", sources.default)
+        end,
       })
 
       vim.fn["ddc#enable"]()
