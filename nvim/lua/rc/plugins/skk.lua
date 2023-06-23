@@ -13,34 +13,31 @@ local spec = {
     config = function()
       vim.keymap.set({ "i", "c" }, "<C-j>", "<Plug>(skkeleton-toggle)")
 
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "DenopsPluginPost:skkeleton",
-        callback = function()
-          vim.g["skkeleton#mapped_keys"] = { "<c-l>" }
-          vim.fn["skkeleton#register_keymap"]("input", "<c-q>", "katakana")
-          vim.fn["skkeleton#register_keymap"]("input", "<c-l>", "zenkaku")
-          vim.fn["skkeleton#register_keymap"]("input", "'", "henkanPoint")
-          local path = vim.fn.stdpath("config") .. "/script/azik_skkeleton.json"
-          local buffer = vim.fs.read(path)
-          local kanaTable = vim.json.decode(buffer)
-          kanaTable[" "] = "henkanFirst"
-          kanaTable["/"] = "abbrev"
-          vim.fn["skkeleton#register_kanatable"]("azik", kanaTable, true)
+      vim.fn["denops#plugin#wait_async"]("skkeleton", function()
+        vim.g["skkeleton#mapped_keys"] = { "<c-l>" }
+        vim.fn["skkeleton#register_keymap"]("input", "<c-q>", "katakana")
+        vim.fn["skkeleton#register_keymap"]("input", "<c-l>", "zenkaku")
+        vim.fn["skkeleton#register_keymap"]("input", "'", "henkanPoint")
+        local path = vim.fn.stdpath("config") .. "/script/azik_skkeleton.json"
+        local buffer = vim.fs.read(path)
+        local kanaTable = vim.json.decode(buffer)
+        kanaTable[" "] = "henkanFirst"
+        kanaTable["/"] = "abbrev"
+        vim.fn["skkeleton#register_kanatable"]("azik", kanaTable, true)
 
-          local lazy_root = require("lazy.core.config").options.root
-          vim.fn["skkeleton#config"]({
-            kanaTable = "azik",
-            eggLikeNewline = true,
-            globalDictionaries = {
-              vim.fs.joinpath(lazy_root, "dict", "SKK-JISYO.L"),
-            },
-            userJisyo = "~/.secret/SKK-JISYO.user",
-            markerHenkan = "<>",
-            markerHenkanSelect = ">>",
-            registerConvertResult = true,
-          })
-        end,
-      })
+        local lazy_root = require("lazy.core.config").options.root
+        vim.fn["skkeleton#config"]({
+          kanaTable = "azik",
+          eggLikeNewline = true,
+          globalDictionaries = {
+            vim.fs.joinpath(lazy_root, "dict", "SKK-JISYO.L"),
+          },
+          userJisyo = "~/.secret/SKK-JISYO.user",
+          markerHenkan = "<>",
+          markerHenkanSelect = ">>",
+          registerConvertResult = true,
+        })
+      end)
     end,
   },
   {
