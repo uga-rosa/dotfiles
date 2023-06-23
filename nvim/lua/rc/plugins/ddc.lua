@@ -55,15 +55,11 @@ local spec = {
 
       vim.api.nvim_create_autocmd("User", {
         pattern = "PumCompleteChanged",
-        callback = function()
-          helper.menu:open()
-        end,
+        callback = helper.menu.open,
       })
       vim.api.nvim_create_autocmd("User", {
         pattern = { "PumClose", "PumCompleteDone" },
-        callback = function()
-          helper.menu:close()
-        end,
+        callback = helper.menu.close,
       })
     end,
     config = function()

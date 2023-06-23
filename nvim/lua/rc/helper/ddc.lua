@@ -75,6 +75,19 @@ function Menu.get_menu(item)
   end
 end
 
-M.menu = Menu.new()
+local menu = Menu.new()
+
+M.menu = {
+  open = function()
+    utils.debounse("menu_open", function()
+      menu:open()
+    end, 100)
+  end,
+  close = function()
+    utils.debounse("menu_open", function()
+      menu:open()
+    end, 100)
+  end,
+}
 
 return M

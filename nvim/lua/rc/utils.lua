@@ -67,4 +67,28 @@ function M.max(arr, callback, init)
   return max_value
 end
 
+local timer = {}
+
+---@param name string
+local function timer_reset(name)
+  if timer[name] then
+    timer[name]:stop()
+    timer[name]:close()
+    timer[name] = nil
+  end
+end
+
+function M.debounse(name, fn, time)
+  timer_reset(name)
+  timer[name] = vim.uv.new_timer()
+  timer[name]:start(
+    time,
+    0,
+    vim.schedule_wrap(function()
+      fn()
+      timer_reset(name)
+    end)
+  )
+end
+
 return M
