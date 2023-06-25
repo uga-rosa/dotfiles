@@ -173,12 +173,20 @@ local spec = {
         end)
       end
 
+      helper.patch_local("lsp:diagnostic", {
+        sourceOptions = {
+          _ = {
+            converters = { "converter_lsp_diagnostic" },
+          },
+        },
+      })
+
       for subcommand, buffer in pairs({
         lsp_diagnostic = 0,
         lsp_diagnostic_all = vim.NIL,
       }) do
         helper.register(subcommand, function()
-          helper.start("lsp", {
+          helper.start("lsp:diagnostic", {
             "lsp_diagnostic",
             params = {
               buffer = buffer,
