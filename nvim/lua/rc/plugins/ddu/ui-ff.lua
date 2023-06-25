@@ -53,7 +53,7 @@ local spec = {
               winWidth = width,
               winCol = col,
               previewHeight = height,
-              previewRow = row + 1,
+              previewRow = row,
               previewWidth = math.floor(width / 2),
             },
           },
