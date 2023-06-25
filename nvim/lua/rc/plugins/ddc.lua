@@ -12,19 +12,34 @@ local spec = {
       "tani/ddc-fuzzy",
       {
         "hrsh7th/vim-vsnip-integ",
+        dir = "~/plugin/vim-vsnip-integ",
         dependencies = "hrsh7th/vim-vsnip",
         init = function()
           vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
           vim.g.vsnip_choice_delay = 200
+          vim.g.vsnip_integ_create_autocmd = false
         end,
       },
-      "uga-rosa/ddc-source-buffer",
+      {
+        "uga-rosa/ddc-source-nvim-lsp",
+        dir = "~/plugin/ddc-source-nvim-lsp",
+      },
+      {
+        "uga-rosa/ddc-source-buffer",
+        dir = "~/plugin/ddc-source-buffer",
+      },
       "vim-skk/skkeleton",
     },
     import = "rc.plugins.ddc",
     init = function()
       vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1)<CR>")
       vim.keymap.set({ "i", "c" }, "<C-p>", "<Cmd>call pum#map#insert_relative(-1)<CR>")
+      vim.keymap.set(
+        { "i", "c" },
+        "<C-Space>",
+        "pum#visible() ? ddc#hide('Manual') : ddc#map#manual_complete()",
+        { expr = true, replace_keycodes = false }
+      )
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyPluginPost:lexima",
         callback = function()
@@ -61,10 +76,23 @@ local spec = {
         pattern = { "PumClose", "PumCompleteDone" },
         callback = helper.menu.close,
       })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = { "PumCompleteDone", "DdcNvimLspCompleteDone" },
+        callback = function(args)
+          if
+            args.match == "PumCompleteDone"
+            and vim.v.completed_item.__sourceName == "nvim-lsp"
+          then
+            return
+          end
+          vim.fn["vsnip_integ#on_complete_done"](vim.v.completed_item)
+        end,
+      })
     end,
     config = function()
       local sources = {
-        default = { "vsnip", "buffer" },
+        default = { "vsnip", "nvim-lsp", "buffer" },
         skkeleton = { "skkeleton" },
       }
 
@@ -74,11 +102,12 @@ local spec = {
           "InsertEnter",
           "TextChangedI",
           "TextChangedP",
-          "TextChangedT",
           "CmdlineEnter",
           "CmdlineChanged",
+          "TextChangedT",
         },
         backspaceCompletion = true,
+        keywordPattern = [[(?:-?\d+(?:\.\d+)?|[a-zA-Z_]\w*(?:-\w*)*)]],
         sources = sources.default,
         sourceOptions = {
           _ = {
@@ -87,14 +116,18 @@ local spec = {
             sorters = { "sorter_fuzzy" },
             converters = { "converter_fuzzy", "converter_lsp-kind" },
           },
+          vsnip = { mark = "[Vsnip]" },
+          ["nvim-lsp"] = {
+            forceCompletionPattern = [[\.]],
+            mark = "[LSP]",
+          },
+          buffer = { mark = "[Buffer]" },
           skkeleton = {
             mark = "[Skk]",
             matchers = { "skkeleton" },
             sorters = {},
             converters = {},
           },
-          vsnip = { mark = "[Vsnip]" },
-          buffer = { mark = "[Buffer]" },
         },
         sourceParams = {
           buffer = {
@@ -109,6 +142,10 @@ local spec = {
             end),
           },
         },
+      })
+
+      helper.patch_filetype("vim", {
+        keywordPattern = "(?:[a-z]:)?\\k*",
       })
 
       vim.api.nvim_create_autocmd("User", {
