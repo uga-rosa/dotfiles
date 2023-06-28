@@ -75,10 +75,9 @@ end
 ---@return string[]
 function Menu.get_documentation(item)
   if item.__sourceName == "vsnip" then
-    local data = vim.json.decode(item.user_data)
     return vim.lsp.util.convert_input_to_markdown_lines({
       language = vim.bo.filetype,
-      value = vim.fn["vsnip#to_string"](data.vsnip.snippet),
+      value = vim.fn["vsnip#to_string"](item.user_data.vsnip.snippet),
     })
   elseif item.__sourceName == "nvim-lsp" then
     local completionItem = vim.json.decode(item.user_data.lspitem)
