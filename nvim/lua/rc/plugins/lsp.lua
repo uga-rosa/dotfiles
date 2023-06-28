@@ -23,7 +23,7 @@ local spec = {
         end,
       },
       "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp",
+      "ddc-source-nvim-lsp",
       {
         "j-hui/fidget.nvim",
         tag = "legacy",
@@ -94,8 +94,7 @@ local spec = {
         end
       end)
 
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      local capabilities = require("ddc_nvim_lsp").make_client_capabilities()
 
       local opts = setmetatable({}, {
         __index = function(self, _)
@@ -180,6 +179,9 @@ local spec = {
             hint = {
               enable = true,
             },
+            completion = {
+              callSnippet = "Replace",
+            },
           },
         },
       }
@@ -231,7 +233,7 @@ local spec = {
         settings = {
           typescript = {
             suggest = {
-              completionFunctionCalls = true,
+              completeFunctionCalls = true,
             },
             inlayHints = typescriptInlayHints,
           },
@@ -249,6 +251,7 @@ local spec = {
           lint = true,
           unstable = true,
           suggest = {
+            completeFunctionCalls = true,
             imports = {
               hosts = {
                 ["https://deno.land"] = true,
@@ -261,6 +264,10 @@ local spec = {
         },
       }
       lspconfig.denols.setup(opts.denols)
+
+      require("lspconfig").html.setup({
+        capabilities = capabilities,
+      })
 
       on_attach(function(client, bufnr)
         if client.name ~= "denols" then
