@@ -62,15 +62,6 @@ local spec = {
         "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'",
         { expr = true, replace_keycodes = false }
       )
-
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "PumCompleteChanged",
-        callback = helper.menu.open,
-      })
-      vim.api.nvim_create_autocmd("User", {
-        pattern = { "PumClose", "PumCompleteDone" },
-        callback = helper.menu.close,
-      })
     end,
     config = function()
       vim.fn["pum#set_option"]({
@@ -153,9 +144,9 @@ local spec = {
       })
 
       vim.fn["ddc#enable"]()
+      helper.menu.enable()
     end,
   },
 }
 
 return spec
--- return {}

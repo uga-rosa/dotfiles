@@ -13,7 +13,12 @@ end
 ---@class Menu
 ---@field bufnr number
 ---@field winid? number
-local Menu = {}
+---@field public max_height number
+---@field public max_width number
+local Menu = {
+  max_height = 30,
+  max_width = 80,
+}
 
 ---@return Menu
 function Menu.new()
@@ -40,8 +45,8 @@ function Menu:open()
 
   vim.api.nvim_buf_set_lines(self.bufnr, 0, -1, true, documents)
   vim.lsp.util.stylize_markdown(self.bufnr, documents, {
-    max_height = 30,
-    max_width = 80,
+    max_height = self.max_height,
+    max_width = self.max_width,
   })
 
   local lines = vim.api.nvim_buf_get_lines(self.bufnr, 0, -1, true)
@@ -50,8 +55,8 @@ function Menu:open()
   local width = utils.max(lines, vim.api.nvim_strwidth)
   self.winid = vim.api.nvim_open_win(self.bufnr, false, {
     relative = "editor",
-    height = math.min(#lines, vim.opt.lines:get() - pum_pos.row, 30),
-    width = math.min(width, vim.opt.columns:get() - col, 80),
+    height = math.min(#lines, vim.opt.lines:get() - pum_pos.row, self.max_height),
+    width = math.min(width, vim.opt.columns:get() - col, self.max_width),
     row = pum_pos.row,
     col = col,
     border = "single",
@@ -121,18 +126,32 @@ function Menu.get_documentation(item)
   end
 end
 
-local menu = Menu.new()
-
 M.menu = {
-  open = function()
-    utils.debounse("menu_open", function()
-      menu:open()
-    end, 100)
+  enable = function()
+    local menu = Menu.new()
+
+    local group = vim.api.nvim_create_augroup("pum-menu", {})
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "PumCompleteChanged",
+      group = group,
+      callback = function()
+        utils.debounse("menu_open", function()
+          menu:open()
+        end, 100)
+      end,
+    })
+    vim.api.nvim_create_autocmd("User", {
+      pattern = { "PumClose", "PumCompleteDone" },
+      group = group,
+      callback = function()
+        utils.debounse("menu_open", function()
+          menu:open()
+        end, 100)
+      end,
+    })
   end,
-  close = function()
-    utils.debounse("menu_open", function()
-      menu:open()
-    end, 100)
+  disable = function()
+    vim.api.nvim_del_augroup_by_name("pum-menu")
   end,
 }
 
