@@ -1,6 +1,6 @@
-import { BaseSource, Item } from "https://deno.land/x/ddc_vim@v3.6.0/types.ts";
-import { Denops, fn } from "https://deno.land/x/ddc_vim@v3.6.0/deps.ts";
-import { OnCompleteDoneArguments } from "https://deno.land/x/ddc_vim@v3.6.0/base/source.ts";
+import { BaseSource, Item } from "https://deno.land/x/ddc_vim@v3.7.2/types.ts";
+import { Denops, fn } from "https://deno.land/x/ddc_vim@v3.7.2/deps.ts";
+import { OnCompleteDoneArguments } from "https://deno.land/x/ddc_vim@v3.7.2/base/source.ts";
 
 type MetaData = {
   vsnip: {
@@ -34,6 +34,7 @@ export class Source extends BaseSource<Params> {
     if (!ctx.text.endsWith(itemWord, ctx.character)) {
       return;
     }
+
     await denops.call("vsnip#expand");
   }
 
