@@ -86,37 +86,44 @@ end
 
 ---@alias lsp.MarkedString string | { language: string, value: string }
 
+---@param input lsp.MarkedString | lsp.MarkedString[] | lsp.MarkupContent
+---@param contents? string[]
+---@return string[] contents
+local function converter(input, contents)
+  return vim.lsp.util.convert_input_to_markdown_lines(input, contents)
+end
+
 ---@param item table
 ---@return string[]
 function Menu.get_documentation(item)
   if item.__sourceName == "vsnip" then
-    return vim.lsp.util.convert_input_to_markdown_lines({
+    return converter({
       language = vim.bo.filetype,
       value = vim.fn["vsnip#to_string"](item.user_data.vsnip.snippet),
     })
   elseif item.__sourceName == "nvim-lsp" then
     ---@type lsp.CompletionItem
     local lspItem = vim.json.decode(item.user_data.lspitem)
-    ---@type (lsp.MarkedString | lsp.MarkedString[] | lsp.MarkupContent)[]
+    ---@type string[]
     local documents = {}
 
     -- detail
     if not empty(lspItem.detail) then
-      table.insert(documents, {
+      documents = converter({
         language = vim.bo.filetype,
         value = lspItem.detail,
-      })
+      }, documents)
     end
 
     -- documentation
     if not empty(lspItem.documentation) then
       if #documents > 0 then
-        table.insert(documents, "---")
+        documents = converter("---", documents)
       end
-      table.insert(documents, lspItem.documentation)
+      documents = converter(lspItem.documentation, documents)
     end
 
-    return vim.lsp.util.convert_input_to_markdown_lines(documents)
+    return documents
   else
     return {}
   end
