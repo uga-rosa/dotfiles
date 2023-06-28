@@ -18,7 +18,7 @@ local spec = {
         end,
       },
       {
-        "uga-rosa/ddc-source-nvim-lsp",
+        "Shougo/ddc-source-nvim-lsp",
         name = "ddc-source-nvim-lsp",
         dev = true,
       },
