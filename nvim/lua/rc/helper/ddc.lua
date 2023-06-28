@@ -39,7 +39,10 @@ function Menu:open()
   end
 
   vim.api.nvim_buf_set_lines(self.bufnr, 0, -1, true, documents)
-  vim.lsp.util.stylize_markdown(self.bufnr, documents, {})
+  vim.lsp.util.stylize_markdown(self.bufnr, documents, {
+    max_height = 30,
+    max_width = 80,
+  })
 
   local lines = vim.api.nvim_buf_get_lines(self.bufnr, 0, -1, true)
   local pum_pos = vim.fn["pum#get_pos"]()
@@ -47,8 +50,8 @@ function Menu:open()
   local width = utils.max(lines, vim.api.nvim_strwidth)
   self.winid = vim.api.nvim_open_win(self.bufnr, false, {
     relative = "editor",
-    height = math.min(#lines, vim.opt.lines:get() - pum_pos.row),
-    width = math.min(width, vim.opt.columns:get() - col),
+    height = math.min(#lines, vim.opt.lines:get() - pum_pos.row, 30),
+    width = math.min(width, vim.opt.columns:get() - col, 80),
     row = pum_pos.row,
     col = col,
     border = "single",
@@ -79,14 +82,6 @@ function Menu.get_documentation(item)
     })
   elseif item.__sourceName == "nvim-lsp" then
     local completionItem = vim.json.decode(item.user_data.lspitem)
-    -- Resolve
-    if item.user_data.resolvable then
-      completionItem =
-        require("ddc_nvim_lsp.internal").resolve(item.user_data.clientId, completionItem)
-      item.user_data.lspitem = vim.json.encode(completionItem)
-      item.user_data.resolvable = false
-      vim.fn["pum#update_current_item"](item)
-    end
     local documents = {}
 
     -- detail
