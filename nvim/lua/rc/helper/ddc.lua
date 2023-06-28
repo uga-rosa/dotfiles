@@ -51,14 +51,18 @@ function Menu:open()
 
   local lines = vim.api.nvim_buf_get_lines(self.bufnr, 0, -1, true)
   local pum_pos = vim.fn["pum#get_pos"]()
-  local col = pum_pos.col + pum_pos.width
-  local width = utils.max(lines, vim.api.nvim_strwidth)
+  local menu_row = pum_pos.row
+  local menu_col = pum_pos.col + pum_pos.width
   self.winid = vim.api.nvim_open_win(self.bufnr, false, {
     relative = "editor",
-    height = math.min(#lines, vim.opt.lines:get() - pum_pos.row, self.max_height),
-    width = math.min(width, vim.opt.columns:get() - col, self.max_width),
-    row = pum_pos.row,
-    col = col,
+    row = menu_row,
+    col = menu_col,
+    height = math.min(#lines, vim.opt.lines:get() - menu_row, self.max_height),
+    width = math.min(
+      utils.max(lines, vim.api.nvim_strwidth),
+      vim.opt.columns:get() - menu_col,
+      self.max_width
+    ),
     border = "single",
     zindex = 10000,
   })
@@ -121,7 +125,6 @@ end
 M.menu = {
   enable = function()
     local menu = Menu.new()
-
     local group = vim.api.nvim_create_augroup("pum-menu", {})
     vim.api.nvim_create_autocmd("User", {
       pattern = "PumCompleteChanged",
