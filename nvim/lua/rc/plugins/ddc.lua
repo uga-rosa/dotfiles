@@ -122,6 +122,8 @@ local spec = {
             snippetEngine = vim.fn["denops#callback#register"](function(body)
               vim.fn["vsnip#anonymous"](body)
             end),
+            enableResolveItem = true,
+            enableAdditionalTextEdit = true,
           },
         },
       })
