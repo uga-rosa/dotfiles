@@ -112,10 +112,15 @@ local spec = {
       ---@return string[]
       local function get_plugin_path(plugins)
         local paths = {}
-        local lazyroot = require("lazy.core.config").options.root
+        local options = require("lazy.core.config").options
+        local dev_root = options.dev.path
+        local root = options.root
         for _, plugin in ipairs(plugins) do
-          local path = vim.fs.joinpath(lazyroot, plugin)
-          if vim.fs.isdir(path .. "/lua") then
+          local dev_path = vim.fs.joinpath(dev_root, plugin)
+          local path = vim.fs.joinpath(root, plugin)
+          if vim.fs.isdir(vim.fs.joinpath(dev_path, "lua")) then
+            table.insert(paths, dev_path)
+          elseif vim.fs.isdir(vim.fs.joinpath(path, "lua")) then
             table.insert(paths, path)
           else
             vim.notify("Invalid plugin name: " .. plugin)
@@ -173,7 +178,7 @@ local spec = {
               path = { "?.lua", "?/init.lua" },
             },
             workspace = {
-              library = library({ "lazy.nvim" }, { "vusted" }),
+              library = library({ "lazy.nvim", "ddc-source-nvim-lsp" }, { "vusted" }),
               checkThirdParty = false,
             },
             hint = {
