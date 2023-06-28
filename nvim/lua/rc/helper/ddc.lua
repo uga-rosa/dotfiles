@@ -139,9 +139,7 @@ M.menu = {
       pattern = { "PumClose", "PumCompleteDone" },
       group = group,
       callback = function()
-        utils.debounse("menu_open", function()
-          menu:open()
-        end, 100)
+        menu:close()
       end,
     })
   end,
