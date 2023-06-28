@@ -45,9 +45,6 @@ local spec = {
         callback = function()
           vim.keymap.set("i", "<CR>", function()
             if vim.fn["pum#visible"]() then
-              if not vim.fn["pum#entered"]() then
-                vim.cmd("noautocmd call pum#map#select_relative(+1)")
-              end
               return vim.fn["pum#map#confirm"]()
             else
               return vim.fn["lexima#expand"]("<CR>", "i")
@@ -91,6 +88,10 @@ local spec = {
       })
     end,
     config = function()
+      vim.fn["pum#set_option"]({
+        auto_select = true,
+      })
+
       local sources = {
         default = { "vsnip", "nvim-lsp", "buffer" },
         skkeleton = { "skkeleton" },
