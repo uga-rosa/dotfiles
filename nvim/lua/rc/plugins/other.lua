@@ -133,6 +133,22 @@ local spec = {
       { "<M-n>", "<Cmd>UgatermNewWithName<CR>", mode = { "n", "t" } },
     },
   },
+  {
+    -- help doc generator
+    "tani/podium",
+    dev = true,
+    config = function()
+      local podium = require("podium")
+      vim.api.nvim_create_user_command("Podium", function()
+        local lines = vim.api.nvim_buf_get_lines(0, 0, -1, true)
+        local output = podium.process(table.concat(lines, "\n"), podium.vimdoc)
+        vim.cmd.new()
+        vim.api.nvim_buf_set_lines(0, 0, -1, true, vim.split(output, "\n"))
+        vim.api.nvim_set_option_value("modified", false, { buf = 0 })
+        vim.api.nvim_set_option_value("filetype", "help", { buf = 0 })
+      end, {})
+    end,
+  },
 }
 
 return spec
