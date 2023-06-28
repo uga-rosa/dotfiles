@@ -13,6 +13,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("rc.plugins", {
+  dev = {
+    path = "~/plugin",
+  },
   change_detection = {
     enabled = false,
   },
