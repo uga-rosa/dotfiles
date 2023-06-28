@@ -11,10 +11,10 @@ function M.patch_filetype(...)
 end
 
 ---@class Menu
----@field bufnr number
----@field winid? number
 ---@field public max_height number
 ---@field public max_width number
+---@field bufnr number
+---@field winid? number
 local Menu = {
   max_height = 30,
   max_width = 80,
@@ -76,6 +76,12 @@ function Menu:close()
   self.winid = nil
 end
 
+local function empty(expr)
+  return expr == nil or expr == ""
+end
+
+---@alias lsp.MarkedString string | { language: string, value: string }
+
 ---@param item table
 ---@return string[]
 function Menu.get_documentation(item)
@@ -85,39 +91,25 @@ function Menu.get_documentation(item)
       value = vim.fn["vsnip#to_string"](item.user_data.vsnip.snippet),
     })
   elseif item.__sourceName == "nvim-lsp" then
-    local completionItem = vim.json.decode(item.user_data.lspitem)
+    ---@type lsp.CompletionItem
+    local lspItem = vim.json.decode(item.user_data.lspitem)
+    ---@type (lsp.MarkedString | lsp.MarkedString[] | lsp.MarkupContent)[]
     local documents = {}
 
     -- detail
-    if completionItem.detail and completionItem.detail ~= "" then
-      local ft = vim.bo.filetype
-      local dot_index = string.find(ft, "%.")
-      if dot_index ~= nil then
-        ft = string.sub(ft, 0, dot_index - 1)
-      end
+    if not empty(lspItem.detail) then
       table.insert(documents, {
-        kind = "markdown",
-        value = ("```%s\n%s\n```"):format(ft, vim.trim(completionItem.detail)),
+        language = vim.bo.filetype,
+        value = lspItem.detail,
       })
     end
 
-    local documentation = completionItem.documentation
-    if type(documentation) == "string" and documentation ~= "" then
-      local value = vim.trim(documentation)
-      if value ~= "" then
-        table.insert(documents, {
-          kind = "plaintext",
-          value = value,
-        })
+    -- documentation
+    if not empty(lspItem.documentation) then
+      if #documents > 0 then
+        table.insert(documents, "---")
       end
-    elseif type(documentation) == "table" and documentation.value then
-      local value = vim.trim(documentation.value)
-      if value ~= "" then
-        table.insert(documents, {
-          kind = documentation.kind,
-          value = value,
-        })
-      end
+      table.insert(documents, lspItem.documentation)
     end
 
     return vim.lsp.util.convert_input_to_markdown_lines(documents)
