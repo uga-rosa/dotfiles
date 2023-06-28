@@ -11,29 +11,27 @@ local spec = {
       "Shougo/ddc-ui-pum",
       "tani/ddc-fuzzy",
       {
-        "hrsh7th/vim-vsnip-integ",
-        dir = "~/plugin/vim-vsnip-integ",
-        dependencies = "hrsh7th/vim-vsnip",
+        "hrsh7th/vim-vsnip",
         init = function()
           vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
           vim.g.vsnip_choice_delay = 200
-          vim.g.vsnip_integ_create_autocmd = false
         end,
       },
       {
         "uga-rosa/ddc-source-nvim-lsp",
-        dir = "~/plugin/ddc-source-nvim-lsp",
+        name = "ddc-source-nvim-lsp",
+        dev = true,
       },
       {
         "uga-rosa/ddc-source-buffer",
-        dir = "~/plugin/ddc-source-buffer",
+        dev = true,
       },
       "vim-skk/skkeleton",
     },
     import = "rc.plugins.ddc",
     init = function()
-      vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1)<CR>")
-      vim.keymap.set({ "i", "c" }, "<C-p>", "<Cmd>call pum#map#insert_relative(-1)<CR>")
+      vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
+      vim.keymap.set({ "i", "c" }, "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
       vim.keymap.set(
         { "i", "c" },
         "<C-Space>",
@@ -72,19 +70,6 @@ local spec = {
       vim.api.nvim_create_autocmd("User", {
         pattern = { "PumClose", "PumCompleteDone" },
         callback = helper.menu.close,
-      })
-
-      vim.api.nvim_create_autocmd("User", {
-        pattern = { "PumCompleteDone", "DdcNvimLspCompleteDone" },
-        callback = function(args)
-          if
-            args.match == "PumCompleteDone"
-            and vim.v.completed_item.__sourceName == "nvim-lsp"
-          then
-            return
-          end
-          vim.fn["vsnip_integ#on_complete_done"](vim.v.completed_item)
-        end,
       })
     end,
     config = function()
@@ -140,6 +125,11 @@ local spec = {
                   return vim.api.nvim_win_get_buf(win)
                 end)
                 :totable()
+            end),
+          },
+          ["nvim-lsp"] = {
+            snippetEngine = vim.fn["denops#callback#register"](function(body)
+              vim.fn["vsnip#anonymous"](body)
             end),
           },
         },
