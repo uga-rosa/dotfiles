@@ -85,16 +85,12 @@ local spec = {
         end
 
         if client.server_capabilities.inlayHintProvider then
-          vim.api.nvim_create_autocmd("CursorHold", {
-            callback = function()
-              vim.lsp.buf.inlay_hint(bufnr, true)
-            end,
-          })
-          vim.api.nvim_create_autocmd("InsertEnter", {
-            callback = function()
-              vim.lsp.buf.inlay_hint(bufnr, false)
-            end,
-          })
+          vim.api.nvim_buf_create_user_command(bufnr, "InlayHintEnable", function()
+            vim.lsp.buf.inlay_hint(bufnr, true)
+          end, {})
+          vim.api.nvim_buf_create_user_command(bufnr, "InlayHintDisable", function()
+            vim.lsp.buf.inlay_hint(bufnr, false)
+          end, {})
         end
       end)
 
