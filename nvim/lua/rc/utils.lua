@@ -54,17 +54,32 @@ end
 
 ---@generic T
 ---@param arr T[]
----@param callback fun(x: T): number
----@param init? number
-function M.max(arr, callback, init)
-  local max_value = init or 0
+---@param callback? fun(x: T): number
+function M.max(arr, callback)
+  assert(#arr > 0, "Array is empty")
+  local max_value = -math.huge
   for _, elem in ipairs(arr) do
-    local m = callback(elem)
+    local m = callback and callback(elem) or elem
     if m > max_value then
       max_value = m
     end
   end
   return max_value
+end
+
+---@generic T
+---@param arr T[]
+---@param callback? fun(x: T): number
+function M.min(arr, callback)
+  assert(#arr > 0, "Array is empty")
+  local min_value = math.huge
+  for _, elem in ipairs(arr) do
+    local m = callback and callback(elem) or elem
+    if m < min_value then
+      min_value = m
+    end
+  end
+  return min_value
 end
 
 local timer = {}
@@ -78,6 +93,9 @@ local function timer_reset(name)
   end
 end
 
+---@param name string
+---@param fn function
+---@param time number milliseconds
 function M.debounse(name, fn, time)
   timer_reset(name)
   timer[name] = vim.uv.new_timer()
