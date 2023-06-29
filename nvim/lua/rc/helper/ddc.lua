@@ -114,6 +114,10 @@ function Menu.get_documentation(item)
   elseif item.__sourceName == "nvim-lsp" then
     ---@type lsp.CompletionItem
     local lspItem = vim.json.decode(item.user_data.lspitem)
+    if lspItem.documentation == nil then
+      local clientId = item.user_data.clientId
+      lspItem = require("ddc_nvim_lsp.internal").resolve(clientId, lspItem) or lspItem
+    end
     ---@type string[]
     local documents = {}
 
