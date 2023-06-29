@@ -21,7 +21,7 @@ export class Source extends BaseSource<Params> {
     return items.map((item) => ({
       ...item,
       menu: undefined,
-      user_data: JSON.parse(item.user_data ?? "{}"),
+      user_data: JSON.parse(item.user_data!),
     }));
   }
 
