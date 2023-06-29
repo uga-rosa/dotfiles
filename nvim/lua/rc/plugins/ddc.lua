@@ -1,4 +1,5 @@
 local helper = require("rc.helper.ddc")
+local utils = require("rc.utils")
 
 ---@type LazySpec
 local spec = {
@@ -32,12 +33,14 @@ local spec = {
     init = function()
       vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
       vim.keymap.set({ "i", "c" }, "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
-      vim.keymap.set(
-        { "i", "c" },
-        "<C-Space>",
-        "pum#visible() ? ddc#hide('Manual') : ddc#map#manual_complete()",
-        { expr = true, replace_keycodes = false }
-      )
+      vim.keymap.set({ "i", "c" }, "<C-Space>", function()
+        if vim.fn["pum#visible"]() then
+          return vim.fn["ddc#hide"]("Manual")
+        else
+          return vim.fn["ddc#map#manual_complete"]({ sources = { "nvim-lsp" } })
+        end
+      end, { expr = true, replace_keycodes = false })
+
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyPluginPost:lexima",
         callback = function()
@@ -84,19 +87,23 @@ local spec = {
           "TextChangedT",
         },
         backspaceCompletion = true,
-        keywordPattern = [[(?:-?\d+(?:\.\d+)?|[a-zA-Z_]\w*(?:-\w*)*)]],
         sources = sources.default,
         sourceOptions = {
           _ = {
             minAutoCompleteLength = 1,
+            -- Matches either a number that may be negative and/or have a fractional component, or a
+            -- string that may start with an alphabet or underscore, and may contain alphanumeric
+            -- characters, underscores, or hyphens in a 'kebab-case' style.
+            keywordPattern = [[(?:-?\d+(?:\.\d+)?|[a-zA-Z_]\w*(?:-\w*)*)]],
             matchers = { "matcher_fuzzy" },
             sorters = { "sorter_fuzzy" },
             converters = { "converter_fuzzy", "converter_lsp-kind" },
           },
           vsnip = { mark = "[Vsnip]" },
           ["nvim-lsp"] = {
-            forceCompletionPattern = [[\.]],
             mark = "[LSP]",
+            dup = "keep",
+            ignoreCase = true,
           },
           buffer = { mark = "[Buffer]" },
           skkeleton = {
@@ -104,11 +111,19 @@ local spec = {
             matchers = { "skkeleton" },
             sorters = {},
             converters = {},
+            isVolatile = true,
           },
         },
         sourceParams = {
+          ["nvim-lsp"] = {
+            snippetEngine = helper.register(function(body)
+              vim.fn["vsnip#anonymous"](body)
+            end),
+            enableResolveItem = true,
+            enableAdditionalTextEdit = true,
+          },
           buffer = {
-            getBufnrs = vim.fn["denops#callback#register"](function()
+            getBufnrs = helper.register(function()
               -- Visible buffers
               return vim
                 .iter(vim.api.nvim_list_wins())
@@ -117,13 +132,6 @@ local spec = {
                 end)
                 :totable()
             end),
-          },
-          ["nvim-lsp"] = {
-            snippetEngine = vim.fn["denops#callback#register"](function(body)
-              vim.fn["vsnip#anonymous"](body)
-            end),
-            enableResolveItem = true,
-            enableAdditionalTextEdit = true,
           },
         },
       })
@@ -142,6 +150,36 @@ local spec = {
         pattern = "skkeleton-disable-post",
         callback = function()
           helper.patch_global("sources", sources.default)
+        end,
+      })
+
+      vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
+        group = vim.api.nvim_create_augroup("setup-triggerCharacters", {}),
+        callback = function()
+          local chars = vim
+            .iter(vim.lsp.get_active_clients({ bufnr = 0 }))
+            :filter(function(client)
+              return client.server_capabilities.completionProvider
+            end)
+            :map(function(client)
+              return client.server_capabilities.completionProvider.triggerCharacters or {}
+            end)
+            :fold({}, function(acc, triggerCharacters)
+              return vim.list_extend(acc, triggerCharacters)
+            end) --[[@as string[] ]]
+          chars = utils.deduplicate(chars)
+          for i = #chars, 1, -1 do
+            if chars[i]:find("^%s$") then
+              table.remove(chars, i)
+            end
+          end
+          table.insert(chars, 1, "[a-zA-Z]")
+          local regex = "(?:" .. table.concat(chars, "|\\") .. ")"
+          helper.patch_buffer("sourceOptions", {
+            ["nvim-lsp"] = {
+              forceCompletionPattern = regex,
+            },
+          })
         end,
       })
 

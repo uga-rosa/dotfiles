@@ -10,6 +10,16 @@ function M.patch_filetype(...)
   vim.fn["ddc#custom#patch_filetype"](...)
 end
 
+function M.patch_buffer(...)
+  vim.fn["ddc#custom#patch_buffer"](...)
+end
+
+---@param fun function
+---@return string
+function M.register(fun)
+  return vim.fn["denops#callback#register"](fun)
+end
+
 ---@class Menu
 ---@field public max_height number
 ---@field public max_width number
@@ -52,7 +62,7 @@ function Menu:open()
   local lines = vim.api.nvim_buf_get_lines(self.bufnr, 0, -1, true)
   local pum_pos = vim.fn["pum#get_pos"]()
   local menu_row = pum_pos.row
-  local menu_col = pum_pos.col + pum_pos.width
+  local menu_col = pum_pos.col + pum_pos.width + pum_pos.scrollbar
   self.winid = vim.api.nvim_open_win(self.bufnr, false, {
     relative = "editor",
     row = menu_row,
