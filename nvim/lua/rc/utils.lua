@@ -91,4 +91,19 @@ function M.debounse(name, fn, time)
   )
 end
 
+---@generic T
+---@param list T[]
+---@return T[]
+function M.deduplicate(list)
+  local set = {}
+  local ret = {}
+  for _, elem in ipairs(list) do
+    if set[elem] == nil then
+      set[elem] = true
+      table.insert(ret, elem)
+    end
+  end
+  return ret
+end
+
 return M
