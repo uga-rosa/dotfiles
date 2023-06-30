@@ -50,3 +50,13 @@ vim.keymap.set("n", "[t", "<Cmd>tabprevious<CR>", { silent = true })
 vim.keymap.set("n", "]t", "<Cmd>tabnext<CR>", { silent = true })
 vim.keymap.set("n", "[T", "<Cmd>tabfirst<CR>", { silent = true })
 vim.keymap.set("n", "]T", "<Cmd>tablast<CR>", { silent = true })
+
+-- Substitute all
+vim.keymap.set("ca", "s", function()
+  if vim.fn.getcmdtype() .. vim.fn.getcmdline() == ":s" then
+    vim.fn.getchar()
+    return "%s///g<Left><Left>"
+  else
+    return "s"
+  end
+end, { expr = true })
