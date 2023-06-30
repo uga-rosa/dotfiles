@@ -106,9 +106,7 @@ local function empty(expr)
   return expr == nil or expr == ""
 end
 
----@alias lsp.MarkedString string | { language: string, value: string }
-
----@param input lsp.MarkedString | lsp.MarkedString[] | lsp.MarkupContent
+---@param input lsp.MarkedString | lsp.MarkedString[] | ddc.lsp.MarkupContent
 ---@param contents? string[]
 ---@return string[] contents
 local function converter(input, contents)
@@ -124,7 +122,7 @@ function Menu.get_documentation(item)
       value = vim.fn["vsnip#to_string"](item.user_data.vsnip.snippet),
     })
   elseif item.__sourceName == "nvim-lsp" then
-    ---@type lsp.CompletionItem
+    ---@type ddc.lsp.CompletionItem
     local lspItem = vim.json.decode(item.user_data.lspitem)
     if lspItem.documentation == nil then
       local clientId = item.user_data.clientId

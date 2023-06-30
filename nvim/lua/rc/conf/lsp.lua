@@ -38,14 +38,14 @@ end
 vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
   if result then
     if type(result.contents) == "string" then
-      ---@cast result {contents: string}
+      ---@cast result { contents: string }
       result.contents = br2lf(result.contents)
     elseif result.contents.value then
       if result.contents.language or result.contents.kind == "markdown" then
         result.contents.value = br2lf(result.contents.value)
       end
     elseif vim.tbl_islist(result.contents) then
-      ---@cast result {contents: MarkedString[]}
+      ---@cast result { contents: lsp.MarkedString[] }
       for i, v in ipairs(result.contents) do
         if type(v) == "string" then
           result.contents[i] = br2lf(v)
@@ -63,21 +63,7 @@ end
 vim.diagnostic.config(opts.diagnostic)
 
 ---@class Hover
----@field contents MarkedString | MarkedString[] | MarkupContent
----@field range? Range
+---@field contents lsp.MarkedString | lsp.MarkedString[] | ddc.lsp.MarkupContent
+---@field range? ddc.lsp.Range
 
----@alias MarkedString string | { language: string, value: string }
-
----@class MarkupContent
----@field kind MarkupKind
----@field value string
-
----@alias MarkupKind "plaintext" | "markdown"
-
----@class Range
----@field start Position
----@field end Position
-
----@class Position
----@field line integer
----@field character integer
+---@alias lsp.MarkedString string | { language: string, value: string }
