@@ -49,12 +49,10 @@ end, {
 
 ---@type LazySpec
 local spec = {
-  {
-    "Shougo/ddu.vim",
-    name = "ddu.vim",
-    dependencies = "vim-denops/denops.vim",
-    import = "rc.plugins.ddu",
-  },
+  "Shougo/ddu.vim",
+  name = "ddu.vim",
+  dependencies = "vim-denops/denops.vim",
+  import = "rc.plugins.ddu",
 }
 
 return spec

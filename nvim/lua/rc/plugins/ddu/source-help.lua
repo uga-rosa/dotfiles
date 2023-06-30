@@ -14,35 +14,33 @@ end)
 
 ---@type LazySpec
 local spec = {
-  {
-    dir = "~/plugin/ddu-source-help",
-    dependencies = "ddu.vim",
-    init = function()
-      vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
-    end,
-    config = function()
-      helper.patch_global({
-        kindOptions = {
-          help = {
-            defaultAction = "open",
-          },
+  dir = "~/plugin/ddu-source-help",
+  dependencies = "ddu.vim",
+  init = function()
+    vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
+  end,
+  config = function()
+    helper.patch_global({
+      kindOptions = {
+        help = {
+          defaultAction = "open",
+        },
+      },
+    })
+
+    helper.register("help_tags", function()
+      helper.start("help", "help")
+    end)
+
+    helper.register("lazy_readme", function()
+      helper.start("help", {
+        "help",
+        params = {
+          readme = "only",
         },
       })
-
-      helper.register("help_tags", function()
-        helper.start("help", "help")
-      end)
-
-      helper.register("lazy_readme", function()
-        helper.start("help", {
-          "help",
-          params = {
-            readme = "only",
-          },
-        })
-      end)
-    end,
-  },
+    end)
+  end,
 }
 
 return spec

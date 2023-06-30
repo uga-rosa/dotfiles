@@ -31,21 +31,19 @@ end)
 
 ---@type LazySpec
 local spec = {
-  {
-    "Shougo/ddu-source-dummy",
-    dependencies = "ddu.vim",
-    config = function()
-      helper.patch_global({
-        sourceOptions = {
-          dummy = {
-            matchers = {},
-            sorters = {},
-            converters = {},
-          },
+  "Shougo/ddu-source-dummy",
+  dependencies = "ddu.vim",
+  config = function()
+    helper.patch_global({
+      sourceOptions = {
+        dummy = {
+          matchers = {},
+          sorters = {},
+          converters = {},
         },
-      })
-    end,
-  },
+      },
+    })
+  end,
 }
 
 return spec
