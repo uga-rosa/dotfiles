@@ -1,8 +1,34 @@
 local helper = require("rc.helper.ddc")
-local utils = require("rc.utils")
 
 ---@type LazySpec
 local spec = {
+  {
+    "hrsh7th/vim-vsnip",
+    init = function()
+      vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
+      vim.g.vsnip_choice_delay = 200
+    end,
+  },
+  "tani/ddc-fuzzy",
+  {
+    "Shougo/ddc-source-nvim-lsp",
+    dependencies = {
+      {
+        "uga-rosa/ddc-nvim-lsp-setup",
+        dev = true,
+      },
+      "neovim/nvim-lspconfig",
+    },
+    dev = true,
+    config = function()
+      require("ddc_nvim_lsp_setup").setup()
+    end,
+  },
+  {
+    "uga-rosa/ddc-source-buffer",
+    dev = true,
+  },
+  "LumaKernel/ddc-source-file",
   {
     "Shougo/ddc.vim",
     name = "ddc.vim",
@@ -10,26 +36,7 @@ local spec = {
       "vim-denops/denops.vim",
       "Shougo/pum.vim",
       "Shougo/ddc-ui-pum",
-      "tani/ddc-fuzzy",
-      {
-        "hrsh7th/vim-vsnip",
-        init = function()
-          vim.g.vsnip_snippet_dir = vim.fn.stdpath("config") .. "/snippets"
-          vim.g.vsnip_choice_delay = 200
-        end,
-      },
-      {
-        "Shougo/ddc-source-nvim-lsp",
-        name = "ddc-source-nvim-lsp",
-        dev = true,
-      },
-      {
-        "uga-rosa/ddc-source-buffer",
-        dev = true,
-      },
-      "vim-skk/skkeleton",
     },
-    import = "rc.plugins.ddc",
     init = function()
       vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
       vim.keymap.set({ "i", "c" }, "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
@@ -40,6 +47,22 @@ local spec = {
           return vim.fn["ddc#map#manual_complete"]({ sources = { "nvim-lsp" } })
         end
       end, { expr = true, replace_keycodes = false })
+      vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
+      vim.keymap.set({ "i", "c" }, "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
+      vim.keymap.set({ "i", "s" }, "<Tab>", function()
+        if vim.bool_fn["vsnip#jumpable"](1) then
+          return "<Plug>(vsnip-jump-next)"
+        else
+          return "<Tab>"
+        end
+      end, { expr = true, replace_keycodes = true })
+      vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+        if vim.bool_fn["vsnip#jumpable"](-1) then
+          return "<Plug>(vsnip-jump-prev)"
+        else
+          return "<S-Tab>"
+        end
+      end, { expr = true, replace_keycodes = true })
 
       vim.api.nvim_create_autocmd("User", {
         pattern = "LazyPluginPost:lexima",
@@ -53,18 +76,6 @@ local spec = {
           end, { silent = true, expr = true, replace_keycodes = false })
         end,
       })
-      vim.keymap.set(
-        { "i", "s" },
-        "<Tab>",
-        "vsnip#jumpable(1) ? '<Plug>(vsnip-jump-next)' : '<Tab>'",
-        { expr = true, replace_keycodes = false }
-      )
-      vim.keymap.set(
-        { "i", "s" },
-        "<S-Tab>",
-        "vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<S-Tab>'",
-        { expr = true, replace_keycodes = false }
-      )
     end,
     config = function()
       vim.fn["pum#set_option"]({
@@ -105,6 +116,9 @@ local spec = {
             dup = "keep",
             ignoreCase = true,
           },
+          file = {
+            mark = "[File]",
+          },
           buffer = { mark = "[Buffer]" },
           skkeleton = {
             mark = "[Skk]",
@@ -121,6 +135,7 @@ local spec = {
             end),
             enableResolveItem = true,
             enableAdditionalTextEdit = true,
+            confirmBehavior = "insert",
           },
           buffer = {
             getBufnrs = helper.register(function()
@@ -150,36 +165,6 @@ local spec = {
         pattern = "skkeleton-disable-post",
         callback = function()
           helper.patch_global("sources", sources.default)
-        end,
-      })
-
-      vim.api.nvim_create_autocmd({ "LspAttach", "LspDetach" }, {
-        group = vim.api.nvim_create_augroup("setup-triggerCharacters", {}),
-        callback = function()
-          local chars = vim
-            .iter(vim.lsp.get_active_clients({ bufnr = 0 }))
-            :filter(function(client)
-              return client.server_capabilities.completionProvider
-            end)
-            :map(function(client)
-              return client.server_capabilities.completionProvider.triggerCharacters or {}
-            end)
-            :fold({}, function(acc, triggerCharacters)
-              return vim.list_extend(acc, triggerCharacters)
-            end) --[[@as string[] ]]
-          chars = utils.deduplicate(chars)
-          for i = #chars, 1, -1 do
-            if chars[i]:find("^%s$") then
-              table.remove(chars, i)
-            end
-          end
-          table.insert(chars, 1, "[a-zA-Z]")
-          local regex = "(?:" .. table.concat(chars, "|\\") .. ")"
-          helper.patch_buffer("sourceOptions", {
-            ["nvim-lsp"] = {
-              forceCompletionPattern = regex,
-            },
-          })
         end,
       })
 

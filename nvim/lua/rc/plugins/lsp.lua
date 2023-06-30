@@ -23,7 +23,6 @@ local spec = {
         end,
       },
       "williamboman/mason-lspconfig.nvim",
-      "ddc-source-nvim-lsp",
       {
         "j-hui/fidget.nvim",
         tag = "legacy",
@@ -94,19 +93,7 @@ local spec = {
         end
       end)
 
-      local capabilities = require("ddc_nvim_lsp").make_client_capabilities()
-
-      local opts = setmetatable({}, {
-        __index = function(self, _)
-          return self["*"]
-        end,
-        __newindex = function(self, key, value)
-          value.capabilities = capabilities
-          rawset(self, key, value)
-        end,
-      })
-
-      opts["*"] = {}
+      local opts = {}
 
       ---@param plugins string[]
       ---@return string[]
@@ -270,10 +257,6 @@ local spec = {
       }
       lspconfig.denols.setup(opts.denols)
 
-      require("lspconfig").html.setup({
-        capabilities = capabilities,
-      })
-
       on_attach(function(client, bufnr)
         if client.name ~= "denols" then
           return
@@ -310,7 +293,7 @@ local spec = {
 
       require("mason-lspconfig").setup_handlers({
         function(server_name)
-          lspconfig[server_name].setup(opts[server_name])
+          lspconfig[server_name].setup(opts[server_name] or {})
         end,
       })
     end,
