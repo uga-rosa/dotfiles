@@ -12,15 +12,11 @@ local spec = {
   },
   import = "rc.plugins.ddc",
   init = function()
-    vim.keymap.set("i", "<C-x>", function()
-      return vim.fn["ddc#map#manual_complete"]({ sources = { "mode" } })
-    end, { expr = true, replace_keycodes = false })
-
     vim.keymap.set({ "i", "c" }, "<C-Space>", function()
       if vim.fn["pum#visible"]() then
         return vim.fn["ddc#hide"]("Manual")
       else
-        return vim.fn["ddc#map#manual_complete"]({ sources = { "nvim-lsp" } })
+        return vim.fn["ddc#map#manual_complete"]()
       end
     end, { expr = true, replace_keycodes = false })
     vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
@@ -90,29 +86,6 @@ local spec = {
         ["exact-prefix-1"] = { length = 1 },
         ["exact-prefix-2"] = { length = 2 },
       },
-    })
-
-    -- source-menu
-    helper.patch_global({
-      sourceOptions = {
-        mode = {
-          forceCompletionPattern = ".*",
-        },
-      },
-      sourceParams = {
-        mode = {
-          items = {
-            { name = "file", lhs = "<C-f>" },
-            { name = "buffer", lhs = "<C-b>" },
-          },
-        },
-      },
-    })
-
-    vim.api.nvim_create_autocmd("InsertLeave", {
-      callback = function()
-        helper.patch_global("sources", helper.sources.default)
-      end,
     })
 
     helper.patch_filetype("vim", {
