@@ -5,6 +5,7 @@ local M = {}
 M.sources = {
   default = { "vsnip", "nvim-lsp", "buffer" },
   skkeleton = { "skkeleton" },
+  lua = { "vsnip", "nvim-lua", "nvim-lsp", "buffer" },
 }
 
 function M.patch_global(...)

@@ -92,6 +92,21 @@ local spec = {
       keywordPattern = "(?:[a-z]:)?\\k*",
     })
 
+    -- source-nvim-lua {{{
+    helper.patch_global({
+      sourceOptions = {
+        ["nvim-lua"] = {
+          mark = "[Lua]",
+          dup = true,
+          forceCompletionPattern = "\\.",
+        },
+      },
+    })
+    helper.patch_filetype("lua", {
+      sources = helper.sources.lua,
+    })
+    -- }}}
+
     vim.fn["ddc#enable"]()
     helper.menu.enable()
   end,
