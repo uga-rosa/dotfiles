@@ -1,11 +1,5 @@
-import {
-  BaseSource,
-  Denops,
-  fn,
-  GatherArguments,
-  Item,
-  OnCompleteDoneArguments,
-} from "../rc/deps.ts";
+import { BaseSource, fn, GatherArguments, Item, OnCompleteDoneArguments } from "../rc/deps.ts";
+import { LineContext } from "../rc/util.ts";
 
 type MetaData = {
   vsnip: {
@@ -35,23 +29,12 @@ export class Source extends BaseSource<Params> {
   }: OnCompleteDoneArguments<Params, MetaData>): Promise<void> {
     // No expansion unless confirmed by pum#map#confirm()
     const itemWord = await denops.eval(`v:completed_item.word`) as string;
-    const ctx = await this.lineContext(denops);
+    const ctx = await LineContext.create(denops);
     if (!ctx.text.endsWith(itemWord, ctx.character)) {
       return;
     }
 
     await denops.call("vsnip#expand");
-  }
-
-  private async lineContext(
-    denops: Denops,
-  ) {
-    const beforeLine = await denops.eval(
-      `getline(".")[:getcurpos()[2]-2]`,
-    ) as string;
-    const character = beforeLine.length;
-    const text = await fn.getline(denops, ".");
-    return { character, text };
   }
 
   params(): Params {
