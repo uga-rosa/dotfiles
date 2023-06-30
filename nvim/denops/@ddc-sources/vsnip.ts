@@ -1,6 +1,11 @@
-import { BaseSource, Item } from "https://deno.land/x/ddc_vim@v3.7.2/types.ts";
-import { Denops, fn } from "https://deno.land/x/ddc_vim@v3.7.2/deps.ts";
-import { OnCompleteDoneArguments } from "https://deno.land/x/ddc_vim@v3.7.2/base/source.ts";
+import {
+  BaseSource,
+  Denops,
+  fn,
+  GatherArguments,
+  Item,
+  OnCompleteDoneArguments,
+} from "../rc/deps.ts";
 
 type MetaData = {
   vsnip: {
@@ -11,12 +16,12 @@ type MetaData = {
 type Params = Record<string, never>;
 
 export class Source extends BaseSource<Params> {
-  async gather(args: {
-    denops: Denops;
-  }): Promise<Item<MetaData>[]> {
-    const items = await args.denops.call(
+  async gather({
+    denops,
+  }: GatherArguments<Params>): Promise<Item<MetaData>[]> {
+    const items = await denops.call(
       "vsnip#get_complete_items",
-      await fn.bufnr(args.denops),
+      await fn.bufnr(denops),
     ) as Item<string>[];
     return items.map((item) => ({
       ...item,
