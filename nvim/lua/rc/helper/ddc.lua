@@ -45,9 +45,16 @@ local Menu = {
 
 ---@return Menu
 function Menu.new()
-  return setmetatable({
-    bufnr = vim.api.nvim_create_buf(false, true),
-  }, { __index = Menu })
+  local self = setmetatable({}, { __index = Menu })
+  self:_buf_reset()
+  return self
+end
+
+function Menu:_buf_reset()
+  if self.bufnr and vim.api.nvim_buf_is_valid(self.bufnr) then
+    vim.api.nvim_buf_delete(self.bufnr, { force = true })
+  end
+  self.bufnr = vim.api.nvim_create_buf(false, true)
 end
 
 function Menu:open()
@@ -60,6 +67,7 @@ function Menu:open()
   if current_item == nil then
     return
   end
+  self:_buf_reset()
   self:_open(current_item)
 end
 
@@ -106,7 +114,6 @@ end
 
 ---@param item DdcItem
 function Menu:_open(item)
-  vim.api.nvim_set_option_value("buftype", "", { buf = self.bufnr })
   if item.__sourceName == "vsnip" then
     local documents = converter({
       language = vim.bo.filetype,
@@ -140,6 +147,28 @@ function Menu:_open(item)
     end
 
     self:_post_markdown(documents)
+  elseif item.__sourceName == "nvim-lua" then
+    local fullpath = item.user_data.fullpath --[[@as string]]
+    if not vim.startswith(fullpath, "vim.") then
+      return false
+    end
+
+    local cmd
+    if vim.startswith(fullpath, "vim.api.") then
+      cmd = item.word
+    elseif vim.startswith(fullpath, "vim.fn.") then
+      cmd = item.word
+    elseif vim.startswith(fullpath, "vim.") then
+      cmd = fullpath
+    else
+      return
+    end
+
+    self:_win_open(self.max_height, 78)
+    vim.api.nvim_set_option_value("buftype", "help", { buf = self.bufnr })
+    vim.api.nvim_win_call(self.winid, function()
+      vim.cmd.help(cmd)
+    end)
   end
 end
 
