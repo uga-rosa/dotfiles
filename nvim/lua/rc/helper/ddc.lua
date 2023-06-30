@@ -52,7 +52,6 @@ end
 
 function Menu:open()
   self:close()
-
   if not vim.fn["pum#visible"]() then
     return
   end
@@ -61,39 +60,7 @@ function Menu:open()
   if current_item == nil then
     return
   end
-  local documents = self.get_documentation(current_item)
-  if #documents == 0 then
-    return
-  end
-
-  vim.api.nvim_buf_set_lines(self.bufnr, 0, -1, true, documents)
-  vim.lsp.util.stylize_markdown(self.bufnr, documents, {
-    max_height = self.max_height,
-    max_width = self.max_width,
-  })
-
-  local lines = vim.api.nvim_buf_get_lines(self.bufnr, 0, -1, true)
-  local pum_pos = vim.fn["pum#get_pos"]()
-  local menu_row = pum_pos.row
-  local menu_col = pum_pos.col + pum_pos.width + pum_pos.scrollbar
-  self.winid = vim.api.nvim_open_win(self.bufnr, false, {
-    relative = "editor",
-    row = menu_row,
-    col = menu_col,
-    height = math.min(#lines, vim.opt.lines:get() - menu_row, self.max_height),
-    width = math.min(
-      utils.max(lines, vim.api.nvim_strwidth),
-      vim.opt.columns:get() - menu_col,
-      self.max_width
-    ),
-    border = "single",
-    zindex = 10000,
-  })
-
-  vim.api.nvim_set_option_value("wrap", false, { win = self.winid })
-  vim.api.nvim_set_option_value("number", false, { win = self.winid })
-  vim.api.nvim_set_option_value("signcolumn", "no", { win = self.winid })
-  vim.api.nvim_set_option_value("foldenable", false, { win = self.winid })
+  self:_open(current_item)
 end
 
 function Menu:close()
@@ -103,6 +70,29 @@ function Menu:close()
   self.winid = nil
 end
 
+---@param height number
+---@param width number
+function Menu:_win_open(height, width)
+  local pum_pos = vim.fn["pum#get_pos"]()
+  local menu_row = pum_pos.row
+  local menu_col = pum_pos.col + pum_pos.width + pum_pos.scrollbar
+  self.winid = vim.api.nvim_open_win(self.bufnr, false, {
+    relative = "editor",
+    row = menu_row,
+    col = menu_col,
+    height = math.min(height, vim.opt.lines:get() - menu_row, self.max_height),
+    width = math.min(width, vim.opt.columns:get() - menu_col, self.max_width),
+    border = "single",
+    zindex = 10000,
+  })
+  vim.api.nvim_set_option_value("wrap", false, { win = self.winid })
+  vim.api.nvim_set_option_value("number", false, { win = self.winid })
+  vim.api.nvim_set_option_value("signcolumn", "no", { win = self.winid })
+  vim.api.nvim_set_option_value("foldenable", false, { win = self.winid })
+end
+
+---@param expr unknown
+---@return boolean
 local function empty(expr)
   return expr == nil or expr == ""
 end
@@ -114,14 +104,15 @@ local function converter(input, contents)
   return vim.lsp.util.convert_input_to_markdown_lines(input, contents)
 end
 
----@param item table
----@return string[]
-function Menu.get_documentation(item)
+---@param item DdcItem
+function Menu:_open(item)
+  vim.api.nvim_set_option_value("buftype", "", { buf = self.bufnr })
   if item.__sourceName == "vsnip" then
-    return converter({
+    local documents = converter({
       language = vim.bo.filetype,
       value = vim.fn["vsnip#to_string"](item.user_data.vsnip.snippet),
     })
+    self:_post_markdown(documents)
   elseif item.__sourceName == "nvim-lsp" then
     ---@type ddc.lsp.CompletionItem
     local lspItem = vim.json.decode(item.user_data.lspitem)
@@ -148,10 +139,24 @@ function Menu.get_documentation(item)
       documents = converter(lspItem.documentation, documents)
     end
 
-    return documents
-  else
-    return {}
+    self:_post_markdown(documents)
   end
+end
+
+---@param documents string[]
+---@return boolean
+function Menu:_post_markdown(documents)
+  if #documents == 0 then
+    return false
+  end
+  vim.api.nvim_buf_set_lines(self.bufnr, 0, -1, true, documents)
+  vim.lsp.util.stylize_markdown(self.bufnr, documents, {
+    max_height = self.max_height,
+    max_width = self.max_width,
+  })
+  local lines = vim.api.nvim_buf_get_lines(self.bufnr, 0, -1, true)
+  self:_win_open(#lines, utils.max(lines, vim.api.nvim_strwidth))
+  return true
 end
 
 M.menu = {
