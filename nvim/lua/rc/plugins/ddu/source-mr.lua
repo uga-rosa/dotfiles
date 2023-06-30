@@ -5,7 +5,14 @@ local spec = {
   "kuuote/ddu-source-mr",
   dependencies = {
     "ddu.vim",
-    "lambdalisue/mr.vim",
+    {
+      "lambdalisue/mr.vim",
+      init = function()
+        vim.cmd([[
+        let g:mr#mru#predicates = [{ filename -> filename !~# 'doc/.*\%(txt\|jax\)' }]
+        ]])
+      end,
+    },
   },
   init = function()
     vim.keymap.set("n", "<Space>w", "<Cmd>Ddu mrw<CR>")
