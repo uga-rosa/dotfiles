@@ -1,4 +1,4 @@
-import { BaseFilter, Item } from "https://deno.land/x/ddc_vim@v3.7.2/types.ts";
+import { BaseFilter, Item } from "../rc/deps.ts";
 
 type Params = Record<never, never>;
 
