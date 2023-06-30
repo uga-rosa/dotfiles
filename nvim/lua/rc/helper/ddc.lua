@@ -2,6 +2,11 @@ local utils = require("rc.utils")
 
 local M = {}
 
+M.sources = {
+  default = { "vsnip", "nvim-lsp", "buffer" },
+  skkeleton = { "skkeleton" },
+}
+
 function M.patch_global(...)
   vim.fn["ddc#custom#patch_global"](...)
 end
@@ -12,6 +17,13 @@ end
 
 function M.patch_buffer(...)
   vim.fn["ddc#custom#patch_buffer"](...)
+end
+
+---@param type "source" | "filter"
+---@param alias string
+---@param base string
+function M.alias(type, alias, base)
+  vim.fn["ddc#custom#alias"](type, alias, base)
 end
 
 ---@param fun function

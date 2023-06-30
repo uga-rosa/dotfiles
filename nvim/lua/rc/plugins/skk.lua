@@ -1,15 +1,18 @@
+local helper = require("rc.helper.ddc")
+
 ---@type LazySpec
 local spec = {
   {
     "vim-skk/skkeleton",
     dependencies = {
+      "vim-denops/denops.vim",
       {
-        "vim-denops/denops.vim",
         "delphinus/skkeleton_indicator.nvim",
         config = function()
           require("skkeleton_indicator").setup()
         end,
       },
+      "ddc.vim",
     },
     config = function()
       vim.keymap.set({ "i", "c" }, "<C-j>", "<Plug>(skkeleton-toggle)")
@@ -39,6 +42,32 @@ local spec = {
           registerConvertResult = true,
         })
       end)
+
+      -- Integration with ddc.vim
+      helper.patch_global({
+        sourceOptions = {
+          skkeleton = {
+            mark = "[Skk]",
+            matchers = { "skkeleton" },
+            sorters = {},
+            converters = {},
+            isVolatile = true,
+          },
+        },
+      })
+
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "skkeleton-enable-post",
+        callback = function()
+          helper.patch_global("sources", helper.sources.skkeleton)
+        end,
+      })
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "skkeleton-disable-post",
+        callback = function()
+          helper.patch_global("sources", helper.sources.default)
+        end,
+      })
     end,
   },
   {
