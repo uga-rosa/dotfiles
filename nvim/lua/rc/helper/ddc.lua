@@ -156,7 +156,10 @@ function Menu:_open(item)
     self:_win_open(self.max_height, 78)
     vim.api.nvim_set_option_value("buftype", "help", { buf = self.bufnr })
     vim.api.nvim_win_call(self.winid, function()
-      vim.cmd("silent! help " .. help_tag)
+      local ok = pcall(vim.cmd.help, help_tag)
+      if not ok then
+        self:close()
+      end
     end)
   end
 end
