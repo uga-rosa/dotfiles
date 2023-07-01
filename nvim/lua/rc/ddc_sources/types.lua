@@ -1,4 +1,5 @@
 ---@class DdcItem
+---@field __sourceName string
 ---@field word string
 ---@field abbr? string
 ---@field menu? string
