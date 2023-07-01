@@ -52,6 +52,7 @@ local spec = {
   config = function()
     vim.fn["pum#set_option"]({
       auto_select = true,
+      max_columns = { kind = 20, menu = 20 },
     })
 
     helper.alias("filter", "exact-prefix-1", "exact-prefix")
