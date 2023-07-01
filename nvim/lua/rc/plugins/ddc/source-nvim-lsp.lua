@@ -3,6 +3,7 @@ local helper = require("rc.helper.ddc")
 ---@type LazySpec
 local spec = {
   "Shougo/ddc-source-nvim-lsp",
+  dev = true,
   dependencies = {
     "ddc.vim",
     {
@@ -11,7 +12,6 @@ local spec = {
     },
     "neovim/nvim-lspconfig",
   },
-  dev = true,
   config = function()
     require("ddc_nvim_lsp_setup").setup()
 
