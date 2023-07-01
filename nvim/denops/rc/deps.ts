@@ -15,3 +15,5 @@ export {
   type OnCompleteDoneArguments,
 } from "https://deno.land/x/ddc_vim@v3.7.2/base/source.ts";
 export { type FilterArguments } from "https://deno.land/x/ddc_vim@v3.7.2/base/filter.ts";
+
+export * as LSP from "npm:vscode-languageserver-types"
