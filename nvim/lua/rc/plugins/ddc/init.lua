@@ -9,6 +9,10 @@ local spec = {
     "Shougo/pum.vim",
     "Shougo/ddc-ui-pum",
     "tani/ddc-fuzzy",
+    {
+      "uga-rosa/denops-popup-preview.vim",
+      dev = true,
+    },
   },
   import = "rc.plugins.ddc",
   init = function()
@@ -101,8 +105,16 @@ local spec = {
     })
     -- }}}
 
+    vim.api.nvim_create_autocmd("InsertLeave", {
+      callback = function()
+        helper.patch_global("sources", helper.sources.default)
+      end,
+    })
+    -- }}}
+
     vim.fn["ddc#enable"]()
-    helper.menu.enable()
+    -- helper.menu.enable()
+    vim.fn["popup_preview#enable"]()
   end,
 }
 
