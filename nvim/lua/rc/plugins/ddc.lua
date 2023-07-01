@@ -52,11 +52,7 @@ local spec = {
   config = function()
     vim.fn["pum#set_option"]({
       auto_select = true,
-      max_columns = { kind = 20, menu = 20 },
     })
-
-    helper.alias("filter", "exact-prefix-1", "exact-prefix")
-    helper.alias("filter", "exact-prefix-2", "exact-prefix")
 
     helper.patch_global({
       ui = "pum",
@@ -77,15 +73,11 @@ local spec = {
           -- string that may start with an alphabet or underscore, and may contain alphanumeric
           -- characters, underscores, or hyphens in a 'kebab-case' style.
           keywordPattern = [[(?:-?\d+(?:\.\d+)?|[a-zA-Z_]\w*(?:-\w*)*)]],
-          matchers = { "exact-prefix-1", "matcher_fuzzy" },
+          matchers = { "exact-prefix", "matcher_fuzzy" },
           sorters = { "sorter_fuzzy" },
           converters = { "converter_fuzzy", "converter_lsp-kind" },
           ignoreCase = true,
         },
-      },
-      filterParams = {
-        ["exact-prefix-1"] = { length = 1 },
-        ["exact-prefix-2"] = { length = 2 },
       },
     })
 
