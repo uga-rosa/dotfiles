@@ -9,7 +9,7 @@ import { LineContext, linePatch } from "../rc/util.ts";
 
 type UserData = {
   name: string;
-  fullpath: string;
+  help_tag: string;
 };
 
 type Params = Record<never, never>;
@@ -32,13 +32,18 @@ export class Source extends BaseSource<Params> {
       parent,
     ) as Item[];
 
-    return items.map((item) => ({
-      ...item,
-      user_data: {
-        name: item.word,
-        fullpath: `${parent.join(".")}.${item.word}`,
-      },
-    }));
+    return items.map((item) => {
+      const help_tag = parent[0] === "vim"
+        ? parent[1] === "api" || parent[1] === "fn" ? item.word : [...parent, item.word].join(".")
+        : "";
+      return {
+        ...item,
+        user_data: {
+          name: item.word,
+          help_tag,
+        },
+      };
+    });
   }
 
   async onCompleteDone({

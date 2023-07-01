@@ -148,26 +148,15 @@ function Menu:_open(item)
 
     self:_post_markdown(documents)
   elseif item.__sourceName == "nvim-lua" then
-    local fullpath = item.user_data.fullpath --[[@as string]]
-    if not vim.startswith(fullpath, "vim.") then
-      return false
-    end
-
-    local cmd
-    if vim.startswith(fullpath, "vim.api.") then
-      cmd = item.word
-    elseif vim.startswith(fullpath, "vim.fn.") then
-      cmd = item.word
-    elseif vim.startswith(fullpath, "vim.") then
-      cmd = fullpath
-    else
+    local help_tag = item.user_data.help_tag --[[@as string]]
+    if help_tag == "" then
       return
     end
 
     self:_win_open(self.max_height, 78)
     vim.api.nvim_set_option_value("buftype", "help", { buf = self.bufnr })
     vim.api.nvim_win_call(self.winid, function()
-      vim.cmd.help(cmd)
+      vim.cmd("silent! help " .. help_tag)
     end)
   end
 end
