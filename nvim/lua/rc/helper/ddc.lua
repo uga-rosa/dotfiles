@@ -165,10 +165,9 @@ function Menu:_open(item)
 end
 
 ---@param documents string[]
----@return boolean
 function Menu:_post_markdown(documents)
   if #documents == 0 then
-    return false
+    return
   end
   vim.api.nvim_buf_set_lines(self.bufnr, 0, -1, true, documents)
   vim.lsp.util.stylize_markdown(self.bufnr, documents, {
@@ -177,7 +176,6 @@ function Menu:_post_markdown(documents)
   })
   local lines = vim.api.nvim_buf_get_lines(self.bufnr, 0, -1, true)
   self:_win_open(#lines, utils.max(lines, vim.api.nvim_strwidth))
-  return true
 end
 
 M.menu = {
