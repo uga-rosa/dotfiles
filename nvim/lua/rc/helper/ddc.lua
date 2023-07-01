@@ -99,10 +99,18 @@ function Menu:_win_open(height, width)
   vim.api.nvim_set_option_value("foldenable", false, { win = self.winid })
 end
 
----@param expr unknown
+---@param expr string|nil|ddc.lsp.MarkupContent
 ---@return boolean
 local function empty(expr)
-  return expr == nil or expr == ""
+  local expr_t = type(expr)
+  if expr_t == "nil" then
+    return true
+  elseif expr_t == "string" then
+    return expr == ""
+  elseif expr_t == "table" then
+    return expr.value == ""
+  end
+  return false
 end
 
 ---@param input lsp.MarkedString | lsp.MarkedString[] | ddc.lsp.MarkupContent
