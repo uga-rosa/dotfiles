@@ -30,20 +30,20 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-ft_event.python = rc.createWrapper(set_indent, 4, false)
-ft_event.toml = rc.createWrapper(set_indent, 4, false)
+ft_event.python = rc.call_with(set_indent, 4, false)
+ft_event.toml = rc.call_with(set_indent, 4, false)
 
-ft_event.qf = rc.createWrapper(set_indent, 4, true)
-ft_event.go = rc.createWrapper(set_indent, 4, true)
+ft_event.qf = rc.call_with(set_indent, 4, true)
+ft_event.go = rc.call_with(set_indent, 4, true)
 
-ft_event.help = rc.createWrapper(set_indent, 8, true)
+ft_event.help = rc.call_with(set_indent, 8, true)
+
+local function find_first_existing_file_path(paths)
+  return vim.iter(paths):map(vim.fs.normalize):find(vim.fs.isfile)
+end
 
 ft_event.lua = function()
-  local function findFirstExistingFilePath(paths)
-    return vim.iter(paths):map(vim.fs.normalize):find(vim.fs.isfile)
-  end
-
-  local stylua_toml = findFirstExistingFilePath({
+  local stylua_toml = find_first_existing_file_path({
     "stylua.toml",
     ".stylua.toml",
     "~/.config/stylua.toml",

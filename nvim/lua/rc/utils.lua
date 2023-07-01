@@ -45,7 +45,7 @@ end
 ---@param fn function
 ---@param ... unknown Arguments
 ---@return function
-function M.createWrapper(fn, ...)
+function M.call_with(fn, ...)
   local args = { ... }
   return function()
     fn(unpack(args))
