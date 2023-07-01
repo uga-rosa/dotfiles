@@ -12,7 +12,7 @@ export class Filter extends BaseFilter<Params> {
   }: FilterArguments<Params>): Promise<Item[]> {
     const prefix = completeStr.slice(0, filterParams.length);
     return Promise.resolve(
-      items.filter((item) => /^\W/.test(item.word) || item.word.startsWith(prefix)),
+      items.filter((item) => item.word.startsWith(prefix)),
     );
   }
 
