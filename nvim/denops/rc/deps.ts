@@ -9,6 +9,7 @@ export {
   BaseSource,
   type DdcGatherItems,
   type Item,
+  type PumHighlight,
 } from "https://deno.land/x/ddc_vim@v3.7.2/types.ts";
 export {
   type GatherArguments,
@@ -16,4 +17,4 @@ export {
 } from "https://deno.land/x/ddc_vim@v3.7.2/base/source.ts";
 export { type FilterArguments } from "https://deno.land/x/ddc_vim@v3.7.2/base/filter.ts";
 
-export * as LSP from "npm:vscode-languageserver-types"
+export * as LSP from "npm:vscode-languageserver-types";
