@@ -58,6 +58,8 @@ github:
           to: zoxide
       snippet: |
         eval "$(zoxide init zsh)"
+      env:
+        _ZO_FZF_OPTS: "$FZF_DEFAULT_OPTS"
   - name: ogham/exa
     description: A modern version of 'ls'.
     owner: ogham
