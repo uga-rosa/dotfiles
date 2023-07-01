@@ -21,7 +21,7 @@ local spec = {
     config = function()
       require("translate").setup({
         default = {
-          command = "translate_shell",
+          command = "deepl_free",
         },
         preset = {
           output = {
