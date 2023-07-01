@@ -52,6 +52,7 @@ local spec = {
   config = function()
     vim.fn["pum#set_option"]({
       auto_select = true,
+      item_orders = { "kind", "abbr", "menu" },
     })
 
     helper.patch_global({

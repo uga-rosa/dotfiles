@@ -1,4 +1,4 @@
-import { BaseFilter, Item, PumHighlight } from "../rc/deps.ts";
+import { BaseFilter, Item } from "../rc/deps.ts";
 
 const HIGHLIGHT_NAME = "ddc-lsp-kind";
 
@@ -12,26 +12,19 @@ export class Filter extends BaseFilter<Params> {
       item.kind = item.kind ?? "Text";
       if (item.kind in IconMap) {
         const kindName = item.kind as Kind;
-        const icon = IconMap[kindName];
-        const iconLength = IconLengthMap[kindName];
-        const highlights = [
-          ...item.highlights?.map((hl) => ({
-            ...hl,
-            col: hl.col + iconLength + 1,
-          })) ?? [],
-          {
-            name: HIGHLIGHT_NAME,
-            type: "abbr",
-            hl_group: `CmpItemKind${item.kind}`,
-            col: 1,
-            width: iconLength,
-          },
-        ] satisfies PumHighlight[];
         item = {
           ...item,
-          abbr: `${icon} ${item.abbr ?? item.word}`,
-          kind: "",
-          highlights,
+          kind: IconMap[kindName],
+          highlights: [
+            ...item.highlights ?? [],
+            {
+              name: HIGHLIGHT_NAME,
+              type: "kind",
+              hl_group: `CmpItemKind${item.kind}`,
+              col: 1,
+              width: IconLengthMap[kindName],
+            },
+          ],
         };
       }
       return item;
