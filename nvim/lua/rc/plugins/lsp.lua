@@ -52,7 +52,6 @@ local spec = {
           "bashls",
           "vtsls",
           "jsonls",
-          "yamlls",
         },
       })
 
@@ -277,16 +276,6 @@ local spec = {
           json = {
             schemas = require("schemastore").json.schemas(),
             validate = { enable = true },
-          },
-        },
-      }
-
-      opts.yamlls = {
-        settings = {
-          yaml = {
-            schemaStore = {
-              enable = true,
-            },
           },
         },
       }
