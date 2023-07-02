@@ -61,6 +61,7 @@ local spec = {
     vim.fn["pum#set_option"]({
       auto_select = true,
       item_orders = { "kind", "abbr", "menu" },
+      highlight_selected = "CursorLine",
     })
 
     helper.patch_global({
