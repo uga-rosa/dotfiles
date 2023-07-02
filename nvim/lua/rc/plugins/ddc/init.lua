@@ -3,20 +3,12 @@ local helper = require("rc.helper.ddc")
 ---@type LazySpec
 local spec = {
   "Shougo/ddc.vim",
-  -- dev = true,
   name = "ddc.vim",
   dependencies = {
     "vim-denops/denops.vim",
-    {
-      "Shougo/pum.vim",
-      -- dev = true,
-    },
+    "Shougo/pum.vim",
     "Shougo/ddc-ui-pum",
     "tani/ddc-fuzzy",
-    {
-      "uga-rosa/denops-popup-preview.vim",
-      dev = true,
-    },
   },
   import = "rc.plugins.ddc",
   init = function()
@@ -135,8 +127,7 @@ local spec = {
     -- }}}
 
     vim.fn["ddc#enable"]()
-    -- helper.menu.enable()
-    vim.fn["popup_preview#enable"]()
+    helper.menu.enable()
   end,
 }
 
