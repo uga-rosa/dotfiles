@@ -74,7 +74,6 @@ local spec = {
         "TextChangedT",
       },
       backspaceCompletion = true,
-      sources = helper.sources.default,
       sourceOptions = {
         _ = {
           minAutoCompleteLength = 1,
@@ -90,6 +89,14 @@ local spec = {
       },
     })
 
+    vim.api.nvim_create_autocmd("InsertEnter", {
+      callback = function()
+        local ft = vim.bo.filetype
+        local sources = helper.sources[ft] or helper.sources.default
+        helper.patch_buffer("sources", sources)
+      end,
+    })
+
     helper.patch_filetype("vim", {
       keywordPattern = "(?:[a-z]:)?\\k*",
     })
@@ -103,16 +110,6 @@ local spec = {
           forceCompletionPattern = "\\.",
         },
       },
-    })
-    helper.patch_filetype("lua", {
-      sources = helper.sources.lua,
-    })
-    -- }}}
-
-    vim.api.nvim_create_autocmd("InsertLeave", {
-      callback = function()
-        helper.patch_global("sources", helper.sources.default)
-      end,
     })
     -- }}}
 
