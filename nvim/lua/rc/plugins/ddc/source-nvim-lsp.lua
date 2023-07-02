@@ -20,6 +20,7 @@ local spec = {
         ["nvim-lsp"] = {
           mark = "[LSP]",
           dup = "keep",
+          keywordPattern = "\\k*",
         },
       },
       sourceParams = {
