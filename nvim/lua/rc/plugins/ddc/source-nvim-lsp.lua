@@ -13,7 +13,7 @@ local spec = {
     },
   },
   config = function()
-    require("ddc_nvim_lsp_setup").setup()
+    -- require("ddc_nvim_lsp.internal").setup({ debug = true })
 
     helper.patch_global({
       sourceOptions = {
