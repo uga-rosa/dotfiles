@@ -4,13 +4,13 @@ local helper = require("rc.helper.ddc")
 local spec = {
   "Shougo/ddc-source-nvim-lsp",
   dev = true,
+  name = "ddc-source-nvim-lsp",
   dependencies = {
     "ddc.vim",
     {
       "uga-rosa/ddc-nvim-lsp-setup",
       dev = true,
     },
-    "neovim/nvim-lspconfig",
   },
   config = function()
     require("ddc_nvim_lsp_setup").setup()

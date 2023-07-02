@@ -16,6 +16,7 @@ local spec = {
     "neovim/nvim-lspconfig",
     event = "VeryLazy",
     dependencies = {
+      "ddc-source-nvim-lsp",
       {
         "williamboman/mason.nvim",
         config = function()
@@ -40,6 +41,8 @@ local spec = {
       "b0o/SchemaStore.nvim",
     },
     config = function()
+      require("ddc_nvim_lsp_setup").setup()
+
       local lspconfig = require("lspconfig")
       local rc = require("rc.utils")
 
