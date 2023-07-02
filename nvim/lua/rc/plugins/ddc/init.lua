@@ -115,9 +115,7 @@ local spec = {
     -- }}}
 
     -- source-menu {{{
-    vim.keymap.set("i", "<C-x>", function()
-      return vim.fn["ddc#map#manual_complete"]({ sources = { "menu" } })
-    end, { expr = true, replace_keycodes = false })
+    vim.keymap.set("i", "<C-x>", "ddc#map#manual_complete(#{sources: ['menu']})", { expr = true })
 
     helper.patch_global({
       sourceOptions = {
