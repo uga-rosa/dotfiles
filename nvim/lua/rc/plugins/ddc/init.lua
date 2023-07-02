@@ -113,6 +113,28 @@ local spec = {
     })
     -- }}}
 
+    -- source-menu {{{
+    vim.keymap.set("i", "<C-x>", function()
+      return vim.fn["ddc#map#manual_complete"]({ sources = { "menu" } })
+    end, { expr = true, replace_keycodes = false })
+
+    helper.patch_global({
+      sourceOptions = {
+        menu = {
+          forceCompletionPattern = ".*",
+        },
+      },
+      sourceParams = {
+        menu = {
+          items = {
+            { sourceName = "file", lhs = "<C-f>" },
+            { sourceName = "buffer", lhs = "<C-b>" },
+          },
+        },
+      },
+    })
+    -- }}}
+
     vim.fn["ddc#enable"]()
     -- helper.menu.enable()
     vim.fn["popup_preview#enable"]()
