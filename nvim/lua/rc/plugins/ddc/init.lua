@@ -3,10 +3,14 @@ local helper = require("rc.helper.ddc")
 ---@type LazySpec
 local spec = {
   "Shougo/ddc.vim",
+  -- dev = true,
   name = "ddc.vim",
   dependencies = {
     "vim-denops/denops.vim",
-    "Shougo/pum.vim",
+    {
+      "Shougo/pum.vim",
+      -- dev = true,
+    },
     "Shougo/ddc-ui-pum",
     "tani/ddc-fuzzy",
     {
