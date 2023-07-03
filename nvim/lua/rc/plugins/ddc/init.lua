@@ -94,18 +94,6 @@ local spec = {
       keywordPattern = "(?:[a-z]:)?\\k*",
     })
 
-    -- source-nvim-lua {{{
-    helper.patch_global({
-      sourceOptions = {
-        ["nvim-lua"] = {
-          mark = "[Lua]",
-          dup = true,
-          forceCompletionPattern = "\\.",
-        },
-      },
-    })
-    -- }}}
-
     -- source-menu {{{
     vim.keymap.set("i", "<C-x>", "ddc#map#manual_complete(#{sources: ['menu']})", { expr = true })
 
