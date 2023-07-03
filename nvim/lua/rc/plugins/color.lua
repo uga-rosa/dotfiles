@@ -37,10 +37,7 @@ local spec = {
           ccc.picker.css_oklab,
           ccc.picker.css_oklch,
           ccc.picker.trailing_whitespace({
-            -- enable = { "markdown" },
-            disable = function(bufnr)
-              return vim.bo[bufnr].buftype ~= ""
-            end,
+            enable = { "markdown", "help" },
           }),
         },
       })
