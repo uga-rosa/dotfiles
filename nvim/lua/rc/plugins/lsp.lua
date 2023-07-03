@@ -199,10 +199,15 @@ local spec = {
 
       local root_pattern = lspconfig.util.root_pattern
 
+      local root_dir = {
+        node = { "tsconfig.json", "package.json", "jsconfig.json" },
+        deno = { "deno.json", "deno.jsonc", "denops", ".git" },
+      }
+
       ---@param fname string
       ---@return boolean
       local function in_node_repo(fname)
-        return root_pattern("tsconfig.json", "package.json", "jsconfig.json")(fname) ~= nil
+        return root_pattern(unpack(root_dir.node))(fname) ~= nil
       end
 
       local typescriptInlayHints = {
@@ -220,7 +225,7 @@ local spec = {
       opts.vtsls = {
         root_dir = function(fname)
           if in_node_repo(fname) then
-            return root_pattern("tsconfig.json", "package.json", "jsconfig.json")(fname)
+            return root_pattern(unpack(root_dir.node))(fname)
           end
         end,
         single_file_support = false,
@@ -238,7 +243,7 @@ local spec = {
       opts.denols = {
         root_dir = function(fname)
           if not in_node_repo(fname) then
-            return root_pattern("deno.json", "deno.jsonc", ".git")(fname)
+            return root_pattern(unpack(root_dir.deno))(fname)
           end
         end,
         init_options = {
