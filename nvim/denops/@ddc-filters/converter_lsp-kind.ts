@@ -10,6 +10,13 @@ export class Filter extends BaseFilter<Params> {
   }) {
     return Promise.resolve(args.items.map((item) => {
       item.kind = item.kind ?? "Text";
+
+      // nvim-lua
+      if (item.kind in NvimLuaKind) {
+        const luaType = item.kind as LuaType;
+        item.kind = NvimLuaKind[luaType];
+      }
+
       if (item.kind in IconMap) {
         const kindName = item.kind as Kind;
         item = {
@@ -35,6 +42,20 @@ export class Filter extends BaseFilter<Params> {
     return {};
   }
 }
+
+// :h luaref-type()
+const NvimLuaKind = {
+  nil: "Value",
+  number: "Value",
+  string: "Value",
+  boolean: "Value",
+  table: "Struct",
+  function: "Function",
+  thread: "Field",
+  userdata: "Field",
+} as const satisfies Record<string, Kind>;
+
+type LuaType = keyof typeof NvimLuaKind;
 
 const IconMap = {
   Text: "󰉿",
