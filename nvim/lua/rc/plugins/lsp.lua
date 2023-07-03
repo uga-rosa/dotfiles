@@ -55,6 +55,7 @@ local spec = {
           "bashls",
           "vtsls",
           "jsonls",
+          "yamlls",
         },
       })
 
