@@ -30,7 +30,7 @@ local spec = {
           end),
           enableResolveItem = true,
           enableAdditionalTextEdit = true,
-          confirmBehavior = "insert",
+          confirmBehavior = "replace",
         },
       },
     })
