@@ -13,6 +13,8 @@ helper.ff_map(nil, function(map)
   map("e", helper.action("expandItem", { mode = "toggle" }))
   -- Show available actions
   map("+", helper.action("chooseAction"))
+  -- Toggle preview
+  map("p", helper.action("toggleAutoAction"))
 end)
 
 helper.ff_filter_map(nil, function(map)
@@ -42,6 +44,7 @@ local spec = {
           autoAction = {
             name = "preview",
           },
+          startAutoAction = true,
           previewFloating = true,
           previewFloatingBorder = "single",
           previewSplit = "vertical",
