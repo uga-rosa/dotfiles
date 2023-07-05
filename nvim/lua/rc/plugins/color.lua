@@ -6,8 +6,11 @@ local spec = {
       vim.g.nightflyItalics = false
       vim.cmd.colorscheme("nightfly")
 
-      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#011627" })
-      vim.api.nvim_set_hl(0, "FloatBorder", { fg = "white" })
+      local palette = require("nightfly").palette
+
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = palette.black })
+      vim.api.nvim_set_hl(0, "FloatBorder", { fg = palette.white, bg = palette.black })
+      vim.api.nvim_set_hl(0, "PmenuSel", { bg = palette.cyan_blue })
       vim.api.nvim_set_hl(0, "LspInlayHint", { link = "Comment" })
     end,
   },
