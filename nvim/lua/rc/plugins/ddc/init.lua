@@ -41,7 +41,14 @@ local spec = {
       callback = function()
         vim.keymap.set("i", "<CR>", function()
           if vim.fn["pum#visible"]() then
-            return vim.fn["pum#map#confirm"]()
+            local info = vim.fn["pum#complete_info"]()
+            if info.selected == -1 then
+              return vim.fn["ddc#map#insert_item"](0, "")
+            else
+              return vim.fn["pum#map#confirm"]()
+            end
+          elseif vim.fn["vsnip#expandable"]() == 1 then
+            return vim.keycode("<Plug>(vsnip-expand)")
           else
             return vim.fn["lexima#expand"]("<CR>", "i")
           end
@@ -51,7 +58,6 @@ local spec = {
   end,
   config = function()
     vim.fn["pum#set_option"]({
-      auto_select = true,
       item_orders = { "kind", "abbr", "menu" },
     })
 
