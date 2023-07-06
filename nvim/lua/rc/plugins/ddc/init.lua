@@ -21,6 +21,8 @@ local spec = {
     end, { expr = true, replace_keycodes = false })
     vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
     vim.keymap.set({ "i", "c" }, "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
+    vim.keymap.set("c", "<Tab>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
+    vim.keymap.set("c", "<S-Tab>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
     vim.keymap.set({ "i", "s" }, "<Tab>", function()
       if vim.bool_fn["vsnip#jumpable"](1) then
         return "<Plug>(vsnip-jump-next)"
@@ -35,17 +37,25 @@ local spec = {
         return "<S-Tab>"
       end
     end, { expr = true, replace_keycodes = true })
+    vim.keymap.set("c", "<CR>", function()
+      local info = vim.fn["pum#complete_info"]()
+      if info.pum_visible and info.selected >= 0 then
+        vim.fn["pum#map#confirm"]()
+      else
+        return vim.keycode("<CR>")
+      end
+    end, { silent = true, expr = true, replace_keycodes = false })
 
     vim.api.nvim_create_autocmd("User", {
       pattern = "LazyPluginPost:lexima",
       callback = function()
         vim.keymap.set("i", "<CR>", function()
-          if vim.fn["pum#visible"]() then
-            local info = vim.fn["pum#complete_info"]()
-            if info.selected == -1 then
-              return vim.fn["ddc#map#insert_item"](0, "")
+          local info = vim.fn["pum#complete_info"]()
+          if info.pum_visible then
+            if info.selected >= 0 then
+              vim.fn["pum#map#confirm"]()
             else
-              return vim.fn["pum#map#confirm"]()
+              return vim.fn["ddc#map#insert_item"](0, "")
             end
           elseif vim.fn["vsnip#expandable"]() == 1 then
             return vim.keycode("<Plug>(vsnip-expand)")
