@@ -37,14 +37,7 @@ local spec = {
         return "<S-Tab>"
       end
     end, { expr = true, replace_keycodes = true })
-    vim.keymap.set("c", "<CR>", function()
-      local info = vim.fn["pum#complete_info"]()
-      if info.pum_visible and info.selected >= 0 then
-        vim.fn["pum#map#confirm"]()
-      else
-        return vim.keycode("<CR>")
-      end
-    end, { silent = true, expr = true, replace_keycodes = false })
+    vim.keymap.set("c", "<C-y>", "<Cmd>call pum#map#confirm()<CR>")
 
     vim.api.nvim_create_autocmd("User", {
       pattern = "LazyPluginPost:lexima",
