@@ -71,6 +71,7 @@ local spec = {
       local height, row = math.floor(lines * 0.8), math.floor(lines * 0.1)
       local columns = vim.opt.columns:get()
       local width, col = math.floor(columns * 0.8), math.floor(columns * 0.1)
+      local previewWidth = math.floor(width / 2)
 
       helper.patch_global({
         uiParams = {
@@ -81,7 +82,8 @@ local spec = {
             winCol = col,
             previewHeight = height,
             previewRow = row,
-            previewWidth = math.floor(width / 2),
+            previewWidth = previewWidth,
+            previewCol = col + (width - previewWidth),
           },
         },
       })
