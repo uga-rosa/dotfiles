@@ -38,8 +38,9 @@ snippet for_of(await)
 	for await (${1|const,let|} $2 of $3) {
 		$0
 	}
-snippet constructor_react
-	constructor(props) {
-		super(props)
-		$0
-	}
+snippet /**(multi line)
+	/**
+	 * $0
+	 */
+snippet /**(single line)
+	/** $0 */

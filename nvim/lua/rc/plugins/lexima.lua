@@ -21,13 +21,6 @@ local spec = {
           input = [[<CR>\ ]],
           filetype = "vim",
         },
-        {
-          char = "*",
-          at = [[/\*\%#]],
-          input = [[*<CR><BS> * ]],
-          input_after = [[<CR>*/]],
-          filetype = { "javascript", "typescript" },
-        },
       }
 
       for _, rule in ipairs(my_rules) do
