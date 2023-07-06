@@ -136,7 +136,6 @@ local spec = {
   {
     -- help doc generator
     "tani/podium",
-    dev = true,
     config = function()
       local podium = require("podium")
       vim.api.nvim_create_user_command("Podium", function()
