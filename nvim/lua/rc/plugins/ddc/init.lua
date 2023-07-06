@@ -69,6 +69,7 @@ local spec = {
   config = function()
     vim.fn["pum#set_option"]({
       item_orders = { "kind", "abbr", "menu" },
+      scrollbar_char = "┃",
     })
 
     helper.patch_global({
