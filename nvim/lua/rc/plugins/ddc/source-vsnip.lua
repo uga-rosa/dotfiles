@@ -15,7 +15,10 @@ local spec = {
   config = function()
     helper.patch_global({
       sourceOptions = {
-        vsnip = { mark = "[Vsnip]" },
+        vsnip = {
+          mark = "[Vsnip]",
+          keywordPattern = "\\S*",
+        },
       },
       sourceParams = {
         vsnip = { menu = false },
