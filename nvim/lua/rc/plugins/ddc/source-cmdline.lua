@@ -11,7 +11,7 @@ local spec = {
   config = function()
     helper.patch_global({
       cmdlineSources = {
-        [":"] = { "cmdline", "nvim-lua" },
+        [":"] = { "nvim-lua", "cmdline" },
         ["@"] = { "cmdline-history", "input", "buffer" },
         ["="] = { "input" },
       },
