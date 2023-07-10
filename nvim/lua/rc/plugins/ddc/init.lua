@@ -48,7 +48,7 @@ local spec = {
             if info.selected >= 0 then
               vim.fn["pum#map#confirm"]()
             else
-              return vim.fn["ddc#map#insert_item"](0, "")
+              return vim.fn["ddc#map#insert_item"](0)
             end
           elseif vim.fn["vsnip#expandable"]() == 1 then
             return vim.keycode("<Plug>(vsnip-expand)")
@@ -57,6 +57,7 @@ local spec = {
           end
         end, { silent = true, expr = true, replace_keycodes = false })
       end,
+      once = true,
     })
   end,
   config = function()

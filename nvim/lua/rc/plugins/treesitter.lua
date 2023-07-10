@@ -4,7 +4,6 @@ local spec = {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "HiPhish/nvim-ts-rainbow2",
     },
     event = "VeryLazy",
     build = ":TSUpdate",
@@ -50,9 +49,6 @@ local spec = {
               ["<M-S-s>"] = "@parameter.inner",
             },
           },
-        },
-        rainbow = {
-          enable = true,
         },
       })
     end,
