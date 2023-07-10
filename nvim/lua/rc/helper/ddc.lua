@@ -203,7 +203,9 @@ M.menu = {
       pattern = { "PumClose", "PumCompleteDone" },
       group = group,
       callback = function()
-        menu:close()
+        vim.schedule(function()
+          menu:close()
+        end)
       end,
     })
   end,
