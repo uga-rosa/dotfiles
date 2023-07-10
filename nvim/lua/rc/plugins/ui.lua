@@ -32,6 +32,12 @@ local spec = {
   {
     "MunifTanjim/nui.nvim",
   },
+  {
+    "rcarriga/nvim-notify",
+    config = function()
+      vim.notify = require("notify")
+    end,
+  },
 }
 
 return spec
