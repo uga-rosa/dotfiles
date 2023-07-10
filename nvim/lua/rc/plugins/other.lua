@@ -130,8 +130,21 @@ local spec = {
     "uga-rosa/ugaterm.nvim",
     keys = {
       { "<M-t>", "<Cmd>UgatermToggle<CR>", mode = { "n", "t" } },
-      { "<M-n>", "<Cmd>UgatermNewWithName<CR>", mode = { "n", "t" } },
+      { "<M-n>", "<Cmd>UgatermNew<CR><Cmd>UgatermRename<CR>", mode = { "n", "t" } },
     },
+    config = function()
+      local group = vim.api.nvim_create_augroup("ugaterm-enter", {})
+      for event, pattern in pairs({
+        TermOpen = "*",
+        BufEnter = "terminal://*",
+      }) do
+        vim.api.nvim_create_autocmd(event, {
+          pattern = pattern,
+          group = group,
+          command = "startinsert",
+        })
+      end
+    end,
   },
   {
     -- help doc generator
