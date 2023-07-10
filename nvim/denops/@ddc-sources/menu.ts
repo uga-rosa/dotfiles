@@ -80,7 +80,7 @@ export class Source extends BaseSource<Params> {
   ): string {
     return `inoremap <buffer><expr> ${lhs} ` +
       `ddc#custom#patch_buffer(#{sources: ['${sourceName}']}) ?? ` +
-      `ddc#map#insert_item(${index}, '')`;
+      `ddc#map#insert_item(${index})`;
   }
 
   async onCompleteDone({
