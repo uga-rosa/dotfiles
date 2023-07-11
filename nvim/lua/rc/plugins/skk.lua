@@ -41,6 +41,8 @@ local spec = {
           markerHenkanSelect = ">>",
           registerConvertResult = true,
         })
+
+        vim.fn["skkeleton#initialize"]()
       end)
 
       -- Integration with ddc.vim
