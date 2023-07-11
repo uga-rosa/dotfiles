@@ -67,10 +67,10 @@ local spec = {
 
         if client.server_capabilities.inlayHintProvider then
           vim.api.nvim_buf_create_user_command(bufnr, "InlayHintEnable", function()
-            vim.lsp.buf.inlay_hint(bufnr, true)
+            vim.lsp.inlay_hint(bufnr, true)
           end, {})
           vim.api.nvim_buf_create_user_command(bufnr, "InlayHintDisable", function()
-            vim.lsp.buf.inlay_hint(bufnr, false)
+            vim.lsp.inlay_hint(bufnr, false)
           end, {})
         end
       end)
