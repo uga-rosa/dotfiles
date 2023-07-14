@@ -1,0 +1,18 @@
+---@class DdcItem
+---@field __sourceName string
+---@field word string
+---@field abbr? string
+---@field menu? string
+---@field info? string
+---@field kind? string
+---@field user_data? unknown
+---@field highlights? PumHighlight[]
+---@field columns? table<string, string>
+---@field [1] string
+
+---@class PumHighlight
+---@field name string
+---@field type "abbr" | "kind" | "menu"
+---@field hl_group string
+---@field col number
+---@field width number
