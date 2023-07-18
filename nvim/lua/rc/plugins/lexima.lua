@@ -9,18 +9,6 @@ local spec = {
       vim.g.lexima_map_escape = ""
 
       local my_rules = {
-        {
-          char = "<CR>",
-          at = [[{\%#}]],
-          input = [[<CR>\ ]],
-          filetype = "vim",
-        },
-        {
-          char = "<CR>",
-          at = [=[\[\%#]]=],
-          input = [[<CR>\ ]],
-          filetype = "vim",
-        },
       }
 
       for _, rule in ipairs(my_rules) do
