@@ -7,10 +7,10 @@ import {
   GatherArguments,
   Item,
   lambda,
+  linePatch,
   OnCompleteDoneArguments,
   OnInitArguments,
 } from "../rc/deps.ts";
-import { linePatch } from "../rc/util.ts";
 
 type Params = {
   items: UserData[];
