@@ -9,6 +9,17 @@ local spec = {
       vim.g.lexima_map_escape = ""
 
       local my_rules = {
+        {
+          char = "<",
+          at = [[\S\%#]],
+          input_after = ">",
+          filetype = "typescript",
+        },
+        {
+          char = "<BS>",
+          at = [[<\%#>]],
+          input = "<BS><Del>",
+        },
       }
 
       for _, rule in ipairs(my_rules) do
