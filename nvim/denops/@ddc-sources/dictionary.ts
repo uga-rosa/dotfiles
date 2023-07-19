@@ -95,10 +95,14 @@ export class Source extends BaseSource<Params> {
 
       const trie = new Trie();
       const reader = await Deno.open(path);
-      for await (const line of readLines(reader)) {
-        line.trim().split(/\s+/)
-          .filter((word) => word !== "")
-          .map((word) => trie.insert(word));
+      try {
+        for await (const line of readLines(reader)) {
+          line.trim().split(/\s+/).forEach((word) => {
+            if (word !== "") trie.insert(word);
+          });
+        }
+      } finally {
+        Deno.close(reader.rid);
       }
 
       this.#dictCache[path] = {
