@@ -27,3 +27,5 @@ export { type FilterArguments } from "https://deno.land/x/ddc_vim@v3.7.2/base/fi
 export { linePatch } from "https://deno.land/x/denops_lsputil@v0.5.3/mod.ts";
 
 export * as LSP from "npm:vscode-languageserver-types";
+
+export { Lock } from "https://deno.land/x/async@v2.0.2/mod.ts";

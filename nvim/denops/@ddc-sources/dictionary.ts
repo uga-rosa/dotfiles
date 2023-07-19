@@ -4,6 +4,7 @@ import {
   DdcGatherItems,
   fn,
   GatherArguments,
+  Lock,
   OnEventArguments,
   op,
   readLines,
@@ -86,6 +87,8 @@ export class Source extends BaseSource<Params> {
       }
     }
 
+    const lock = new Lock(this.#dictCache);
+
     await Promise.all(paths.map(async (path) => {
       const stat = await Deno.stat(path);
       const mtime = stat.mtime?.getTime();
@@ -105,12 +108,14 @@ export class Source extends BaseSource<Params> {
         Deno.close(reader.rid);
       }
 
-      this.#dictCache[path] = {
-        path,
-        mtime: mtime ?? -1,
-        trie,
-        active: true,
-      };
+      await lock.lock((dictCache) => {
+        dictCache[path] = {
+          path,
+          mtime: mtime ?? -1,
+          trie,
+          active: true,
+        };
+      });
     }));
   }
 
