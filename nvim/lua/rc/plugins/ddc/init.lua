@@ -90,6 +90,7 @@ local spec = {
           ignoreCase = true,
         },
       },
+      sources = helper.sources.default,
     })
 
     vim.api.nvim_create_autocmd("InsertEnter", {
@@ -118,6 +119,23 @@ local spec = {
           items = {
             { sourceName = "file", lhs = "<C-f>" },
             { sourceName = "buffer", lhs = "<C-b>" },
+          },
+        },
+      },
+    })
+    -- }}}
+
+    -- source-dictionary {{{
+    helper.patch_global({
+      sourceOptions = {
+        dictionary = {
+          mark = "[Dict]",
+        },
+      },
+      sourceParams = {
+        dictionary = {
+          spelllang = {
+            en = "/usr/share/dict/words",
           },
         },
       },

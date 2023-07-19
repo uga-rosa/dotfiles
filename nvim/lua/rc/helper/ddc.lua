@@ -3,9 +3,9 @@ local utils = require("rc.utils")
 local M = {}
 
 M.sources = {
-  default = { "vsnip", "nvim-lsp", "buffer" },
+  default = { "vsnip", "nvim-lsp", "buffer", "dictionary" },
   skkeleton = { "skkeleton" },
-  lua = { "vsnip", "nvim-lua", "nvim-lsp", "buffer" },
+  lua = { "vsnip", "nvim-lua", "nvim-lsp", "buffer", "dictionary" },
 }
 
 function M.patch_global(...)
