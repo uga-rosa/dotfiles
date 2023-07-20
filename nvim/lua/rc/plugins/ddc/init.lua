@@ -15,12 +15,18 @@ local spec = {
     vim.keymap.set("i", "<C-Space>", function()
       if vim.fn["ddc#visible"]() then
         return vim.fn["ddc#hide"]("Manual")
+      elseif vim.bo.filetype == "lua" then
+        return vim.fn["ddc#map#manual_complete"]({ sources = { "nvim-lua", "nvim-lsp" } })
+      elseif #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
+        return vim.fn["ddc#map#manual_complete"]({ sources = { "nvim-lsp" } })
       else
-        return vim.fn["ddc#map#manual_complete"]()
+        return vim.fn["ddc#map#manual_complete"]({ sources = { "buffer", "dictionary" } })
       end
     end, { expr = true, replace_keycodes = false })
+
     vim.keymap.set("i", "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
     vim.keymap.set("i", "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
+
     vim.keymap.set({ "i", "s" }, "<Tab>", function()
       if vim.bool_fn["vsnip#jumpable"](1) then
         return "<Plug>(vsnip-jump-next)"
