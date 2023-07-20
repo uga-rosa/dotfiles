@@ -1,4 +1,5 @@
 import {
+  autocmd,
   BaseSource,
   DdcEvent,
   DdcGatherItems,
@@ -6,6 +7,7 @@ import {
   GatherArguments,
   Lock,
   OnEventArguments,
+  OnInitArguments,
   op,
   readLines,
 } from "../rc/deps.ts";
@@ -47,6 +49,12 @@ export class Source extends BaseSource<Params> {
     "BufEnter",
     "OptionSet",
   ];
+
+  async onInit({
+    denops,
+  }: OnInitArguments<Params>): Promise<void> {
+    await autocmd.define(denops, "OptionSet", "spelllang", "call ddc#on_event('OptionSet')");
+  }
 
   async onEvent({
     denops,
