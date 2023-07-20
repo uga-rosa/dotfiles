@@ -1,4 +1,4 @@
-export { readLines } from "https://deno.land/std@0.194.0/io/mod.ts";
+export { readLines } from "https://deno.land/std@0.195.0/io/mod.ts";
 
 export { type Denops } from "https://deno.land/x/denops_std@v5.0.1/mod.ts";
 export * as fn from "https://deno.land/x/denops_std@v5.0.1/function/mod.ts";
@@ -15,17 +15,17 @@ export {
   type DdcGatherItems,
   type Item,
   type PumHighlight,
-} from "https://deno.land/x/ddc_vim@v3.7.2/types.ts";
+} from "https://deno.land/x/ddc_vim@v3.9.0/types.ts";
 export {
   type GatherArguments,
   type OnCompleteDoneArguments,
   type OnEventArguments,
   type OnInitArguments,
-} from "https://deno.land/x/ddc_vim@v3.7.2/base/source.ts";
-export { type FilterArguments } from "https://deno.land/x/ddc_vim@v3.7.2/base/filter.ts";
+} from "https://deno.land/x/ddc_vim@v3.9.0/base/source.ts";
+export { type FilterArguments } from "https://deno.land/x/ddc_vim@v3.9.0/base/filter.ts";
 
 export { linePatch } from "https://deno.land/x/denops_lsputil@v0.5.3/mod.ts";
 
-export * as LSP from "npm:vscode-languageserver-types";
-
 export { Lock } from "https://deno.land/x/async@v2.0.2/mod.ts";
+
+export * as LSP from "npm:vscode-languageserver-types@3.17.4-next.1";
