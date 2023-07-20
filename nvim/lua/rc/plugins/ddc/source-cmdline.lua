@@ -29,6 +29,17 @@ local spec = {
     })
 
     vim.keymap.set({ "n", "x" }, ":", "<Cmd>call ddc#enable_cmdline_completion()<CR>:")
+    vim.keymap.set("c", "<Tab>", function()
+      if vim.fn["ddc#visible"]() then
+        vim.fn["pum#map#insert_relative"](1, "loop")
+      else
+        return vim.fn["ddc#map#manual_complete"]()
+      end
+    end, { expr = true, replace_keycodes = false })
+    vim.keymap.set("c", "<S-Tab>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
+    vim.keymap.set("c", "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
+    vim.keymap.set("c", "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
+    vim.keymap.set("c", "<C-y>", "<Cmd>call pum#map#confirm()<CR>")
   end,
 }
 

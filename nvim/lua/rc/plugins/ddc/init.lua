@@ -12,17 +12,15 @@ local spec = {
   },
   import = "rc.plugins.ddc",
   init = function()
-    vim.keymap.set({ "i", "c" }, "<C-Space>", function()
-      if vim.fn["pum#visible"]() then
+    vim.keymap.set("i", "<C-Space>", function()
+      if vim.fn["ddc#visible"]() then
         return vim.fn["ddc#hide"]("Manual")
       else
         return vim.fn["ddc#map#manual_complete"]()
       end
     end, { expr = true, replace_keycodes = false })
-    vim.keymap.set({ "i", "c" }, "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
-    vim.keymap.set({ "i", "c" }, "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
-    vim.keymap.set("c", "<Tab>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
-    vim.keymap.set("c", "<S-Tab>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
+    vim.keymap.set("i", "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
+    vim.keymap.set("i", "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
     vim.keymap.set({ "i", "s" }, "<Tab>", function()
       if vim.bool_fn["vsnip#jumpable"](1) then
         return "<Plug>(vsnip-jump-next)"
@@ -37,7 +35,6 @@ local spec = {
         return "<S-Tab>"
       end
     end, { expr = true, replace_keycodes = true })
-    vim.keymap.set("c", "<C-y>", "<Cmd>call pum#map#confirm()<CR>")
 
     vim.api.nvim_create_autocmd("User", {
       pattern = "LazyPluginPost:lexima",
