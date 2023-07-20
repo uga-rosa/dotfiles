@@ -1,8 +1,6 @@
 ---@type LazySpec
 local spec = {
-  {
-    "folke/lazy.nvim",
-  },
+  "folke/lazy.nvim",
 }
 
 return spec

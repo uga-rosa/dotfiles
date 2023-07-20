@@ -15,24 +15,22 @@ end
 
 ---@type LazySpec
 local spec = {
-  {
-    "uga-rosa/translate.nvim",
-    keys = keys,
-    config = function()
-      require("translate").setup({
-        default = {
-          command = "deepl_free",
-        },
-        preset = {
-          output = {
-            split = {
-              append = true,
-            },
+  "uga-rosa/translate.nvim",
+  keys = keys,
+  config = function()
+    require("translate").setup({
+      default = {
+        command = "deepl_free",
+      },
+      preset = {
+        output = {
+          split = {
+            append = true,
           },
         },
-      })
-    end,
-  },
+      },
+    })
+  end,
 }
 
 return spec
