@@ -133,17 +133,11 @@ local spec = {
       { "<M-n>", "<Cmd>UgatermNew<CR><Cmd>UgatermRename<CR>", mode = { "n", "t" } },
     },
     config = function()
-      local group = vim.api.nvim_create_augroup("ugaterm-enter", {})
-      for event, pattern in pairs({
-        TermOpen = "*",
-        BufEnter = "terminal://*",
-      }) do
-        vim.api.nvim_create_autocmd(event, {
-          pattern = pattern,
-          group = group,
-          command = "startinsert",
-        })
-      end
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "UgatermEnter",
+        group = vim.api.nvim_create_augroup("ugaterm-enter", {}),
+        command = "startinsert",
+      })
     end,
   },
   {
