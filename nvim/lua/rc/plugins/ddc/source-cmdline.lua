@@ -19,6 +19,8 @@ local spec = {
         cmdline = {
           mark = "[Cmd]",
           keywordPattern = "[\\w#:~_-]*",
+          matchers = { "matcher_fuzzy" },
+          sorters = { "sorter_fuzzy" },
           converters = { "converter_cmdline" },
         },
         input = { mark = "[Input]" },
