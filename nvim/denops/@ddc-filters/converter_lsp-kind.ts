@@ -1,7 +1,5 @@
 import { BaseFilter, Item } from "../rc/deps.ts";
 
-const HIGHLIGHT_NAME = "ddc-lsp-kind";
-
 type Params = Record<never, never>;
 
 export class Filter extends BaseFilter<Params> {
@@ -25,7 +23,7 @@ export class Filter extends BaseFilter<Params> {
           highlights: [
             ...item.highlights ?? [],
             {
-              name: HIGHLIGHT_NAME,
+              name: `ddc-lsp-kind-${kindName}`,
               type: "kind",
               hl_group: `CmpItemKind${item.kind}`,
               col: 1,
