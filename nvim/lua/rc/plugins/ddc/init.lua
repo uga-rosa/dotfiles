@@ -62,7 +62,7 @@ local spec = {
   end,
   config = function()
     vim.fn["pum#set_option"]({
-      item_orders = { "kind", "abbr", "menu" },
+      item_orders = { "kind", "space", "abbr", "space", "menu" },
       scrollbar_char = "┃",
     })
 
