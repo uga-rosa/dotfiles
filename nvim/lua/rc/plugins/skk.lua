@@ -77,7 +77,8 @@ local spec = {
     cond = false,
   },
   {
-    dir = "~/plugin/skk-learning.nvim",
+    "uga-rosa/skk-learning",
+    dev = true,
     cond = false,
   },
 }

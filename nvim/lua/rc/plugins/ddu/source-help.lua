@@ -14,7 +14,8 @@ end)
 
 ---@type LazySpec
 local spec = {
-  dir = "~/plugin/ddu-source-help",
+  "uga-rosa/ddu-source-help",
+  dev = true,
   dependencies = "ddu.vim",
   init = function()
     vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")

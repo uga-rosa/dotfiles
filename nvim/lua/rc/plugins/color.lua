@@ -15,7 +15,8 @@ local spec = {
     end,
   },
   {
-    dir = "~/plugin/ccc.nvim",
+    "uga-rosa/ccc.nvim",
+    dev = true,
     event = "BufRead",
     config = function()
       local ccc = require("ccc")

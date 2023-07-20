@@ -13,7 +13,8 @@ end)
 
 ---@type LazySpec
 local spec = {
-  dir = "~/plugin/ddu-source-lsp",
+  "uga-rosa/ddu-source-lsp",
+  dev = true,
   dependencies = "ddu.vim",
   init = function()
     vim.keymap.set("n", "gd", "<Cmd>Ddu lsp_definition<CR>")
