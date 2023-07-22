@@ -87,9 +87,6 @@ return {
       hint = {
         enable = true,
       },
-      completion = {
-        callSnippet = "Replace",
-      },
     },
   },
 }
