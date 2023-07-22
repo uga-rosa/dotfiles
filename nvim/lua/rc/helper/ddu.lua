@@ -42,19 +42,31 @@ function M.register(name, callback)
   utils.package_set("ddu_command", name, callback)
 end
 
+---@param fn? string | function
+---@param ... unknown
+local function safe_call(fn, ...)
+  fn = type(fn) == "string" and vim.fn[fn] or fn --[[@as function?]]
+  if fn then
+    fn(...)
+  end
+end
+
 ---@param name string
 ---@param params? table
 ---@param stopinsert? boolean
+---@param callback? string | function
 ---@return function
-function M.action(name, params, stopinsert)
+function M.action(name, params, stopinsert, callback)
   return function()
     if stopinsert then
       vim.cmd.stopinsert()
       vim.schedule(function()
         vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
+        safe_call(callback)
       end)
     else
       vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
+      safe_call(callback)
     end
   end
 end
@@ -62,9 +74,10 @@ end
 ---@param name string
 ---@param params? table
 ---@param stopinsert? boolean
+---@param callback? string | function
 ---@return function
-function M.item_action(name, params, stopinsert)
-  return M.action("itemAction", { name = name, params = params }, stopinsert)
+function M.item_action(name, params, stopinsert, callback)
+  return M.action("itemAction", { name = name, params = params }, stopinsert, callback)
 end
 
 ---@param cmd string
