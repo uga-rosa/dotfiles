@@ -129,13 +129,15 @@ export class Source extends BaseSource<Params> {
 
   gather({
     sourceParams,
+    sourceOptions,
     completeStr,
   }: GatherArguments<Params>): Promise<DdcGatherItems> {
     const prefix = completeStr.slice(0, sourceParams.exactLength);
-    const isIncomplete = completeStr.length !== sourceParams.exactLength;
     const items = Object.values(this.#dictCache).filter((cache) => cache.active)
       .flatMap((cache) => cache.trie.search(prefix))
       .map((word) => ({ word }));
+    const isIncomplete = completeStr.length === sourceParams.exactLength ||
+      items.length > sourceOptions.maxItems;
     return Promise.resolve({ items, isIncomplete });
   }
 
