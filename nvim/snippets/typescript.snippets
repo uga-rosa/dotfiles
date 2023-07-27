@@ -22,3 +22,12 @@ snippet arrow_fn(async)
 	}
 snippet promise
 	Promise<$1>
+snippet custom_error
+	class ${1}Error extends Error {
+		static {
+			this.prototype.name = "${1}Error";
+		}
+		constructor(message: string, options?: ErrorOptions) {
+			super(message, options);
+		}
+	}
