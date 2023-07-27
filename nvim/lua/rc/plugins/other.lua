@@ -129,10 +129,10 @@ local spec = {
   },
   {
     "uga-rosa/ugaterm.nvim",
-    keys = {
-      { "<M-t>", "<Cmd>UgatermToggle<CR>", mode = { "n", "t" } },
-      { "<M-n>", "<Cmd>UgatermNew<CR><Cmd>UgatermRename<CR>", mode = { "n", "t" } },
-    },
+    dev = true,
+    init = function()
+      vim.keymap.set({ "n", "t" }, "<M-t>", "<Cmd>UgatermOpen -toggle<CR>")
+    end,
     config = function()
       vim.api.nvim_create_autocmd("User", {
         pattern = "UgatermEnter",
