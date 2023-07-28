@@ -6,7 +6,7 @@ type Params = Record<never, never>;
 export class Filter extends BaseFilter<Params> {
   async filter({
     items,
-  }: FilterArguments): Promise<Item[]> {
+  }: FilterArguments<Params>): Promise<Item[]> {
     {{_cursor_}}
   }
 
