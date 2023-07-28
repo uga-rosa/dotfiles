@@ -8,9 +8,13 @@ local spec = {
     {
       "lambdalisue/mr.vim",
       init = function()
-        vim.cmd([[
-        let g:mr#mru#predicates = [{ filename -> filename !~# 'doc/.*\%(txt\|jax\)' }]
-        ]])
+        vim.g["mr#mru#predicates"] = {
+          ---@param filename string
+          ---@return boolean
+          function(filename)
+            return not (filename:find("doc/.*%.txt$") or filename:find("doc/.*%.jax$"))
+          end,
+        }
       end,
     },
   },
