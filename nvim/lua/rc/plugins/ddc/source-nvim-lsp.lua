@@ -21,6 +21,7 @@ local spec = {
           mark = "[LSP]",
           dup = "keep",
           keywordPattern = "\\k*",
+          sorters = { "sorter_fuzzy", "sorter_lsp-kind" },
         },
       },
       sourceParams = {
