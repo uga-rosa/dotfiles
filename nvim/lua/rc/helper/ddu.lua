@@ -4,7 +4,8 @@ local M = {}
 
 ---@class Source
 ---@field [1] string name
----@field params table
+---@field params? table
+---@field options? table
 
 ---@param name string
 ---@param source string|Source|(Source|string)[]
@@ -15,12 +16,8 @@ function M.start(name, source, config)
   if type(source) == "string" then
     -- string
     sources = { { name = source } }
-  elseif source.params then
-    -- Source
-    source.name, source[1] = source[1], nil
-    sources = { source }
-  else
-    -- Source[]
+  elseif vim.tbl_islist(source) then
+    ---@cast source (Source|string)[]
     for i, s in ipairs(source) do
       if type(s) == "string" then
         source[i] = { name = s }
@@ -29,6 +26,10 @@ function M.start(name, source, config)
       end
     end
     sources = source
+  else
+    -- Source
+    source.name, source[1] = source[1], nil
+    sources = { source }
   end
   config.sources = sources
   config.name = name
