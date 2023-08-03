@@ -20,7 +20,7 @@ local spec = {
         ["nvim-lsp"] = {
           mark = "[LSP]",
           dup = "keep",
-          keywordPattern = "\\k*",
+          keywordPattern = "\\k+",
           sorters = { "sorter_fuzzy", "sorter_lsp-kind" },
         },
       },
