@@ -39,7 +39,7 @@ local spec = {
     "lambdalisue/kensaku.vim",
     dependencies = "vim-denops/denops.vim",
     config = function()
-      local romanTableJson = vim.fs.read(vim.fn.stdpath("config") .. "/script/azik.json")
+      local romanTableJson = vim.fs.read(vim.fn.stdpath("config") .. "/script/azik_skkeleton.json")
       local romanTableObj = vim.json.decode(romanTableJson)
       local romanTable = {}
       for key, value in pairs(romanTableObj) do
