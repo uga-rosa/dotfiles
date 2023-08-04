@@ -55,6 +55,7 @@ end
 ---@generic T
 ---@param arr T[]
 ---@param callback? fun(x: T): number
+---@return number
 function M.max(arr, callback)
   assert(#arr > 0, "Array is empty")
   local max_value = -math.huge
@@ -70,6 +71,7 @@ end
 ---@generic T
 ---@param arr T[]
 ---@param callback? fun(x: T): number
+---@return number
 function M.min(arr, callback)
   assert(#arr > 0, "Array is empty")
   local min_value = math.huge
