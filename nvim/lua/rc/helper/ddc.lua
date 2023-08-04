@@ -69,6 +69,7 @@ function Menu:open()
   end
   self:_buf_reset()
   self:_open(current_item)
+  vim.cmd.redraw()
 end
 
 function Menu:close()
