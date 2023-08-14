@@ -6,6 +6,10 @@ for _, pos in ipairs({ "Left", "Right", "Middle" }) do
   end
 end
 
+-- swap ; and :
+vim.keymap.set("", ";", ":")
+vim.keymap.set("", ":", ";")
+
 -- Release for prefix
 vim.keymap.set("n", "s", "<Nop>")
 
