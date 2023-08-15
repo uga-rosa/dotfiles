@@ -1,26 +1,26 @@
+local mode_all = { "n", "v", "o", "i", "c", "t" }
+
 -- Disable mouse click for all mode
 for _, pos in ipairs({ "Left", "Right", "Middle" }) do
-  vim.keymap.set({ "", "i", "c", "t" }, ("<%sMouse>"):format(pos), "<Nop>")
+  vim.keymap.set(mode_all, ("<%sMouse>"):format(pos), "<Nop>")
   for _, pre in ipairs({ "2", "3", "4", "S", "C", "A" }) do
-    vim.keymap.set({ "", "i", "c", "t" }, ("<%s-%sMouse>"):format(pre, pos), "<Nop>")
+    vim.keymap.set(mode_all, ("<%s-%sMouse>"):format(pre, pos), "<Nop>")
   end
 end
 
 -- swap ; and :
-vim.keymap.set("", ";", ":")
-vim.keymap.set("", ":", ";")
+vim.keymap.set(mode_all, ";", ":", { remap = true })
+vim.keymap.set(mode_all, ":", ";", { remap = true })
 
 -- 7sPro
-for _, mode in ipairs({ "n", "x", "o", "i", "c", "t" }) do
-  vim.keymap.set(mode, "<Right>", "<C-f>", { remap = true })
-  vim.keymap.set(mode, "<Left>", "<C-b>", { remap = true })
-  vim.keymap.set(mode, "<Up>", "<C-p>", { remap = true })
-  vim.keymap.set(mode, "<Down>", "<C-n>", { remap = true })
-  vim.keymap.set(mode, "<Del>", "<C-d>", { remap = true })
-  vim.keymap.set(mode, "<BS>", "<C-h>", { remap = true })
-  vim.keymap.set(mode, "<Home>", "<C-a>", { remap = true })
-  vim.keymap.set(mode, "<End>", "<C-e>", { remap = true })
-end
+vim.keymap.set(mode_all, "<Right>", "<C-f>", { remap = true })
+vim.keymap.set(mode_all, "<Left>", "<C-b>", { remap = true })
+vim.keymap.set(mode_all, "<Up>", "<C-p>", { remap = true })
+vim.keymap.set(mode_all, "<Down>", "<C-n>", { remap = true })
+vim.keymap.set(mode_all, "<Del>", "<C-d>", { remap = true })
+vim.keymap.set(mode_all, "<BS>", "<C-h>", { remap = true })
+vim.keymap.set(mode_all, "<Home>", "<C-a>", { remap = true })
+vim.keymap.set(mode_all, "<End>", "<C-e>", { remap = true })
 
 -- Release for prefix
 vim.keymap.set("n", "s", "<Nop>")
