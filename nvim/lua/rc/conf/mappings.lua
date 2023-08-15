@@ -10,6 +10,18 @@ end
 vim.keymap.set("", ";", ":")
 vim.keymap.set("", ":", ";")
 
+-- 7sPro
+for _, mode in ipairs({ "n", "x", "o", "i", "c", "t" }) do
+  vim.keymap.set(mode, "<Right>", "<C-f>", { remap = true })
+  vim.keymap.set(mode, "<Left>", "<C-b>", { remap = true })
+  vim.keymap.set(mode, "<Up>", "<C-p>", { remap = true })
+  vim.keymap.set(mode, "<Down>", "<C-n>", { remap = true })
+  vim.keymap.set(mode, "<Del>", "<C-d>", { remap = true })
+  vim.keymap.set(mode, "<BS>", "<C-h>", { remap = true })
+  vim.keymap.set(mode, "<Home>", "<C-a>", { remap = true })
+  vim.keymap.set(mode, "<End>", "<C-e>", { remap = true })
+end
+
 -- Release for prefix
 vim.keymap.set("n", "s", "<Nop>")
 
