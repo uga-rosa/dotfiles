@@ -9,6 +9,10 @@ local spec = {
     "Shougo/pum.vim",
     "Shougo/ddc-ui-pum",
     "tani/ddc-fuzzy",
+    {
+      "uga-rosa/ddc-previewer-floating",
+      dev = true,
+    },
   },
   import = "rc.plugins.ddc",
   init = function()
@@ -146,7 +150,7 @@ local spec = {
     -- }}}
 
     vim.fn["ddc#enable"]()
-    helper.menu.enable()
+    require("ddc_previewer_floating").enable()
   end,
 }
 
