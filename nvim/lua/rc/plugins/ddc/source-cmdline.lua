@@ -28,7 +28,7 @@ local spec = {
       },
     })
 
-    vim.keymap.set({ "n", "x" }, ":", "<Cmd>call ddc#enable_cmdline_completion()<CR>:")
+    vim.keymap.set({ "n", "x" }, ";", "<Cmd>call ddc#enable_cmdline_completion()<CR>:")
     vim.keymap.set("c", "<Tab>", function()
       if vim.fn["ddc#visible"]() then
         vim.fn["pum#map#insert_relative"](1, "loop")

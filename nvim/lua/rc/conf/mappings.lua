@@ -9,8 +9,8 @@ for _, pos in ipairs({ "Left", "Right", "Middle" }) do
 end
 
 -- swap ; and :
-vim.keymap.set(mode_all, ";", ":", { remap = true })
-vim.keymap.set(mode_all, ":", ";", { remap = true })
+vim.keymap.set(mode_all, ";", ":")
+vim.keymap.set(mode_all, ":", ";")
 
 -- 7sPro
 vim.keymap.set(mode_all, "<Right>", "<C-f>", { remap = true })
