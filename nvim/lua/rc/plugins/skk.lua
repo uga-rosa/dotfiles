@@ -61,13 +61,13 @@ local spec = {
       vim.api.nvim_create_autocmd("User", {
         pattern = "skkeleton-enable-post",
         callback = function()
-          helper.patch_global("sources", helper.sources.skkeleton)
+          helper.patch_buffer("sources", helper.sources.skkeleton)
         end,
       })
       vim.api.nvim_create_autocmd("User", {
         pattern = "skkeleton-disable-post",
         callback = function()
-          helper.patch_global("sources", helper.sources.default)
+          helper.patch_buffer("sources", helper.sources.default)
         end,
       })
     end,

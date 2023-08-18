@@ -100,13 +100,13 @@ local spec = {
       sources = helper.sources.default,
     })
 
-    vim.api.nvim_create_autocmd("InsertEnter", {
-      callback = function()
-        local ft = vim.bo.filetype
-        local sources = helper.sources[ft] or helper.sources.default
-        helper.patch_buffer("sources", sources)
-      end,
-    })
+    for ft, sources in pairs(helper.sources) do
+      if ft ~= "default" and ft ~= "skkeleton" then
+        helper.patch_filetype(ft, {
+          sources = sources,
+        })
+      end
+    end
 
     helper.patch_filetype("vim", {
       keywordPattern = "(?:[a-z]:)?\\k*",
