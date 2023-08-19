@@ -1,4 +1,4 @@
-import { join } from "https://deno.land/std@0.174.0/path/mod.ts";
+import { join } from "https://deno.land/std@0.198.0/path/mod.ts";
 import { hiraToKata } from "./hira_kata.ts";
 import { kataToHanKata } from "./hira_hankata.ts";
 

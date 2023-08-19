@@ -1,5 +1,5 @@
-import { BaseFilter, Item } from "https://deno.land/x/ddc_vim@v3.9.0/types.ts";
-import { FilterArguments } from "https://deno.land/x/ddc_vim@v3.9.0/base/filter.ts";
+import { BaseFilter, Item } from "https://deno.land/x/ddc_vim@v4.0.4/types.ts";
+import { FilterArguments } from "https://deno.land/x/ddc_vim@v4.0.4/base/filter.ts";
 
 type Params = Record<never, never>;
 
