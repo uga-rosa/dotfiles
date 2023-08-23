@@ -38,6 +38,10 @@ ft_event.go = rc.call_with(set_indent, 4, true)
 
 ft_event.help = rc.call_with(set_indent, 8, true)
 
+ft_event.vim = function()
+  vim.keymap.set("n", "gd", "<Cmd>call vimrc#vim#gd()<CR>")
+end
+
 local function find_first_existing_file_path(paths)
   return vim.iter(paths):map(vim.fs.normalize):find(vim.fs.isfile)
 end
