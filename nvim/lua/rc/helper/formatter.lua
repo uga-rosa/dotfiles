@@ -9,9 +9,9 @@ function M.stdin(cmd)
     return
   end
   local data = result.stdout:gsub("%s*$", "")
-  local cursor = vim.api.nvim_win_get_cursor(0)
+  local view = vim.fn.winsaveview()
   vim.api.nvim_buf_set_lines(0, 0, -1, true, vim.split(data, "\n"))
-  vim.api.nvim_win_set_cursor(0, cursor)
+  vim.fn.winrestview(view)
 end
 
 --- `%f` is replaced by the filename
@@ -30,9 +30,9 @@ function M.tmp(cmd)
     return
   end
   local data = vim.fs.read(tmpfile):gsub("%s*$", "")
-  local cursor = vim.api.nvim_win_get_cursor(0)
+  local view = vim.fn.winsaveview()
   vim.api.nvim_buf_set_lines(0, 0, -1, true, vim.split(data, "\n"))
-  vim.api.nvim_win_set_cursor(0, cursor)
+  vim.fn.winrestview(view)
 end
 
 return M
