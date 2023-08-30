@@ -38,6 +38,7 @@ local spec = {
         ff = {
           startFilter = true,
           prompt = "> ",
+          cursorPos = 0,
           split = "floating",
           floatingBorder = "single",
           filterFloatingPosition = "top",

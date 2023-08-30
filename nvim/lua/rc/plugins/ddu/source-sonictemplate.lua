@@ -6,17 +6,16 @@ local spec = {
   dev = true,
   dependencies = "ddu.vim",
   config = function()
-    helper.patch_global({
-      kindOptions = {
-        sonictemplate = {
-          defaultAction = "apply",
+    helper.patch_local("sonictemplate", {
+      sources = {
+        {
+          name = "sonictemplate",
+          options = {
+            defaultAction = "apply",
+          },
         },
       },
     })
-
-    helper.register("sonictemplate", function()
-      helper.start("sonictemplate", "sonictemplate", {})
-    end)
   end,
 }
 

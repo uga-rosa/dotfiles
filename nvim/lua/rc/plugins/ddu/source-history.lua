@@ -16,36 +16,34 @@ local spec = {
     "matsui54/ddu-source-command_history",
     dependencies = "ddu.vim",
     init = function()
-      vim.keymap.set("n", "q:", "<Cmd>Ddu command_history<CR>")
+      vim.keymap.set("n", "q:", "<Cmd>Ddu history:command<CR>")
     end,
     config = function()
-      helper.register("command_history", function()
-        helper.start("history", "command_history", {
-          kindOptions = {
-            _ = {
-              defaultAction = "execute",
-            },
+      helper.patch_local("history:command", {
+        sources = { "command_history" },
+        kindOptions = {
+          _ = {
+            defaultAction = "execute",
           },
-        })
-      end)
+        },
+      })
     end,
   },
   {
     "uga-rosa/ddu-source-search_history",
     dependencies = "ddu.vim",
     init = function()
-      vim.keymap.set("n", "q/", "<Cmd>Ddu search_history<CR>")
+      vim.keymap.set("n", "q/", "<Cmd>Ddu history:search<CR>")
     end,
     config = function()
-      helper.register("search_history", function()
-        helper.start("history", "search_history", {
-          kindOptions = {
-            _ = {
-              defaultAction = "execute",
-            },
+      helper.patch_local("history:search", {
+        sources = { "search_history" },
+        kindOptions = {
+          _ = {
+            defaultAction = "execute",
           },
-        })
-      end)
+        },
+      })
     end,
   },
 }

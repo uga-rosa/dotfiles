@@ -19,19 +19,22 @@ local spec = {
     },
   },
   init = function()
-    vim.keymap.set("n", "<Space>w", "<Cmd>Ddu mrw<CR>")
-    vim.keymap.set("n", "<Space>u", "<Cmd>Ddu mru<CR>")
+    vim.keymap.set("n", "<Space>w", "<Cmd>Ddu file:mrw<CR>")
+    vim.keymap.set("n", "<Space>u", "<Cmd>Ddu file:mru<CR>")
   end,
   config = function()
     for _, kind in ipairs({ "mru", "mrw", "mrr" }) do
-      helper.register(kind, function()
-        helper.start("file", {
-          "mr",
+      helper.patch_local("file:" .. kind, {
+        sources = {
+          name = "mr",
+          options = {
+            converters = { "converter_devicon" },
+          },
           params = {
             kind = kind,
           },
-        })
-      end)
+        },
+      })
     end
   end,
 }

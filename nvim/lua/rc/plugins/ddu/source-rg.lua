@@ -5,24 +5,28 @@ local spec = {
   "shun/ddu-source-rg",
   dependencies = "ddu.vim",
   init = function()
-    vim.keymap.set("n", "<Space>lg", "<Cmd>Ddu live_grep<CR>")
+    vim.keymap.set("n", "<Space>lg", "<Cmd>Ddu file:rg<CR>")
   end,
   config = function()
-    helper.register("live_grep", function()
-      helper.start("file", "rg", {
-        uiParams = {
-          ff = {
-            ignoreEmpty = false,
+    helper.patch_local("file:rg", {
+      sources = {
+        {
+          name = "rg",
+          options = {
+            _ = {
+              volatile = true,
+              matchers = {},
+              converters = { "converter_devicon" },
+            },
           },
         },
-        sourceOptions = {
-          rg = {
-            volatile = true,
-            matchers = {},
-          },
+      },
+      uiParams = {
+        ff = {
+          ignoreEmpty = false,
         },
-      })
-    end)
+      },
+    })
   end,
 }
 

@@ -17,10 +17,10 @@ local spec = {
   dev = true,
   dependencies = "ddu.vim",
   init = function()
-    vim.keymap.set("n", "gd", "<Cmd>Ddu lsp_definition<CR>")
-    vim.keymap.set("n", "gt", "<Cmd>Ddu lsp_type_definition<CR>")
-    vim.keymap.set("n", "gr", "<Cmd>Ddu lsp_references<CR>")
-    vim.keymap.set({ "n", "x" }, "<Space>a", "<Cmd>Ddu lsp_codeAction<CR>")
+    vim.keymap.set("n", "gd", "<Cmd>Ddu lsp:definition<CR>")
+    vim.keymap.set("n", "gt", "<Cmd>Ddu lsp:type_definition<CR>")
+    vim.keymap.set("n", "gr", "<Cmd>Ddu lsp:references<CR>")
+    vim.keymap.set({ "n", "x" }, "<Space>a", "<Cmd>Ddu lsp:code_action<CR>")
   end,
   config = function()
     helper.patch_global({
@@ -34,107 +34,92 @@ local spec = {
       },
     })
 
-    for subcommand, method in pairs({
-      lsp_declaration = "textDocument/declaration",
-      lsp_definition = "textDocument/definition",
-      lsp_type_definition = "textDocument/typeDefinition",
-      lsp_implementation = "textDocument/implementation",
+    for name, method in pairs({
+      ["lsp:declaration"] = "textDocument/declaration",
+      ["lsp:definition"] = "textDocument/definition",
+      ["lsp:type_definition"] = "textDocument/typeDefinition",
+      ["lsp:implementation"] = "textDocument/implementation",
     }) do
-      helper.register(subcommand, function()
-        helper.start("lsp", {
-          "lsp_definition",
-          params = {
-            method = method,
-          },
-        }, {
-          sync = true,
-          uiParams = {
-            ff = {
-              immediateAction = "open",
+      helper.patch_local(name, {
+        sources = {
+          {
+            name = "lsp_definition",
+            params = {
+              method = method,
             },
           },
-        })
-      end)
+        },
+        sync = true,
+        uiParams = {
+          ff = {
+            immediateAction = "open",
+          },
+        },
+      })
     end
 
-    helper.register("lsp_references", function()
-      helper.start("lsp", "lsp_references")
-    end)
+    helper.patch_local("lsp:references", {
+      sources = { "lsp_references" },
+    })
 
     ---@param word string
     ---@param color string
-    ---@return Source
+    ---@return { name: string, params: table }
     local function separator(word, color)
       local hlGroup = "DduDummy" .. color:gsub("[^a-zA-Z0-9]", "")
       vim.api.nvim_set_hl(0, hlGroup, { fg = color })
       return {
-        "dummy",
+        name = "dummy",
         params = { word = word, hlGroup = hlGroup },
       }
     end
 
-    helper.register("lsp_definition_all", function()
-      helper.start("lsp:dummy", {
+    helper.patch_local("lsp:definition_all", {
+      sources = {
         separator(">>Definition<<", "#fc514e"),
-        { "lsp_definition", params = { method = "textDocument/definition" } },
+        { name = "lsp_definition", params = { method = "textDocument/definition" } },
         separator(">>Type definition<<", "#ffcb8b"),
-        { "lsp_definition", params = { method = "textDocument/typeDefinition" } },
+        { name = "lsp_definition", params = { method = "textDocument/typeDefinition" } },
         separator(">>Declaration<<", "#21c7a8"),
-        { "lsp_definition", params = { method = "textDocument/declaration" } },
+        { name = "lsp_definition", params = { method = "textDocument/declaration" } },
         separator(">>Implementation<<", "#5e97ec"),
-        { "lsp_definition", params = { method = "textDocument/implementation" } },
-      })
-    end)
+        { name = "lsp_definition", params = { method = "textDocument/implementation" } },
+      },
+    })
 
-    helper.register("lsp_finder", function()
-      helper.start("lsp:dummy", {
+    helper.patch_local("lsp:finder", {
+      sources = {
         separator(">>Definition<<", "#fc514e"),
-        "lsp_definition",
+        { name = "lsp_definition" },
         separator(">>References<<", "#5e97ec"),
-        { "lsp_references", params = { includeDeclaration = false } },
-      })
-    end)
+        { name = "lsp_references", params = { includeDeclaration = false } },
+      },
+    })
 
-    helper.patch_local("lsp:symbol", {
-      sourceOptions = {
-        _ = {
-          converters = { "converter_lsp_symbol" },
+    helper.patch_local("lsp:document_symbol", {
+      sources = {
+        {
+          name = "lsp_documentSymbol",
+          options = {
+            converters = { "converter_lsp_symbol" },
+          },
         },
       },
     })
 
-    helper.register("lsp_document_symbol", function()
-      helper.start("lsp:symbol", "lsp_documentSymbol")
-    end)
-
-    helper.register("lsp_workspace_symbol", function()
-      vim.ui.input({
-        prompt = "A query string to filter symbols by: ",
-      }, function(input)
-        input = input or ""
-        helper.start("lsp:symbol", {
-          "lsp_workspaceSymbol",
-          params = {
-            query = input,
-          },
-        })
-      end)
-    end)
-
-    helper.register("lsp_dynamic_workspaceSymbol", function()
-      helper.start("lsp:symbol", "lsp_workspaceSymbol", {
-        uiParams = {
-          ff = {
-            ignoreEmpty = false,
-          },
+    helper.patch_local("lsp:dynamic_workspaceSymbol", {
+      sources = {
+        {
+          name = "lsp_workspaceSymbol",
+          options = { volatile = true },
         },
-        sourceOptions = {
-          lsp_workspaceSymbol = {
-            volatile = true,
-          },
+      },
+      uiParams = {
+        ff = {
+          ignoreEmpty = false,
         },
-      })
-    end)
+      },
+    })
 
     helper.patch_local("lsp:hierarchy", {
       uiParams = {
@@ -145,32 +130,26 @@ local spec = {
       },
     })
 
-    for subcommand, method in pairs({
-      lsp_incoming_call = "callHierarchy/incomingCalls",
-      lsp_outgoing_call = "callHierarchy/outgoingCalls",
+    for name, method in pairs({
+      ["lsp:incoming_call"] = "callHierarchy/incomingCalls",
+      ["lsp:outgoing_call"] = "callHierarchy/outgoingCalls",
+      ["lsp:super_type"] = "typeHierarchy/supertypes",
+      ["lsp:sub_type"] = "typeHierarchy/subtypes",
     }) do
-      helper.register(subcommand, function()
-        helper.start("lsp:hierarchy", {
-          "lsp_callHierarchy",
-          params = {
-            method = method,
+      helper.patch_local(name, {
+        sources = {
+          {
+            name = "lsp_callHierarchy",
+            params = { method = method },
           },
-        })
-      end)
-    end
-
-    for subcommand, method in pairs({
-      lsp_super_type = "typeHierarchy/supertypes",
-      lsp_sub_type = "typeHierarchy/subtypes",
-    }) do
-      helper.register(subcommand, function()
-        helper.start("lsp:hierarchy", {
-          "lsp_typeHierarchy",
-          params = {
-            method = method,
+        },
+        uiParams = {
+          ff = {
+            displayTree = true,
+            startFilter = false,
           },
-        })
-      end)
+        },
+      })
     end
 
     helper.patch_local("lsp:diagnostic", {
@@ -185,19 +164,19 @@ local spec = {
       lsp_diagnostic = 0,
       lsp_diagnostic_all = vim.NIL,
     }) do
-      helper.register(subcommand, function()
-        helper.start("lsp:diagnostic", {
-          "lsp_diagnostic",
-          params = {
-            buffer = buffer,
+      helper.patch_local(subcommand, {
+        sources = {
+          {
+            name = "lsp_diagnostic",
+            params = { buffer = buffer },
           },
-        })
-      end)
+        },
+      })
     end
 
-    helper.register("lsp_codeAction", function()
-      helper.start("codeAction", "lsp_codeAction")
-    end)
+    helper.patch_local("lsp:code_action", {
+      sources = { "lsp_codeAction" },
+    })
   end,
 }
 

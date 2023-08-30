@@ -21,26 +21,16 @@ local spec = {
     vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
   end,
   config = function()
-    helper.patch_global({
-      kindOptions = {
-        help = {
-          defaultAction = "open",
+    helper.patch_local("help_tags", {
+      sources = {
+        {
+          name = "help",
+          options = {
+            defaultAction = "open",
+          },
         },
       },
     })
-
-    helper.register("help_tags", function()
-      helper.start("help", "help")
-    end)
-
-    helper.register("lazy_readme", function()
-      helper.start("help", {
-        "help",
-        params = {
-          readme = "only",
-        },
-      })
-    end)
   end,
 }
 
