@@ -13,11 +13,9 @@ local spec = {
         {
           name = "rg",
           options = {
-            _ = {
-              volatile = true,
-              matchers = {},
-              converters = { "converter_devicon" },
-            },
+            volatile = true,
+            matchers = {},
+            converters = { "converter_devicon" },
           },
         },
       },
