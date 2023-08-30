@@ -33,3 +33,8 @@ snippet custom_error
 			super(message, options);
 		}
 	}
+snippet byteLength
+	const ENCODER = new TextEncoder();
+	function byteLength(str: string): number {
+		return ENCODER.encode(str).length;
+	}
