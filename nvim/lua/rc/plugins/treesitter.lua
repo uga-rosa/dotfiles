@@ -8,7 +8,7 @@ local spec = {
   build = ":TSUpdate",
   config = function()
     local parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
-    vim.opt.runtimepath:append(parser_install_dir)
+    vim.opt.runtimepath:prepend(parser_install_dir)
 
     require("nvim-treesitter.configs").setup({
       highlight = {
@@ -17,6 +17,7 @@ local spec = {
       },
       -- lua, vim. help (vimdoc) parser is in neovim core.
       ensure_installed = {
+        "bash",
         "toml",
         "query",
         "markdown",
