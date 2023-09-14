@@ -24,6 +24,21 @@ local spec = {
         vsnip = { menu = false },
       },
     })
+
+    vim.keymap.set({ "i", "s" }, "<Tab>", function()
+      if vim.bool_fn["vsnip#jumpable"](1) then
+        return "<Plug>(vsnip-jump-next)"
+      else
+        return "<Tab>"
+      end
+    end, { expr = true, replace_keycodes = true })
+    vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+      if vim.bool_fn["vsnip#jumpable"](-1) then
+        return "<Plug>(vsnip-jump-prev)"
+      else
+        return "<S-Tab>"
+      end
+    end, { expr = true, replace_keycodes = true })
   end,
 }
 

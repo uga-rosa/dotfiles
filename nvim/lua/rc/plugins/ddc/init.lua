@@ -31,21 +31,6 @@ local spec = {
     vim.keymap.set("i", "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
     vim.keymap.set("i", "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
 
-    vim.keymap.set({ "i", "s" }, "<Tab>", function()
-      if vim.bool_fn["vsnip#jumpable"](1) then
-        return "<Plug>(vsnip-jump-next)"
-      else
-        return "<Tab>"
-      end
-    end, { expr = true, replace_keycodes = true })
-    vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
-      if vim.bool_fn["vsnip#jumpable"](-1) then
-        return "<Plug>(vsnip-jump-prev)"
-      else
-        return "<S-Tab>"
-      end
-    end, { expr = true, replace_keycodes = true })
-
     vim.api.nvim_create_autocmd("User", {
       pattern = "LazyPluginPost:lexima",
       callback = function()
