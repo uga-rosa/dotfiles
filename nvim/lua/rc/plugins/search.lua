@@ -27,7 +27,7 @@ local spec = {
   {
     "yuki-yano/fuzzy-motion.vim",
     dependencies = {
-      "vim-denops/denops.vim",
+      "denops.vim",
       "lambdalisue/kensaku.vim",
     },
     init = function()
@@ -37,7 +37,7 @@ local spec = {
   },
   {
     "lambdalisue/kensaku.vim",
-    dependencies = "vim-denops/denops.vim",
+    dependencies = "denops.vim",
     config = function()
       local romanTableJson = vim.fs.read(vim.fn.stdpath("config") .. "/script/azik_skkeleton.json")
       local romanTableObj = vim.json.decode(romanTableJson)

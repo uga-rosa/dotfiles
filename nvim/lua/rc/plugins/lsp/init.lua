@@ -23,7 +23,7 @@ local spec = {
       },
       {
         "matsui54/denops-signature_help",
-        dependencies = "vim-denops/denops.vim",
+        dependencies = "denops.vim",
         config = function()
           vim.fn["signature_help#enable"]()
         end,

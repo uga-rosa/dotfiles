@@ -5,7 +5,7 @@ local spec = {
   "Shougo/ddc.vim",
   name = "ddc.vim",
   dependencies = {
-    "vim-denops/denops.vim",
+    "denops.vim",
     "Shougo/pum.vim",
     "Shougo/ddc-ui-pum",
     "tani/ddc-fuzzy",

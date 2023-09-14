@@ -5,7 +5,7 @@ local spec = {
   {
     "vim-skk/skkeleton",
     dependencies = {
-      "vim-denops/denops.vim",
+      "denops.vim",
       {
         "delphinus/skkeleton_indicator.nvim",
         config = function()
