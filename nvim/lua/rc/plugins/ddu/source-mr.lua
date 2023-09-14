@@ -26,12 +26,14 @@ local spec = {
     for _, kind in ipairs({ "mru", "mrw", "mrr" }) do
       helper.patch_local("file:" .. kind, {
         sources = {
-          name = "mr",
-          options = {
-            converters = { "converter_devicon" },
-          },
-          params = {
-            kind = kind,
+          {
+            name = "mr",
+            options = {
+              converters = { "converter_devicon" },
+            },
+            params = {
+              kind = kind,
+            },
           },
         },
       })
