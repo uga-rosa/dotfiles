@@ -31,7 +31,6 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 ft_event.python = rc.call_with(set_indent, 4, false)
-ft_event.toml = rc.call_with(set_indent, 4, false)
 
 ft_event.qf = rc.call_with(set_indent, 4, true)
 ft_event.go = rc.call_with(set_indent, 4, true)
@@ -39,7 +38,7 @@ ft_event.go = rc.call_with(set_indent, 4, true)
 ft_event.help = rc.call_with(set_indent, 8, true)
 
 ft_event.vim = function()
-  vim.keymap.set("n", "gd", "<Cmd>call vimrc#vim#gd()<CR>")
+  vim.keymap.set("n", "gd", "<Cmd>call vimrc#vim#gd()<CR>", { buffer = true })
 end
 
 local function find_first_existing_file_path(paths)
