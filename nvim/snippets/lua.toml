@@ -1,0 +1,63 @@
+[increment]
+prefix = "+="
+body = "$1 = $1 + ${2:1}"
+
+[decrement]
+prefix = "-="
+body = "$1 = $1 - ${2:1}"
+
+["*="]
+prefix = "*="
+body = "$1 = $1 * ${2:1}"
+
+["/="]
+prefix = "/="
+body = "$1 = $1 / ${2:1}"
+
+["%="]
+prefix = "%="
+body = "$1 = $1 % ${2:1}"
+
+["^="]
+prefix = "^="
+body = "$1 = $1 ^ ${2:1}"
+
+[insert]
+prefix = "ins"
+body = "table.insert($1, $2)"
+
+[require]
+prefix = "rq"
+body = 'require("${1:module}")'
+
+[local]
+prefix = "l"
+body = "local $1 = $2"
+
+["local require"]
+prefix = "lr"
+body = 'local ${1:var} = require("${2:module}")'
+
+["local function"]
+prefix = "lf"
+body = """
+local function $1($2)
+  $0
+end\
+"""
+
+[function]
+prefix = "fn"
+body = """
+function $1($2)
+  $0
+end\
+"""
+
+[return]
+prefix = "rt"
+body = "return"
+
+[print]
+prefix = "p"
+body = "vim.print($0)"

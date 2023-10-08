@@ -1,0 +1,135 @@
+[return]
+prefix = "rt"
+body = "return"
+
+[let]
+prefix = "l"
+body = "let $1 = $0"
+
+[const]
+prefix = "c"
+body = "const $1 = $0"
+
+[print]
+prefix = "p"
+body = "console.log($0)"
+
+[if]
+prefix = "if"
+body = """
+if ($1) {
+  $0
+}\
+"""
+
+[is_undefined]
+# prefix = "is undefined"
+prefix = "=== undefined"
+body = "=== undefined"
+
+[is_not_undefined]
+prefix = "is not undefined"
+body = "!== undefined"
+
+["for i"]
+prefix = "for i"
+body = """
+for (let ${1:i} = ${2:0}; $1 < ${3:10}; ${4:$1++}) {
+  $0
+}\
+"""
+
+["for of"]
+prefix = "for of"
+body = """
+for (${1|const,let|} $2 of $3) {
+  $0
+}\
+"""
+
+["for await of"]
+prefix = "for await of"
+body = """
+for await (${1|const,let|} $2 of $3) {
+  $0
+}\
+"""
+
+["single line comment"]
+prefix = "/** single"
+body = "/** $0 */"
+
+["multi line comment"]
+prefix = "/** multi"
+body = """
+/**
+ * $0
+ */\
+"""
+
+["dax import"]
+prefix = "dax"
+body = """
+import \\$ from "https://deno.land/x/dax/mod.ts";
+
+$0\
+"""
+
+[fn]
+prefix = "fn"
+body = """
+function $1($2): $3 {
+  $0
+}\
+"""
+
+["arrow fn"]
+prefix = "arrow fn"
+body = """
+($1): $2 => {
+  $0
+}\
+"""
+
+["fn async"]
+prefix = "fn async"
+body = """
+async function $1($2): Promise<${3:void}> {
+  $0
+}\
+"""
+
+["arrow fn async"]
+prefix = "arrow fn async"
+body = """
+async ($1): Promise<${2:void}> => {
+  $0
+}\
+"""
+
+["empty object"]
+prefix = "empty object"
+body = "Record<PropertyKey, never>"
+description = "Type of empty object: `{}`"
+
+["custom error"]
+prefix = "custom error"
+body = """
+class ${1}Error extends Error {
+  static {
+    this.prototype.name = "${1}Error";
+  }
+  constructor(message: string, options?: ErrorOptions) {
+    super(message, options);
+  }
+}\
+"""
+
+[byteLength]
+prefix = "byteLength"
+body = """
+const ENCODER = new TextEncoder();
+function byteLength(str: string): number {
+  return ENCODER.encode(str).length;
+}\
+"""

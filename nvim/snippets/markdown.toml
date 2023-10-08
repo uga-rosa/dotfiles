@@ -1,0 +1,3 @@
+[color]
+prefix = "color"
+body = '<font color="$1">$0</font>'
