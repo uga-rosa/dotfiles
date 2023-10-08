@@ -75,15 +75,6 @@ local spec = {
         end
       end)
 
-      local local_server = {
-        "denols",
-        "html",
-      }
-      for _, server_name in ipairs(local_server) do
-        local ok, opt = pcall(require, "rc.plugins.lsp." .. server_name)
-        lspconfig[server_name].setup(ok and opt or {})
-      end
-
       require("mason-lspconfig").setup_handlers({
         function(server_name)
           local ok, opt = pcall(require, "rc.plugins.lsp." .. server_name)

@@ -20,6 +20,7 @@ return {
     end
   end,
   init_options = {
+    enable = true,
     lint = true,
     unstable = true,
     suggest = {
