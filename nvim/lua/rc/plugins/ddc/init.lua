@@ -42,8 +42,8 @@ local spec = {
             else
               return vim.fn["ddc#map#insert_item"](0)
             end
-          elseif vim.fn["vsnip#expandable"]() == 1 then
-            return vim.keycode("<Plug>(vsnip-expand)")
+          elseif vim.fn["denippet#expandable"]() == 1 then
+            return vim.keycode("<Plug>(denippet-expand)")
           else
             return vim.fn["lexima#expand"]("<CR>", "i")
           end

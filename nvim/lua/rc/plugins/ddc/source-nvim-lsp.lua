@@ -27,7 +27,7 @@ local spec = {
       sourceParams = {
         ["nvim-lsp"] = {
           snippetEngine = helper.register(function(body)
-            vim.fn["vsnip#anonymous"](body)
+            vim.fn["denippet#anonymous"](body)
           end),
           enableResolveItem = true,
           enableAdditionalTextEdit = true,
