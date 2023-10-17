@@ -1,0 +1,19 @@
+[for]
+prefix = "for"
+body = """
+foo ${1:var} in ${2:list}
+	$0
+endfor\
+"""
+
+[fn]
+prefix = "fn"
+body = """
+function $1($2) abort
+	$0
+endfunction\
+"""
+
+[rt]
+prefix = "rt"
+body = return

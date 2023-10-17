@@ -23,8 +23,7 @@ if ($1) {
 """
 
 [is_undefined]
-# prefix = "is undefined"
-prefix = "=== undefined"
+prefix = "is undefined"
 body = "=== undefined"
 
 [is_not_undefined]

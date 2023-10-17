@@ -1,0 +1,40 @@
+[init]
+prefix = "init"
+body = """
+#!/bin/bash
+set -eu
+"""
+
+[if]
+prefix = "if"
+body = """
+if [[ $1 ]]; then
+	$0
+fi\
+"""
+
+[elif]
+prefix = "elif"
+body = """
+elif [[ $1 ]]; then
+	$0\
+"""
+
+[else]
+prefix = "else"
+body = """
+else
+	$0\
+"""
+
+[for]
+prefix = "for"
+body = """
+for ${1:var} in ${2:list}; do
+	$0
+done\
+"""
+
+[script_dir]
+prefix = "script_dir"
+body = 'SCRIPT_DIR=\$(cd \$(dirname \$0); pwd)'

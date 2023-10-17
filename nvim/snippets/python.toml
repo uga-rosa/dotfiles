@@ -1,0 +1,131 @@
+[env]
+prefix = "env"
+body = """
+#!/usr/bin/env python
+"""
+
+[im]
+prefix = "im"
+body = "import ${1:package/module}"
+
+[fim]
+prefix = "fim"
+body = "from ${1:package/module} import ${2:names}"
+
+[class]
+prefix = "class"
+body = """
+class ${1:ClassName}(${2:object}):
+	\"\"\"${3:docstring}\"\"\"
+	def __init__(self, ${4:arg}):
+		$0\
+"""
+
+[fn_self]
+prefix = "fn_self"
+body = """
+def ${1:mname}(self, ${2:arg}):
+	${3:pass}\
+"""
+
+[fn]
+prefix = "fn"
+body = """
+def ${1:fname}(${2:arg}):
+	${3:pass}\
+"""
+
+[af]
+prefix = "af"
+body = """
+async def ${1:fname}(${2:arg}):
+	${3:pass}\
+"""
+
+[if]
+prefix = "if"
+body = """
+if ${1:condition}:
+	${2:pass}\
+"""
+
+[for]
+prefix = "for"
+body = """
+for ${1:var} in ${2:iterable}:
+	${3:pass}\
+"""
+
+[while]
+prefix = "while"
+body = """
+while ${1:condition}:
+	${2:pass}\
+"""
+
+[try]
+prefix = "try"
+body = """
+try:
+	${1:pass}
+except ${2:Exception} as ${3:e}:
+	${4:pass}\
+"""
+
+[try_else]
+prefix = "try_else"
+body = """
+try:
+	${1:pass}
+except ${2:Exception} as ${3:e}:
+	${4:pass}
+else:
+	${5:pass}\
+"""
+
+[try_finally]
+prefix = "try_finally"
+body = """
+try:
+	${1:pass}
+except ${2:Exception} as ${3:e}:
+	${4:pass}
+finally:
+	${5:pass}\
+"""
+
+[try_else_finally]
+prefix = "try_else_finally"
+body = """
+try:
+	${1:pass}
+except ${2:Exception} as ${3:e}:
+	${4:pass}
+else:
+	${5:pass}
+finally:
+	${6:pass}\
+"""
+
+[self]
+prefix = "s"
+body = "self."
+
+[__]
+prefix = "__"
+body = "__${1:init}__"
+
+[ifmain]
+prefix = "ifmain"
+body = """
+if __name__ == "__main__":
+	${1:main()}\
+"""
+
+[lambda]
+prefix = "lambda"
+body = "lambda ${1:arg}: ${2:expr}"
+
+[rt]
+prefix = "rt"
+body = "return"
