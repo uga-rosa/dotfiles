@@ -16,4 +16,4 @@ endfunction\
 
 [rt]
 prefix = "rt"
-body = return
+body = "return"
