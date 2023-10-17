@@ -1,5 +1,7 @@
+local formatter = require("rc.helper.formatter")
+
 return {
-  attach = function()
+  attach = function(bufnr)
     vim.fn["lspoints#attach"]("denols", {
       cmd = { "deno", "lsp" },
       initializationOptions = {
@@ -7,7 +9,6 @@ return {
         lint = true,
         unstable = true,
         suggest = {
-          completeFunctionCalls = true,
           imports = {
             hosts = {
               ["https://deno.land"] = true,
@@ -18,19 +19,18 @@ return {
         },
       },
     })
-  end,
-  mapping = function()
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = true })
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { buffer = true })
-    vim.keymap.set("n", "<Space>F", function()
-      vim.fn["denops#request"](
-        "lspoints",
-        "executeCommand",
-        { "format", "execute", vim.fn.bufnr() }
-      )
-    end)
-    vim.keymap.set("n", "K", function()
-      vim.fn["denops#request"]("lspoints", "executeCommand", { "hover", "execute", vim.fn.bufnr() })
-    end)
+
+    vim.api.nvim_buf_create_user_command(bufnr, "Format", function()
+      formatter.stdin("deno fmt -")
+    end, {})
+
+    vim.api.nvim_buf_create_user_command(bufnr, "DenoCache", function()
+      vim.fn["lspoints#request"]("denols", "deno/cache", {
+        referrer = {
+          uri = vim.uri_from_bufnr(bufnr),
+        },
+        uris = {},
+      })
+    end, {})
   end,
 }
