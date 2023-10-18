@@ -1,4 +1,4 @@
-import { BaseSource, DdcGatherItems, GatherArguments } from "../rc/deps.ts";
+import { BaseSource, DdcGatherItems, GatherArguments } from "../rc/deps/ddc.ts";
 
 type Params = Record<never, never>;
 

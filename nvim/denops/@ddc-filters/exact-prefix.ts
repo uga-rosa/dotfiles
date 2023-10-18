@@ -1,4 +1,4 @@
-import { BaseFilter, FilterArguments, Item } from "../rc/deps.ts";
+import { BaseFilter, FilterArguments, Item } from "../rc/deps/ddc.ts";
 
 type Params = {
   length: number;

@@ -1,4 +1,4 @@
-import { BaseFilter, Item, PumHighlight } from "../rc/deps.ts";
+import { BaseFilter, Item, PumHighlight } from "../rc/deps/ddc.ts";
 
 const highlight: PumHighlight = {
   type: "kind",

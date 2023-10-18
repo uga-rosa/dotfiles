@@ -1,12 +1,7 @@
-import {
-  BaseExtension,
-  Lspoints,
-} from "https://deno.land/x/lspoints@v0.0.1/interface.ts";
-import {
-  makePositionParams,
-  OffsetEncoding,
-} from "https://deno.land/x/denops_lsputil@v0.6.2/mod.ts";
-import { Denops, fn, LSP, u } from "../rc/deps.ts";
+import { BaseExtension, Lspoints } from "https://deno.land/x/lspoints@v0.0.3/interface.ts";
+import { Denops, fn } from "../rc/deps/denops.ts";
+import { LSP, makePositionParams, OffsetEncoding } from "../rc/deps/lsp.ts";
+import { u } from "../rc/deps/unknownutil.ts";
 
 function splitLines(s: string): string[] {
   return s.replaceAll(/\r\n?/g, "\n")

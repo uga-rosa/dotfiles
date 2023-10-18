@@ -1,16 +1,13 @@
+import { autocmd, batch, Denops, lambda } from "../rc/deps/denops.ts";
 import {
-  autocmd,
   BaseSource,
-  batch,
   DdcGatherItems,
-  Denops,
   GatherArguments,
   Item,
-  lambda,
-  linePatch,
   OnCompleteDoneArguments,
   OnInitArguments,
-} from "../rc/deps.ts";
+} from "../rc/deps/ddc.ts";
+import { linePatch } from "../rc/deps/lsp.ts";
 
 type Params = {
   items: UserData[];

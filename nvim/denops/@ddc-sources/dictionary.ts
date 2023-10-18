@@ -1,16 +1,14 @@
+import { autocmd, fn, op } from "../rc/deps/denops.ts";
+import { readLines } from "../rc/deps/std.ts";
 import {
-  autocmd,
   BaseSource,
   DdcEvent,
   DdcGatherItems,
-  fn,
   GatherArguments,
-  Lock,
   OnEventArguments,
   OnInitArguments,
-  op,
-  readLines,
-} from "../rc/deps.ts";
+} from "../rc/deps/ddc.ts";
+import { Lock } from "../rc/deps/async.ts";
 import Trie from "../rc/trie.ts";
 
 function ensureArray<T>(x: T | T[]): T[] {

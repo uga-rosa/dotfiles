@@ -1,5 +1,4 @@
-import { BaseFilter, Item } from "https://deno.land/x/ddc_vim@v4.0.4/types.ts";
-import { FilterArguments } from "https://deno.land/x/ddc_vim@v4.0.4/base/filter.ts";
+import { BaseFilter, FilterArguments, Item } from "../rc/deps/ddc.ts";
 
 type Params = {
   funcname?: string;

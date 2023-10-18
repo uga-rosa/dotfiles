@@ -1,4 +1,4 @@
-import { BaseFilter, Item } from "../rc/deps.ts";
+import { BaseFilter, Item } from "../rc/deps/ddc.ts";
 
 type Params = Record<never, never>;
 
