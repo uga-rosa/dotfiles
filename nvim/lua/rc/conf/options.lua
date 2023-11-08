@@ -47,6 +47,17 @@ vim.opt.helplang = { "en", "ja" }
 
 -- clipboard
 vim.opt.clipboard = "unnamedplus"
+vim.g.clipboard = {
+  name = "OSC 52",
+  copy = {
+    ["+"] = require("vim.clipboard.osc52").copy,
+    ["*"] = require("vim.clipboard.osc52").copy,
+  },
+  paste = {
+    ["+"] = require("vim.clipboard.osc52").paste,
+    ["*"] = require("vim.clipboard.osc52").paste,
+  },
+}
 
 -- vimgrep
 vim.opt.grepprg = "rg --vimgrep"

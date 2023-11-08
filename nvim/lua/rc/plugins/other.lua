@@ -120,14 +120,6 @@ local spec = {
     end,
   },
   {
-    "ojroques/vim-oscyank",
-    keys = {
-      { "<Space>c", "<Plug>OSCYankOperator", mode = "n" },
-      { "<Space>cc", "<Plug>OSCYankOperator_", mode = "n" },
-      { "<Space>c", "<Plug>OSCYankVisual", mode = "x" },
-    },
-  },
-  {
     "uga-rosa/ugaterm.nvim",
     dev = true,
     init = function()
