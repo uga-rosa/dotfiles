@@ -1,4 +1,5 @@
 local M = {}
+M.callback = {}
 
 ---@param fn? string | function
 ---@param ... unknown
@@ -13,16 +14,17 @@ end
 ---@param params? table
 ---@param stopinsert? boolean
 ---@param callback? string | function
----@return function
+---@return string | function
 function M.action(name, params, stopinsert, callback)
-  return function()
-    if stopinsert then
-      vim.cmd.stopinsert()
-      vim.schedule(function()
-        vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
-        safe_call(callback)
-      end)
-    else
+  if stopinsert then
+    local id = #M.callback + 1
+    table.insert(M.callback, function()
+      vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
+      safe_call(callback)
+    end)
+    return ("<Esc><Cmd>lua require('rc.helper.ddu').callback[%d]()<CR>"):format(id)
+  else
+    return function()
       vim.fn["ddu#ui#do_action"](name, params or vim.empty_dict())
       safe_call(callback)
     end
@@ -33,7 +35,7 @@ end
 ---@param params? table
 ---@param stopinsert? boolean
 ---@param callback? string | function
----@return function
+---@return string | function
 function M.item_action(name, params, stopinsert, callback)
   return M.action("itemAction", { name = name, params = params }, stopinsert, callback)
 end
