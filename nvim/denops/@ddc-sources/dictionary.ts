@@ -1,5 +1,5 @@
 import { autocmd, fn, op } from "../rc/deps/denops.ts";
-import { readLines } from "../rc/deps/std.ts";
+import { TextLineStream } from "../rc/deps/std.ts";
 import {
   BaseSource,
   DdcEvent,
@@ -103,15 +103,14 @@ export class Source extends BaseSource<Params> {
       }
 
       const trie = new Trie();
-      const reader = await Deno.open(path);
-      try {
-        for await (const line of readLines(reader)) {
-          line.trim().split(/\s+/).forEach((word) => {
-            if (word !== "") trie.insert(word);
-          });
-        }
-      } finally {
-        Deno.close(reader.rid);
+      const file = await Deno.open(path);
+      const lineStream = file.readable
+        .pipeThrough(new TextDecoderStream())
+        .pipeThrough(new TextLineStream());
+      for await (const line of lineStream) {
+        line.trim().split(/\s+/).forEach((word) => {
+          if (word !== "") trie.insert(word);
+        });
       }
 
       await lock.lock((dictCache) => {
