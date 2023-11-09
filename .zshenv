@@ -47,3 +47,6 @@ export THEMIS_VIM="nvim"
 export DENOPS_TEST_DENOPS_PATH="$HOME/.local/share/nvim/lazy/denops.vim"
 export DENOPS_TEST_VIM=$(command -v vim)
 export DENOPS_TEST_NVIM=$(command -v nvim)
+
+# LSP
+export PATH="$PATH:$HOME/.local/share/nvim/mason/bin"
