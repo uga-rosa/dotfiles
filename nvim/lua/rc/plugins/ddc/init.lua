@@ -32,7 +32,7 @@ local spec = {
     vim.keymap.set("i", "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
 
     vim.api.nvim_create_autocmd("User", {
-      pattern = "LazyPluginPost:lexima",
+      pattern = "LazyPluginPost:insx",
       callback = function()
         vim.keymap.set("i", "<CR>", function()
           local info = vim.fn["pum#complete_info"]()
@@ -45,7 +45,7 @@ local spec = {
           elseif vim.fn["denippet#expandable"]() == 1 then
             return vim.keycode("<Plug>(denippet-expand)")
           else
-            return vim.fn["lexima#expand"]("<CR>", "i")
+            return vim.fn["insx#expand"]("<CR>")
           end
         end, { silent = true, expr = true, replace_keycodes = false })
       end,
