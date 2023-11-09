@@ -41,7 +41,13 @@ end
 ---@param rocks string[]
 ---@return string[]
 local function library(plugins, rocks)
-  return vim.list_extend(get_plugin_path(plugins), get_rock_path(rocks))
+  local paths = vim.list_extend(get_plugin_path(plugins), get_rock_path(rocks))
+  table.insert(paths, vim.fn.stdpath("config"))
+  table.insert(paths, "/usr/local/share/nvim/runtime")
+  table.insert(paths, "${3rd}/luv/library")
+  table.insert(paths, "${3rd}/busted/library")
+  table.insert(paths, "${3rd}/luassert/library")
+  return paths
 end
 
 return {
@@ -76,7 +82,10 @@ return {
                   path = { "?.lua", "?/init.lua" },
                 },
                 workspace = {
-                  library = library({ "lazy.nvim", "ddc-source-nvim-lsp" }, { "vusted" }),
+                  library = library(
+                    { "nvim-insx", "lazy.nvim", "ddc-source-nvim-lsp" },
+                    { "vusted" }
+                  ),
                   checkThirdParty = false,
                 },
                 hint = {

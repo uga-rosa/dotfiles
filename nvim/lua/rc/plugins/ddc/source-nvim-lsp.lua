@@ -26,6 +26,7 @@ local spec = {
       },
       sourceParams = {
         ["nvim-lsp"] = {
+          lspEngine = "lspoints",
           snippetEngine = helper.register(function(body)
             vim.fn["denippet#anonymous"](body)
           end),

@@ -1,4 +1,3 @@
-local helper = require("rc.helper.lsp")
 local formatter = require("rc.helper.formatter")
 
 return {

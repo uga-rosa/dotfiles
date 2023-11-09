@@ -71,6 +71,7 @@ local spec = {
       -- mappings
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+
       vim.api.nvim_create_user_command("Format", function()
         vim.fn["denops#request"](
           "lspoints",
@@ -79,10 +80,6 @@ local spec = {
         )
       end, {})
       vim.keymap.set("n", "<Space>F", "<Cmd>Format<CR>")
-      vim.api.nvim_create_user_command("Rename", function()
-        vim.fn["denops#request"]("lspoints", "executeCommand", { "rename", "execute" })
-      end, {})
-      vim.keymap.set("n", "<Space>n", "<Cmd>Rename<CR>")
 
       local group = vim.api.nvim_create_augroup("lspoints-attach", {})
       vim.api.nvim_create_autocmd("User", {
@@ -91,13 +88,19 @@ local spec = {
         callback = function(arg)
           setCompletionPattern()
 
-          vim.keymap.set("n", "K", function()
+          vim.api.nvim_buf_create_user_command(arg.buf, "Rename", function()
+            vim.fn["denops#request"]("lspoints", "executeCommand", { "rename", "execute" })
+          end, {})
+          vim.keymap.set("n", "<Space>n", "<Cmd>Rename<CR>", { buffer = arg.buf })
+
+          vim.api.nvim_buf_create_user_command(arg.buf, "Hover", function()
             vim.fn["denops#request"](
               "lspoints",
               "executeCommand",
               { "hover", "execute", vim.fn.bufnr() }
             )
-          end, { buffer = arg.buf })
+          end, {})
+          vim.keymap.set("n", "K", "<Cmd>Hover<CR>", { buffer = arg.buf })
         end,
       })
 
@@ -117,6 +120,8 @@ local spec = {
         typescript = "denols",
         lua = "luals",
         python = "pyright",
+        json = "jsonls",
+        toml = "taplo",
       }
 
       vim.api.nvim_create_autocmd("FileType", {
