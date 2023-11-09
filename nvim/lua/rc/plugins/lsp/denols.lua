@@ -24,7 +24,6 @@ return {
     lint = true,
     unstable = true,
     suggest = {
-      completeFunctionCalls = true,
       imports = {
         hosts = {
           ["https://deno.land"] = true,

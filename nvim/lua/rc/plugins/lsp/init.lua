@@ -4,6 +4,7 @@ local helper = require("rc.helper.lsp")
 local spec = {
   {
     "neovim/nvim-lspconfig",
+    enabled = false,
     event = "VeryLazy",
     dependencies = {
       "ddc-source-nvim-lsp",
@@ -37,10 +38,8 @@ local spec = {
 
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "lua_ls",
           "vimls",
           "gopls",
-          "pyright",
           "bashls",
           "vtsls",
           "jsonls",
