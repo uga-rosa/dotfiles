@@ -3,7 +3,7 @@ local M = {}
 M.sources = {
   default = { "denippet", "nvim-lsp", "buffer", "dictionary" },
   skkeleton = { "skkeleton" },
-  lua = { "denippet", "nvim-lua", "nvim-lsp", "buffer", "dictionary" },
+  lua = { "denippet", "nvim-lsp", "nvim-lua", "buffer", "dictionary" },
 }
 
 function M.patch_global(...)
