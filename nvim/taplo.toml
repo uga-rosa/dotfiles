@@ -1,0 +1,8 @@
+[formatting]
+reorder_keys = false
+
+[[rule]]
+include = [ "**/snippets/*.toml" ]
+
+[rule.schema]
+path = "/home/uga/plugin/denippet.vim/schemas/snippet.json"
