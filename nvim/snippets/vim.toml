@@ -6,10 +6,10 @@ foo ${1:var} in ${2:list}
 endfor\
 """
 
-[fn]
-prefix = "fn"
+["local function"]
+prefix = "lfn"
 body = """
-function $1($2) abort
+function s:$1($2) abort
 	$0
 endfunction\
 """
