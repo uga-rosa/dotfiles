@@ -54,8 +54,8 @@ vim.g.clipboard = {
     ["*"] = require("vim.clipboard.osc52").copy,
   },
   paste = {
-    ["+"] = require("vim.clipboard.osc52").paste,
-    ["*"] = require("vim.clipboard.osc52").paste,
+    ["+"] = vim.fn.getreg("+"),
+    ["*"] = vim.fn.getreg("*"),
   },
 }
 
