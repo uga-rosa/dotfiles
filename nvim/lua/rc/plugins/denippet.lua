@@ -2,7 +2,7 @@ local helper = require("rc.helper.ddc")
 
 ---@type LazySpec
 local spec = {
-  "uga-rosa/denippet.nvim",
+  "uga-rosa/denippet.vim",
   dev = true,
   -- enabled = false,
   dependencies = {
