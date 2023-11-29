@@ -65,20 +65,3 @@ ft_event.lua = function()
     set_indent(tab_size, is_hard_tab)
   end
 end
-
-ft_event.typescript = function(ev)
-  vim.api.nvim_create_autocmd("TextChangedI", {
-    buffer = ev.buf,
-    callback = function()
-      local line = vim.api.nvim_get_current_line()
-      local cursor = vim.api.nvim_win_get_cursor(0)
-      local line_before_cursor = line:sub(1, cursor[2])
-      if vim.endswith(line_before_cursor, "${") then
-        vim.api.nvim_feedkeys(vim.keycode('<Cmd>normal sr"`<CR>'), "n", false)
-        vim.schedule(function()
-          vim.api.nvim_win_set_cursor(0, cursor)
-        end)
-      end
-    end,
-  })
-end
