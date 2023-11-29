@@ -1,7 +1,7 @@
 [for]
 prefix = "for"
 body = """
-foo ${1:var} in ${2:list}
+for ${1:var} in ${2:list}
 	$0
 endfor\
 """
