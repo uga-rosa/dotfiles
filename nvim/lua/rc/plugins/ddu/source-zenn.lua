@@ -11,7 +11,7 @@ local spec = {
     helper.patch_local("file:zenn", {
       sources = {
         {
-          name = "zenn_dev",
+          name = "zenn_dev_article",
           options = {
             path = vim.fs.normalize("~/zenn"),
             converters = {},
