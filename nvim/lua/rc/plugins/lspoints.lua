@@ -107,7 +107,7 @@ local spec = {
       -- settings
       local function setup()
         vim.fn["lspoints#load_extensions"]({ "nvim_diagnostics", "format", "hover", "rename" })
-        local capabilities = require("ddc_nvim_lsp").make_client_capabilities()
+        local capabilities = require("ddc_source_lsp").make_client_capabilities()
         vim.fn["lspoints#settings#patch"]({ clientCapabilites = capabilities })
       end
 

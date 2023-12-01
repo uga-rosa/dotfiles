@@ -83,7 +83,7 @@ return {
                 },
                 workspace = {
                   library = library(
-                    { "nvim-insx", "lazy.nvim", "ddc-source-nvim-lsp" },
+                    { "nvim-insx", "lazy.nvim", "ddc-source-lsp" },
                     { "vusted" }
                   ),
                   checkThirdParty = false,

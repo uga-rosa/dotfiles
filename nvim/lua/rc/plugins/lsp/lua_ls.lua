@@ -81,7 +81,7 @@ return {
         path = { "?.lua", "?/init.lua" },
       },
       workspace = {
-        library = library({ "lazy.nvim", "ddc-source-nvim-lsp" }, { "vusted" }),
+        library = library({ "lazy.nvim", "ddc-source-lsp" }, { "vusted" }),
         checkThirdParty = false,
       },
       hint = {

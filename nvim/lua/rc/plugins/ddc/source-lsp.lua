@@ -2,9 +2,9 @@ local helper = require("rc.helper.ddc")
 
 ---@type LazySpec
 local spec = {
-  "Shougo/ddc-source-nvim-lsp",
+  "Shougo/ddc-source-lsp",
   dev = true,
-  name = "ddc-source-nvim-lsp",
+  name = "ddc-source-lsp",
   dependencies = {
     "ddc.vim",
     {
@@ -17,7 +17,7 @@ local spec = {
 
     helper.patch_global({
       sourceOptions = {
-        ["nvim-lsp"] = {
+        lsp = {
           mark = "[LSP]",
           dup = "keep",
           keywordPattern = "\\k+",
@@ -25,7 +25,7 @@ local spec = {
         },
       },
       sourceParams = {
-        ["nvim-lsp"] = {
+        lsp = {
           lspEngine = "lspoints",
           snippetEngine = helper.register(function(body)
             vim.fn["denippet#anonymous"](body)

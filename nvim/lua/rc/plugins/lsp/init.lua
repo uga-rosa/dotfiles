@@ -7,7 +7,7 @@ local spec = {
     enabled = false,
     event = "VeryLazy",
     dependencies = {
-      "ddc-source-nvim-lsp",
+      "ddc-source-lsp",
       {
         "williamboman/mason.nvim",
         config = function()

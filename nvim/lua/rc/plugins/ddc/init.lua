@@ -20,9 +20,9 @@ local spec = {
       if vim.fn["ddc#visible"]() then
         return vim.fn["ddc#hide"]("Manual")
       elseif vim.bo.filetype == "lua" then
-        return vim.fn["ddc#map#manual_complete"]({ sources = { "nvim-lua", "nvim-lsp" } })
+        return vim.fn["ddc#map#manual_complete"]({ sources = { "nvim-lua", "lsp" } })
       elseif #vim.lsp.get_clients({ bufnr = 0 }) > 0 then
-        return vim.fn["ddc#map#manual_complete"]({ sources = { "nvim-lsp" } })
+        return vim.fn["ddc#map#manual_complete"]({ sources = { "lsp" } })
       else
         return vim.fn["ddc#map#manual_complete"]({ sources = { "buffer", "dictionary" } })
       end
