@@ -8,6 +8,14 @@ local spec = {
     vim.keymap.set("n", "<Space>z", "<Cmd>Ddu file:zenn<CR>")
   end,
   config = function()
+    helper.patch_global({
+      kindOptions = {
+        zenn_dev_article = {
+          defaultAction = "open",
+        },
+      },
+    })
+
     helper.patch_local("file:zenn", {
       sources = {
         {
