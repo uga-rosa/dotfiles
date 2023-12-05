@@ -42,7 +42,7 @@ body = 'local ${1:var} = require("${2:module}")'
 prefix = "lf"
 body = """
 local function $1($2)
-  $0
+	$0
 end\
 """
 
@@ -50,7 +50,7 @@ end\
 prefix = "fn"
 body = """
 function $1($2)
-  $0
+	$0
 end\
 """
 
