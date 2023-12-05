@@ -8,6 +8,7 @@ local spec = {
     "denops.vim",
     "Shougo/pum.vim",
     "Shougo/ddc-ui-pum",
+    "Shougo/ddc-ui-none",
     "tani/ddc-fuzzy",
     {
       "uga-rosa/ddc-previewer-floating",
@@ -27,9 +28,6 @@ local spec = {
         return vim.fn["ddc#map#manual_complete"]({ sources = { "buffer", "dictionary" } })
       end
     end, { expr = true, replace_keycodes = false })
-
-    vim.keymap.set("i", "<C-n>", "<Cmd>call pum#map#insert_relative(+1, 'loop')<CR>")
-    vim.keymap.set("i", "<C-p>", "<Cmd>call pum#map#insert_relative(-1, 'loop')<CR>")
 
     vim.api.nvim_create_autocmd("User", {
       pattern = "LazyPluginPost:insx",
