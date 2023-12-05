@@ -1,3 +1,21 @@
 [color]
 prefix = "color"
 body = '<font color="$1">$0</font>'
+
+[details_zenn]
+prefix = "details zenn"
+body = """
+::: ${1:title}
+$0
+:::\
+"""
+
+[details_normal]
+prefix = "details normal"
+body = """
+<details><summary>${1:title}</summary><div>
+
+$0
+
+</div/</details>\
+"""
