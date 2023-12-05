@@ -1,26 +1,26 @@
 [increment]
 prefix = "+="
-body = "$1 = $1 + ${2:1}"
+body = "$1 = $1 + $0"
 
 [decrement]
 prefix = "-="
-body = "$1 = $1 - ${2:1}"
+body = "$1 = $1 - $0"
 
 ["*="]
 prefix = "*="
-body = "$1 = $1 * ${2:1}"
+body = "$1 = $1 * $0"
 
 ["/="]
 prefix = "/="
-body = "$1 = $1 / ${2:1}"
+body = "$1 = $1 / $0"
 
 ["%="]
 prefix = "%="
-body = "$1 = $1 % ${2:1}"
+body = "$1 = $1 % $0"
 
 ["^="]
 prefix = "^="
-body = "$1 = $1 ^ ${2:1}"
+body = "$1 = $1 ^ $0"
 
 [insert]
 prefix = "ins"
@@ -32,7 +32,7 @@ body = 'require("${1:module}")'
 
 [local]
 prefix = "l"
-body = "local $1 = $2"
+body = "local $1 = $0"
 
 ["local require"]
 prefix = "lr"
