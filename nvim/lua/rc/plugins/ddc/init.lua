@@ -120,6 +120,7 @@ local spec = {
       sourceOptions = {
         dictionary = {
           mark = "[Dict]",
+          matchers = { "matcher_fuzzy" },
         },
       },
       sourceParams = {
@@ -127,6 +128,7 @@ local spec = {
           spelllang = {
             en = "/usr/share/dict/words",
           },
+          firstCaseInsensitive = true,
         },
       },
     })

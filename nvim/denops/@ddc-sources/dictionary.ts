@@ -24,6 +24,14 @@ function ensureDict(dict: Dict): EnsuredDict {
   );
 }
 
+function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function decapitalize(str: string): string {
+  return str.charAt(0).toLowerCase() + str.slice(1);
+}
+
 type Cache = {
   path: string;
   mtime: number;
@@ -36,6 +44,7 @@ type Params = {
   filetype: Dict;
   filepath: Dict;
   spelllang: Dict;
+  firstCaseInsensitive: boolean;
 };
 
 export class Source extends BaseSource<Params> {
@@ -51,7 +60,12 @@ export class Source extends BaseSource<Params> {
   async onInit({
     denops,
   }: OnInitArguments<Params>): Promise<void> {
-    await autocmd.define(denops, "OptionSet", "spelllang", "call ddc#on_event('OptionSet')");
+    await autocmd.define(
+      denops,
+      "OptionSet",
+      "spelllang",
+      "call ddc#on_event('OptionSet')",
+    );
   }
 
   async onEvent({
@@ -67,7 +81,8 @@ export class Source extends BaseSource<Params> {
     const fullpath = await fn.expand(denops, "%:p") as string;
     const spelllang = await op.spelllang.get(denops);
 
-    const dictionaries = (await op.dictionary.get(denops)).split(",").filter(Boolean);
+    const dictionaries = (await op.dictionary.get(denops))
+      .split(",").filter(Boolean);
 
     if (params.filetype[filetype]) {
       dictionaries.push(...params.filetype[filetype]);
@@ -130,8 +145,12 @@ export class Source extends BaseSource<Params> {
     completeStr,
   }: GatherArguments<Params>): Promise<DdcGatherItems> {
     const prefix = completeStr.slice(0, sourceParams.exactLength);
+    const prefixes = sourceParams.firstCaseInsensitive
+      ? [capitalize(prefix), decapitalize(prefix)]
+      : [prefix];
     const items = Object.values(this.#dictCache).filter((cache) => cache.active)
-      .flatMap((cache) => cache.trie.search(prefix))
+      .map((cache) => prefixes.map((p) => cache.trie.search(p)))
+      .flat(2)
       .map((word) => ({ word }));
     const isIncomplete = completeStr.length === sourceParams.exactLength ||
       items.length > sourceOptions.maxItems;
@@ -144,6 +163,7 @@ export class Source extends BaseSource<Params> {
       filetype: {},
       filepath: {},
       spelllang: {},
+      firstCaseInsensitive: false,
     };
   }
 }
