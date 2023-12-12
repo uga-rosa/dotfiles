@@ -1,19 +1,15 @@
----@generic T
----@param list T[]
----@return T[]
-local function deduplicate(list)
-  local set = {}
-  local ret = {}
-  for _, elem in ipairs(list) do
-    if set[elem] == nil then
-      set[elem] = true
-      table.insert(ret, elem)
-    end
-  end
-  return ret
-end
+local helper = require("rc.helper.lsp")
+local utils = require("rc.utils")
 
-local function setCompletionPattern()
+local function setupDdc()
+  vim.fn["ddc#custom#patch_buffer"]({
+    sourceParams = {
+      lsp = {
+        lspEngine = "lspoints",
+      },
+    },
+  })
+
   ---@type string[]
   local chars = {}
   for _, client in ipairs(vim.fn["lspoints#get_clients"]()) do
@@ -22,7 +18,7 @@ local function setCompletionPattern()
       chars = vim.list_extend(chars, provider.triggerCharacters)
     end
   end
-  chars = deduplicate(chars)
+  chars = utils.deduplicate(chars)
   for i = #chars, 1, -1 do
     if chars[i]:find("^%s$") then
       table.remove(chars, i)
@@ -31,7 +27,7 @@ local function setCompletionPattern()
   table.insert(chars, 1, "[a-zA-Z]")
   local regex = "(?:" .. table.concat(chars, "|\\") .. ")"
   vim.fn["ddc#custom#patch_buffer"]("sourceOptions", {
-    ["nvim-lsp"] = {
+    ["lsp"] = {
       forceCompletionPattern = regex,
     },
   })
@@ -40,54 +36,20 @@ end
 ---@type LazySpec
 local spec = {
   {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-      config = function()
-        require("mason").setup()
-      end,
-    },
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "lua_ls",
-          "pyright",
-          -- "vimls",
-          -- "gopls",
-          -- "bashls",
-          -- "vtsls",
-          -- "jsonls",
-          -- "yamlls",
-        },
-      })
-    end,
-  },
-  {
     "kuuote/lspoints",
     dependencies = {
       "denops.vim",
     },
     config = function()
-      -- mappings
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-
-      vim.api.nvim_create_user_command("Format", function()
-        vim.fn["denops#request"](
-          "lspoints",
-          "executeCommand",
-          { "format", "execute", vim.fn.bufnr() }
-        )
-      end, {})
-      vim.keymap.set("n", "<Space>F", "<Cmd>Format<CR>")
-
       local group = vim.api.nvim_create_augroup("lspoints-attach", {})
       vim.api.nvim_create_autocmd("User", {
         pattern = "LspointsAttach*",
         group = group,
         callback = function(arg)
-          setCompletionPattern()
+          setupDdc()
+          vim.b.ddu_source_lsp_clientName = "lspoints"
 
+          -- Mappings and commands
           vim.api.nvim_buf_create_user_command(arg.buf, "Rename", function()
             vim.fn["denops#request"]("lspoints", "executeCommand", { "rename", "execute" })
           end, {})
@@ -101,11 +63,20 @@ local spec = {
             )
           end, {})
           vim.keymap.set("n", "K", "<Cmd>Hover<CR>", { buffer = arg.buf })
+
+          vim.api.nvim_buf_create_user_command(arg.buf, "Format", function()
+            vim.fn["denops#request"](
+              "lspoints",
+              "executeCommand",
+              { "format", "execute", vim.fn.bufnr() }
+            )
+          end, {})
+          vim.keymap.set("n", "<Space>F", "<Cmd>Format<CR>", { buffer = arg.buf })
         end,
       })
 
       -- settings
-      local function setup()
+      local function initialize()
         vim.fn["lspoints#load_extensions"]({ "nvim_diagnostics", "format", "hover", "rename" })
         local capabilities = require("ddc_source_lsp").make_client_capabilities()
         vim.fn["lspoints#settings#patch"]({ clientCapabilites = capabilities })
@@ -113,22 +84,18 @@ local spec = {
 
       vim.api.nvim_create_autocmd("User", {
         pattern = "DenopsPluginPost:lspoints",
-        callback = setup,
+        callback = initialize,
       })
 
-      local servers = {
-        typescript = "denols",
-        lua = "luals",
-        python = "pyright",
-        json = "jsonls",
-        toml = "taplo",
-      }
-
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = vim.tbl_keys(servers),
+        pattern = "typescript",
         group = group,
         callback = function(arg)
-          require("rc.plugins.lspoints." .. servers[arg.match]).attach(arg.buf)
+          local fname = vim.fn.bufname(arg.buf)
+          if helper.in_node_repo(fname) then
+            return
+          end
+          require("rc.plugins.lspoints.denols").attach(arg.buf)
         end,
       })
 
@@ -137,12 +104,13 @@ local spec = {
         vim.api.nvim_create_autocmd("User", {
           pattern = "DenopsPluginPost:lspoints",
           once = true,
-          callback = function()
-            setup()
-            local server = servers[vim.bo.filetype]
-            if server then
-              require("rc.plugins.lspoints." .. server).attach(0)
+          callback = function(arg)
+            initialize()
+            local fname = vim.fn.bufname(arg.buf)
+            if helper.in_node_repo(fname) then
+              return
             end
+            require("rc.plugins.lspoints.denols").attach(arg.buf)
           end,
         })
       end, {})

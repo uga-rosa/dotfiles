@@ -7,10 +7,6 @@ local spec = {
   name = "ddc-source-lsp",
   dependencies = {
     "ddc.vim",
-    {
-      "uga-rosa/ddc-nvim-lsp-setup",
-      dev = true,
-    },
   },
   config = function()
     -- require("ddc_nvim_lsp.internal").setup({ debug = true })
@@ -26,7 +22,7 @@ local spec = {
       },
       sourceParams = {
         lsp = {
-          lspEngine = "lspoints",
+          lspEngine = "nvim-lsp",
           snippetEngine = helper.register(function(body)
             vim.fn["denippet#anonymous"](body)
           end),

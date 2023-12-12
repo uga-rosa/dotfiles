@@ -18,11 +18,10 @@ local spec = {
   dependencies = "ddu.vim",
   init = function()
     vim.keymap.set("n", "gd", "<Cmd>Ddu lsp:definition<CR>")
-    vim.keymap.set("n", "gt", "<Cmd>Ddu lsp:type_definition<CR>")
     vim.keymap.set("n", "gr", "<Cmd>Ddu lsp:references<CR>")
     vim.keymap.set({ "n", "x" }, "<Space>a", "<Cmd>Ddu lsp:code_action<CR>")
 
-    vim.g.ddu_source_lsp_clientName = "lspoints"
+    vim.g.ddu_source_lsp_clientName = "nvim-lsp"
   end,
   config = function()
     helper.patch_global({

@@ -4,10 +4,13 @@ local helper = require("rc.helper.lsp")
 local spec = {
   {
     "neovim/nvim-lspconfig",
-    enabled = false,
     event = "VeryLazy",
     dependencies = {
       "ddc-source-lsp",
+      {
+        "uga-rosa/ddc-source-lsp-setup",
+        dev = true,
+      },
       {
         "williamboman/mason.nvim",
         config = function()
@@ -34,7 +37,7 @@ local spec = {
     config = function()
       local lspconfig = require("lspconfig")
 
-      require("ddc_nvim_lsp_setup").setup()
+      require("ddc_source_lsp_setup").setup()
 
       require("mason-lspconfig").setup({
         ensure_installed = {
@@ -47,14 +50,15 @@ local spec = {
         },
       })
 
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+
       helper.on_attach(nil, function(client, bufnr)
         local buf_map = function(lhs, rhs)
           vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
         end
 
         buf_map("K", vim.lsp.buf.hover)
-        buf_map("[d", vim.diagnostic.goto_prev)
-        buf_map("]d", vim.diagnostic.goto_next)
         buf_map("<Space>n", vim.lsp.buf.rename)
         buf_map("<Space>F", "<Cmd>Format<CR>")
 
