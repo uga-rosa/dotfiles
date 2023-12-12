@@ -9,7 +9,7 @@ export class Filter extends BaseFilter<Params> {
   }: FilterArguments<Params>): Promise<Item[]> {
     return Promise.resolve(items.sort((a, b) => {
       if (b.word === completeStr) {
-        return 1
+        return 1;
       } else if (a.word === completeStr) {
         return -1;
       } else {

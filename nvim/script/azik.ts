@@ -186,9 +186,9 @@ Deno.writeTextFileSync(
 Deno.writeTextFileSync(
   join(dirname, "azik_corvus.txt"),
   Object.entries(rule).reduce((acc, cur) => {
-      const [rom, [hira, _]] = cur
-      const kata = hiraToKata(hira);
-      const hankata = kataToHanKata(kata);
-      return acc + [rom, hira, kata, hankata, 0].join("\t") + "\n";
-    }, ""),
+    const [rom, [hira, _]] = cur;
+    const kata = hiraToKata(hira);
+    const hankata = kataToHanKata(kata);
+    return acc + [rom, hira, kata, hankata, 0].join("\t") + "\n";
+  }, ""),
 );
