@@ -63,15 +63,6 @@ local spec = {
             )
           end, {})
           vim.keymap.set("n", "K", "<Cmd>Hover<CR>", { buffer = arg.buf })
-
-          vim.api.nvim_buf_create_user_command(arg.buf, "Format", function()
-            vim.fn["denops#request"](
-              "lspoints",
-              "executeCommand",
-              { "format", "execute", vim.fn.bufnr() }
-            )
-          end, {})
-          vim.keymap.set("n", "<Space>F", "<Cmd>Format<CR>", { buffer = arg.buf })
         end,
       })
 

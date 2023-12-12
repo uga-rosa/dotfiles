@@ -52,6 +52,7 @@ local spec = {
 
       vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
       vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+      vim.keymap.set("n", "<Space>F", "<Cmd>Format<CR>")
 
       helper.on_attach(nil, function(client, bufnr)
         local buf_map = function(lhs, rhs)
@@ -60,7 +61,6 @@ local spec = {
 
         buf_map("K", vim.lsp.buf.hover)
         buf_map("<Space>n", vim.lsp.buf.rename)
-        buf_map("<Space>F", "<Cmd>Format<CR>")
 
         if client.server_capabilities.documentFormattingProvider then
           vim.api.nvim_buf_create_user_command(bufnr, "Format", function()
