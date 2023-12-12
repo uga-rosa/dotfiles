@@ -124,3 +124,7 @@ function byteLength(str: string): number {
 	return ENCODER.encode(str).length;
 }\
 """
+
+[SomeRerquired]
+prefix = "SomeRerquired"
+body = "type SomeRequired<T, K extends keyof T> = Required<Pick<T, K>> & Omit<T, K>;"
