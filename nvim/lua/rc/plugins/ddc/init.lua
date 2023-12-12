@@ -75,7 +75,7 @@ local spec = {
           -- characters, underscores, or hyphens in a 'kebab-case' style.
           keywordPattern = [[(?:-?\d+(?:\.\d+)?|[a-zA-Z_]\w*(?:-\w*)*)]],
           matchers = { "exact-prefix", "matcher_fuzzy" },
-          sorters = { "sorter_fuzzy" },
+          sorters = { "sorter_fuzzy", "exact" },
           converters = { "converter_fuzzy", "converter_lsp-kind" },
           ignoreCase = true,
         },
