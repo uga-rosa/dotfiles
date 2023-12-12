@@ -148,11 +148,20 @@ export class Source extends BaseSource<Params> {
     const prefixes = sourceParams.firstCaseInsensitive
       ? [capitalize(prefix), decapitalize(prefix)]
       : [prefix];
+    const isCapital = prefix.charAt(0) === prefix.charAt(0).toUpperCase();
+    const fixWord = (word: string) => {
+      if (sourceParams.firstCaseInsensitive) {
+        return isCapital ? capitalize(word) : decapitalize(word);
+      } else {
+        return word;
+      }
+    };
+
     const items = Object.values(this.#dictCache).filter((cache) => cache.active)
-      .map((cache) => prefixes.map((p) => cache.trie.search(p)))
+      .map((cache) => prefixes.map((prefix) => cache.trie.search(prefix)))
       .flat(2)
-      .map((word) => ({ word }));
-    const isIncomplete = completeStr.length === sourceParams.exactLength ||
+      .map((word) => ({ word: fixWord(word) }));
+    const isIncomplete = completeStr.length < sourceParams.exactLength ||
       items.length > sourceOptions.maxItems;
     return Promise.resolve({ items, isIncomplete });
   }
