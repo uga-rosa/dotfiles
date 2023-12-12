@@ -4,7 +4,6 @@ local helper = require("rc.helper.ddc")
 local spec = {
   "uga-rosa/denippet.vim",
   dev = true,
-  -- enabled = false,
   dependencies = {
     "denops.vim",
     "ddc.vim",
@@ -13,9 +12,7 @@ local spec = {
     -- loader
     local root = vim.fn.stdpath("config") .. "/snippets/"
     for name, _ in vim.fs.dir(root) do
-      if not vim.endswith(name, ".snippets") then
-        vim.fn["denippet#load"](root .. name)
-      end
+      vim.fn["denippet#load"](root .. name)
     end
 
     vim.g.denippet_drop_on_zero = true
