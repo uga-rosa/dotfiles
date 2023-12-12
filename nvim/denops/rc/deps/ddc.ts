@@ -5,11 +5,11 @@ export {
   type DdcGatherItems,
   type Item,
   type PumHighlight,
-} from "https://deno.land/x/ddc_vim@v4.1.0/types.ts";
+} from "https://deno.land/x/ddc_vim@v4.3.1/types.ts";
 export {
   type GatherArguments,
   type OnCompleteDoneArguments,
   type OnEventArguments,
   type OnInitArguments,
-} from "https://deno.land/x/ddc_vim@v4.1.0/base/source.ts";
-export { type FilterArguments } from "https://deno.land/x/ddc_vim@v4.1.0/base/filter.ts";
+} from "https://deno.land/x/ddc_vim@v4.3.1/base/source.ts";
+export { type FilterArguments } from "https://deno.land/x/ddc_vim@v4.3.1/base/filter.ts";
