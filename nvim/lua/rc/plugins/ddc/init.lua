@@ -123,9 +123,7 @@ local spec = {
       },
       sourceParams = {
         dictionary = {
-          spelllang = {
-            en = "/usr/share/dict/words",
-          },
+          paths = { "/usr/share/dict/words" },
           firstCaseInsensitive = true,
         },
       },
