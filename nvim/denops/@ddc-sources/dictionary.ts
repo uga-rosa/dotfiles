@@ -4,6 +4,7 @@ import {
   DdcGatherItems,
   GatherArguments,
   Item,
+  OnEventArguments,
   OnInitArguments,
 } from "../rc/deps/ddc.ts";
 import { Lock } from "../rc/deps/async.ts";
@@ -32,14 +33,21 @@ type Params = {
 
 export class Source extends BaseSource<Params> {
   #dictCache: Record<string, Cache> = {};
-  #prePaths: string[] = [];
+  #prePaths = "";
 
   async onInit({ sourceParams }: OnInitArguments<Params>): Promise<void> {
     await this.update(sourceParams.paths);
   }
 
+  events = ["InsertEnter"];
+  async onEvent({ sourceParams }: OnEventArguments<Params>): Promise<void> {
+    if (JSON.stringify(sourceParams.paths) !== this.#prePaths) {
+      await this.update(sourceParams.paths);
+    }
+  }
+
   async update(paths: string[]): Promise<void> {
-    this.#prePaths = paths;
+    this.#prePaths = JSON.stringify(paths);
 
     // Deactivate old caches.
     for (const cache of Object.values(this.#dictCache)) {
@@ -89,15 +97,10 @@ export class Source extends BaseSource<Params> {
       .flatMap((cache) => cache.trie.search(prefix));
   }
 
-  async gather({
+  gather({
     sourceParams,
     completeStr,
   }: GatherArguments<Params>): Promise<DdcGatherItems> {
-    // Update if paths is changed.
-    if (JSON.stringify(sourceParams.paths) !== JSON.stringify(this.#prePaths)) {
-      await this.update(sourceParams.paths);
-    }
-
     const prefix = completeStr.slice(0, sourceParams.exactLength);
     let items: Item[] = [];
     if (sourceParams.firstCaseInsensitive) {
@@ -114,11 +117,8 @@ export class Source extends BaseSource<Params> {
     } else {
       items = this.search(prefix).map((word) => ({ word }));
     }
-
-    return {
-      items,
-      isIncomplete: completeStr.length < sourceParams.exactLength,
-    };
+    const isIncomplete = completeStr.length < sourceParams.exactLength;
+    return Promise.resolve({ items, isIncomplete });
   }
 
   params(): Params {
