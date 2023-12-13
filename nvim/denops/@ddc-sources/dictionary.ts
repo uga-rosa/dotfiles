@@ -29,6 +29,7 @@ type Params = {
   paths: string[];
   exactLength: number;
   firstCaseInsensitive: boolean;
+  showPath: boolean;
 };
 
 export class Source extends BaseSource<Params> {
@@ -91,33 +92,40 @@ export class Source extends BaseSource<Params> {
     }));
   }
 
-  search(prefix: string): string[] {
+  search(prefix: string, showPath: boolean): Item[] {
     return Object.values(this.#dictCache)
       .filter((cache) => cache.active)
-      .flatMap((cache) => cache.trie.search(prefix));
+      .flatMap((cache) => {
+        const info = showPath ? cache.path : "";
+        return cache.trie.search(prefix).map((word) => ({ word, info }));
+      });
   }
 
   gather({
-    sourceParams,
+    sourceParams: params,
     completeStr,
   }: GatherArguments<Params>): Promise<DdcGatherItems> {
-    const prefix = completeStr.slice(0, sourceParams.exactLength);
+    const prefix = completeStr.slice(0, params.exactLength);
     let items: Item[] = [];
-    if (sourceParams.firstCaseInsensitive) {
+    if (params.firstCaseInsensitive) {
       const isCapital = prefix.charAt(0) === prefix.charAt(0).toUpperCase();
       if (isCapital) {
-        items = this.search(prefix).map((word) => ({ word }));
-        const prefixL = decapitalize(prefix);
-        items = items.concat(this.search(prefixL).map((word) => ({ word: capitalize(word) })));
+        items = [
+          ...this.search(prefix, params.showPath),
+          ...this.search(decapitalize(prefix), params.showPath)
+            .map((item) => ({ ...item, word: capitalize(item.word) })),
+        ];
       } else {
-        items = this.search(prefix).map((word) => ({ word }));
-        const prefixU = capitalize(prefix);
-        items = items.concat(this.search(prefixU).map((word) => ({ word: decapitalize(word) })));
+        items = [
+          ...this.search(prefix, params.showPath),
+          ...this.search(capitalize(prefix), params.showPath)
+            .map((item) => ({ ...item, word: decapitalize(item.word) })),
+        ];
       }
     } else {
-      items = this.search(prefix).map((word) => ({ word }));
+      items = this.search(prefix, params.showPath);
     }
-    const isIncomplete = completeStr.length < sourceParams.exactLength;
+    const isIncomplete = completeStr.length < params.exactLength;
     return Promise.resolve({ items, isIncomplete });
   }
 
@@ -126,6 +134,7 @@ export class Source extends BaseSource<Params> {
       paths: [],
       exactLength: 2,
       firstCaseInsensitive: false,
+      showPath: false,
     };
   }
 }
