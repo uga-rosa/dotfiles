@@ -14,24 +14,46 @@ end)
 
 ---@type LazySpec
 local spec = {
-  "uga-rosa/ddu-source-help",
-  dev = true,
-  dependencies = "ddu.vim",
-  init = function()
-    vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
-  end,
-  config = function()
-    helper.patch_local("help_tags", {
-      sources = {
-        {
-          name = "help",
-          options = {
-            defaultAction = "open",
+  {
+    "uga-rosa/ddu-source-help",
+    dev = true,
+    dependencies = "ddu.vim",
+    init = function()
+      vim.keymap.set("n", "<Space>h", "<Cmd>Ddu help_tags<CR>")
+    end,
+    config = function()
+      helper.patch_local("help_tags", {
+        sources = {
+          {
+            name = "help",
+            options = {
+              defaultAction = "open",
+            },
           },
         },
-      },
-    })
-  end,
+      })
+    end,
+  },
+  {
+    "uga-rosa/vimdoc-vim",
+    dev = true,
+    dependencies = "ddu.vim",
+    config = function()
+      helper.patch_local("help_tags_vim", {
+        sources = {
+          {
+            name = "help",
+            options = {
+              defaultAction = "open",
+            },
+            params = {
+              helpLang = "vm",
+            },
+          },
+        },
+      })
+    end,
+  },
 }
 
 return spec
