@@ -4,6 +4,7 @@ M.sources = {
   default = { "denippet", "lsp", "buffer", "dictionary" },
   skkeleton = { "skkeleton" },
   lua = { "denippet", "lsp", "nvim-lua", "buffer", "dictionary" },
+  vim = { "denippet", "necovim", "buffer", "dictionary" },
 }
 
 function M.patch_global(...)

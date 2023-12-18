@@ -34,7 +34,6 @@ local spec = {
 
       require("mason-lspconfig").setup({
         ensure_installed = {
-          "vimls",
           "gopls",
           "bashls",
           "vtsls",
