@@ -4,7 +4,8 @@ local helper = require("rc.helper.lsp")
 local spec = {
   {
     "neovim/nvim-lspconfig",
-    event = "VeryLazy",
+    -- event = { "BufReadPre", "BufNewFile" },
+    lazy = false,
     dependencies = {
       "ddc-source-lsp",
       {
@@ -25,13 +26,6 @@ local spec = {
           require("fidget").setup()
         end,
       },
-      {
-        "matsui54/denops-signature_help",
-        dependencies = "denops.vim",
-        config = function()
-          vim.fn["signature_help#enable"]()
-        end,
-      },
       "b0o/SchemaStore.nvim",
     },
     config = function()
@@ -50,30 +44,20 @@ local spec = {
         },
       })
 
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-      vim.keymap.set("n", "<Space>F", "<Cmd>Format<CR>")
-
       helper.on_attach(nil, function(client, bufnr)
         local buf_map = function(lhs, rhs)
           vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
         end
 
+        buf_map("[d", vim.diagnostic.goto_prev)
+        buf_map("]d", vim.diagnostic.goto_next)
         buf_map("K", vim.lsp.buf.hover)
         buf_map("<Space>n", vim.lsp.buf.rename)
+        buf_map("<Space>F", "<Cmd>Format<CR>")
 
         if client.server_capabilities.documentFormattingProvider then
           vim.api.nvim_buf_create_user_command(bufnr, "Format", function()
             vim.lsp.buf.format()
-          end, {})
-        end
-
-        if client.server_capabilities.inlayHintProvider then
-          vim.api.nvim_buf_create_user_command(bufnr, "InlayHintEnable", function()
-            vim.lsp.inlay_hint(bufnr, true)
-          end, {})
-          vim.api.nvim_buf_create_user_command(bufnr, "InlayHintDisable", function()
-            vim.lsp.inlay_hint(bufnr, false)
           end, {})
         end
       end)
@@ -84,11 +68,17 @@ local spec = {
           lspconfig[server_name].setup(ok and opt or {})
         end,
       })
+
+      local local_servers = { "denols" }
+      for _, server_name in ipairs(local_servers) do
+        local ok, opt = pcall(require, "rc.plugins.lsp." .. server_name)
+        lspconfig[server_name].setup(ok and opt or {})
+      end
     end,
   },
   {
     "utilyre/barbecue.nvim",
-    event = "VeryLazy",
+    event = "LSPAttach",
     dependencies = {
       "SmiteshP/nvim-navic",
       "nvim-tree/nvim-web-devicons",
