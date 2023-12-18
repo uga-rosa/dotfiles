@@ -12,17 +12,21 @@ return {
     enable = true,
     lint = true,
     unstable = true,
-    suggest = {
-      imports = {
-        hosts = {
-          ["https://deno.land"] = true,
-          ["https://cdn.nest.land"] = true,
-          ["https://crux.land"] = true,
+  },
+  settings = {
+    deno = {
+      suggest = {
+        autoImports = false,
+        imports = {
+          autoDiscover = false,
+          hosts = {
+            ["https://deno.land"] = false,
+            ["https://crux.land"] = false,
+            ["https://x.nest.land"] = false,
+          },
         },
       },
     },
-  },
-  settings = {
     typescript = {
       inlayHints = helper.typescriptInlayHints,
     },
