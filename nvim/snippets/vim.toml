@@ -1,10 +1,14 @@
-[for]
-prefix = "for"
-body = """
-for ${1:var} in ${2:list}
-	$0
-endfor\
-"""
+[rt]
+prefix = "rt"
+body = "return"
+
+[l]
+prefix = "l"
+body = "let $1 = $0"
+
+[c]
+prefix = "c"
+body = "const $1 = $0"
 
 ["local function"]
 prefix = "lfn"
@@ -14,6 +18,27 @@ function s:$1($2) abort
 endfunction\
 """
 
-[rt]
-prefix = "rt"
-body = "return"
+[for]
+prefix = "for"
+body = """
+for ${1:var} in ${2:list}
+	$0
+endfor\
+"""
+
+[if]
+prefix = "if"
+body = """
+if $1
+	$0
+endif\
+"""
+
+[aug]
+prefix = "aug"
+body = """
+augroup $1
+	au!
+	$0
+augroup END
+"""
