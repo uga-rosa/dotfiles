@@ -22,6 +22,9 @@ vim.keymap.set(mode_all, "<BS>", "<C-h>", { remap = true })
 vim.keymap.set(mode_all, "<Home>", "<C-a>", { remap = true })
 vim.keymap.set(mode_all, "<End>", "<C-e>", { remap = true })
 
+-- HHKB
+-- vim.keymap.set("i", "<C-h>", "<BS>", { remap = true })
+
 -- Release for prefix
 vim.keymap.set("n", "s", "<Nop>")
 
