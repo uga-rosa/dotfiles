@@ -49,6 +49,17 @@ vim.keymap.set("n", "<Esc><Esc>", "<Cmd>nohl<CR>")
 -- Erase x history
 vim.keymap.set("n", "x", '"_x')
 
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("use-easy-regname", {}),
+  callback = function()
+    ---@diagnostic disable
+    if vim.v.event.regname == "" then
+      vim.fn.setreg(vim.v.event.operator, vim.fn.getreg())
+    end
+    ---@diagnostic enable
+  end,
+})
+
 -- Emacs keybinding (Insert mode)
 vim.keymap.set("i", "<C-f>", "<C-g>U<Right>")
 vim.keymap.set("i", "<C-b>", "<C-g>U<Left>")
