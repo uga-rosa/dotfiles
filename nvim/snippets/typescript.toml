@@ -93,7 +93,7 @@ async function $1($2): Promise<${3:void}> {
 ["arrow fn async"]
 prefix = "arrow fn async"
 body = """
-async ($1): Promise<${2:void}> => {
+async ($1) => {
 	$0
 }\
 """
