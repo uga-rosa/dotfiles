@@ -93,26 +93,6 @@ local spec = {
       keywordPattern = "(?:[a-z]:)?\\k*",
     })
 
-    -- source-menu {{{
-    vim.keymap.set("i", "<C-x>", "ddc#map#manual_complete(#{sources: ['menu']})", { expr = true })
-
-    helper.patch_global({
-      sourceOptions = {
-        menu = {
-          forceCompletionPattern = ".*",
-        },
-      },
-      sourceParams = {
-        menu = {
-          items = {
-            { sourceName = "file", lhs = "<C-f>" },
-            { sourceName = "buffer", lhs = "<C-b>" },
-          },
-        },
-      },
-    })
-    -- }}}
-
     -- source-dictionary {{{
     helper.patch_global({
       sourceOptions = {
