@@ -4,8 +4,7 @@ local helper = require("rc.helper.lsp")
 local spec = {
   {
     "neovim/nvim-lspconfig",
-    -- event = { "BufReadPre", "BufNewFile" },
-    lazy = false,
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "ddc-source-lsp",
       {
