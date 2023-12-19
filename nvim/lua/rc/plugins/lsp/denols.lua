@@ -16,18 +16,18 @@ return {
   settings = {
     deno = {
       suggest = {
-        autoImports = false,
         imports = {
           autoDiscover = false,
           hosts = {
             ["https://deno.land"] = false,
-            ["https://crux.land"] = false,
-            ["https://x.nest.land"] = false,
           },
         },
       },
     },
     typescript = {
+      suggest = {
+        autoImports = false,
+      },
       inlayHints = helper.typescriptInlayHints,
     },
   },
