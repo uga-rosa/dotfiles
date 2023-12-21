@@ -40,6 +40,19 @@ github:
       link:
         - from: '*jq*'
           to: jq
+  - name: mikefarah/yq
+    description: yq is a portable command-line YAML, JSON, XML, CSV, TOML and properties processor
+    owner: mikefarah
+    repo: yq
+    release:
+      name: yq
+      tag: v4.40.5
+      asset:
+        filename: '{{ .Release.Name }}_{{ .OS }}_{{ .Arch }}.tar.gz'
+    command:
+      link:
+        - from: '*yq_*'
+          to: yq
   - name: ajeetdsouza/zoxide
     description: A smarter cd command. Supports all major shells.
     owner: ajeetdsouza
