@@ -16,7 +16,7 @@ local spec = {
     "matsui54/ddu-source-command_history",
     dependencies = "ddu.vim",
     init = function()
-      vim.keymap.set("n", "q:", "<Cmd>Ddu history:command<CR>")
+      vim.keymap.set("n", "q;", "<Cmd>Ddu history:command<CR>")
     end,
     config = function()
       helper.patch_local("history:command", {
