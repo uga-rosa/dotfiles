@@ -105,6 +105,7 @@ local spec = {
         dictionary = {
           paths = { "/usr/share/dict/words" },
           firstCaseInsensitive = true,
+          documentCommand = { "wn", "%s", "-over" },
         },
       },
     })

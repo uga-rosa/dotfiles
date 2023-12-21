@@ -3,9 +3,11 @@ import {
   BaseSource,
   DdcGatherItems,
   GatherArguments,
+  GetPreviewerArguments,
   Item,
   OnEventArguments,
   OnInitArguments,
+  Previewer,
 } from "../rc/deps/ddc.ts";
 import { Lock } from "../rc/deps/async.ts";
 import Trie from "../rc/trie.ts";
@@ -30,6 +32,7 @@ type Params = {
   exactLength: number;
   firstCaseInsensitive: boolean;
   showPath: boolean;
+  documentCommand: string[];
 };
 
 export class Source extends BaseSource<Params> {
@@ -129,12 +132,51 @@ export class Source extends BaseSource<Params> {
     return Promise.resolve({ items, isIncomplete });
   }
 
+  #Decoder = new TextDecoder();
+  decode(u: Uint8Array): string {
+    return this.#Decoder.decode(u);
+  }
+
+  getPreviewer({
+    item,
+    sourceParams: params,
+  }: GetPreviewerArguments<Params>): Previewer {
+    const contents = item.info ? [item.info] : [];
+    if (params.documentCommand.length > 0) {
+      const command = params.documentCommand.map((c) => c === "%s" ? item.word : c);
+      const { stdout, stderr } = new Deno.Command(command[0], {
+        args: command.slice(1),
+      }).outputSync();
+      if (stdout.length > 0) {
+        return {
+          kind: "text",
+          contents: [
+            ...contents,
+            ...this.decode(stdout).trim().split("\n"),
+          ],
+        };
+      } else if (stderr.length > 0) {
+        return {
+          kind: "text",
+          contents: [
+            "Error:",
+            ...this.decode(stderr).trim().split("\n"),
+          ],
+        };
+      }
+    } else if (contents.length > 0) {
+      return { kind: "text", contents };
+    }
+    return { kind: "empty" };
+  }
+
   params(): Params {
     return {
       paths: [],
       exactLength: 2,
       firstCaseInsensitive: false,
       showPath: false,
+      documentCommand: [],
     };
   }
 }
