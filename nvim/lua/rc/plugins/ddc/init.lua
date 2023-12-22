@@ -93,24 +93,6 @@ local spec = {
       keywordPattern = "(?:[a-z]:)?\\k*",
     })
 
-    -- source-dictionary {{{
-    helper.patch_global({
-      sourceOptions = {
-        dictionary = {
-          mark = "[Dict]",
-          matchers = { "matcher_fuzzy" },
-        },
-      },
-      sourceParams = {
-        dictionary = {
-          paths = { "/usr/share/dict/words" },
-          firstCaseInsensitive = true,
-          documentCommand = { "wn", "%s", "-over" },
-        },
-      },
-    })
-    -- }}}
-
     vim.fn["ddc#enable"]()
     require("ddc_previewer_floating").enable()
   end,
