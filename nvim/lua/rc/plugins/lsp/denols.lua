@@ -11,10 +11,10 @@ return {
   init_options = {
     enable = true,
     lint = true,
-    unstable = true,
   },
   settings = {
     deno = {
+      unstable = true,
       suggest = {
         imports = {
           autoDiscover = false,
