@@ -59,10 +59,8 @@ local spec = {
       autoCompleteEvents = {
         "InsertEnter",
         "TextChangedI",
-        "TextChangedP",
         "CmdlineEnter",
         "CmdlineChanged",
-        "TextChangedT",
       },
       backspaceCompletion = true,
       sourceOptions = {
@@ -81,15 +79,22 @@ local spec = {
       sources = helper.sources.default,
     })
 
-    for ft, sources in pairs(helper.sources) do
-      if ft ~= "default" and ft ~= "skkeleton" then
-        helper.patch_filetype(ft, {
-          sources = sources,
-        })
-      end
-    end
+    vim.api.nvim_create_autocmd("BufEnter", {
+      callback = function()
+        helper.set_context_buffer(function()
+          if vim.fn["ddc#syntax_in"]("comment") then
+            return { sources = helper.sources.comment }
+          end
+          return {}
+        end)
+      end,
+    })
 
+    helper.patch_filetype("lua", {
+      sources = helper.sources.lua,
+    })
     helper.patch_filetype("vim", {
+      sources = helper.sources.vim,
       keywordPattern = "(?:[a-z]:)?\\k*",
     })
 

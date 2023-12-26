@@ -5,6 +5,7 @@ M.sources = {
   skkeleton = { "skkeleton" },
   lua = { "denippet", "lsp", "nvim-lua", "buffer", "dictionary" },
   vim = { "denippet", "necovim", "buffer", "dictionary" },
+  comment = { "buffer", "dictionary" },
 }
 
 function M.patch_global(...)
@@ -40,6 +41,10 @@ end
 ---@param base string
 function M.alias(type, alias, base)
   vim.fn["ddc#custom#alias"](type, alias, base)
+end
+
+function M.set_context_buffer(...)
+  vim.fn["ddc#custom#set_context_buffer"](...)
 end
 
 ---@param fun function
