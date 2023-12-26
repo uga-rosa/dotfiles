@@ -9,8 +9,6 @@ local spec = {
     "ddc.vim",
   },
   config = function()
-    -- require("ddc_nvim_lsp.internal").setup({ debug = true })
-
     helper.patch_global({
       sourceOptions = {
         lsp = {
