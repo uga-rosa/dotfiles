@@ -6,6 +6,7 @@ local spec = {
   dev = true,
   dependencies = { "ddc.vim" },
   config = function()
+    local data_dir = vim.fn.stdpath("data") --[[@as string]]
     helper.patch_global({
       sourceOptions = {
         dictionary = {
@@ -17,7 +18,8 @@ local spec = {
         dictionary = {
           paths = { "/usr/share/dict/words" },
           firstCaseInsensitive = true,
-          documentCommand = { "wn", "{{word}}", "-over" },
+          documentCommand = { "wn", "${item.word}", "-over" },
+          databasePath = vim.fs.joinpath(data_dir, "ddc-source-dictionary.sqlite3"),
         },
       },
     })
