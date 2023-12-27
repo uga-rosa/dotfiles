@@ -40,5 +40,5 @@ body = """
 augroup $1
 	au!
 	$0
-augroup END
+augroup END\
 """
