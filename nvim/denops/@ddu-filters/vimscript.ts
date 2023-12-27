@@ -1,5 +1,4 @@
-import { DduItem } from "https://deno.land/x/ddu_vim@v3.5.1/types.ts";
-import { BaseFilter, FilterArguments } from "https://deno.land/x/ddu_vim@v3.5.1/base/filter.ts";
+import { BaseFilter, DduItem, FilterArguments } from "../rc/deps/ddu.ts";
 
 type Params = {
   funcname?: string;
