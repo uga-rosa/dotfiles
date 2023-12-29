@@ -35,11 +35,13 @@ local spec = {
           eggLikeNewline = true,
           globalDictionaries = {
             vim.fs.joinpath(lazy_root, "dict", "SKK-JISYO.L"),
+            vim.fs.joinpath(lazy_root, "dict", "SKK-JISYO.jinmei"),
           },
           userJisyo = "~/.secret/SKK-JISYO.user",
           markerHenkan = "<>",
           markerHenkanSelect = ">>",
           registerConvertResult = true,
+          databasePath = vim.fn.stdpath("data") .. "/skkeleton.db",
         })
 
         vim.fn["skkeleton#initialize"]()

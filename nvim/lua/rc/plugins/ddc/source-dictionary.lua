@@ -19,7 +19,7 @@ local spec = {
           paths = { "/usr/share/dict/words" },
           firstCaseInsensitive = true,
           documentCommand = { "wn", "${item.word}", "-over" },
-          databasePath = vim.fs.joinpath(data_dir, "ddc-source-dictionary.sqlite3"),
+          databasePath = vim.fs.joinpath(data_dir, "ddc-source-dictionary.db"),
         },
       },
     })
