@@ -74,6 +74,7 @@ local spec = {
           sorters = { "sorter_fuzzy", "exact" },
           converters = { "converter_fuzzy", "converter_lsp-kind" },
           ignoreCase = true,
+          timeout = 500,
         },
       },
       sources = helper.sources.default,
