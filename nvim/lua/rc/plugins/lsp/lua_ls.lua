@@ -72,7 +72,7 @@ return {
       },
       workspace = {
         library = library({ "lazy.nvim", "nvim-insx" }, { "vusted" }),
-        checkThirdParty = false,
+        checkThirdParty = "Disable",
       },
       hint = {
         enable = false,
