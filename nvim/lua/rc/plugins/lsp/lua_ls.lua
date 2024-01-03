@@ -18,7 +18,7 @@ local function get_plugin_paths(names)
   local paths = {}
   for _, name in ipairs(names) do
     if plugins[name] then
-      table.insert(paths, plugins[name].dir)
+      table.insert(paths, plugins[name].dir .. "/lua")
     else
       vim.notify("Invalid plugin name: " .. name)
     end
@@ -47,8 +47,8 @@ end
 ---@return string[]
 local function library(plugins, rocks)
   local paths = vim.list_extend(get_plugin_paths(plugins), get_rock_path(rocks))
-  table.insert(paths, vim.fn.stdpath("config"))
-  table.insert(paths, vim.env.VIMRUNTIME)
+  table.insert(paths, vim.fn.stdpath("config") .. "/lua")
+  table.insert(paths, vim.env.VIMRUNTIME .. "/lua")
   table.insert(paths, "${3rd}/luv/library")
   table.insert(paths, "${3rd}/busted/library")
   table.insert(paths, "${3rd}/luassert/library")
@@ -67,6 +67,7 @@ return {
       },
       runtime = {
         version = "LuaJIT",
+        pathStrict = true,
         path = { "?.lua", "?/init.lua" },
       },
       workspace = {
@@ -74,7 +75,7 @@ return {
         checkThirdParty = false,
       },
       hint = {
-        enable = true,
+        enable = false,
       },
     },
   },
