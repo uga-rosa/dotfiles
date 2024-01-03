@@ -26,17 +26,17 @@ local function get_plugin_paths(names)
   return paths
 end
 
----@param rocks string[]
+---@param names string[]
 ---@return string[]
-local function get_rock_path(rocks)
+local function get_rock_paths(names)
   local root = "/usr/local/share/lua/5.1/"
   local paths = {}
-  for _, rock in ipairs(rocks) do
-    local path = root .. rock
+  for _, name in ipairs(names) do
+    local path = root .. name
     if vim.bool_fn.isdirectory(path) then
       table.insert(paths, path)
     else
-      vim.notify("Invalid rock name: " .. rock)
+      vim.notify("Invalid rock name: " .. name)
     end
   end
   return paths
@@ -46,7 +46,7 @@ end
 ---@param rocks string[]
 ---@return string[]
 local function library(plugins, rocks)
-  local paths = vim.list_extend(get_plugin_paths(plugins), get_rock_path(rocks))
+  local paths = vim.list_extend(get_plugin_paths(plugins), get_rock_paths(rocks))
   table.insert(paths, vim.fn.stdpath("config") .. "/lua")
   table.insert(paths, vim.env.VIMRUNTIME .. "/lua")
   table.insert(paths, "${3rd}/luv/library")
