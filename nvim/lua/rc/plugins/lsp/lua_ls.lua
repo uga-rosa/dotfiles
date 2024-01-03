@@ -11,22 +11,16 @@ helper.on_attach("lua_ls", function(_, bufnr)
   end, {})
 end)
 
----@param plugins string[]
+---@param names string[]
 ---@return string[]
-local function get_plugin_path(plugins)
+local function get_plugin_paths(names)
+  local plugins = require("lazy.core.config").plugins
   local paths = {}
-  local options = require("lazy.core.config").options
-  local dev_root = options.dev.path
-  local root = options.root
-  for _, plugin in ipairs(plugins) do
-    local dev_path = vim.fs.joinpath(dev_root, plugin)
-    local path = vim.fs.joinpath(root, plugin)
-    if vim.fs.isdir(vim.fs.joinpath(dev_path, "lua")) then
-      table.insert(paths, dev_path)
-    elseif vim.fs.isdir(vim.fs.joinpath(path, "lua")) then
-      table.insert(paths, path)
+  for _, name in ipairs(names) do
+    if plugins[name] then
+      table.insert(paths, plugins[name].dir)
     else
-      vim.notify("Invalid plugin name: " .. plugin)
+      vim.notify("Invalid plugin name: " .. name)
     end
   end
   return paths
@@ -52,9 +46,9 @@ end
 ---@param rocks string[]
 ---@return string[]
 local function library(plugins, rocks)
-  local paths = vim.list_extend(get_plugin_path(plugins), get_rock_path(rocks))
+  local paths = vim.list_extend(get_plugin_paths(plugins), get_rock_path(rocks))
   table.insert(paths, vim.fn.stdpath("config"))
-  table.insert(paths, "/usr/local/share/nvim/runtime")
+  table.insert(paths, vim.env.VIMRUNTIME)
   table.insert(paths, "${3rd}/luv/library")
   table.insert(paths, "${3rd}/busted/library")
   table.insert(paths, "${3rd}/luassert/library")
@@ -67,17 +61,6 @@ return {
       format = {
         -- Use stylua
         enable = false,
-      },
-      diagnostics = {
-        globals = {
-          "vim",
-          "describe",
-          "it",
-          "before_each",
-          "after_each",
-          "setup",
-          "teardown",
-        },
       },
       semantic = {
         enable = false,
