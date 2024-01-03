@@ -1,18 +1,13 @@
----@type table<string, fun(...: unknown): boolean>
-vim.bool_fn = setmetatable({}, {
-  __index = function(_, key)
-    return function(...)
-      local v = vim.fn[key](...)
-      return vim.fn.empty(v) == 0
-    end
-  end,
-})
+_G.uga = {}
+
+local fs = {}
+uga.fs = fs
 
 ---@param path string
 ---@return table|nil
 local function get_stat(path)
   ---@type string|nil
-  local fullpath = vim.loop.fs_realpath(vim.fs.normalize(path))
+  local fullpath = vim.uv.fs_realpath(vim.fs.normalize(path))
   return fullpath and vim.loop.fs_stat(fullpath)
 end
 
@@ -20,7 +15,7 @@ end
 ---In case of symlink, refer to the attribute of the link destination.
 ---@param path string
 ---@return boolean
-function vim.fs.exists(path)
+function fs.exists(path)
   local stat = get_stat(path)
   return stat ~= nil
 end
@@ -29,7 +24,7 @@ end
 ---In case of symlink, refer to the attribute of the link destination.
 ---@param path string
 ---@return boolean
-function vim.fs.isfile(path)
+function fs.isfile(path)
   local stat = get_stat(path)
   return stat ~= nil and stat.type == "file"
 end
@@ -38,14 +33,14 @@ end
 ---In case of symlink, refer to the attribute of the link destination.
 ---@param path string
 ---@return boolean
-function vim.fs.isdir(path)
+function fs.isdir(path)
   local stat = get_stat(path)
   return stat ~= nil and stat.type == "directory"
 end
 
 ---@param fname string
 ---@return string
-function vim.fs.read(fname)
+function fs.read(fname)
   local fd = assert(vim.uv.fs_open(fname, "r", 292)) -- 0444
   local stat = assert(vim.uv.fs_fstat(fd))
   local buffer = assert(vim.uv.fs_read(fd, stat.size, 0))
@@ -55,7 +50,7 @@ end
 
 ---@param fname string
 ---@param data string|string[]
-function vim.fs.write(fname, data)
+function fs.write(fname, data)
   local fd = assert(vim.uv.fs_open(fname, "w", 438))
   assert(vim.uv.fs_write(fd, data))
   vim.uv.fs_close(fd)

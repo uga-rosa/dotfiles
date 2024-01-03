@@ -29,7 +29,7 @@ function M.tmp(cmd)
     vim.notify("Failed to format", vim.log.levels.ERROR)
     return
   end
-  local data = vim.fs.read(tmpfile):gsub("%s*$", "")
+  local data = uga.fs.read(tmpfile):gsub("%s*$", "")
   local view = vim.fn.winsaveview()
   vim.api.nvim_buf_set_lines(0, 0, -1, true, vim.split(data, "\n"))
   vim.fn.winrestview(view)

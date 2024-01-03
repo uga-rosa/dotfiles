@@ -15,7 +15,7 @@ local spec = {
     init = function()
       vim.g.searchx = {
         auto_accept = true,
-        scrolloff = vim.opt.scrolloff:get(),
+        scrolloff = vim.opt.scrolloff,
         scrolltime = 0,
         nohlsearch = {
           jump = true,
@@ -39,7 +39,7 @@ local spec = {
     "lambdalisue/kensaku.vim",
     dependencies = "denops.vim",
     config = function()
-      local romanTableJson = vim.fs.read(vim.fn.stdpath("config") .. "/script/azik_skkeleton.json")
+      local romanTableJson = uga.fs.read(vim.fn.stdpath("config") .. "/script/azik_skkeleton.json")
       local romanTableObj = vim.json.decode(romanTableJson)
       local romanTable = {}
       for key, value in pairs(romanTableObj) do
