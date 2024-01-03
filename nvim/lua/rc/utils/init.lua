@@ -45,7 +45,7 @@ end
 ---@param fn function
 ---@param ... unknown Arguments
 ---@return function
-function M.call_with(fn, ...)
+function M.bind(fn, ...)
   local args = { ... }
   return function()
     fn(unpack(args))
