@@ -32,20 +32,19 @@ local function br2lf(s)
 end
 
 ---@param err any
----@param result? Hover
+---@param result? lsp.Hover
 ---@param ctx any
 ---@param config? table
 vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
   if result then
+    ---@diagnostic disable: param-type-mismatch
     if type(result.contents) == "string" then
-      ---@cast result { contents: string }
       result.contents = br2lf(result.contents)
     elseif result.contents.value then
       if result.contents.language or result.contents.kind == "markdown" then
         result.contents.value = br2lf(result.contents.value)
       end
     elseif vim.tbl_islist(result.contents) then
-      ---@cast result { contents: lsp.MarkedString[] }
       for i, v in ipairs(result.contents) do
         if type(v) == "string" then
           result.contents[i] = br2lf(v)
@@ -54,6 +53,7 @@ vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
         end
       end
     end
+    ---@diagnostic enable
   end
   config = config or {}
   config.max_width = 80
@@ -61,9 +61,3 @@ vim.lsp.handlers["textDocument/hover"] = function(err, result, ctx, config)
 end
 
 vim.diagnostic.config(opts.diagnostic)
-
----@class Hover
----@field contents lsp.MarkedString | lsp.MarkedString[] | ddc.lsp.MarkupContent
----@field range? ddc.lsp.Range
-
----@alias lsp.MarkedString string | { language: string, value: string }

@@ -45,6 +45,8 @@ return {
       diagnostics = {
         disable = {
           "duplicate-set-field",
+          "duplicate-doc-alias",
+          "duplicate-doc-field",
         },
       },
       format = {
