@@ -1,6 +1,3 @@
-# windows_commands
-export PATH="$HOME/.windows_command:$PATH"
-
 # afx (package manager for zsh)
 export AFX_COMMAND_PATH="$HOME/.afx/bin"
 export PATH="$AFX_COMMAND_PATH:$PATH"

@@ -42,6 +42,11 @@ end
 return {
   settings = {
     Lua = {
+      diagnostics = {
+        disable = {
+          "duplicate-set-field",
+        },
+      },
       format = {
         -- Use stylua
         enable = false,

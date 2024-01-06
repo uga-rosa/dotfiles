@@ -45,20 +45,6 @@ vim.opt.laststatus = 3
 -- jaxしかないプラグインもある
 vim.opt.helplang = { "en", "ja" }
 
--- clipboard
-vim.opt.clipboard = "unnamedplus"
-vim.g.clipboard = {
-  name = "OSC 52",
-  copy = {
-    ["+"] = require("vim.ui.clipboard.osc52").copy,
-    ["*"] = require("vim.ui.clipboard.osc52").copy,
-  },
-  paste = {
-    ["+"] = vim.fn.getreg("+"),
-    ["*"] = vim.fn.getreg("*"),
-  },
-}
-
 -- vimgrep
 vim.opt.grepprg = "rg --vimgrep"
 vim.opt.grepformat = "%f:%l:%c:%m"
