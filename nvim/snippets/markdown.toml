@@ -5,7 +5,7 @@ body = '<font color="$1">$0</font>'
 [details_zenn]
 prefix = "details zenn"
 body = """
-::: ${1:title}
+:::details ${1:title}
 $0
 :::\
 """
