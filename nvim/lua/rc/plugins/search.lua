@@ -9,8 +9,8 @@ local spec = {
       { "n", "<Cmd>call searchx#next()<CR>", mode = { "n", "x" } },
       { "N", "<Cmd>call searchx#prev()<CR>", mode = { "n", "x" } },
       { "/", "<Cmd>call searchx#start(#{dir: 1})<CR>", mode = { "n", "x" } },
-      { "<M-/>", "<Cmd>call vimrc#kensaku#start(1)<CR>", mode = { "n", "x" } },
-      { "<M-?>", "<Cmd>call vimrc#kensaku#start(0)<CR>", mode = { "n", "x" } },
+      { "<M-/>", "<Cmd>call rc#kensaku#start(1)<CR>", mode = { "n", "x" } },
+      { "<M-?>", "<Cmd>call rc#kensaku#start(0)<CR>", mode = { "n", "x" } },
     },
     init = function()
       vim.g.searchx = {

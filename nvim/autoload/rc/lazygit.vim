@@ -1,4 +1,4 @@
-function! vimrc#lazygit#open() abort
+function! rc#lazygit#open() abort
   tabnew
   terminal lazygit
   startinsert
