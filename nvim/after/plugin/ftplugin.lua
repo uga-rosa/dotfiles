@@ -75,27 +75,25 @@ ft_event.vim = function()
   vim.keymap.set("n", "gd", "<Cmd>call vimrc#vim#gd()<CR>", { buffer = true })
 end
 
+---@param paths string[]
+---@return string?
 local function find_first_existing_file_path(paths)
-  return vim.iter(paths):map(vim.fs.normalize):find(vim.fs.isfile)
+  return vim.iter(paths):map(vim.fs.normalize):find(uga.fs.isfile)
 end
 
 ft_event.lua = function()
-  local stylua_toml = find_first_existing_file_path({
+  local stylua_toml_path = find_first_existing_file_path({
     "stylua.toml",
     ".stylua.toml",
     "~/.config/stylua.toml",
   })
 
-  if stylua_toml then
-    local tab_size, is_hard_tab = 2, false
-    for line in io.lines(stylua_toml) do
-      if vim.startswith(line, "indent_width") then
-        tab_size = tonumber(line:match("%d+")) or 2
-      elseif vim.startswith(line, "indent_type") then
-        is_hard_tab = not not line:find("Tabs")
-      end
-    end
+  if stylua_toml_path then
+    local raw = uga.fs.read(stylua_toml_path)
+    local stylua_toml = vim.fn["rc#toml#parse"](raw)
 
+    local tab_size = stylua_toml.indent_width or 2
+    local is_hard_tab = stylua_toml.indent_type == "Tabs"
     set_indent(tab_size, is_hard_tab)
   end
 end
