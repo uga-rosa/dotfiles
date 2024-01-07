@@ -41,8 +41,14 @@ ft_event.toml = rc.bind(set_indent, 2, true)
 
 local foldlevel = 0
 local valid_marker = {}
-function _G.markdown_foldexpr()
-  local current_line = vim.fn.getline(vim.v.lnum) --[[@as string]]
+
+---@param lnum integer
+---@return integer
+function _G.markdown_foldexpr(lnum)
+  if lnum == 1 then
+    foldlevel = 0
+  end
+  local current_line = vim.fn.getline(lnum) --[[@as string]]
   local start_marker = current_line:match("^(:*:::)details")
   if start_marker then
     foldlevel = foldlevel + 1
@@ -62,7 +68,7 @@ ft_event.markdown = function()
   set_indent(2, false)
   vim.opt_local.foldenable = true
   vim.opt_local.foldmethod = "expr"
-  vim.opt_local.foldexpr = "v:lua.markdown_foldexpr()"
+  vim.opt_local.foldexpr = "v:lua.markdown_foldexpr(v:lnum)"
 end
 
 ft_event.vim = function()
