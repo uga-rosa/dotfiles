@@ -71,10 +71,6 @@ ft_event.markdown = function()
   vim.opt_local.foldexpr = "v:lua.markdown_foldexpr(v:lnum)"
 end
 
-ft_event.vim = function()
-  vim.keymap.set("n", "gd", "<Cmd>call vimrc#vim#gd()<CR>", { buffer = true })
-end
-
 ---@param paths string[]
 ---@return string?
 local function find_first_existing_file_path(paths)
