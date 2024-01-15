@@ -5,7 +5,7 @@ type Params = Record<never, never>;
 export class Filter extends BaseFilter<Params> {
   override filter(args: {
     items: Item[];
-  }) {
+  }): Promise<Item[]> {
     return Promise.resolve(args.items.map((item) => {
       item.kind = item.kind ?? "Text";
 
