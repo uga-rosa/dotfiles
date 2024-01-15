@@ -37,10 +37,11 @@ local spec = {
             vim.fs.joinpath(lazy_root, "dict", "SKK-JISYO.L"),
             vim.fs.joinpath(lazy_root, "dict", "SKK-JISYO.jinmei"),
           },
-          userJisyo = "~/.secret/SKK-JISYO.user",
+          userDictionary = "~/.secret/SKK-JISYO.user",
           markerHenkan = "<>",
           markerHenkanSelect = ">>",
           registerConvertResult = true,
+          sources = { "deno_kv" },
           databasePath = vim.fn.stdpath("data") .. "/skkeleton.db",
         })
 
