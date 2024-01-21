@@ -2,7 +2,6 @@
 local spec = {
   {
     "hrsh7th/vim-searchx",
-    dependencies = "lambdalisue/kensaku.vim",
     keys = {
       { "/", "<Cmd>call searchx#start(#{dir: 1})<CR>", mode = { "n", "x" } },
       { "?", "<Cmd>call searchx#start(#{dir: 0})<CR>", mode = { "n", "x" } },
@@ -39,7 +38,7 @@ local spec = {
     "lambdalisue/kensaku.vim",
     dependencies = "denops.vim",
     config = function()
-      local romanTableJson = uga.fs.read(vim.fn.stdpath("config") .. "/script/azik_skkeleton.json")
+      local romanTableJson = uga.fs.read(vim.fn.stdpath("config") .. "/script/azik/skkeleton.json")
       local romanTableObj = vim.json.decode(romanTableJson)
       local romanTable = {}
       for key, value in pairs(romanTableObj) do

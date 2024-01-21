@@ -178,7 +178,7 @@ set_rule("", undefined, {
 // For skkeleton
 const dirname = new URL(".", import.meta.url).pathname;
 Deno.writeTextFileSync(
-  join(dirname, "azik_skkeleton.json"),
+  join(dirname, "skkeleton.json"),
   JSON.stringify(rule, undefined, 2) + "\n",
 );
 
