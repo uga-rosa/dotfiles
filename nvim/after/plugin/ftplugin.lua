@@ -74,7 +74,7 @@ end
 ---@param paths string[]
 ---@return string?
 local function find_first_existing_file_path(paths)
-  return vim.iter(paths):map(vim.fs.normalize):find(uga.fs.isfile)
+  return vim.iter(paths):map(vim.fs.normalize):find(vim.fs.isfile)
 end
 
 ft_event.lua = function()
@@ -85,7 +85,7 @@ ft_event.lua = function()
   })
 
   if stylua_toml_path then
-    local raw = uga.fs.read(stylua_toml_path)
+    local raw = vim.fs.read(stylua_toml_path)
     local stylua_toml = vim.fn["rc#toml#parse"](raw)
 
     local tab_size = stylua_toml.indent_width or 2

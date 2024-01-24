@@ -1,8 +1,3 @@
-_G.uga = {}
-
-local fs = {}
-uga.fs = fs
-
 ---@param path string
 ---@return table|nil
 local function get_stat(path)
@@ -15,7 +10,7 @@ end
 ---In case of symlink, refer to the attribute of the link destination.
 ---@param path string
 ---@return boolean
-function fs.exists(path)
+function vim.fs.exists(path)
   local stat = get_stat(path)
   return stat ~= nil
 end
@@ -24,7 +19,7 @@ end
 ---In case of symlink, refer to the attribute of the link destination.
 ---@param path string
 ---@return boolean
-function fs.isfile(path)
+function vim.fs.isfile(path)
   local stat = get_stat(path)
   return stat ~= nil and stat.type == "file"
 end
@@ -33,14 +28,14 @@ end
 ---In case of symlink, refer to the attribute of the link destination.
 ---@param path string
 ---@return boolean
-function fs.isdir(path)
+function vim.fs.isdir(path)
   local stat = get_stat(path)
   return stat ~= nil and stat.type == "directory"
 end
 
 ---@param fname string
 ---@return string
-function fs.read(fname)
+function vim.fs.read(fname)
   local fd = assert(vim.uv.fs_open(fname, "r", 292)) -- 0444
   local stat = assert(vim.uv.fs_fstat(fd))
   local buffer = assert(vim.uv.fs_read(fd, stat.size, 0))
@@ -50,7 +45,7 @@ end
 
 ---@param fname string
 ---@param data string|string[]
-function fs.write(fname, data)
+function vim.fs.write(fname, data)
   local fd = assert(vim.uv.fs_open(fname, "w", 438))
   assert(vim.uv.fs_write(fd, data))
   vim.uv.fs_close(fd)

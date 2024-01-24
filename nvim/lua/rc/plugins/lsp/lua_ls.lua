@@ -4,7 +4,7 @@ local formatter = require("rc.helper.formatter")
 helper.on_attach("lua_ls", function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, "Format", function()
     local cmd = ("stylua -f %s -"):format(vim.fs.normalize("~/.config/stylua.toml"))
-    if uga.fs.isfile("stylua.toml") or uga.fs.isfile(".stylua.toml") then
+    if vim.fs.isfile("stylua.toml") or vim.fs.isfile(".stylua.toml") then
       cmd = "stylua -"
     end
     formatter.stdin(cmd)
@@ -62,7 +62,10 @@ return {
         path = { "?.lua", "?/init.lua" },
       },
       workspace = {
-        library = library({ "lazy.nvim", "nvim-insx" }),
+        library = library({
+          "lazy.nvim",
+          "nvim-insx",
+        }),
         checkThirdParty = "Disable",
       },
       hint = {

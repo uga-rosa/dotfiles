@@ -39,7 +39,8 @@ local spec = {
     name = "kensaku.vim",
     dependencies = "denops.vim",
     config = function()
-      local romanTableJson = uga.fs.read(vim.fn.stdpath("config") .. "/script/azik/skkeleton.json")
+      local path = vim.fs.joinpath(vim.fn.stdpath("config"), "script", "azik", "skkeleton.json")
+      local romanTableJson = vim.fs.read(path)
       local romanTableObj = vim.json.decode(romanTableJson)
       local romanTable = {}
       for key, value in pairs(romanTableObj) do

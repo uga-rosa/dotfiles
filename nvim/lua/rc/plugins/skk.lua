@@ -23,7 +23,7 @@ local spec = {
         vim.fn["skkeleton#register_keymap"]("input", "<c-l>", "zenkaku")
         vim.fn["skkeleton#register_keymap"]("input", "'", "henkanPoint")
         local path = vim.fn.stdpath("config") .. "/script/azik/skkeleton.json"
-        local buffer = uga.fs.read(path)
+        local buffer = vim.fs.read(path)
         local kanaTable = vim.json.decode(buffer)
         kanaTable[" "] = "henkanFirst"
         kanaTable["/"] = "abbrev"

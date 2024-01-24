@@ -34,7 +34,7 @@ local spec = {
         local path = item.action.path
           or (item.action.bufnr and vim.api.nvim_buf_get_name(item.action.bufnr))
           or item.word
-        if uga.fs.isfile(path) then
+        if vim.fs.isfile(path) then
           vim.cmd.tabedit(path)
 
           local root = vim.fs.dirname(vim.fs.find({ "init.lua", ".git" }, {
