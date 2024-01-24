@@ -36,6 +36,7 @@ local spec = {
   },
   {
     "lambdalisue/kensaku.vim",
+    name = "kensaku.vim",
     dependencies = "denops.vim",
     config = function()
       local romanTableJson = uga.fs.read(vim.fn.stdpath("config") .. "/script/azik/skkeleton.json")
