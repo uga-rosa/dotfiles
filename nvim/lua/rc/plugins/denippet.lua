@@ -46,6 +46,73 @@ local spec = {
       end
     end)
 
+    vim.api.nvim_create_user_command("DenippetDefine", function(opts)
+      -- Get selection text
+      local start = vim.fn.getpos("'<")
+      local end_ = vim.fn.getpos("'>")
+      local mode = vim.fn.visualmode()
+      ---@type string[]
+      local lines
+      if mode == "v" then
+        lines = vim.api.nvim_buf_get_text(0, start[2] - 1, start[3] - 1, end_[2] - 1, end_[3], {})
+      elseif mode == "V" then
+        lines = vim.api.nvim_buf_get_lines(0, start[2] - 1, end_[2], true)
+      else
+        lines = vim.api.nvim_buf_get_lines(0, start[2] - 1, end_[2], true)
+        for i, line in ipairs(lines) do
+          lines[i] = line:sub(start[3], end_[3])
+        end
+      end
+      -- Trim base indent
+      local base_indent = ""
+      for i, line in ipairs(lines) do
+        if mode == "v" and i == 1 then
+          -- Ignore the first line when the text created as char-wise
+        elseif line == "" then
+          -- Ignore empty line
+        else
+          local indent = line:match("^%s*")
+          if base_indent == "" or #indent < #base_indent then
+            base_indent = indent
+          end
+        end
+      end
+      for i, line in ipairs(lines) do
+        lines[i] = line:sub(#base_indent + 1)
+      end
+
+      local body = table.concat(lines, "\n")
+      local filetype = vim.api.nvim_get_option_value("filetype", {})
+      if filetype == "" then
+        filetype = "*"
+      end
+
+      ---@param prefix string
+      local function setSnippet(prefix)
+        vim.fn["denops#notify"]("denippet", "setDirect", {
+          { prefix },
+          body,
+          { filetype },
+        })
+      end
+
+      if opts.args ~= "" then
+        setSnippet(opts.args)
+      else
+        vim.ui.input({
+          prompt = "Input prefix for snippet: ",
+        }, function(input)
+          if input == nil or input == "" then
+            return
+          end
+          setSnippet(input)
+        end)
+      end
+    end, {
+      nargs = "?",
+      range = true,
+    })
+
     -- ddc-source-denippet
     helper.patch_global({
       sourceOptions = {
