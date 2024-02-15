@@ -122,15 +122,6 @@ local spec = {
       },
     })
 
-    helper.patch_local("lsp:hierarchy", {
-      uiParams = {
-        ff = {
-          displayTree = true,
-          startFilter = false,
-        },
-      },
-    })
-
     for name, method in pairs({
       ["lsp:incoming_call"] = "callHierarchy/incomingCalls",
       ["lsp:outgoing_call"] = "callHierarchy/outgoingCalls",
@@ -153,14 +144,6 @@ local spec = {
       })
     end
 
-    helper.patch_local("lsp:diagnostic", {
-      sourceOptions = {
-        _ = {
-          converters = { "converter_lsp_diagnostic" },
-        },
-      },
-    })
-
     for subcommand, buffer in pairs({
       lsp_diagnostic = 0,
       lsp_diagnostic_all = vim.NIL,
@@ -170,6 +153,23 @@ local spec = {
           {
             name = "lsp_diagnostic",
             params = { buffer = buffer },
+          },
+        },
+        sourceOptions = {
+          lsp_diagnostic = {
+            converters = {
+              {
+                name = "converter_lsp_diagnostic",
+                params = {
+                  iconMap = {
+                    Error = "Error 󰅚 ",
+                    Warning = "Warn 󰀪 ",
+                    Info = "Info 󰌶 ",
+                    Hint = "Hint  ",
+                  },
+                },
+              },
+            },
           },
         },
       })
