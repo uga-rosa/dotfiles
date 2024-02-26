@@ -33,7 +33,7 @@ local spec = {
       },
       typescript = {
         command = "deno",
-        exec = "%C run -A --unstable %S",
+        exec = "%C run -A --unstable-kv %S",
       },
       lua = {
         command = "nvim",
