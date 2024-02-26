@@ -25,7 +25,6 @@ local spec = {
         default_color = "#40bfbf",
         highlighter = {
           auto_enable = true,
-          lsp = true,
           excludes = {
             "ddu-ui",
             "ddu-ui-filter",
