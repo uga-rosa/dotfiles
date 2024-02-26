@@ -16,7 +16,7 @@ local spec = {
             converters = { "converter_devicon" },
           },
           params = {
-            cmd = vim.split("fd --type f --color never --hidden --follow --exclude .git", " "),
+            cmd = vim.split("fd --type f --color never", " "),
           },
         },
       },
