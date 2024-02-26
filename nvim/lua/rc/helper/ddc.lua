@@ -4,7 +4,7 @@ M.sources = {
   default = { "denippet", "lsp", "buffer", "dictionary" },
   skkeleton = { "skkeleton" },
   lua = { "denippet", "lsp", "nvim-lua", "buffer", "dictionary" },
-  vim = { "denippet", "necovim", "buffer", "dictionary" },
+  vim = { "denippet", "vim", "buffer", "dictionary" },
   comment = { "buffer", "dictionary" },
 }
 

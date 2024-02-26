@@ -2,14 +2,15 @@ local helper = require("rc.helper.ddc")
 
 ---@type LazySpec
 local spec = {
-  "Shougo/neco-vim",
+  "Shougo/ddc-source-vim",
   dependencies = {
     "ddc.vim",
+    "Shougo/neco-vim",
   },
   config = function()
     helper.patch_global({
       sourceOptions = {
-        necovim = {
+        vim = {
           mark = "[Vim]",
         },
       },
