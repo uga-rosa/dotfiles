@@ -96,7 +96,11 @@ local spec = {
     })
     helper.patch_filetype("vim", {
       sources = helper.sources.vim,
-      keywordPattern = "(?:[a-z]:)?\\k*",
+      sourceOptions = {
+        _ = {
+          keywordPattern = "(?:[a-z]:)?\\k*",
+        },
+      },
     })
 
     vim.fn["ddc#enable"]()
