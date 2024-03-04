@@ -1,4 +1,4 @@
----@type LazySpec
+---@type PluginSpec
 local spec = {
   {
     "hrsh7th/vim-searchx",
@@ -14,6 +14,7 @@ local spec = {
     init = function()
       vim.g.searchx = {
         auto_accept = true,
+        ---@diagnostic disable-next-line
         scrolloff = vim.opt.scrolloff:get(),
         scrolltime = 0,
         nohlsearch = {
@@ -27,7 +28,7 @@ local spec = {
     "yuki-yano/fuzzy-motion.vim",
     dependencies = {
       "denops.vim",
-      "lambdalisue/kensaku.vim",
+      "kensaku.vim",
     },
     init = function()
       vim.g.fuzzy_motion_matchers = { "fzf", "kensaku" }
@@ -39,7 +40,8 @@ local spec = {
     name = "kensaku.vim",
     dependencies = "denops.vim",
     config = function()
-      local path = vim.fs.joinpath(vim.fn.stdpath("config"), "script", "azik", "skkeleton.json")
+      local config_dir = vim.fn.stdpath("config") --[[@as string]]
+      local path = vim.fs.joinpath(config_dir, "script", "azik", "skkeleton.json")
       local romanTableJson = vim.fs.read(path)
       local romanTableObj = vim.json.decode(romanTableJson)
       local romanTable = {}

@@ -10,7 +10,7 @@ helper.ff_filter_map("history", function(map)
   map("i", "<C-d>", helper.item_action("delete"))
 end)
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   {
     "matsui54/ddu-source-command_history",

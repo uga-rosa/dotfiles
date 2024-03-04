@@ -1,6 +1,6 @@
 local helper = require("rc.helper.ddu")
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "kyoh86/ddu-source-lazy_nvim",
   dependencies = { "ddu.vim" },

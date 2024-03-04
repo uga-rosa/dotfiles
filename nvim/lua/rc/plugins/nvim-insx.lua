@@ -1,4 +1,4 @@
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "hrsh7th/nvim-insx",
   config = function()

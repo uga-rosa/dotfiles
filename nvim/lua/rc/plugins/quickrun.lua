@@ -12,7 +12,7 @@ local function run_under_cursor_block()
   end
 end
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "thinca/vim-quickrun",
   dependencies = {
@@ -21,7 +21,8 @@ local spec = {
   },
   init = function()
     vim.keymap.set("n", "@r", "<Cmd>QuickRun<CR>")
-
+  end,
+  setup = function()
     vim.g.quickrun_config = {
       _ = {
         runner = "neovim_job",

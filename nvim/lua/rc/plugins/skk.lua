@@ -1,17 +1,18 @@
 local helper = require("rc.helper.ddc")
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
+  {
+    "delphinus/skkeleton_indicator.nvim",
+    config = function()
+      require("skkeleton_indicator").setup()
+    end,
+  },
   {
     "vim-skk/skkeleton",
     dependencies = {
       "denops.vim",
-      {
-        "delphinus/skkeleton_indicator.nvim",
-        config = function()
-          require("skkeleton_indicator").setup()
-        end,
-      },
+      "skkeleton_indicator.nvim",
       "ddc.vim",
     },
     config = function()
@@ -29,13 +30,14 @@ local spec = {
         kanaTable["/"] = "abbrev"
         vim.fn["skkeleton#register_kanatable"]("azik", kanaTable, true)
 
-        local lazy_root = require("lazy.core.config").options.root
+        local data_dir = vim.fn.stdpath("data") --[[@as string]]
+        local plugin_root = vim.fs.joinpath(data_dir, "site", "pack", "jetpack", "opt")
         vim.fn["skkeleton#config"]({
           kanaTable = "azik",
           eggLikeNewline = true,
           globalDictionaries = {
-            vim.fs.joinpath(lazy_root, "dict", "SKK-JISYO.L"),
-            vim.fs.joinpath(lazy_root, "dict", "SKK-JISYO.jinmei"),
+            vim.fs.joinpath(plugin_root, "dict", "SKK-JISYO.L"),
+            vim.fs.joinpath(plugin_root, "dict", "SKK-JISYO.jinmei"),
           },
           userDictionary = "~/.secret/SKK-JISYO.user",
           markerHenkan = "<>",
@@ -75,14 +77,11 @@ local spec = {
       })
     end,
   },
-  {
-    "skk-dev/dict",
-    cond = false,
-  },
+  "skk-dev/dict",
   {
     "uga-rosa/skk-learning",
     dev = true,
-    cond = false,
+    enabled = false,
   },
 }
 

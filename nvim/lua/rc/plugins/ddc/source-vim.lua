@@ -1,6 +1,6 @@
 local helper = require("rc.helper.ddc")
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "Shougo/ddc-source-vim",
   dependencies = {

@@ -4,6 +4,8 @@ helper.ff_map("lsp", function(map)
   map("<C-x>", helper.item_action("open", { command = "split" }))
   map("<C-v>", helper.item_action("open", { command = "vsplit" }))
   map("q", helper.item_action("quickfix"))
+  map("l", helper.action("expandItem"))
+  map("h", helper.action("collapseItem"))
 end)
 
 helper.ff_filter_map("lsp", function(map)
@@ -11,7 +13,7 @@ helper.ff_filter_map("lsp", function(map)
   map("i", "<C-v>", helper.item_action("open", { command = "vsplit" }, true))
 end)
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "uga-rosa/ddu-source-lsp",
   dev = true,
@@ -104,6 +106,11 @@ local spec = {
           options = {
             converters = { "converter_lsp_symbol" },
           },
+        },
+      },
+      uiParams = {
+        ff = {
+          displayTree = true,
         },
       },
     })

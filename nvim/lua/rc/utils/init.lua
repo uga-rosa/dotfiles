@@ -47,7 +47,8 @@ end
 ---@return function
 function M.bind(fn, ...)
   local args = { ... }
-  return function()
+  return function(...)
+    args = vim.list_extend(args, { ... })
     fn(unpack(args))
   end
 end
@@ -124,6 +125,39 @@ function M.deduplicate(list)
     end
   end
   return ret
+end
+
+---@param tbl table
+---@param key any
+---@param default? any
+---@return any
+function M.get(tbl, key, default)
+  local value = tbl[key]
+  if value == nil then
+    return default
+  end
+  return value
+end
+
+---@generic T
+---@param x T | T[]
+---@return T[]
+function M.to_list(x)
+  if vim.tbl_islist(x) then
+    return x
+  end
+  return { x }
+end
+
+---@param tbl table
+---@param keys unknown[]
+---@return table
+function M.partial(tbl, keys)
+  local new = {}
+  for _, key in ipairs(keys) do
+    new[key] = tbl[key]
+  end
+  return new
 end
 
 return M

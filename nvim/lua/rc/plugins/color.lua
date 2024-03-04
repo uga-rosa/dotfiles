@@ -1,4 +1,4 @@
----@type LazySpec
+---@type PluginSpec
 local spec = {
   {
     "bluz71/vim-nightfly-colors",

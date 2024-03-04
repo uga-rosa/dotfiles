@@ -1,6 +1,6 @@
 local helper = require("rc.helper.ddc")
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "uga-rosa/ddc-source-nvim-lua",
   dev = true,

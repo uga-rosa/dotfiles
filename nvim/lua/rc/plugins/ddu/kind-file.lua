@@ -16,7 +16,7 @@ helper.ff_filter_map("file", function(map)
   map("i", "<C-t>", helper.item_action("openProject", nil, true))
 end)
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "Shougo/ddu-kind-file",
   dependencies = "ddu.vim",

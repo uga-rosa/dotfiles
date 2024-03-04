@@ -1,12 +1,11 @@
----@type LazySpec
+---@type PluginSpec
 local spec = {
   {
     "yuki-yano/vim-operator-replace",
     dependencies = "kana/vim-operator-user",
-    keys = "<Plug>(operator-replace)",
-    init = function()
-      vim.keymap.set({ "n", "x", "o" }, "r", "<Plug>(operator-replace)")
-    end,
+    keys = {
+      { "r", "<Plug>(operator-replace)", mode = { "n", "x", "o" } },
+    },
   },
   {
     "machakann/vim-sandwich",
@@ -23,7 +22,7 @@ local spec = {
       { "is", "<Plug>(textobj-query-auto-i)", mode = { "x", "o" } },
       { "as", "<Plug>(textobj-query-auto-a)", mode = { "x", "o" } },
     },
-    init = function()
+    setup = function()
       vim.g.operator_sandwich_no_default_key_mappings = true
       vim.g.textobj_sandwich_no_default_key_mappings = true
     end,

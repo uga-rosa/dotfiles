@@ -1,7 +1,7 @@
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "mattn/vim-sonictemplate",
-  init = function()
+  setup = function()
     vim.g.sonictemplate_vim_template_dir = vim.fn.stdpath("config") .. "/template"
   end,
 }

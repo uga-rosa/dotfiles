@@ -1,8 +1,7 @@
----@type LazySpec
+---@type PluginSpec
 local spec = {
   {
     "stevearc/dressing.nvim",
-    event = "VeryLazy",
     config = function()
       require("dressing").setup({
         input = {

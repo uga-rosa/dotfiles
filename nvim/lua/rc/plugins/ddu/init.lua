@@ -23,15 +23,12 @@ end, {
   end,
 })
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "Shougo/ddu.vim",
   name = "ddu.vim",
   dependencies = "denops.vim",
   import = "rc.plugins.ddu",
-  config = function()
-    vim.schedule(vim.fn["ddu#start"])
-  end,
 }
 
 return spec

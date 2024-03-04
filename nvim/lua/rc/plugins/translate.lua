@@ -13,7 +13,7 @@ for k, v in pairs({
   })
 end
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "uga-rosa/translate.nvim",
   keys = keys,

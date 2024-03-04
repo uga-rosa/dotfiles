@@ -11,25 +11,9 @@ helper.on_attach("lua_ls", function(_, bufnr)
   end, {})
 end)
 
----@param names string[]
 ---@return string[]
-local function get_plugin_paths(names)
-  local plugins = require("lazy.core.config").plugins
-  local paths = {}
-  for _, name in ipairs(names) do
-    if plugins[name] then
-      table.insert(paths, plugins[name].dir .. "/lua")
-    else
-      vim.notify("Invalid plugin name: " .. name)
-    end
-  end
-  return paths
-end
-
----@param plugins string[]
----@return string[]
-local function library(plugins)
-  local paths = get_plugin_paths(plugins)
+local function library()
+  local paths = vim.api.nvim_get_runtime_file("lua", true)
   table.insert(paths, "/usr/local/share/lua/5.1")
   table.insert(paths, vim.fn.stdpath("config") .. "/lua")
   table.insert(paths, vim.env.VIMRUNTIME .. "/lua")
@@ -63,10 +47,7 @@ return {
         path = { "?.lua", "?/init.lua" },
       },
       workspace = {
-        library = library({
-          "lazy.nvim",
-          "nvim-insx",
-        }),
+        library = library(),
         checkThirdParty = "Disable",
       },
       hint = {

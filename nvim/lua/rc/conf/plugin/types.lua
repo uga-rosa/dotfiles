@@ -1,0 +1,59 @@
+---@alias PluginSpec string | PluginSpecBase | (string | PluginSpecBase)[]
+
+---@class PluginSpecBase
+---@field [1] string plugin specifier
+---@field name? string
+---@field lazy? boolean
+---@field keys? PluginKeySpec | PluginKeySpec[]
+---@field cmd? string | string[]
+---@field event? string | string[]
+---@field ft? string | string[]
+---@field enabled? boolean | fun(): boolean
+---@field dev? boolean
+---@field branch? string
+---@field tag? string
+---@field commit? string
+---@field rtp? string
+---@field build? string
+---@field frozen? boolean
+---@field path? string
+---@field init? string | function
+---@field setup? string | function
+---@field config? string | function
+---@field dependencies? PluginSpec
+---@field import? string
+
+---@class PluginKeySpec
+---@field [1] string lhs
+---@field [2] string rhs
+---@field mode? string | string[] Default is 'n'.
+---@field buffer? integer | boolean true and 0 means the current buffer
+---@field remap? boolean
+---@field desc? string
+---@field nowait? boolean
+---@field silent? boolean
+---@field script? boolean
+---@field uniq? boolean
+---@field expr? boolean
+
+---@class JetpackOptions
+---@field as? string Install plugins as the specified name.
+---@field opt? boolean On-demand loading plugins by packadd.
+---@field keys? string | string[] On-demand loading plugins by keymaps.
+---@field cmd? string | string[] On-demand loading plugins by commands.
+---@field event? string | string[] On-demand loading plugins by event.
+---@field ft? string | string[] On-demand loading plugins by filetypes.
+---@field branch? string Install plugins from the specified branch.
+---@field tag? string Install plugins from the specified tag.
+---@field commit? string Install plugins from the specified commit.
+---@field rtp? string Add the specified directory to the runtimepath.
+---@field build? string Execute the specified command after installation/update.
+---@field frozen? boolean Freeze plugins to the current version.
+---@field path? string Install plugins to the specified directory.
+---@field hook_add? string | function Execute the specified function in starting Vim.
+---@field hook_source? string | function Execute the specified function before startup.
+---@field hook_post_source? string | function Execute the specified function after startup.
+---@field depends? string[] Load the specified plugins before the plugin.
+---@field before? string | string[] Load the plugin before the specified plugins.
+---@field after? string | string[] Load the plugin after the specified plugins.
+---@field merged? boolean

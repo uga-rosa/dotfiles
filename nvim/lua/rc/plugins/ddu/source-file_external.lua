@@ -1,6 +1,6 @@
 local helper = require("rc.helper.ddu")
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "matsui54/ddu-source-file_external",
   dependencies = "ddu.vim",

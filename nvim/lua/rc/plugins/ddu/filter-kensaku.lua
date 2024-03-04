@@ -1,6 +1,6 @@
 local helper = require("rc.helper.ddu")
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "Milly/ddu-filter-kensaku",
   dependencies = {

@@ -1,4 +1,4 @@
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "lewis6991/gitsigns.nvim",
   event = "BufRead",

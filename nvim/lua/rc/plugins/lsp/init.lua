@@ -1,30 +1,21 @@
 local helper = require("rc.helper.lsp")
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   {
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup({})
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
-    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "ddc-source-lsp",
-      {
-        "uga-rosa/ddc-source-lsp-setup",
-        dev = true,
-      },
-      {
-        "williamboman/mason.nvim",
-        config = function()
-          require("mason").setup()
-        end,
-      },
+      "uga-rosa/ddc-source-lsp-setup",
+      "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      {
-        "j-hui/fidget.nvim",
-        tag = "legacy",
-        config = function()
-          require("fidget").setup()
-        end,
-      },
+      "j-hui/fidget.nvim",
       "b0o/SchemaStore.nvim",
     },
     config = function()
@@ -32,8 +23,10 @@ local spec = {
 
       require("ddc_source_lsp_setup").setup()
 
+      require("mason").setup()
       require("mason-lspconfig").setup({
         ensure_installed = {
+          "lua_ls",
           "gopls",
           "bashls",
           "vtsls",
@@ -89,12 +82,12 @@ local spec = {
   },
   {
     "neoclide/coc.nvim",
-    cond = false,
+    enabled = false,
     branch = "release",
   },
   {
     "prabirshrestha/vim-lsp",
-    cond = false,
+    enabled = false,
     config = function()
       vim.g.lsp_settings_filetype_typescript = { "deno" }
       vim.fn["lsp#enable"]()
@@ -102,7 +95,7 @@ local spec = {
   },
   {
     "mattn/vim-lsp-settings",
-    cond = false,
+    enabled = false,
   },
 }
 

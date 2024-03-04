@@ -1,15 +1,17 @@
 local helper = require("rc.helper.ddu")
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "yuki-yano/ddu-filter-fzf",
   dependencies = {
     "ddu.vim",
-    "bluz71/vim-nightfly-colors",
+    "vim-nightfly-colors",
   },
   config = function()
     local palette = require("nightfly").palette
-    vim.api.nvim_set_hl(0, "DduSearchMatched", { fg = palette.black, bg = palette.emerald })
+    vim.schedule(function()
+      vim.api.nvim_set_hl(0, "DduSearchMatched", { fg = palette.black, bg = palette.emerald })
+    end)
 
     helper.patch_global({
       sourceOptions = {

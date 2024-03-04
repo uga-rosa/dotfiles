@@ -27,7 +27,7 @@ helper.ff_filter_map(nil, function(map)
   map("i", "<C-p>", helper.execute("normal k"))
 end)
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "Shougo/ddu-ui-ff",
   dependencies = "ddu.vim",

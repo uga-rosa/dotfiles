@@ -1,4 +1,4 @@
----@type LazySpec
+---@type PluginSpec
 local spec = {
   { "thinca/vim-themis" },
   {
@@ -30,7 +30,7 @@ local spec = {
     keys = {
       { "<M-o>", "<Plug>(openbrowser-smart-search)", mode = { "n", "x" } },
     },
-    init = function()
+    setup = function()
       vim.g.openbrowser_browser_commands = {
         {
           name = "wslview",
@@ -55,13 +55,6 @@ local spec = {
     config = function()
       vim.g["partedit#prefix_pattern"] = "\\s*"
       vim.g["partedit#auto_prefix"] = 0
-    end,
-  },
-  {
-    "uga-rosa/linkformat.vim",
-    cmd = "LinkFormatPaste",
-    init = function()
-      vim.g.linkformat_template = table.concat({ "{", '"<>"', "}" }, "\n")
     end,
   },
   {
@@ -134,20 +127,14 @@ local spec = {
     end,
   },
   {
-    -- help doc generator
-    "tani/podium",
-    config = function()
-      local podium = require("podium")
-      vim.api.nvim_create_user_command("Podium", function()
-        local input = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, true), "\n")
-        local processor = podium.PodiumProcessor.new(podium.vimdoc)
-        local output = processor:process(input)
-        vim.cmd.new()
-        vim.api.nvim_buf_set_lines(0, 0, -1, true, vim.split(output, "\n"))
-        vim.api.nvim_set_option_value("modified", false, { buf = 0 })
-        vim.api.nvim_set_option_value("filetype", "help", { buf = 0 })
-      end, {})
-    end,
+    "kawarimidoll/autoplay.vim",
+  },
+  {
+    "uga-rosa/estrela.lua",
+    dev = true,
+  },
+  {
+    "hrsh7th/nvim-kit",
   },
 }
 

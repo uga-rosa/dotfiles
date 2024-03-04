@@ -29,7 +29,7 @@ helper.ff_map("dummy", function(map)
   map("k", move_ignore_dummy(-1))
 end)
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "Shougo/ddu-source-dummy",
   dependencies = "ddu.vim",

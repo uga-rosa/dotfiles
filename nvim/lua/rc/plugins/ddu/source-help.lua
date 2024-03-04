@@ -12,7 +12,7 @@ helper.ff_filter_map("help", function(map)
   map("i", "<C-t>", helper.item_action("tabopen", nil, true))
 end)
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   {
     "uga-rosa/ddu-source-help",

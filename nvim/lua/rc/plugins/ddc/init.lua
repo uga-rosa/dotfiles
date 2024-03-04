@@ -1,6 +1,6 @@
 local helper = require("rc.helper.ddc")
 
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "Shougo/ddc.vim",
   name = "ddc.vim",
@@ -10,13 +10,10 @@ local spec = {
     "Shougo/ddc-ui-pum",
     "Shougo/ddc-ui-none",
     "tani/ddc-fuzzy",
-    {
-      "uga-rosa/ddc-previewer-floating",
-      dev = true,
-    },
+    "uga-rosa/ddc-previewer-floating",
   },
   import = "rc.plugins.ddc",
-  init = function()
+  setup = function()
     vim.keymap.set("i", "<C-Space>", function()
       if vim.fn["ddc#visible"]() then
         return vim.fn["ddc#hide"]("Manual")

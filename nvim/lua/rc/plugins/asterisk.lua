@@ -7,7 +7,7 @@ local spec = {
     { "g*", "<Plug>(asterisk-gz*)", mode = { "n", "x", "o" } },
     { "g#", "<Plug>(asterisk-gz#)", mode = { "n", "x", "o" } },
   },
-  init = function()
+  setup = function()
     vim.g["asterisk#keeppos"] = 1
   end,
 }
