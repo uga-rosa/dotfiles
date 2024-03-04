@@ -1,5 +1,5 @@
-import { BaseSource, Item } from "https://deno.land/x/ddu_vim@v3.5.1/types.ts";
-import { GatherArguments } from "https://deno.land/x/ddu_vim@v3.5.1/base/source.ts";
+import { BaseSource, Item } from "https://deno.land/x/ddu_vim@v3.10.2/types.ts";
+import { GatherArguments } from "https://deno.land/x/ddu_vim@v3.10.2/base/source.ts";
 
 type Params = Record<never, never>;
 

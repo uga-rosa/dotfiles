@@ -1,5 +1,5 @@
-import { ActionFlags, ActionResult, Actions } from "https://deno.land/x/ddu_vim@v3.5.1/types.ts";
-import { BaseKind } from "https://deno.land/x/ddu_vim@v3.5.1/base/kind.ts";
+import { ActionFlags, ActionResult, Actions } from "https://deno.land/x/ddu_vim@v3.10.2/types.ts";
+import { BaseKind } from "https://deno.land/x/ddu_vim@v3.10.2/base/kind.ts";
 
 type Params = Record<never, never>;
 
