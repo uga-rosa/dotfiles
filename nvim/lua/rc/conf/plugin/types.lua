@@ -20,6 +20,8 @@
 ---@field setup? string | function
 ---@field config? string | function
 ---@field dependencies? PluginSpec
+---@field before? string | string[]
+---@field after? string | string[]
 ---@field import? string
 
 ---@class PluginKeySpec

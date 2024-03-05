@@ -70,12 +70,6 @@ local function set_keys(spec)
   end
 end
 
-local hook_template = table.concat({
-  "lua if require('jetpack').tap(%q) then",
-  "  require('rc.conf.plugin.loader')._hook[%q]()",
-  "end",
-}, " ")
-
 ---@param hook_name string
 ---@param pkg_name string
 ---@param value? string | function
@@ -89,7 +83,7 @@ local function create_hook(hook_name, pkg_name, value)
   else
     Loader._hook[key] = assert(load(value))
   end
-  return hook_template:format(pkg_name, key)
+  return ("lua require'rc.conf.plugin.loader'._hook[%q]()"):format(key)
 end
 
 ---@param spec PluginSpec
@@ -104,10 +98,20 @@ function Loader.load_plugin(spec)
 
   local pkg_name = get_name(spec)
   ---@type JetpackOptions
-  local opts = utils.partial(
-    spec,
-    { "cmd", "event", "ft", "branch", "tag", "commit", "rtp", "build", "frozen", "path" }
-  )
+  local opts = utils.partial(spec, {
+    "cmd",
+    "event",
+    "ft",
+    "branch",
+    "tag",
+    "commit",
+    "rtp",
+    "build",
+    "frozen",
+    "path",
+    "before",
+    "after",
+  })
   opts.opt = spec.lazy
   opts.hook_add = create_hook("init", pkg_name, spec.init)
   opts.hook_source = create_hook("setup", pkg_name, spec.setup)
