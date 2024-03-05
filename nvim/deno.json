@@ -7,8 +7,8 @@
   },
   "lock": false,
   "tasks": {
-    "cache:plugins": "deno task cache:lazy; deno task cache:dev",
-    "cache:lazy": "deno cache --no-check $HOME/.local/share/nvim/lazy/**/denops/**/*.ts",
+    "cache:plugins": "deno task cache:jetpack; deno task cache:dev",
+    "cache:jetpack": "deno cache --no-check $HOME/.local/share/nvim/site/pack/jetpack/opt/**/denops/**/*.ts",
     "cache:dev": "deno cache --no-check $HOME/plugin/**/denops/**/*.ts"
   }
 }
