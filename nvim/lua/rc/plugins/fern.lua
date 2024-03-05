@@ -2,10 +2,9 @@
 local spec = {
   {
     "lambdalisue/fern.vim",
-    cmd = "Fern",
     dependencies = {
-      -- "lambdalisue/nerdfont.vim",
-      -- "lambdalisue/fern-renderer-nerdfont.vim",
+      "lambdalisue/nerdfont.vim",
+      "lambdalisue/fern-renderer-nerdfont.vim",
     },
     init = function()
       vim.g["fern#renderer"] = "nerdfont"

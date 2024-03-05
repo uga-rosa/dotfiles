@@ -1,7 +1,6 @@
 ---@type PluginSpec
 local spec = {
   "lewis6991/gitsigns.nvim",
-  event = "BufRead",
   config = function()
     local gs = require("gitsigns")
     gs.setup({

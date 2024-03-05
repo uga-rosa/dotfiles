@@ -2,13 +2,12 @@
 
 ---@class PluginSpecBase
 ---@field [1] string plugin specifier
----@field name? string
+---@field enabled? boolean | fun(): boolean
 ---@field lazy? boolean
 ---@field keys? PluginKeySpec | PluginKeySpec[]
 ---@field cmd? string | string[]
 ---@field event? string | string[]
 ---@field ft? string | string[]
----@field enabled? boolean | fun(): boolean
 ---@field dev? boolean
 ---@field branch? string
 ---@field tag? string
