@@ -1,4 +1,4 @@
----@type LazySpec
+---@type PluginSpec
 local spec = {
   "haya14busa/vim-asterisk",
   keys = {
