@@ -2,7 +2,7 @@
 local spec = {
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = true,
+    event = { "BufRead", "BufNewFile" },
     build = ":TSUpdate",
     config = function()
       local parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
@@ -30,8 +30,7 @@ local spec = {
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    event = { "BufRead", "BufNewFile" },
-    dependencies = "nvim-treesitter",
+    after = "nvim-treesitter",
     config = function()
       require("nvim-treesitter.configs").setup({
         textobjects = {
