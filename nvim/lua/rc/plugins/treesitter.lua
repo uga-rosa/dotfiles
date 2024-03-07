@@ -11,7 +11,6 @@ local spec = {
       require("nvim-treesitter.configs").setup({
         highlight = {
           enable = true,
-          disable = { "vimdoc" },
         },
         -- lua, vim. help (vimdoc) parser is in neovim core.
         ensure_installed = {
