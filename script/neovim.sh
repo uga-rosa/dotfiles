@@ -24,7 +24,7 @@ if [[ -d $prefix ]]; then
   sudo rm "$prefix/shada.vim"
   sudo rm "$prefix/spellfile.vim"
   sudo rm "$prefix/tarPlugin.vim"
-  sudo rm "$prefix/tohtml.vim"
+  sudo rm "$prefix/tohtml.lua"
   sudo rm "$prefix/tutor.vim"
   sudo rm "$prefix/zipPlugin.vim"
 fi
