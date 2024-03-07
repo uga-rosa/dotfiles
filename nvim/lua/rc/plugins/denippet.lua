@@ -7,12 +7,23 @@ local spec = {
   dependencies = {
     "denops.vim",
     "ddc.vim",
+    -- "rafamadriz/friendly-snippets",
   },
   config = function()
     -- loader
-    local root = vim.fn.stdpath("config") .. "/snippets/"
-    for name, _ in vim.fs.dir(root) do
-      vim.fn["denippet#load"](root .. name)
+    for _, root in ipairs(vim.api.nvim_get_runtime_file("snippets", true)) do
+      for name, type in vim.fs.dir(root) do
+        if type == "file" then
+          vim.fn["denippet#load"](vim.fs.joinpath(root, name))
+        elseif type == "directory" then
+          local dirpath = vim.fs.joinpath(root, name)
+          for name2, type2 in vim.fs.dir(dirpath) do
+            if type2 == "file" then
+              vim.fn["denippet#load"](vim.fs.joinpath(dirpath, name2))
+            end
+          end
+        end
+      end
     end
 
     vim.g.denippet_drop_on_zero = true
