@@ -1,9 +1,9 @@
-local data_path = vim.fn.stdpath("data") --[[@as string]]
-local plugin_root = vim.fs.joinpath(data_path, "site", "pack", "jetpack", "opt")
+local opts = require("rc.conf.plugin.config").options
 
 -- Bootstrap of jetpack
-local jetpack_root = vim.fs.joinpath(plugin_root, "vim-jetpack")
+local jetpack_root = vim.fs.joinpath(opts.root, "vim-jetpack")
 if not vim.fs.isdir(jetpack_root) then
+  -- stylua: ignore
   vim.system({
     "curl",
     "-fLo",
@@ -14,6 +14,4 @@ if not vim.fs.isdir(jetpack_root) then
 end
 vim.cmd("packadd vim-jetpack")
 
-local config_dir = vim.fn.stdpath("config") --[[@as string]]
-local plugin_config_root = vim.fs.joinpath(config_dir, "lua", "rc", "plugins")
-require("rc.conf.plugin.loader").run(plugin_config_root)
+require("rc.conf.plugin.loader").run("rc.plugins")

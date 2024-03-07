@@ -1,13 +1,14 @@
 local utils = require("rc.utils")
-local config_dir = vim.fn.stdpath("config") --[[@as string]]
-local dev_root = vim.fs.normalize("~/plugin")
+local options = require("rc.conf.plugin.config").options
 
 ---@class PluginLoader
----@field _depends PluginSpecBase[]
----@field _hook table<string, function>
+---@field public plugins table<string, PluginSpecBase>
+---@field private depends PluginSpecBase[]
+---@field private hook table<string, function>
 local Loader = {
-  _depends = {},
-  _hook = {},
+  plugins = {},
+  depends = {},
+  hook = {},
 }
 
 ---@param spec PluginSpecBase
@@ -79,11 +80,11 @@ local function create_hook(hook_name, pkg_name, value)
   end
   local key = hook_name .. pkg_name
   if type(value) == "function" then
-    Loader._hook[key] = value
+    Loader.hook[key] = value
   else
-    Loader._hook[key] = assert(load(value))
+    Loader.hook[key] = assert(load(value))
   end
-  return ("lua require'rc.conf.plugin.loader'._hook[%q]()"):format(key)
+  return ("lua require'rc.conf.plugin.loader'.hook[%q]()"):format(key)
 end
 
 ---@param spec PluginSpec
@@ -95,6 +96,10 @@ function Loader.load_plugin(spec)
   if not is_truthy(spec.enabled, true) then
     return
   end
+  if Loader.plugins[spec[1]] then
+    return
+  end
+  Loader.plugins[spec[1]] = spec
 
   local pkg_name = get_name(spec)
   ---@type JetpackOptions
@@ -133,7 +138,7 @@ function Loader.load_plugin(spec)
         if is_lazy(spec) then
           depend_spec.lazy = true
         end
-        table.insert(Loader._depends, depend_spec)
+        table.insert(Loader.depends, depend_spec)
       end
       table.insert(opts.depends, depend_spec[1])
     end
@@ -141,7 +146,7 @@ function Loader.load_plugin(spec)
 
   local repo = spec[1]
   if spec.dev then
-    repo = vim.fs.joinpath(dev_root, get_name(spec))
+    repo = vim.fs.joinpath(options.dev_root, get_name(spec))
   end
   if vim.tbl_isempty(opts) then
     opts = vim.empty_dict()
@@ -149,40 +154,34 @@ function Loader.load_plugin(spec)
   vim.fn["jetpack#add"](repo, opts)
 
   if spec.import then
-    local root = vim.fs.normalize(config_dir .. "/lua/" .. spec.import:gsub("%.", "/"))
-    Loader.load_dir(root)
+    Loader.load_dir(spec.import)
   end
 end
 
----@param root string
-function Loader.load_dir(root)
-  for name, type in vim.fs.dir(root) do
-    local path = vim.fs.joinpath(root, name)
+---@param import string
+function Loader.load_dir(import)
+  local pattern = "lua/" .. import:gsub("%.", "/")
+  local paths = {}
+  vim.list_extend(paths, vim.api.nvim_get_runtime_file(pattern .. "/*.lua", true))
+  vim.list_extend(paths, vim.api.nvim_get_runtime_file(pattern .. "/*/init.lua", true))
+  for _, path in ipairs(paths) do
     local modname = path:gsub(".*/lua/", ""):gsub("%.lua$", ""):gsub("/", ".")
-    if type == "file" and name ~= "init.lua" then
-    elseif type == "directory" and vim.fs.isfile(vim.fs.joinpath(path, "init.lua")) then
-      modname = modname .. ".init"
-    else
-      goto continue
-    end
     local specs = utils.to_list(require(modname))
     for _, spec in ipairs(specs) do
       Loader.load_plugin(spec)
     end
-
-    ::continue::
   end
 end
 
----@param root string
-function Loader.run(root)
+---@param import string
+function Loader.run(import)
   vim.fn["jetpack#begin"]()
 
   vim.fn["jetpack#add"]("tani/vim-jetpack", { opt = true })
 
-  Loader.load_dir(root)
+  Loader.load_dir(import)
 
-  for _, depend_spec in ipairs(Loader._depends) do
+  for _, depend_spec in ipairs(Loader.depends) do
     Loader.load_plugin(depend_spec)
   end
 
