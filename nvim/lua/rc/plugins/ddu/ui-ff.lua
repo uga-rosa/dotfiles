@@ -36,7 +36,6 @@ local spec = {
       ui = "ff",
       uiParams = {
         ff = {
-          startFilter = true,
           prompt = "> ",
           cursorPos = 0,
           split = "floating",
@@ -65,6 +64,14 @@ local spec = {
           ignoreEmpty = true,
         },
       },
+    })
+
+    -- startFilter
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "Ddu:uiReady",
+      callback = function()
+        vim.fn["ddu#ui#do_action"]("openFilterWindow")
+      end,
     })
 
     local function resize()
