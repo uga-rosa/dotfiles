@@ -81,7 +81,7 @@ local spec = {
       local width, col = math.floor(columns * 0.8), math.floor(columns * 0.1)
       local previewWidth = math.floor(width / 2)
 
-      helper.patch_global({
+      local options = {
         uiParams = {
           ff = {
             winHeight = height,
@@ -94,7 +94,14 @@ local spec = {
             previewCol = col + (width - previewWidth),
           },
         },
-      })
+      }
+
+      helper.patch_global(options)
+
+      vim.fn["ddu#ui#do_action"]("updateOptions", options)
+      vim.fn["ddu#ui#do_action"]("redraw", { method = "uiRedraw" })
+      vim.fn["ddu#ui#do_action"]("closeFilterWindow")
+      vim.fn["ddu#ui#do_action"]("openFilterWindow")
     end
     resize()
 
