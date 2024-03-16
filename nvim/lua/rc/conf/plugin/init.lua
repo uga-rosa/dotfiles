@@ -13,5 +13,6 @@ if not vim.fs.isdir(jetpack_root) then
   }):wait()
 end
 vim.cmd("packadd vim-jetpack")
+vim.g.jetpack_njobs = 100
 
 require("rc.conf.plugin.loader").run("rc.plugins")
