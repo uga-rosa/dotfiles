@@ -25,6 +25,16 @@ local spec = {
         },
         parser_install_dir = parser_install_dir,
       })
+
+      vim.treesitter.start = (function(wrapped)
+        return function(bufnr, lang)
+          lang = lang or vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+          if lang == "help" or lang == "vimdoc" then
+            return
+          end
+          pcall(wrapped, bufnr, lang)
+        end
+      end)(vim.treesitter.start)
     end,
   },
   {
