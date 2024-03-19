@@ -71,18 +71,21 @@ local function set_keys(spec)
   end
 end
 
+---@param spec PluginSpecBase
 ---@param hook_name string
----@param pkg_name string
----@param value? string | function
-local function create_hook(hook_name, pkg_name, value)
+local function create_hook(spec, hook_name)
+  local value = spec[hook_name] --[[@as string | function]]
   if value == nil then
     return
   end
-  local key = hook_name .. pkg_name
+  local key = get_name(spec) .. hook_name
   if type(value) == "function" then
     Loader.hook[key] = value
   else
     Loader.hook[key] = assert(load(value))
+  end
+  if hook_name == "config" and Loader.hook[key] and not is_lazy(spec) then
+    Loader.hook[key] = vim.schedule_wrap(Loader.hook[key])
   end
   return ("lua require'rc.conf.plugin.loader'.hook[%q]()"):format(key)
 end
@@ -101,7 +104,6 @@ function Loader.load_plugin(spec)
   end
   Loader.plugins[spec[1]] = spec
 
-  local pkg_name = get_name(spec)
   ---@type JetpackOptions
   local opts = utils.partial(spec, {
     "cmd",
@@ -118,9 +120,9 @@ function Loader.load_plugin(spec)
     "after",
   })
   opts.opt = spec.lazy
-  opts.hook_add = create_hook("init", pkg_name, spec.init)
-  opts.hook_source = create_hook("setup", pkg_name, spec.setup)
-  opts.hook_post_source = create_hook("config", pkg_name, spec.config)
+  opts.hook_add = create_hook(spec, "init")
+  opts.hook_source = create_hook(spec, "setup")
+  opts.hook_post_source = create_hook(spec, "config")
 
   if spec.keys then
     set_keys(spec)
