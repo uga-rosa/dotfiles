@@ -4,7 +4,7 @@ require("rc.conf.vim")
 require("rc.conf.ftdetect")
 require("rc.conf.lsp")
 require("rc.conf.oscyank")
-require("rc.conf.logger")
+
 require("rc.conf.plugin")
 
 if vim.fs.isfile("~/.secret/key.vim") then
