@@ -2,7 +2,7 @@ local M = {}
 
 ---Register callback function on LspAttach
 ---@param name string|nil If nil, global
----@param callback fun(client: lsp.Client, bufnr: integer)
+---@param callback fun(client: vim.lsp.Client, bufnr: integer)
 function M.on_attach(name, callback)
   vim.api.nvim_create_autocmd("LspAttach", {
     callback = function(args)
