@@ -12,6 +12,10 @@ local spec = {
     "Vimjas/vim-python-pep8-indent",
     ft = "python",
   },
+  {
+    "KentoOgata/vim-vimscript-gd",
+    ft = "vim",
+  },
 }
 
 return spec
