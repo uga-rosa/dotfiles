@@ -53,7 +53,7 @@ end, { expr = true })
 
 vim.keymap.set("n", "<Space>cc", "<Space>c_", { remap = true })
 
-vim.keymap.set("x", "<Space>c", function()
+vim.keymap.set("x", "<CR>", function()
   vim.cmd(vim.keycode("normal! <Esc>"))
   local text = get_text("gvy")
   vim.api.nvim_chan_send(2, osc52(text))
