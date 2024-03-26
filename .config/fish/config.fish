@@ -17,9 +17,9 @@ fish_add_path $DENO_INSTALL/bin
 fish_add_path $HOME/.cargo/bin
 
 ## Go
-set -x GOPATH $HOME/.go/bin
-fish_add_path /usr/local/go/bin:$PATH
-fish_add_path $GOPATH/bin:$PATH
+set -x GOPATH $HOME/.go
+fish_add_path $GOPATH/bin
+fish_add_path /usr/local/go/bin
 
 # abbrev
 ## Git
