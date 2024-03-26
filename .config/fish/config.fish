@@ -1,18 +1,25 @@
-set -x PATH $HOME/.local/bin:$PATH
+fish_add_path $HOME/.local/bin
+
+# afx
+set -x AFX_COMMAND_PATH $HOME/.afx/bin
+fish_add_path $AFX_COMMAND_PATH
+afx init | source
 
 # mise
 mise activate fish | source
 
-# deno
+# ENVIRONMENT VARIABLES
+## deno
 set -x DENO_INSTALL $HOME/.deno
-set -x PATH $DENO_INSTALL/bin:$PATH
+fish_add_path $DENO_INSTALL/bin
 
-# Rust
-set -x PATH $HOME/.cargo/bin
+## Rust
+fish_add_path $HOME/.cargo/bin
 
-# Go
+## Go
 set -x GOPATH $HOME/.go/bin
-set -x PATH /usr/local/go/bin:$GOPATH/bin:$PATH
+fish_add_path /usr/local/go/bin:$PATH
+fish_add_path $GOPATH/bin:$PATH
 
 # abbrev
 ## Git
