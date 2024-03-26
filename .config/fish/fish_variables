@@ -1,8 +1,15 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR __fish_initialized:3100
+SETUVAR _fish_abbr_g:lazygit
 SETUVAR _fish_abbr_gco:git\x20checkout
+SETUVAR _fish_abbr_l:eza\x20\x2d\x2dicons
+SETUVAR _fish_abbr_la:eza\x20\x2da\x20\x2d\x2dicons
+SETUVAR _fish_abbr_ll:eza\x20\x2daal\x20\x2d\x2dicons
+SETUVAR _fish_abbr_lt:eza\x20\x2dT\x20\x2dL\x203\x20\x2da\x20\x2dI\x20\x22node_modules\x7c\x2egit\x7c\x2ecache\x22\x20\x2d\x2dicons
+SETUVAR _fish_abbr_lta:eza\x20\x2dT\x20\x2da\x20\x2dI\x20\x22node_modules\x7c\x2egit\x7c\x2ecache\x22\x20\x2d\x2dcolor\x3dalways\x20\x2d\x2dicons\x20\x7c\x20less\x20\x2dr
 SETUVAR _fish_abbr_nv:nvim
+SETUVAR _fish_abbr_rr:gomi
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fisher\x2efish\x1e\x7e/\x2econfig/fish/completions/fisher\x2efish
 SETUVAR _fisher_plugins:jorgebucaran/fisher
 SETUVAR _fisher_upgraded_to_4_4:\x1d
@@ -34,4 +41,4 @@ SETUVAR fish_pager_color_completion:normal
 SETUVAR fish_pager_color_description:B3A06D\x1eyellow
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
-SETUVAR fish_user_paths:/home/uga/\x2ecargo/bin\x1e/home/uga/\x2edeno/bin\x1e/home/uga/\x2eafx/bin\x1e/home/uga/\x2elocal/bin
+SETUVAR fish_user_paths:/home/uga/\x2ego/bin\x1e/usr/local/go/bin\x1e/home/uga/\x2ecargo/bin\x1e/home/uga/\x2edeno/bin\x1e/home/uga/\x2eafx/bin\x1e/home/uga/\x2elocal/bin

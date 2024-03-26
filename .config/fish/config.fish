@@ -1,12 +1,30 @@
 fish_add_path $HOME/.local/bin
 
-# afx
-set -x AFX_COMMAND_PATH $HOME/.afx/bin
-fish_add_path $AFX_COMMAND_PATH
-afx init | source
+# aqua
+fish_add_path (aqua root-dir)/bin
 
-# mise
+# tools
+## mise
 mise activate fish | source
+## gomi
+abbr -a rr gomi
+## fzf
+set -x FZF_DEFAULT_COMMAND 'fd --type f'
+set -x FZF_DEFAULT_OPTS '--height 50% --reverse'
+set -x FZF_CTRL_T_COMMAND 'rg --files --hidden --follow --glob "!.git/*"'
+set -x FZF_CTRL_T_OPTS '--preview "bat --color=always --style=header,grid --line-range :100 {}"'
+set -x FZF_ALT_C_COMMAND 'fd --type d'
+## zoxide
+zoxide init fish | source
+set -x _ZO_FZF_OPTS '--no-sort --height 45% --reverse'
+## eza
+abbr -a l   eza --icons
+abbr -a la  eza -a --icons
+abbr -a ll  eza -aal --icons
+abbr -a lt  'eza -T -L 3 -a -I "node_modules|.git|.cache" --icons'
+abbr -a lta 'eza -T -a -I "node_modules|.git|.cache" --color=always --icons | less -r'
+## lazygit
+abbr -a g lazygit
 
 # ENVIRONMENT VARIABLES
 ## deno
@@ -23,9 +41,9 @@ fish_add_path /usr/local/go/bin
 
 # abbrev
 ## Git
-abbr --add gco git checkout
+abbr -a gco git checkout
 ## Neovim
-abbr --add nv nvim
+abbr -a nv nvim
 
 if status is-interactive
   # Vim key bindings and emacs key bindings Insert-Mode
